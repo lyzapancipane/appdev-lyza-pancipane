@@ -1,0 +1,112 @@
+.title{
+    text-align: center;
+    margin-bottom: 0px;
+    font-family: arial;
+    font-size: 20px;
+    
+}
+
+.Year{
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-family: arial;
+    color: gray;
+    font-size: 12px;
+}
+
+.me{
+    text-align: center;
+    font-weight: bold;
+    font-family: arial;
+    margin-top: 10px;
+    color: blueviolet;
+}
+
+.Name{
+font-family: arial;
+font-size: 18px;
+text-align: center;
+}
+
+.photo{
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    border: solid;
+    border-color: blueviolet;
+
+
+
+ 
+}
+.edit{
+font-family: arial;
+font-size: 15px;
+
+
+}
+
+.figma{
+font-family: arial;
+font-size: 15px;
+
+
+
+}
+
+.basic{
+font-family: arial;
+font-size: 15px;
+}
+
+
+
+
+.gaming{
+font-family: arial;
+font-size: 15px;
+display: inline-block;
+
+}
+
+.listening{
+font-family: arial;
+font-size: 15px;
+display: inline-block;
+}s
+
+.cook{
+font-family: arial;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.skill{
+font-family: arial;
+color: blueviolet;
+margin-bottom: 3px;
+
+}
+
+.hobbies{
+font-family: arial;
+color: blueviolet;
+margin-bottom: 3px;
+}
+
+.Contact{
+    color: blueviolet;
+    text-align: center;
+    font-family: arial;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.week{
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 0px;
+    padding-left: 55px;
+    color: blueviolet;
+}
