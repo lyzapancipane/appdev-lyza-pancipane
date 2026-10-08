@@ -1,0 +1,4482 @@
+<?php
+
+session_start();
+
+require_once "php/db.php";
+
+
+/* =========================================================
+   SESSION PROTECTION
+========================================================= */
+
+if (
+    !isset($_SESSION["system_admin_logged_in"]) ||
+    $_SESSION["system_admin_logged_in"] !== true
+) {
+    header("Location: superadmin_login.html");
+    exit;
+}
+
+
+/* =========================================================
+   GET CURRENT LOGGED-IN SYSTEM OWNER
+========================================================= */
+
+$adminId = $_SESSION["system_admin_id"] ?? 0;
+
+$stmt = $conn->prepare(
+    "SELECT
+        admin_id,
+        first_name,
+        last_name,
+        email,
+        status
+     FROM system_admins
+     WHERE admin_id = ?
+     LIMIT 1"
+);
+
+$stmt->bind_param("i", $adminId);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+
+/* =========================================================
+   VERIFY CURRENT ACCOUNT
+========================================================= */
+
+if ($result->num_rows !== 1) {
+
+    $_SESSION = [];
+    session_destroy();
+
+    header("Location: superadmin_login.html");
+    exit;
+}
+
+$currentAdmin = $result->fetch_assoc();
+
+
+/* =========================================================
+   CHECK CURRENT ACCOUNT STATUS
+========================================================= */
+
+if ($currentAdmin["status"] !== "active") {
+
+    $_SESSION = [];
+    session_destroy();
+
+    header("Location: superadmin_login.html");
+    exit;
+}
+
+
+/* =========================================================
+   CURRENT ACCOUNT INFORMATION
+========================================================= */
+
+$adminId = (int)$currentAdmin["admin_id"];
+
+$adminName =
+    $currentAdmin["first_name"] .
+    " " .
+    $currentAdmin["last_name"];
+
+$adminEmail = $currentAdmin["email"];
+
+
+/* =========================================================
+   KEEP SESSION INFORMATION UPDATED
+========================================================= */
+
+$_SESSION["system_admin_id"] = $adminId;
+$_SESSION["system_admin_name"] = $adminName;
+$_SESSION["system_admin_email"] = $adminEmail;
+$_SESSION["system_admin_logged_in"] = true;
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+if (
+    isset($_GET["logout"]) &&
+    $_GET["logout"] === "1"
+) {
+
+    $_SESSION = [];
+
+    if (ini_get("session.use_cookies")) {
+
+        $params = session_get_cookie_params();
+
+        setcookie(
+            session_name(),
+            "",
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+    }
+
+    session_destroy();
+
+    header("Location: superadmin_login.html");
+    exit;
+}
+
+
+/* =========================================================
+   COUNT FUNCTION
+========================================================= */
+
+function getCount($conn, $query)
+{
+    $result = $conn->query($query);
+
+    if ($result && $row = $result->fetch_assoc()) {
+        return (int)$row["total"];
+    }
+
+    return 0;
+}
+
+
+/* =========================================================
+   DASHBOARD COUNTS
+========================================================= */
+
+$totalSchools = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total FROM schools"
+);
+
+$pendingRegistrations = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM school_verification_requests
+     WHERE status = 'pending'"
+);
+
+$approvedSchools = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM schools
+     WHERE status = 'approved'"
+);
+
+$activeSchoolAdmins = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM users
+     WHERE role = 'school_admin'
+     AND status = 'active'"
+);
+
+$totalStudents = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM users
+     WHERE role = 'student'"
+);
+
+$totalTeachers = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM users
+     WHERE role = 'teacher'"
+);
+
+$rejectedSchools = getCount(
+    $conn,
+    "SELECT COUNT(*) AS total
+     FROM schools
+     WHERE status = 'rejected'"
+);
+
+
+/* =========================================================
+   SCHOOL VERIFICATION REQUESTS
+========================================================= */
+
+$requests = [];
+
+$requestQuery = "
+    SELECT
+        svr.request_id,
+        svr.school_id,
+        svr.system_admin_id,
+        svr.status,
+        svr.remarks,
+        svr.requested_at,
+        svr.reviewed_at,
+
+        s.school_name,
+        s.school_code,
+        s.school_email,
+        s.contact_number,
+        s.address,
+
+        (
+            SELECT CONCAT(u.first_name, ' ', u.last_name)
+            FROM users u
+            WHERE u.school_id = s.school_id
+              AND u.role = 'school_admin'
+            ORDER BY
+                CASE
+                    WHEN u.status = 'active' THEN 1
+                    ELSE 2
+                END,
+                u.user_id ASC
+            LIMIT 1
+        ) AS admin_name,
+
+        (
+            SELECT u.email
+            FROM users u
+            WHERE u.school_id = s.school_id
+              AND u.role = 'school_admin'
+            ORDER BY
+                CASE
+                    WHEN u.status = 'active' THEN 1
+                    ELSE 2
+                END,
+                u.user_id ASC
+            LIMIT 1
+        ) AS admin_email,
+
+        (
+            SELECT u.status
+            FROM users u
+            WHERE u.school_id = s.school_id
+              AND u.role = 'school_admin'
+            ORDER BY
+                CASE
+                    WHEN u.status = 'active' THEN 1
+                    ELSE 2
+                END,
+                u.user_id ASC
+            LIMIT 1
+        ) AS admin_status
+
+    FROM school_verification_requests svr
+
+    INNER JOIN schools s
+        ON svr.school_id = s.school_id
+
+    ORDER BY
+        CASE
+            WHEN svr.status = 'pending' THEN 1
+            WHEN svr.status = 'approved' THEN 2
+            WHEN svr.status = 'rejected' THEN 3
+            ELSE 4
+        END,
+
+        svr.requested_at DESC
+
+    LIMIT 6
+";
+
+$requestResult = $conn->query($requestQuery);
+
+if ($requestResult) {
+
+    while ($row = $requestResult->fetch_assoc()) {
+        $requests[] = $row;
+    }
+}
+
+
+/* =========================================================
+   RECENT ACTIVITY
+========================================================= */
+
+$activities = [];
+
+$activityQuery = "
+    SELECT
+        svr.request_id,
+        svr.status,
+        svr.requested_at,
+        svr.reviewed_at,
+        s.school_name
+
+    FROM school_verification_requests svr
+
+    INNER JOIN schools s
+        ON svr.school_id = s.school_id
+
+    ORDER BY
+        COALESCE(
+            svr.reviewed_at,
+            svr.requested_at
+        ) DESC
+
+    LIMIT 4
+";
+
+$activityResult = $conn->query($activityQuery);
+
+if ($activityResult) {
+
+    while ($row = $activityResult->fetch_assoc()) {
+        $activities[] = $row;
+    }
+}
+
+
+/* =========================================================
+   PROFILE INITIALS
+========================================================= */
+
+$nameParts = preg_split(
+    '/\s+/',
+    trim($adminName)
+);
+
+$initials = "";
+
+if (!empty($nameParts[0])) {
+
+    $initials .= strtoupper(
+        substr(
+            $nameParts[0],
+            0,
+            1
+        )
+    );
+}
+
+if (count($nameParts) > 1) {
+
+    $initials .= strtoupper(
+        substr(
+            $nameParts[count($nameParts) - 1],
+            0,
+            1
+        )
+    );
+}
+
+if ($initials === "") {
+    $initials = "SA";
+}
+
+
+/* =========================================================
+   STATUS HELPERS
+========================================================= */
+
+function statusClass($status)
+{
+    switch ($status) {
+
+        case "approved":
+            return "status-approved";
+
+        case "rejected":
+            return "status-rejected";
+
+        case "pending":
+        default:
+            return "status-pending";
+    }
+}
+
+
+function statusText($status)
+{
+    switch ($status) {
+
+        case "approved":
+            return "Approved";
+
+        case "rejected":
+            return "Rejected";
+
+        case "pending":
+        default:
+            return "Pending";
+    }
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>EduBridge - Super Admin Dashboard</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background: #f3f3f3;
+            font-family: "Poppins", sans-serif;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        button,
+        input {
+            font-family: "Poppins", sans-serif;
+        }
+
+
+        /* =====================================================
+           MAIN DASHBOARD
+        ====================================================== */
+
+        .dashboard-page {
+            width: 1440px;
+            min-height: 900px;
+            margin: 0 auto;
+            display: flex;
+            position: relative;
+            background: #f3f3f3;
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ====================================================== */
+
+        .sidebar {
+            width: 275px;
+            min-height: 900px;
+            background: #05052b;
+            padding: 28px 18px 20px;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           EDUBRIDGE LOGO
+        ====================================================== */
+
+        .logo-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 27px;
+        }
+
+        .logo-icon {
+            width: 120px;
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3px;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.7px;
+        }
+
+        .logo-text span {
+            color: #7b3dd0;
+        }
+
+
+        /* =====================================================
+           SIDEBAR MENU
+        ====================================================== */
+
+        .menu-section {
+            margin-bottom: 15px;
+        }
+
+        .menu-label {
+            font-size: 10px;
+            color: #aaaaaf;
+            margin: 0 12px 7px;
+            font-weight: 500;
+        }
+
+        .menu-item {
+            width: 100%;
+            min-height: 37px;
+            padding: 8px 11px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #d9d9e3;
+            text-decoration: none;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            color: #ffffff;
+        }
+
+        .menu-item.active {
+            background: #7138c8;
+            color: #ffffff;
+        }
+
+        .menu-icon {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .settings-icon-img {
+            width: 15px;
+            height: 15px;
+            object-fit: contain;
+            display: block;
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ====================================================== */
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+
+        /* =====================================================
+           MAIN AREA
+        ====================================================== */
+
+        .main-area {
+            flex: 1;
+            min-width: 0;
+            min-height: 900px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ====================================================== */
+
+        .topbar {
+            height: 88px;
+            padding: 0 32px 0 36px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hamburger {
+            width: 19px;
+            height: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444444;
+        }
+
+        .hamburger svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+        }
+
+        .page-title h1 {
+            font-size: 25px;
+            font-weight: 600;
+            letter-spacing: -0.6px;
+            color: #171717;
+        }
+
+
+        /* =====================================================
+           TOP RIGHT
+        ====================================================== */
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .notification-button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #3e3e3e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-button svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ====================================================== */
+
+        .profile-wrapper {
+            position: relative;
+        }
+
+        .profile-button {
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+
+        .profile-avatar {
+            width: 39px;
+            height: 39px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                #f2d2bd,
+                #9d6b51
+            );
+            border: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .profile-info {
+            text-align: left;
+        }
+
+        .profile-name {
+            display: block;
+            color: #202020;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.3;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-role {
+            display: block;
+            color: #8a8a8a;
+            font-size: 10px;
+            line-height: 1.3;
+        }
+
+        .profile-arrow {
+            width: 15px;
+            height: 15px;
+            margin-left: 8px;
+        }
+
+        .profile-arrow svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: #222222;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+        ====================================================== */
+
+        .profile-dropdown {
+            position: absolute;
+            right: 0;
+            top: 52px;
+            width: 235px;
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            padding: 8px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 12px;
+            border-bottom: 1px solid #eeeeee;
+            margin-bottom: 5px;
+        }
+
+        .dropdown-header strong {
+            display: block;
+            font-size: 12px;
+            color: #222222;
+        }
+
+        .dropdown-header span {
+            display: block;
+            font-size: 10px;
+            color: #8b8b8b;
+            margin-top: 2px;
+            word-break: break-word;
+        }
+
+        .dropdown-item {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 10px 11px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333333;
+            font-size: 11px;
+            text-align: left;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f0fc;
+            color: #7138c8;
+        }
+
+        .dropdown-item.logout-item {
+            color: #c94b4b;
+            border-top: 1px solid #eeeeee;
+            margin-top: 4px;
+        }
+
+        .dropdown-item.logout-item:hover {
+            background: #fff3f3;
+            color: #c13c3c;
+        }
+
+        .dropdown-item svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .account-settings-dropdown-img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            display: block;
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ====================================================== */
+
+        .content {
+            padding: 28px 31px 30px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           STAT CARDS
+        ====================================================== */
+
+        .overview-cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+
+        .stat-card {
+            height: 116px;
+            border: 1px solid #e2e2e2;
+            border-radius: 5px;
+            background: #ffffff;
+            padding: 18px 12px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #eee1ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #7438ca;
+        }
+
+        .stat-icon svg {
+            width: 27px;
+            height: 27px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .stat-number {
+            font-size: 29px;
+            font-weight: 600;
+            line-height: 1;
+            color: #7138c8;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #333333;
+            line-height: 1.3;
+        }
+
+        .stat-sub {
+            font-size: 8px;
+            color: #999999;
+            margin-top: 2px;
+        }
+
+
+        /* =====================================================
+           LOWER DASHBOARD
+        ====================================================== */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 245px;
+            gap: 12px;
+            height: calc(100% - 129px);
+        }
+
+
+        /* =====================================================
+           TABLE CARD
+        ====================================================== */
+
+        .table-card {
+            border: 1px solid #e1e1e1;
+            border-radius: 5px;
+            background: #ffffff;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .card-header {
+            min-height: 63px;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #242424;
+        }
+
+        .card-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .search-box {
+            width: 190px;
+            height: 31px;
+            border: 1px solid #e3e3e3;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            padding: 0 9px;
+            gap: 7px;
+        }
+
+        .search-box svg {
+            width: 13px;
+            height: 13px;
+            stroke: #aaa;
+            fill: none;
+            stroke-width: 1.6;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 9px;
+            color: #444444;
+        }
+
+        .search-box input::placeholder {
+            color: #bdbdbd;
+        }
+
+        .filter-button {
+            height: 31px;
+            border: 1px solid #e1e1e1;
+            background: #ffffff;
+            border-radius: 5px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #555555;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+        .filter-button:hover {
+            border-color: #7138c8;
+            color: #7138c8;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ====================================================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        thead th {
+            height: 43px;
+            background: #fcfcfc;
+            border-bottom: 1px solid #eeeeee;
+            color: #b3b3b3;
+            font-size: 8px;
+            font-weight: 500;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        tbody td {
+            height: 63px;
+            border-bottom: 1px solid #eeeeee;
+            padding: 7px 10px;
+            color: #555555;
+            font-size: 9px;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #fcfaff;
+        }
+
+        .school-name {
+            color: #2e2e2e;
+            font-weight: 500;
+            line-height: 1.35;
+            display: block;
+        }
+
+        .school-code {
+            color: #a1a1a1;
+            font-size: 7px;
+            display: block;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ====================================================== */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 58px;
+            padding: 4px 7px;
+            border-radius: 3px;
+            font-size: 7px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff1c9;
+            color: #a87800;
+        }
+
+        .status-approved {
+            background: #dff7d1;
+            color: #4a9d2c;
+        }
+
+        .status-rejected {
+            background: #ffe0e0;
+            color: #c94b4b;
+        }
+
+
+        /* =====================================================
+           VIEW BUTTON
+        ====================================================== */
+
+        .view-button {
+            width: 29px;
+            height: 27px;
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #444444;
+        }
+
+        .view-button:hover {
+            border-color: #7138c8;
+            color: #7138c8;
+            background: #faf7ff;
+        }
+
+        .view-button svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+
+        /* =====================================================
+           TABLE FOOTER
+        ====================================================== */
+
+        .table-footer {
+            height: 43px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .showing-text {
+            color: #999999;
+            font-size: 8px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .page-number {
+            width: 22px;
+            height: 22px;
+            border: none;
+            background: transparent;
+            color: #777777;
+            font-size: 8px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .page-number:hover {
+            background: #f2eaff;
+            color: #7138c8;
+        }
+
+        .page-number.active {
+            background: #7138c8;
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           RIGHT COLUMN
+        ====================================================== */
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .side-card {
+            border: 1px solid #e1e1e1;
+            border-radius: 5px;
+            background: #ffffff;
+            padding: 13px;
+            overflow: hidden;
+        }
+
+        .side-card-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #303030;
+            margin-bottom: 11px;
+        }
+
+
+        /* =====================================================
+           SCHOOL STATUS OVERVIEW
+        ====================================================== */
+
+        .overview-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .overview-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .overview-row-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #eee1ff;
+            color: #7438ca;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .overview-row-icon svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .overview-row-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .overview-row-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .overview-row-name {
+            font-size: 8px;
+            color: #555555;
+        }
+
+        .overview-row-count {
+            font-size: 8px;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #eadbfa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #7138c8;
+            border-radius: 10px;
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ====================================================== */
+
+        .quick-action {
+            width: 100%;
+            min-height: 30px;
+            margin-bottom: 7px;
+            border: none;
+            border-radius: 5px;
+            background: #eee0ff;
+            color: #7138c8;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 9px;
+            font-size: 8px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .quick-action:last-child {
+            margin-bottom: 0;
+        }
+
+        .quick-action:hover {
+            background: #e5d1fc;
+        }
+
+        .quick-action svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+
+        /* =====================================================
+           RECENT ACTIVITY
+        ====================================================== */
+
+        .activity-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .activity-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #eee1ff;
+            color: #7138c8;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-icon svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .activity-text {
+            font-size: 8px;
+            color: #555555;
+            line-height: 1.4;
+        }
+
+        .activity-time {
+            color: #aaaaaa;
+            font-size: 7px;
+            margin-top: 2px;
+        }
+
+        .view-all {
+            display: inline-block;
+            margin-top: 6px;
+            color: #7138c8;
+            font-size: 8px;
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ====================================================== */
+
+        .empty-state {
+            height: 170px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #a0a0a0;
+        }
+
+        .empty-state svg {
+            width: 31px;
+            height: 31px;
+            stroke: #b9b9b9;
+            fill: none;
+            stroke-width: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .empty-state span {
+            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           MODAL
+        ====================================================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.32);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 450px;
+            max-height: 88vh;
+            background: #ffffff;
+            border-radius: 9px;
+            border: 1px solid #e2e2e2;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16);
+            overflow: hidden;
+        }
+
+        #requestModal .modal-box {
+            width: 600px;
+        }
+
+        #requestModal .modal-body {
+            max-height: 570px;
+            overflow-y: auto;
+        }
+
+        #requestModal .modal-body::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        #requestModal .modal-body::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        #requestModal .modal-body::-webkit-scrollbar-thumb {
+            background: #a8a8a8;
+            border-radius: 10px;
+        }
+
+        #requestModal .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #888888;
+        }
+
+        .detail-section-title {
+            grid-column: 1 / -1;
+            color: #555555;
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: 3px;
+            margin-bottom: -2px;
+        }
+
+        .modal-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #272727;
+        }
+
+        .modal-close {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #555555;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #eee1ff;
+            color: #7138c8;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 13px 20px;
+            border-top: 1px solid #eeeeee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .modal-button {
+            height: 35px;
+            padding: 0 15px;
+            border-radius: 5px;
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #555555;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .modal-button.primary {
+            background: #7138c8;
+            border-color: #7138c8;
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           PROFILE MODAL
+        ====================================================== */
+
+        .profile-modal-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .profile-modal-avatar {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                #f2d2bd,
+                #9d6b51
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .profile-modal-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #242424;
+        }
+
+        .profile-modal-role {
+            font-size: 10px;
+            color: #8c8c8c;
+            margin-top: 2px;
+        }
+
+        .profile-detail {
+            margin-bottom: 12px;
+        }
+
+        .profile-detail-label {
+            font-size: 9px;
+            color: #999999;
+            margin-bottom: 4px;
+        }
+
+        .profile-detail-value {
+            min-height: 36px;
+            border: 1px solid #e4e4e4;
+            border-radius: 5px;
+            padding: 9px 10px;
+            font-size: 10px;
+            color: #333333;
+            background: #fafafa;
+        }
+
+
+        /* =====================================================
+           SETTINGS
+        ====================================================== */
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-text strong {
+            display: block;
+            font-size: 10px;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .settings-text span {
+            display: block;
+            font-size: 8px;
+            color: #999999;
+            margin-top: 3px;
+        }
+
+        .toggle {
+            width: 34px;
+            height: 19px;
+            background: #d5d5d5;
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            border: none;
+        }
+
+        .toggle::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ffffff;
+            border-radius: 50%;
+            left: 2px;
+            top: 2px;
+            transition: 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle.active {
+            background: #7138c8;
+        }
+
+        .toggle.active::after {
+            left: 17px;
+        }
+
+
+        /* =====================================================
+           REQUEST DETAILS
+        ====================================================== */
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .detail-box {
+            background: #fafafa;
+            border: 1px solid #eeeeee;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .detail-box.full {
+            grid-column: 1 / -1;
+        }
+
+        .detail-box label {
+            display: block;
+            color: #999999;
+            font-size: 8px;
+            margin-bottom: 4px;
+        }
+
+        .detail-box strong {
+            display: block;
+            color: #333333;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1440px) {
+
+            body {
+                justify-content: flex-start;
+            }
+
+            .dashboard-page {
+                transform: scale(calc(100vw / 1440));
+                transform-origin: top left;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .dashboard-page {
+                transform: none;
+                width: 100%;
+                min-height: 100vh;
+            }
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .overview-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .right-column {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #requestModal .modal-box {
+                width: calc(100% - 30px);
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- =================================================
+             EDUBRIDGE LOGO
+        ================================================== -->
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+
+                <img
+                    src="edubridgelogo.png"
+                    alt="EduBridge Logo"
+                >
+
+            </div>
+
+            <div class="logo-text">
+                Edu<span>Bridge</span>
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HOME
+        ================================================== -->
+
+        <div class="menu-section">
+
+            <a
+                href="#"
+                class="menu-item active"
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 10.5L12 3l9 7.5"></path>
+
+                        <path d="M5 9.5V21h14V9.5"></path>
+
+                        <path d="M9 21v-6h6v6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Home
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             SCHOOL MANAGEMENT
+        ================================================== -->
+
+        <div class="menu-section">
+
+            <div class="menu-label">
+                School Management
+            </div>
+
+
+            <a
+                href="School_Registrations.php"
+                class="menu-item"
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M3 21h18"></path>
+
+                        <path d="M5 21V7l7-4 7 4v14"></path>
+
+                        <path d="M9 21v-5h6v5"></path>
+
+                        <path d="M8 9h2"></path>
+
+                        <path d="M14 9h2"></path>
+
+                        <path d="M8 12h2"></path>
+
+                        <path d="M14 12h2"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    School Registrations
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('Approved Schools');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M5 4h14v17H5z"></path>
+
+                        <path d="M9 4v-2h6v2"></path>
+
+                        <path d="M8 10h8"></path>
+
+                        <path d="M8 14h8"></path>
+
+                        <path d="M8 18h5"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Approved Schools
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             USER MANAGEMENT
+        ================================================== -->
+
+        <div class="menu-section">
+
+            <div class="menu-label">
+                User Management
+            </div>
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('School Admins');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="8"
+                            r="4"
+                        ></circle>
+
+                        <path
+                            d="M4 21c0-4.2 3.5-7 8-7s8 2.8 8 7"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    School Admins
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('Teachers');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M4 5h16v14H4z"></path>
+
+                        <path d="M8 9h8"></path>
+
+                        <path d="M8 13h5"></path>
+
+                        <path d="M8 17h8"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Teachers
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('Students');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="9"
+                            cy="8"
+                            r="3"
+                        ></circle>
+
+                        <circle
+                            cx="17"
+                            cy="9"
+                            r="2.5"
+                        ></circle>
+
+                        <path
+                            d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"
+                        ></path>
+
+                        <path
+                            d="M15 14c3.2 0 6 2.2 6 5"
+                        ></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Students
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             ANALYTICS
+        ================================================== -->
+
+        <div class="menu-section">
+
+            <div class="menu-label">
+                Analytics
+            </div>
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('Dashboard Analytics');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M4 19V5"></path>
+
+                        <path d="M4 19h17"></path>
+
+                        <path d="M7 16l4-5 3 2 5-7"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Dashboard Analytics
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('Activity Logs');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path d="M12 7v5l3 2"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Activity Logs
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    showComingSoon('Report a Problem');
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                        ></circle>
+
+                        <path d="M12 8v5"></path>
+
+                        <path d="M12 16h.01"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Report a Problem
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 UPDATED SYSTEM SETTINGS ICON
+            ================================================== -->
+
+            <a
+                href="#"
+                class="menu-item"
+                onclick="
+                    openSettings();
+                    return false;
+                "
+            >
+
+                <span class="menu-icon">
+
+                    <img
+                        src="settings icon.png"
+                        alt="System Settings"
+                        class="settings-icon-img"
+                    >
+
+                </span>
+
+                <span>
+                    System Settings
+                </span>
+
+            </a>
+
+
+            <a
+                href="?logout=1"
+                class="menu-item"
+            >
+
+                <span class="menu-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M10 17l5-5-5-5"></path>
+
+                        <path d="M15 12H3"></path>
+
+                        <path d="M14 4h6v16h-6"></path>
+
+                    </svg>
+
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN AREA
+    ====================================================== -->
+
+    <main class="main-area">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <div class="hamburger">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M4 7h16"></path>
+
+                        <path d="M4 12h16"></path>
+
+                        <path d="M4 17h16"></path>
+
+                    </svg>
+
+                </div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+            </div>
+
+
+            <!-- =================================================
+                 TOP RIGHT
+            ================================================== -->
+
+            <div class="top-right">
+
+
+                <button
+                    class="notification-button"
+                    type="button"
+                    onclick="
+                        showComingSoon('Notifications')
+                    "
+                >
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path
+                            d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                        ></path>
+
+                        <path d="M10 21h4"></path>
+
+                    </svg>
+
+                </button>
+
+
+                <!-- =================================================
+                     CURRENT LOGGED-IN PROFILE
+                ================================================== -->
+
+                <div class="profile-wrapper">
+
+                    <button
+                        class="profile-button"
+                        type="button"
+                        onclick="toggleProfileDropdown()"
+                    >
+
+                        <div class="profile-avatar">
+
+                            <?php
+                            echo htmlspecialchars($initials);
+                            ?>
+
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <span class="profile-name">
+
+                                <?php
+                                echo htmlspecialchars($adminName);
+                                ?>
+
+                            </span>
+
+                            <span class="profile-role">
+                                System Owner
+                            </span>
+
+                        </div>
+
+
+                        <div class="profile-arrow">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M6 9l6 6 6-6"></path>
+
+                            </svg>
+
+                        </div>
+
+                    </button>
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
+
+                        <div class="dropdown-header">
+
+                            <strong>
+
+                                <?php
+                                echo htmlspecialchars($adminName);
+                                ?>
+
+                            </strong>
+
+                            <span>
+
+                                <?php
+                                echo htmlspecialchars($adminEmail);
+                                ?>
+
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="dropdown-item"
+                            onclick="openProfile()"
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4"
+                                ></circle>
+
+                                <path
+                                    d="M4 21c0-4.2 3.5-7 8-7s8 2.8 8 7"
+                                ></path>
+
+                            </svg>
+
+                            <span>
+                                My Profile
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="dropdown-item"
+                            onclick="openSettings()"
+                        >
+
+                            <span class="menu-icon">
+
+                                <img
+                                    src="accountsettings icon.png"
+                                    alt="Account Settings"
+                                    class="account-settings-dropdown-img"
+                                >
+
+                            </span>
+
+                            <span>
+                                Account Settings
+                            </span>
+
+                        </button>
+
+
+                        <a
+                            href="?logout=1"
+                            class="dropdown-item logout-item"
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M10 17l5-5-5-5"></path>
+
+                                <path d="M15 12H3"></path>
+
+                                <path d="M14 4h6v16h-6"></path>
+
+                            </svg>
+
+                            <span>
+                                Logout
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <section class="content">
+
+
+            <!-- =================================================
+                 STAT CARDS
+            ================================================== -->
+
+            <div class="overview-cards">
+
+
+                <!-- PENDING -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M4 5h16v14H4z"></path>
+
+                            <path d="M8 9h8"></path>
+
+                            <path d="M8 13h5"></path>
+
+                            <path d="M8 17h8"></path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="stat-number">
+
+                            <?php
+                            echo $pendingRegistrations;
+                            ?>
+
+                        </div>
+
+                        <div class="stat-label">
+                            Pending Registrations
+                        </div>
+
+                        <div class="stat-sub">
+                            Awaiting review
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- APPROVED -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path d="M5 4h14v17H5z"></path>
+
+                            <path d="M8 12l3 3 5-6"></path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="stat-number">
+
+                            <?php
+                            echo $approvedSchools;
+                            ?>
+
+                        </div>
+
+                        <div class="stat-label">
+                            Approved Schools
+                        </div>
+
+                        <div class="stat-sub">
+                            Verified schools
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADMINS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="4"
+                            ></circle>
+
+                            <path
+                                d="M4 21c0-4.2 3.5-7 8-7s8 2.8 8 7"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="stat-number">
+
+                            <?php
+                            echo $activeSchoolAdmins;
+                            ?>
+
+                        </div>
+
+                        <div class="stat-label">
+                            Active School Admins
+                        </div>
+
+                        <div class="stat-sub">
+                            Currently active
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STUDENTS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+
+                        <svg viewBox="0 0 24 24">
+
+                            <circle
+                                cx="9"
+                                cy="8"
+                                r="3"
+                            ></circle>
+
+                            <circle
+                                cx="17"
+                                cy="9"
+                                r="2.5"
+                            ></circle>
+
+                            <path
+                                d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"
+                            ></path>
+
+                            <path
+                                d="M15 14c3.2 0 6 2.2 6 5"
+                            ></path>
+
+                        </svg>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="stat-number">
+
+                            <?php
+                            echo $totalStudents;
+                            ?>
+
+                        </div>
+
+                        <div class="stat-label">
+                            Total Students
+                        </div>
+
+                        <div class="stat-sub">
+                            Registered students
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LOWER DASHBOARD
+            ================================================== -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- =================================================
+                     VERIFICATION TABLE
+                ================================================== -->
+
+                <div class="table-card">
+
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+                            School Verification Requests
+                        </div>
+
+
+                        <div class="card-header-actions">
+
+                            <div class="search-box">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <circle
+                                        cx="11"
+                                        cy="11"
+                                        r="7"
+                                    ></circle>
+
+                                    <path d="M16 16l5 5"></path>
+
+                                </svg>
+
+
+                                <input
+                                    type="text"
+                                    id="schoolSearch"
+                                    placeholder="Search schools"
+                                    onkeyup="searchSchools()"
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="filter-button"
+                                onclick="
+                                    showComingSoon(
+                                        'School Request Filters'
+                                    )
+                                "
+                            >
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path d="M4 6h16"></path>
+
+                                    <path d="M7 12h10"></path>
+
+                                    <path d="M10 18h4"></path>
+
+                                </svg>
+
+                                Filter
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <?php if (count($requests) > 0): ?>
+
+                            <table id="requestsTable">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th style="width:30%;">
+                                            SCHOOL
+                                        </th>
+
+                                        <th style="width:20%;">
+                                            SCHOOL CODE
+                                        </th>
+
+                                        <th style="width:15%;">
+                                            DATE SUBMITTED
+                                        </th>
+
+                                        <th style="width:15%;">
+                                            STATUS
+                                        </th>
+
+                                        <th style="width:20%;">
+                                            ACTION
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    <?php foreach ($requests as $request): ?>
+
+                                        <tr>
+
+                                            <td>
+
+                                                <span class="school-name">
+
+                                                    <?php
+                                                    echo htmlspecialchars(
+                                                        $request["school_name"]
+                                                    );
+                                                    ?>
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <span class="school-code">
+
+                                                    <?php
+                                                    echo htmlspecialchars(
+                                                        $request["school_code"]
+                                                    );
+                                                    ?>
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <?php
+
+                                                if (
+                                                    !empty(
+                                                        $request["requested_at"]
+                                                    )
+                                                ) {
+
+                                                    echo date(
+                                                        "M d, Y",
+                                                        strtotime(
+                                                            $request["requested_at"]
+                                                        )
+                                                    );
+
+                                                } else {
+
+                                                    echo "—";
+
+                                                }
+
+                                                ?>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <span
+                                                    class="
+                                                        status
+                                                        <?php
+                                                        echo statusClass(
+                                                            $request["status"]
+                                                        );
+                                                        ?>
+                                                    "
+                                                >
+
+                                                    <?php
+                                                    echo statusText(
+                                                        $request["status"]
+                                                    );
+                                                    ?>
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <button
+                                                    type="button"
+                                                    class="view-button"
+                                                    title="View Request"
+                                                    onclick='viewRequest(<?php echo json_encode($request); ?>)'
+                                                >
+
+                                                    <svg
+                                                        viewBox="0 0 24 24"
+                                                    >
+
+                                                        <path
+                                                            d="
+                                                                M2 12
+                                                                s3.5-6 10-6
+                                                                10 6 10 6
+                                                                -3.5 6-10 6
+                                                                S2 12 2 12z
+                                                            "
+                                                        ></path>
+
+                                                        <circle
+                                                            cx="12"
+                                                            cy="12"
+                                                            r="2.5"
+                                                        ></circle>
+
+                                                    </svg>
+
+                                                </button>
+
+                                            </td>
+
+                                        </tr>
+
+                                    <?php endforeach; ?>
+
+                                </tbody>
+
+                            </table>
+
+                        <?php else: ?>
+
+                            <div class="empty-state">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path d="M4 5h16v14H4z"></path>
+
+                                    <path d="M8 9h8"></path>
+
+                                    <path d="M8 13h5"></path>
+
+                                    <path d="M8 17h8"></path>
+
+                                </svg>
+
+                                <span>
+                                    No school verification requests yet.
+                                </span>
+
+                            </div>
+
+                        <?php endif; ?>
+
+                    </div>
+
+
+                    <div class="table-footer">
+
+                        <div class="showing-text">
+
+                            Showing
+                            <?php echo count($requests); ?>
+                            recent requests
+
+                        </div>
+
+
+                        <div class="pagination">
+
+                            <button class="page-number">
+                                ‹
+                            </button>
+
+                            <button class="page-number active">
+                                1
+                            </button>
+
+                            <button class="page-number">
+                                ›
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RIGHT COLUMN
+                ================================================== -->
+
+                <div class="right-column">
+
+
+                    <!-- SCHOOL STATUS -->
+
+                    <div class="side-card">
+
+                        <div class="side-card-title">
+                            School Status Overview
+                        </div>
+
+
+                        <!-- PENDING -->
+
+                        <div class="overview-row">
+
+                            <div class="overview-row-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                    ></circle>
+
+                                    <path d="M12 7v5"></path>
+
+                                    <path d="M12 16h.01"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div class="overview-row-content">
+
+                                <div class="overview-row-top">
+
+                                    <span class="overview-row-name">
+                                        Pending
+                                    </span>
+
+                                    <span class="overview-row-count">
+
+                                        <?php
+                                        echo $pendingRegistrations;
+                                        ?>
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="progress-bar">
+
+                                    <?php
+
+                                    $pendingPercent =
+                                        $totalSchools > 0
+                                        ?
+                                        (
+                                            $pendingRegistrations
+                                            /
+                                            $totalSchools
+                                        ) * 100
+                                        :
+                                        0;
+
+                                    ?>
+
+                                    <div
+                                        class="progress-fill"
+                                        style="
+                                            width:
+                                            <?php
+                                            echo min(
+                                                100,
+                                                $pendingPercent
+                                            );
+                                            ?>%;
+                                        "
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- APPROVED -->
+
+                        <div class="overview-row">
+
+                            <div class="overview-row-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path d="M5 4h14v17H5z"></path>
+
+                                    <path d="M8 12l3 3 5-6"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div class="overview-row-content">
+
+                                <div class="overview-row-top">
+
+                                    <span class="overview-row-name">
+                                        Approved
+                                    </span>
+
+                                    <span class="overview-row-count">
+
+                                        <?php
+                                        echo $approvedSchools;
+                                        ?>
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="progress-bar">
+
+                                    <?php
+
+                                    $approvedPercent =
+                                        $totalSchools > 0
+                                        ?
+                                        (
+                                            $approvedSchools
+                                            /
+                                            $totalSchools
+                                        ) * 100
+                                        :
+                                        0;
+
+                                    ?>
+
+                                    <div
+                                        class="progress-fill"
+                                        style="
+                                            width:
+                                            <?php
+                                            echo min(
+                                                100,
+                                                $approvedPercent
+                                            );
+                                            ?>%;
+                                        "
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REJECTED -->
+
+                        <div class="overview-row">
+
+                            <div class="overview-row-icon">
+
+                                <svg viewBox="0 0 24 24">
+
+                                    <path d="M6 3h12v18H6z"></path>
+
+                                    <path d="M9 7h6"></path>
+
+                                    <path d="M9 11h6"></path>
+
+                                    <path d="M9 15h4"></path>
+
+                                </svg>
+
+                            </div>
+
+
+                            <div class="overview-row-content">
+
+                                <div class="overview-row-top">
+
+                                    <span class="overview-row-name">
+                                        Rejected
+                                    </span>
+
+                                    <span class="overview-row-count">
+
+                                        <?php
+                                        echo $rejectedSchools;
+                                        ?>
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="progress-bar">
+
+                                    <?php
+
+                                    $rejectedPercent =
+                                        $totalSchools > 0
+                                        ?
+                                        (
+                                            $rejectedSchools
+                                            /
+                                            $totalSchools
+                                        ) * 100
+                                        :
+                                        0;
+
+                                    ?>
+
+                                    <div
+                                        class="progress-fill"
+                                        style="
+                                            width:
+                                            <?php
+                                            echo min(
+                                                100,
+                                                $rejectedPercent
+                                            );
+                                            ?>%;
+                                        "
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="side-card">
+
+                        <div class="side-card-title">
+                            Quick Actions
+                        </div>
+
+
+                        <button
+                            class="quick-action"
+                            type="button"
+                            onclick="window.location.href='School_Registrations.php'"
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M4 5h16v14H4z"></path>
+
+                                <path d="M8 9h8"></path>
+
+                                <path d="M8 13h5"></path>
+
+                                <path d="M8 17h8"></path>
+
+                            </svg>
+
+                            Review School Registrations
+
+                        </button>
+
+
+                        <button
+                            class="quick-action"
+                            type="button"
+                            onclick="
+                                showComingSoon(
+                                    'Approved Schools'
+                                )
+                            "
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M5 4h14v17H5z"></path>
+
+                                <path d="M8 12l3 3 5-6"></path>
+
+                            </svg>
+
+                            View Approved Schools
+
+                        </button>
+
+
+                        <button
+                            class="quick-action"
+                            type="button"
+                            onclick="
+                                showComingSoon(
+                                    'System Owners'
+                                )
+                            "
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="3"
+                                ></circle>
+
+                                <path
+                                    d="
+                                        M4 20
+                                        c0-3.5 3.5-6 8-6
+                                        s8 2.5 8 6
+                                    "
+                                ></path>
+
+                            </svg>
+
+                            Manage System Owners
+
+                        </button>
+
+
+                        <!-- UPDATED QUICK ACTION SETTINGS ICON -->
+
+                        <button
+                            class="quick-action"
+                            type="button"
+                            onclick="openSettings()"
+                        >
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path
+                                    d="
+                                        M12 8.5
+                                        a3.5 3.5 0 1 0 0 7
+                                        a3.5 3.5 0 0 0 0-7z
+                                    "
+                                ></path>
+
+                                <path
+                                    d="
+                                        M19.4 15
+                                        a1.7 1.7 0 0 0 .34 1.88
+                                        l.06.06-1.9 1.9
+                                        -.06-.06
+                                        a1.7 1.7 0 0 0-1.88-.34
+                                        1.7 1.7 0 0 0-1.03 1.56
+                                        V20h-2.7v-.09
+                                        a1.7 1.7 0 0 0-1.03-1.56
+                                        1.7 1.7 0 0 0-1.88.34
+                                        l-.06.06-1.9-1.9
+                                        .06-.06
+                                        A1.7 1.7 0 0 0 7.6 15
+                                        1.7 1.7 0 0 0 6.04 14
+                                        H6v-2.7h.04
+                                        A1.7 1.7 0 0 0 7.6 9.76
+                                        1.7 1.7 0 0 0 7.26 7.88
+                                        l-.06-.06 1.9-1.9
+                                        .06.06
+                                        a1.7 1.7 0 0 0 1.88.34
+                                        1.7 1.7 0 0 0 1.03-1.56
+                                        V4h2.7v.09
+                                        a1.7 1.7 0 0 0 1.03 1.56
+                                        1.7 1.7 0 0 0 1.88-.34
+                                        l.06-.06 1.9 1.9-.06.06
+                                        a1.7 1.7 0 0 0-.34 1.88
+                                        1.7 1.7 0 0 0 1.56 1.03
+                                        H20v2.7h-.09
+                                        A1.7 1.7 0 0 0 19.4 15z
+                                    "
+                                ></path>
+
+                            </svg>
+
+                            System Settings
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- RECENT ACTIVITY -->
+
+                    <div class="side-card">
+
+                        <div class="side-card-title">
+                            Recent Activity
+                        </div>
+
+
+                        <?php if (count($activities) > 0): ?>
+
+                            <?php foreach ($activities as $activity): ?>
+
+                                <div class="activity-item">
+
+                                    <div class="activity-icon">
+
+                                        <svg viewBox="0 0 24 24">
+
+                                            <path d="M4 5h16v14H4z"></path>
+
+                                            <path d="M8 9h8"></path>
+
+                                            <path d="M8 13h5"></path>
+
+                                        </svg>
+
+                                    </div>
+
+
+                                    <div class="activity-text">
+
+                                        <strong>
+
+                                            <?php
+                                            echo htmlspecialchars(
+                                                $activity["school_name"]
+                                            );
+                                            ?>
+
+                                        </strong>
+
+                                        <?php
+
+                                        if (
+                                            $activity["status"]
+                                            === "approved"
+                                        ) {
+
+                                            echo " was approved.";
+
+                                        } elseif (
+                                            $activity["status"]
+                                            === "rejected"
+                                        ) {
+
+                                            echo " was rejected.";
+
+                                        } else {
+
+                                            echo " submitted a verification request.";
+
+                                        }
+
+                                        ?>
+
+
+                                        <div class="activity-time">
+
+                                            <?php
+
+                                            $activityDate =
+                                                !empty(
+                                                    $activity["reviewed_at"]
+                                                )
+                                                ?
+                                                $activity["reviewed_at"]
+                                                :
+                                                $activity["requested_at"];
+
+                                            echo date(
+                                                "M d, Y • g:i A",
+                                                strtotime($activityDate)
+                                            );
+
+                                            ?>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <div class="activity-text">
+                                No recent activity yet.
+                            </div>
+
+                        <?php endif; ?>
+
+
+                        <a
+                            href="#"
+                            class="view-all"
+                            onclick="
+                                showComingSoon(
+                                    'Activity Logs'
+                                );
+                                return false;
+                            "
+                        >
+                            View all activity logs →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     PROFILE MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="profileModal"
+    onclick="
+        closeModalOutside(
+            event,
+            'profileModal'
+        )
+    "
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                My Profile
+            </h2>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="
+                    closeModal(
+                        'profileModal'
+                    )
+                "
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="profile-modal-top">
+
+                <div class="profile-modal-avatar">
+
+                    <?php
+                    echo htmlspecialchars($initials);
+                    ?>
+
+                </div>
+
+
+                <div>
+
+                    <div class="profile-modal-name">
+
+                        <?php
+                        echo htmlspecialchars($adminName);
+                        ?>
+
+                    </div>
+
+                    <div class="profile-modal-role">
+                        EduBridge System Owner
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-detail">
+
+                <div class="profile-detail-label">
+                    Full Name
+                </div>
+
+                <div class="profile-detail-value">
+
+                    <?php
+                    echo htmlspecialchars($adminName);
+                    ?>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-detail">
+
+                <div class="profile-detail-label">
+                    Email Address
+                </div>
+
+                <div class="profile-detail-value">
+
+                    <?php
+                    echo htmlspecialchars($adminEmail);
+                    ?>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-detail">
+
+                <div class="profile-detail-label">
+                    Account Type
+                </div>
+
+                <div class="profile-detail-value">
+                    System Owner / Super Admin
+                </div>
+
+            </div>
+
+
+            <div class="profile-detail">
+
+                <div class="profile-detail-label">
+                    Account Status
+                </div>
+
+                <div class="profile-detail-value">
+                    Active
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="modal-button primary"
+                onclick="
+                    closeModal(
+                        'profileModal'
+                    )
+                "
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     SETTINGS MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="settingsModal"
+    onclick="
+        closeModalOutside(
+            event,
+            'settingsModal'
+        )
+    "
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                Account Settings
+            </h2>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="
+                    closeModal(
+                        'settingsModal'
+                    )
+                "
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="settings-item">
+
+                <div class="settings-text">
+
+                    <strong>
+                        Email Notifications
+                    </strong>
+
+                    <span>
+                        Receive important system notifications.
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="toggle active"
+                    onclick="
+                        toggleSetting(this)
+                    "
+                ></button>
+
+            </div>
+
+
+            <div class="settings-item">
+
+                <div class="settings-text">
+
+                    <strong>
+                        School Verification Alerts
+                    </strong>
+
+                    <span>
+                        Get notified about new school registrations.
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="toggle active"
+                    onclick="
+                        toggleSetting(this)
+                    "
+                ></button>
+
+            </div>
+
+
+            <div class="settings-item">
+
+                <div class="settings-text">
+
+                    <strong>
+                        Activity Alerts
+                    </strong>
+
+                    <span>
+                        Show important system activity alerts.
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="toggle active"
+                    onclick="
+                        toggleSetting(this)
+                    "
+                ></button>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="modal-button"
+                onclick="
+                    closeModal(
+                        'settingsModal'
+                    )
+                "
+            >
+                Cancel
+            </button>
+
+
+            <button
+                type="button"
+                class="modal-button primary"
+                onclick="saveSettings()"
+            >
+                Save Settings
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     SCHOOL REQUEST DETAILS MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="requestModal"
+    onclick="
+        closeModalOutside(
+            event,
+            'requestModal'
+        )
+    "
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                School Verification Details
+            </h2>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="
+                    closeModal(
+                        'requestModal'
+                    )
+                "
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="detail-grid">
+
+
+                <div class="detail-box">
+
+                    <label>
+                        School Name
+                    </label>
+
+                    <strong id="detailSchoolName">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        School Code
+                    </label>
+
+                    <strong id="detailSchoolCode">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        School Email
+                    </label>
+
+                    <strong id="detailSchoolEmail">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Contact Number
+                    </label>
+
+                    <strong id="detailContact">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Request Date
+                    </label>
+
+                    <strong id="detailDate">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Current Status
+                    </label>
+
+                    <strong id="detailStatus">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box full">
+
+                    <label>
+                        School Address
+                    </label>
+
+                    <strong id="detailAddress">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-section-title">
+                    School Administrator
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Admin Name
+                    </label>
+
+                    <strong id="detailAdminName">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Admin Email
+                    </label>
+
+                    <strong id="detailAdminEmail">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Admin Account Status
+                    </label>
+
+                    <strong id="detailAdminStatus">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <label>
+                        Review Remarks
+                    </label>
+
+                    <strong id="detailRemarks">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box full">
+
+                    <label>
+                        Reviewed Date
+                    </label>
+
+                    <strong id="detailReviewedDate">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="modal-button primary"
+                onclick="
+                    closeModal(
+                        'requestModal'
+                    )
+                "
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     GENERAL MESSAGE MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="messageModal"
+    onclick="
+        closeModalOutside(
+            event,
+            'messageModal'
+        )
+    "
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                EduBridge
+            </h2>
+
+            <button
+                type="button"
+                class="modal-close"
+                onclick="
+                    closeModal(
+                        'messageModal'
+                    )
+                "
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <p
+                id="messageModalText"
+                style="
+                    font-size:11px;
+                    color:#666;
+                    line-height:1.6;
+                "
+            ></p>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="modal-button primary"
+                onclick="
+                    closeModal(
+                        'messageModal'
+                    )
+                "
+            >
+                OK
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+    /* =====================================================
+       PROFILE DROPDOWN
+    ====================================================== */
+
+    function toggleProfileDropdown() {
+
+        const dropdown =
+            document.getElementById(
+                "profileDropdown"
+            );
+
+        dropdown.classList.toggle("show");
+    }
+
+
+    /* =====================================================
+       CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+    ====================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profileWrapper =
+                document.querySelector(
+                    ".profile-wrapper"
+                );
+
+            const dropdown =
+                document.getElementById(
+                    "profileDropdown"
+                );
+
+            if (
+                profileWrapper &&
+                !profileWrapper.contains(
+                    event.target
+                )
+            ) {
+
+                dropdown.classList.remove("show");
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       MODAL
+    ====================================================== */
+
+    function openModal(id) {
+
+        document
+            .getElementById(id)
+            .classList.add("show");
+    }
+
+
+    function closeModal(id) {
+
+        document
+            .getElementById(id)
+            .classList.remove("show");
+    }
+
+
+    function closeModalOutside(
+        event,
+        id
+    ) {
+
+        if (event.target.id === id) {
+            closeModal(id);
+        }
+    }
+
+
+    /* =====================================================
+       PROFILE
+    ====================================================== */
+
+    function openProfile() {
+
+        document
+            .getElementById("profileDropdown")
+            .classList.remove("show");
+
+        openModal("profileModal");
+    }
+
+
+    /* =====================================================
+       SETTINGS
+    ====================================================== */
+
+    function openSettings() {
+
+        document
+            .getElementById("profileDropdown")
+            .classList.remove("show");
+
+        openModal("settingsModal");
+    }
+
+
+    function toggleSetting(button) {
+
+        button.classList.toggle("active");
+    }
+
+
+    function saveSettings() {
+
+        closeModal("settingsModal");
+
+        showComingSoon(
+            "Your account settings will be connected to the database next."
+        );
+    }
+
+
+    /* =====================================================
+       GENERAL MESSAGE
+    ====================================================== */
+
+    function showComingSoon(message) {
+
+        document.getElementById(
+            "messageModalText"
+        ).textContent = message;
+
+        openModal("messageModal");
+    }
+
+
+    /* =====================================================
+       SCHOOL REQUEST DETAILS
+    ====================================================== */
+
+    function viewRequest(request) {
+
+        document.getElementById(
+            "detailSchoolName"
+        ).textContent =
+            request.school_name || "—";
+
+
+        document.getElementById(
+            "detailSchoolCode"
+        ).textContent =
+            request.school_code || "—";
+
+
+        document.getElementById(
+            "detailSchoolEmail"
+        ).textContent =
+            request.school_email || "—";
+
+
+        document.getElementById(
+            "detailContact"
+        ).textContent =
+            request.contact_number || "—";
+
+
+        document.getElementById(
+            "detailAddress"
+        ).textContent =
+            request.address || "—";
+
+
+        document.getElementById(
+            "detailAdminName"
+        ).textContent =
+            request.admin_name || "—";
+
+
+        document.getElementById(
+            "detailAdminEmail"
+        ).textContent =
+            request.admin_email || "—";
+
+
+        document.getElementById(
+            "detailAdminStatus"
+        ).textContent =
+            request.admin_status
+                ?
+                request.admin_status.charAt(0).toUpperCase()
+                +
+                request.admin_status.slice(1)
+                :
+                "—";
+
+
+        document.getElementById(
+            "detailRemarks"
+        ).textContent =
+            request.remarks || "—";
+
+
+        document.getElementById(
+            "detailStatus"
+        ).textContent =
+            request.status
+                ?
+                request.status.charAt(0).toUpperCase()
+                +
+                request.status.slice(1)
+                :
+                "—";
+
+
+        if (request.requested_at) {
+
+            const date =
+                new Date(
+                    request.requested_at.replace(
+                        " ",
+                        "T"
+                    )
+                );
+
+
+            if (!isNaN(date.getTime())) {
+
+                document.getElementById(
+                    "detailDate"
+                ).textContent =
+                    date.toLocaleDateString(
+                        "en-US",
+                        {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric"
+                        }
+                    );
+
+            } else {
+
+                document.getElementById(
+                    "detailDate"
+                ).textContent =
+                    request.requested_at;
+            }
+
+        } else {
+
+            document.getElementById(
+                "detailDate"
+            ).textContent = "—";
+        }
+
+
+        if (request.reviewed_at) {
+
+            const reviewedDate =
+                new Date(
+                    request.reviewed_at.replace(
+                        " ",
+                        "T"
+                    )
+                );
+
+
+            if (!isNaN(reviewedDate.getTime())) {
+
+                document.getElementById(
+                    "detailReviewedDate"
+                ).textContent =
+                    reviewedDate.toLocaleDateString(
+                        "en-US",
+                        {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                            hour: "numeric",
+                            minute: "2-digit"
+                        }
+                    );
+
+            } else {
+
+                document.getElementById(
+                    "detailReviewedDate"
+                ).textContent =
+                    request.reviewed_at;
+            }
+
+        } else {
+
+            document.getElementById(
+                "detailReviewedDate"
+            ).textContent = "—";
+        }
+
+
+        openModal("requestModal");
+    }
+
+
+    /* =====================================================
+       SEARCH SCHOOLS
+    ====================================================== */
+
+    function searchSchools() {
+
+        const input =
+            document
+                .getElementById("schoolSearch")
+                .value
+                .toLowerCase();
+
+
+        const table =
+            document.getElementById(
+                "requestsTable"
+            );
+
+
+        if (!table) {
+            return;
+        }
+
+
+        const tbody =
+            table.getElementsByTagName(
+                "tbody"
+            )[0];
+
+
+        const rows =
+            tbody.getElementsByTagName(
+                "tr"
+            );
+
+
+        for (
+            let i = 0;
+            i < rows.length;
+            i++
+        ) {
+
+            const text =
+                rows[i]
+                    .textContent
+                    .toLowerCase();
+
+
+            rows[i].style.display =
+                text.includes(input)
+                    ?
+                    ""
+                    :
+                    "none";
+        }
+    }
+
+
+    /* =====================================================
+       ESC KEY
+    ====================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+
+                document
+                    .querySelectorAll(
+                        ".modal-overlay"
+                    )
+                    .forEach(
+                        function(modal) {
+
+                            modal.classList.remove(
+                                "show"
+                            );
+
+                        }
+                    );
+
+
+                document
+                    .getElementById(
+                        "profileDropdown"
+                    )
+                    .classList.remove(
+                        "show"
+                    );
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
