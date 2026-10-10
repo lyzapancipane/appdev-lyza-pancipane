@@ -1,0 +1,3403 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		Announcement Details | EduBridge
+	</title>
+	<style>
+		*
+		{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		:root
+		{
+			--background: #f3f3f3;
+			--surface: #ffffff;
+			--surface-soft: #faf9fc;
+			--text: #17152d;
+			--text-soft: #696774;
+			--text-muted: #77737e;
+			--border: #e1e1e1;
+			--purple: #7138c8;
+			--purple-light: #eee5ff;
+			--purple-soft: #eadcff;
+			--shadow: rgba(40, 24, 75, 0.08);
+			--mission-text: #eee8f6;
+		}
+
+		body.dark-mode
+		{
+			--background: #090817;
+			--surface: #131124;
+			--surface-soft: #18162b;
+			--text: #f7f3ff;
+			--text-soft: #c4bfd2;
+			--text-muted: #9e99ae;
+			--border: #2d2941;
+			--purple: #a970ff;
+			--purple-light: #251b3b;
+			--purple-soft: #241934;
+			--shadow: rgba(0, 0, 0, 0.35);
+		}
+
+		html
+		{
+			scroll-behavior: smooth;
+		}
+
+		body
+		{
+			font-family: Poppins, Arial, sans-serif;
+			color: var(--text);
+			background: var(--background);
+			overflow-x: hidden;
+			transition: background 0.45s ease, color 0.45s ease;
+		}
+
+		body.dark-mode
+		{
+			background:
+				radial-gradient(
+					circle at 12% 10%,
+					rgba(113, 56, 200, 0.12),
+					transparent 28%
+				),
+				radial-gradient(
+					circle at 88% 45%,
+					rgba(68, 72, 190, 0.08),
+					transparent 30%
+				),
+				#090817;
+		}
+
+		a
+		{
+			color: inherit;
+			text-decoration: none;
+		}
+
+		button,
+		input,
+		select
+		{
+			font: inherit;
+		}
+
+		button
+		{
+			font-family: inherit;
+			cursor: pointer;
+		}
+
+		button:focus-visible,
+		a:focus-visible,
+		input:focus-visible,
+		select:focus-visible
+		{
+			outline: 2px solid #a970ff;
+			outline-offset: 2px;
+		}
+
+		[hidden]
+		{
+			display: none !important;
+		}
+
+		body.theme-changing::before
+		{
+			content: "";
+			position: fixed;
+			width: 30px;
+			height: 30px;
+			left: var(--theme-x);
+			top: var(--theme-y);
+			transform: translate(-50%, -50%) scale(0);
+			border-radius: 50%;
+			background: var(--theme-circle);
+			z-index: 9999;
+			pointer-events: none;
+			animation: themeReveal 0.65s ease-out forwards;
+		}
+
+		@keyframes themeReveal
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) scale(0);
+				opacity: 0.35;
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) scale(100);
+				opacity: 0;
+			}
+		}
+
+		.cursor-gradient
+		{
+			position: fixed;
+			width: 500px;
+			height: 500px;
+			left: 0;
+			top: 0;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 9998;
+			opacity: 0;
+			background:
+				radial-gradient(
+					circle,
+					rgba(185, 120, 255, 0.16) 0%,
+					rgba(86, 105, 255, 0.10) 28%,
+					rgba(225, 80, 160, 0.06) 48%,
+					transparent 72%
+				);
+			filter: blur(32px);
+			transition: opacity 0.35s ease;
+		}
+
+		body.cursor-ready .cursor-gradient
+		{
+			opacity: 1;
+		}
+
+		body.dark-mode .cursor-gradient
+		{
+			background:
+				radial-gradient(
+					circle,
+					rgba(174, 112, 255, 0.23) 0%,
+					rgba(88, 103, 255, 0.14) 30%,
+					rgba(228, 78, 173, 0.08) 50%,
+					transparent 73%
+				);
+		}
+
+		.navbar
+		{
+			height: 88px;
+			padding: 0 36px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 20;
+			color: white;
+			transition:
+				height 0.3s ease,
+				background 0.3s ease,
+				box-shadow 0.3s ease,
+				backdrop-filter 0.3s ease;
+		}
+
+		.navbar.scrolled
+		{
+			height: 72px;
+			background: rgba(8, 5, 29, 0.82);
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+			backdrop-filter: blur(14px);
+		}
+
+		.logo
+		{
+			display: flex;
+			align-items: center;
+			gap: 2px;
+			font-size: 18px;
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		.logo img
+		{
+			width: 90px;
+			height: 90px;
+			object-fit: contain;
+			flex-shrink: 0;
+			transition: transform 0.3s ease;
+		}
+
+		.logo:hover img
+		{
+			transform: rotate(-4deg) scale(1.04);
+		}
+
+		.brand-name
+		{
+			display: flex;
+			align-items: center;
+			margin-left: -3px;
+			letter-spacing: -0.4px;
+		}
+
+		.brand-edu
+		{
+			color: white;
+		}
+
+		.brand-bridge
+		{
+			color: #7339c2;
+		}
+
+		.nav-links
+		{
+			display: flex;
+			align-items: center;
+			gap: 28px;
+			font-size: 13px;
+		}
+
+		.nav-links a
+		{
+			position: relative;
+			color: #ffffffdd;
+			transition: 0.2s;
+		}
+
+		.nav-links a::after
+		{
+			content: "";
+			position: absolute;
+			left: 50%;
+			bottom: -7px;
+			width: 0;
+			height: 2px;
+			border-radius: 10px;
+			background: #b77aff;
+			transform: translateX(-50%);
+			transition: width 0.25s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links .active
+		{
+			color: #c58cff;
+		}
+
+		.nav-links a:hover::after,
+		.nav-links .active::after
+		{
+			width: 100%;
+		}
+
+		.nav-buttons
+		{
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.theme-button,
+		.login-button
+		{
+			height: 34px;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			background: #ffffff12;
+			color: white;
+			transition: 0.25s ease;
+		}
+
+		.menu-button
+		{
+			display: none;
+			width: 34px;
+			height: 34px;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			background: #ffffff12;
+			color: white;
+			transition: 0.25s ease;
+		}
+
+		.theme-button
+		{
+			width: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.theme-button:hover,
+		.menu-button:hover
+		{
+			background: #ffffff20;
+			border-color: #ffffff88;
+			transform: translateY(-2px) rotate(8deg);
+		}
+
+		.theme-button:active
+		{
+			transform: scale(0.88);
+		}
+
+		.menu-button:active
+		{
+			transform: scale(0.88);
+		}
+
+		.theme-button svg,
+		.menu-button svg
+		{
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
+		}
+
+		.login-button
+		{
+			display: inline-flex;
+			padding: 0 15px;
+			align-items: center;
+			justify-content: center;
+			font-size: 12px;
+		}
+
+		.login-button:hover
+		{
+			background: #7138c8;
+			border-color: #a970ff;
+			transform: translateY(-2px);
+		}
+
+		.login-button:active
+		{
+			transform: scale(0.96);
+		}
+
+		.nav-profile
+		{
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: #ffffffdd;
+			font-size: 12px;
+			white-space: nowrap;
+		}
+
+		.nav-profile img
+		{
+			width: 34px;
+			height: 34px;
+			border: 1px solid #ffffff55;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		.hero
+		{
+			min-height: 470px;
+			padding: 130px 36px 70px;
+			display: flex;
+			align-items: center;
+			position: relative;
+			overflow: hidden;
+			isolation: isolate;
+			background: #08051d;
+		}
+
+		.hero-image
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -10;
+			background-image: url("Edubridge-Hero-About.png");
+			background-size: cover;
+			background-position: center;
+			opacity: 0.62;
+			transform: scale(1.04);
+			transition: transform 0.25s ease-out;
+		}
+
+		.hero-base
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -9;
+			background:
+				linear-gradient(
+					135deg,
+					rgba(5, 5, 35, 0.7),
+					rgba(14, 4, 40, 0.32),
+					rgba(5, 5, 30, 0.65)
+				);
+		}
+
+		.gradient-layer
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -8;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.gradient
+		{
+			position: absolute;
+			border-radius: 50%;
+			filter: blur(65px);
+			mix-blend-mode: screen;
+			opacity: 0.72;
+		}
+
+		.gradient-purple
+		{
+			width: 430px;
+			height: 430px;
+			background: #7138c8;
+			left: var(--purple-x, 4%);
+			top: var(--purple-y, 5%);
+			animation: purpleFloat 12s ease-in-out infinite alternate;
+		}
+
+		.gradient-blue
+		{
+			width: 390px;
+			height: 390px;
+			background: #315ee8;
+			left: var(--blue-x, 93%);
+			top: var(--blue-y, 8%);
+			animation: blueFloat 14s ease-in-out infinite alternate;
+		}
+
+		.gradient-pink
+		{
+			width: 360px;
+			height: 360px;
+			background: #d94f91;
+			left: var(--pink-x, 15%);
+			top: var(--pink-y, 57%);
+			animation: pinkFloat 13s ease-in-out infinite alternate;
+		}
+
+		.gradient-violet
+		{
+			width: 430px;
+			height: 430px;
+			background: #933cff;
+			left: var(--violet-x, 55%);
+			top: var(--violet-y, 38%);
+			animation: violetFloat 15s ease-in-out infinite alternate;
+		}
+
+		.gradient-orange
+		{
+			width: 400px;
+			height: 400px;
+			background: #e69a42;
+			left: var(--orange-x, 94%);
+			top: var(--orange-y, 88%);
+			animation: orangeFloat 11s ease-in-out infinite alternate;
+		}
+
+		.gradient-cyan
+		{
+			width: 340px;
+			height: 340px;
+			background: #387ee8;
+			left: var(--cyan-x, 5%);
+			top: var(--cyan-y, 93%);
+			animation: cyanFloat 16s ease-in-out infinite alternate;
+		}
+
+		.gradient-pink-small
+		{
+			width: 270px;
+			height: 270px;
+			background: #b73fbd;
+			left: var(--pink-small-x, 78%);
+			top: var(--pink-small-y, 67%);
+			animation: smallPinkFloat 12s ease-in-out infinite alternate;
+		}
+
+		.hero-overlay
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -6;
+			pointer-events: none;
+			background:
+				linear-gradient(
+					90deg,
+					rgba(5, 5, 35, 0.58),
+					rgba(10, 5, 35, 0.12),
+					rgba(5, 5, 35, 0.52)
+				);
+		}
+
+		.hero-content
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+			position: relative;
+			z-index: 5;
+		}
+
+		.hero-label
+		{
+			color: #c18cff;
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			margin-bottom: 12px;
+		}
+
+		.hero-title-row
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 16px;
+			margin-bottom: 18px;
+		}
+
+		.hero-title-row h1
+		{
+			margin-bottom: 0;
+		}
+
+		.hero h1
+		{
+			color: white;
+			font-size: 52px;
+			line-height: 1.1;
+			font-weight: 600;
+			margin-bottom: 18px;
+		}
+
+		.hero h1 span
+		{
+			color: #b77aff;
+		}
+
+		.hero p
+		{
+			max-width: 650px;
+			color: #d5d1df;
+			font-size: 15px;
+			line-height: 1.8;
+		}
+
+		.hero-back
+		{
+			display: inline-flex;
+			height: 34px;
+			align-items: center;
+			gap: 7px;
+			padding: 0 15px;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			background: #ffffff12;
+			color: white;
+			font-size: 12px;
+			white-space: nowrap;
+			transition: 0.25s ease;
+		}
+
+		.hero-back svg
+		{
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
+			transition: 0.25s ease;
+		}
+
+		.hero-back:hover
+		{
+			background: #7138c8;
+			border-color: #a970ff;
+			transform: translateY(-2px);
+		}
+
+		.hero-back:active
+		{
+			transform: scale(0.96);
+		}
+
+		.hero-back:hover svg
+		{
+			transform: translateX(-2px);
+		}
+
+		.content-section
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 45px 0;
+		}
+
+		.detail-section
+		{
+			padding-top: 35px;
+		}
+
+		.detail-card
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 17px;
+			max-width: 920px;
+			margin: 0 auto;
+			padding: 30px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 5px 20px var(--shadow);
+			transition: 0.3s ease;
+		}
+
+		.detail-heading
+		{
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			padding-bottom: 20px;
+			border-bottom: 1px solid var(--border);
+		}
+
+		.announcement-icon
+		{
+			display: flex;
+			width: 70px;
+			height: 70px;
+			min-width: 70px;
+			align-items: center;
+			justify-content: center;
+			border-radius: 5px;
+			background: var(--purple-light);
+			color: var(--purple);
+			transition: 0.3s ease;
+		}
+
+		.announcement-icon svg
+		{
+			width: 36px;
+			height: 36px;
+			fill: currentColor;
+		}
+
+		.detail-card:hover .announcement-icon
+		{
+			transform: rotate(-5deg) scale(1.05);
+		}
+
+		.announcement-icon[data-tone="purple"]
+		{
+			background: #6733b5;
+			color: #ffffff;
+		}
+
+		.announcement-icon[data-tone="blue"]
+		{
+			background: #d8ebff;
+			color: #1668c7;
+		}
+
+		.announcement-icon[data-tone="lavender"]
+		{
+			background: #eadcff;
+			color: #6632b0;
+		}
+
+		.announcement-icon[data-tone="sky"]
+		{
+			background: #e1ecff;
+			color: #1779e8;
+		}
+
+		.announcement-icon[data-tone="gray"]
+		{
+			background: #e9e7f2;
+			color: #505777;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="purple"]
+		{
+			background: #352250;
+			color: #d9c2ff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="blue"]
+		{
+			background: #1d2b42;
+			color: #8dbdff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="lavender"]
+		{
+			background: #30223f;
+			color: #d6b8ff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="sky"]
+		{
+			background: #1a2c45;
+			color: #8fc1ff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="gray"]
+		{
+			background: #29283c;
+			color: #c5c3df;
+		}
+
+		.detail-meta
+		{
+			display: flex;
+			align-items: center;
+			gap: 7px;
+			margin-bottom: 6px;
+			color: var(--purple);
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 0.6px;
+			text-transform: uppercase;
+		}
+
+		.category-dot
+		{
+			width: 7px;
+			height: 7px;
+			flex: 0 0 7px;
+			border-radius: 50%;
+			background: currentColor;
+		}
+
+		.detail-title
+		{
+			color: var(--text);
+			font-size: 22px;
+			font-weight: 600;
+			line-height: 1.4;
+		}
+
+		.detail-date-row
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 16px;
+			padding: 17px 0;
+			border-bottom: 1px solid var(--border);
+			color: var(--text-muted);
+			font-size: 12px;
+		}
+
+		.detail-date-row time
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.detail-date-row time svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+			color: var(--purple);
+		}
+
+		.detail-date-row span
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.detail-date-row span svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+			color: var(--purple);
+		}
+
+		.detail-body
+		{
+			color: var(--text-soft);
+			font-size: 13px;
+			line-height: 1.8;
+		}
+
+		.detail-body p + p
+		{
+			margin-top: 14px;
+		}
+
+		.empty-state
+		{
+			display: grid;
+			min-height: 190px;
+			place-content: center;
+			justify-items: center;
+			gap: 6px;
+			border: 1px dashed var(--border);
+			border-radius: 5px;
+			color: var(--text-muted);
+			text-align: center;
+		}
+
+		.empty-state strong
+		{
+			color: var(--text);
+			font-size: 15px;
+		}
+
+		.empty-state p
+		{
+			max-width: 320px;
+			font-size: 13px;
+			line-height: 1.6;
+		}
+
+		.section-heading
+		{
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.section-label
+		{
+			color: var(--purple);
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			margin-bottom: 6px;
+		}
+
+		.section-heading h2
+		{
+			font-size: 32px;
+			font-weight: 600;
+			color: var(--text);
+			margin-bottom: 10px;
+		}
+
+		.section-heading p
+		{
+			max-width: 650px;
+			margin: 0 auto;
+			color: var(--text-muted);
+			font-size: 13px;
+			line-height: 1.7;
+		}
+
+		.events-section
+		{
+			padding-top: 10px;
+			padding-bottom: 55px;
+		}
+
+		.events-grid
+		{
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 18px;
+		}
+
+		.event-card
+		{
+			display: flex;
+			align-items: center;
+			gap: 13px;
+			padding: 16px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 5px 20px var(--shadow);
+			transition: 0.3s ease;
+		}
+
+		.event-card:hover,
+		.event-card:focus-visible
+		{
+			transform: translateY(-5px);
+			border-color: #b77aff;
+			box-shadow:
+				0 15px 35px var(--shadow),
+				0 0 25px rgba(183, 122, 255, 0.1);
+		}
+
+		.event-date-badge
+		{
+			display: grid;
+			width: 45px;
+			height: 45px;
+			min-width: 45px;
+			align-content: center;
+			justify-items: center;
+			border-radius: 5px;
+			background: var(--purple-light);
+			color: var(--purple);
+		}
+
+		.event-date-badge strong
+		{
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 1;
+		}
+
+		.event-date-badge span
+		{
+			margin-top: 3px;
+			font-size: 8px;
+			font-weight: 600;
+			letter-spacing: 0.4px;
+			line-height: 1;
+		}
+
+		.event-copy
+		{
+			display: grid;
+			gap: 4px;
+			min-width: 0;
+		}
+
+		.event-copy strong
+		{
+			color: var(--text);
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 1.35;
+		}
+
+		.event-copy time
+		{
+			color: var(--text-muted);
+			font-size: 11px;
+			line-height: 1.4;
+		}
+
+		.event-time
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			color: var(--text-muted);
+			font-size: 10px;
+		}
+
+		.clock-icon
+		{
+			position: relative;
+			display: inline-block;
+			width: 9px;
+			height: 9px;
+			flex: 0 0 9px;
+			border: 1px solid currentColor;
+			border-radius: 50%;
+		}
+
+		.clock-icon::before,
+		.clock-icon::after
+		{
+			position: absolute;
+			content: "";
+			background: currentColor;
+		}
+
+		.clock-icon::before
+		{
+			top: 1px;
+			left: 3px;
+			width: 1px;
+			height: 3px;
+		}
+
+		.clock-icon::after
+		{
+			top: 4px;
+			left: 3px;
+			width: 3px;
+			height: 1px;
+		}
+
+		body.dark-mode .detail-card,
+		body.dark-mode .event-card
+		{
+			background:
+				linear-gradient(
+					145deg,
+					rgba(25, 20, 39, 0.98),
+					rgba(14, 12, 25, 0.98)
+				);
+			box-shadow:
+				0 15px 40px rgba(0, 0, 0, 0.25),
+				0 0 25px rgba(113, 56, 200, 0.05);
+		}
+
+		.inquiry-section
+		{
+			display: flex;
+			width: 100%;
+			max-width: 1180px;
+			align-items: center;
+			justify-content: space-between;
+			gap: 25px;
+			margin: 0 auto 55px;
+			padding: 35px 40px;
+			border-radius: 5px;
+			background:
+				radial-gradient(
+					circle at 15% 20%,
+					rgba(196, 126, 255, 0.25),
+					transparent 35%
+				),
+				linear-gradient(135deg, #7138c8, #54259c);
+			color: white;
+			box-shadow: 0 15px 35px rgba(80, 36, 145, 0.18);
+		}
+
+		.inquiry-item
+		{
+			display: flex;
+			align-items: center;
+			gap: 18px;
+		}
+
+		.mission-icon
+		{
+			width: 58px;
+			height: 58px;
+			min-width: 58px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff88;
+			border-radius: 8px;
+			background: #ffffff12;
+			color: white;
+			transition: 0.3s ease;
+		}
+
+		.inquiry-section:hover .mission-icon
+		{
+			transform: rotate(-5deg) scale(1.05);
+			background: #ffffff20;
+		}
+
+		.mission-icon svg
+		{
+			width: 25px;
+			height: 25px;
+			fill: currentColor;
+		}
+
+		.inquiry-item h3
+		{
+			font-size: 17px;
+			font-weight: 600;
+			margin-bottom: 6px;
+		}
+
+		.inquiry-item p
+		{
+			color: var(--mission-text);
+			font-size: 12px;
+			line-height: 1.7;
+		}
+
+		.inquiry-button
+		{
+			display: inline-flex;
+			height: 34px;
+			align-items: center;
+			justify-content: center;
+			padding: 0 15px;
+			border: 1px solid #ffffff88;
+			border-radius: 5px;
+			background: #ffffff;
+			color: #54259c;
+			font-size: 12px;
+			font-weight: 600;
+			white-space: nowrap;
+			transition: 0.25s ease;
+		}
+
+		.inquiry-button:hover
+		{
+			transform: translateY(-2px);
+			background: #f4ecff;
+			border-color: #ffffff;
+		}
+
+		.inquiry-button:active
+		{
+			transform: scale(0.96);
+		}
+
+		footer
+		{
+			position: relative;
+			overflow: hidden;
+			padding: 42px 36px 16px;
+			background:
+				radial-gradient(
+					circle at 12% 20%,
+					rgba(125, 65, 210, 0.8),
+					transparent 30%
+				),
+				radial-gradient(
+					circle at 82% 18%,
+					rgba(45, 95, 210, 0.7),
+					transparent 32%
+				),
+				radial-gradient(
+					circle at 50% 85%,
+					rgba(255, 255, 255, 0.16),
+					transparent 28%
+				),
+				linear-gradient(
+					135deg,
+					#5b279e 0%,
+					#252a82 38%,
+					#080817 72%,
+					#000000 100%
+				);
+			color: white;
+		}
+
+		body.dark-mode footer
+		{
+			background:
+				radial-gradient(
+					circle at 12% 20%,
+					rgba(135, 67, 230, 0.48),
+					transparent 30%
+				),
+				radial-gradient(
+					circle at 82% 18%,
+					rgba(48, 80, 210, 0.4),
+					transparent 32%
+				),
+				radial-gradient(
+					circle at 50% 85%,
+					rgba(165, 95, 255, 0.12),
+					transparent 28%
+				),
+				linear-gradient(
+					135deg,
+					#251047 0%,
+					#121442 38%,
+					#070711 72%,
+					#020207 100%
+				);
+		}
+
+		footer::before,
+		footer::after
+		{
+			content: "";
+			position: absolute;
+			border-radius: 50%;
+			pointer-events: none;
+			filter: blur(90px);
+		}
+
+		footer::before
+		{
+			width: 500px;
+			height: 500px;
+			top: -280px;
+			right: -120px;
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		footer::after
+		{
+			width: 450px;
+			height: 450px;
+			bottom: -300px;
+			left: 15%;
+			background: rgba(76, 86, 220, 0.3);
+		}
+
+		.footer-content,
+		.footer-bottom
+		{
+			position: relative;
+			z-index: 2;
+		}
+
+		.footer-content
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: 1.45fr 0.8fr 1fr 1.05fr;
+			gap: 55px;
+			padding-bottom: 30px;
+			border-bottom: 1px solid #ffffff25;
+		}
+
+		.footer-logo
+		{
+			margin-bottom: 7px;
+		}
+
+		.footer-logo img
+		{
+			width: 78px;
+			height: 78px;
+			object-fit: contain;
+		}
+
+		.footer-description
+		{
+			max-width: 270px;
+			color: #d3d0df;
+			font-size: 11px;
+			line-height: 1.7;
+			margin-bottom: 14px;
+		}
+
+		footer h4
+		{
+			font-size: 13px;
+			font-weight: 600;
+			margin-bottom: 9px;
+		}
+
+		.social-icons
+		{
+			display: flex;
+			align-items: center;
+			gap: 9px;
+		}
+
+		.social-icon
+		{
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff30;
+			border-radius: 5px;
+			background: #ffffff10;
+			color: #d0ccdc;
+			transition: 0.2s ease;
+		}
+
+		.social-icon:hover
+		{
+			color: white;
+			background: #7138c8;
+			border-color: #a86be8;
+			transform: translateY(-2px);
+		}
+
+		.social-icon:active
+		{
+			transform: scale(0.9);
+		}
+
+		.social-icon svg
+		{
+			width: 16px;
+			height: 16px;
+			fill: currentColor;
+		}
+
+		.footer-links
+		{
+			list-style: none;
+		}
+
+		.footer-links li
+		{
+			margin-bottom: 8px;
+		}
+
+		.footer-links a
+		{
+			display: flex;
+			align-items: center;
+			gap: 9px;
+			color: #d0ccdc;
+			font-size: 11px;
+			transition: 0.2s;
+		}
+
+		.footer-links a:hover
+		{
+			color: white;
+			transform: translateX(2px);
+		}
+
+		.footer-links svg
+		{
+			width: 13px;
+			height: 13px;
+			fill: currentColor;
+			flex-shrink: 0;
+		}
+
+		.contact
+		{
+			display: flex;
+			align-items: flex-start;
+			gap: 9px;
+			margin-bottom: 12px;
+			color: #d0ccdc;
+			font-size: 11px;
+		}
+
+		.contact-icon
+		{
+			width: 14px;
+			height: 14px;
+			min-width: 14px;
+			margin-top: 1px;
+			color: #c58cff;
+		}
+
+		.contact-icon svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.contact a
+		{
+			transition: 0.2s;
+		}
+
+		.contact a:hover
+		{
+			color: white;
+		}
+
+		.question-box
+		{
+			padding: 18px;
+			border: 1px solid #ffffff25;
+			border-radius: 5px;
+			background: rgba(255, 255, 255, 0.08);
+			backdrop-filter: blur(8px);
+			transition: 0.3s ease;
+		}
+
+		.question-box:hover
+		{
+			transform: translateY(-4px);
+			background: rgba(255, 255, 255, 0.11);
+		}
+
+		.question-icon
+		{
+			width: 38px;
+			height: 38px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 11px;
+			border-radius: 5px;
+			background: #7138c866;
+			color: white;
+		}
+
+		.question-icon svg
+		{
+			width: 18px;
+			height: 18px;
+			fill: currentColor;
+		}
+
+		.question-box h4
+		{
+			font-size: 14px;
+			margin-bottom: 7px;
+		}
+
+		.question-box p
+		{
+			color: #d0ccdc;
+			font-size: 10px;
+			line-height: 1.7;
+			margin-bottom: 13px;
+		}
+
+		.question-button
+		{
+			display: inline-flex;
+			height: 32px;
+			align-items: center;
+			justify-content: center;
+			padding: 0 14px;
+			border: none;
+			border-radius: 5px;
+			background: #7138c8;
+			color: white;
+			font-size: 10px;
+			transition: 0.2s ease;
+		}
+
+		.question-button:hover
+		{
+			background: #8c50df;
+			transform: translateY(-1px);
+		}
+
+		.question-button:active
+		{
+			transform: scale(0.95);
+		}
+
+		.footer-bottom
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+		}
+
+		.developer
+		{
+			min-height: 70px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 17px 0;
+			border-bottom: 1px solid #ffffff25;
+		}
+
+		.developer-icon
+		{
+			width: 45px;
+			height: 45px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			color: #d0ccdc;
+		}
+
+		.developer-icon svg
+		{
+			width: 19px;
+			height: 19px;
+			fill: currentColor;
+		}
+
+		.developer p
+		{
+			color: #aaa7b8;
+			font-size: 10px;
+			line-height: 1.6;
+		}
+
+		.developer strong
+		{
+			color: white;
+			font-size: 11px;
+		}
+
+		.quote
+		{
+			margin-left: auto;
+			color: #d0ccd8;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 1.5;
+			text-align: right;
+		}
+
+		.copyright
+		{
+			padding-top: 14px;
+			text-align: center;
+			color: #aaa7b8;
+			font-size: 9px;
+		}
+
+		.back-to-top
+		{
+			position: fixed;
+			right: 28px;
+			bottom: 28px;
+			width: 42px;
+			height: 42px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff30;
+			border-radius: 6px;
+			background: #7138c8;
+			color: white;
+			z-index: 100;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(15px);
+			transition: 0.3s ease;
+			box-shadow: 0 8px 25px rgba(55, 25, 100, 0.3);
+		}
+
+		.back-to-top.show
+		{
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.back-to-top:hover
+		{
+			background: #8c50df;
+			transform: translateY(-3px);
+		}
+
+		.back-to-top:active
+		{
+			transform: scale(0.9);
+		}
+
+		.back-to-top svg
+		{
+			width: 17px;
+			height: 17px;
+			fill: currentColor;
+		}
+
+		.reveal
+		{
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		body.js .reveal
+		{
+			opacity: 0;
+			transform: translateY(28px);
+			transition:
+				opacity 0.7s ease,
+				transform 0.7s ease;
+		}
+
+		body.js .reveal.visible
+		{
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		@keyframes purpleFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-20px, -15px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(45px, 35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(10px, 70px);
+			}
+		}
+
+		@keyframes blueFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(20px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(-55px, 35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-15px, -30px);
+			}
+		}
+
+		@keyframes pinkFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(15px, -20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(-40px, 35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(35px, 55px);
+			}
+		}
+
+		@keyframes violetFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-25px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(55px, -35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-40px, 45px);
+			}
+		}
+
+		@keyframes orangeFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-20px, -25px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(45px, -55px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-35px, 35px);
+			}
+		}
+
+		@keyframes cyanFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(25px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(-45px, -30px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(35px, -55px);
+			}
+		}
+
+		@keyframes smallPinkFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-15px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(35px, -35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-30px, 45px);
+			}
+		}
+
+		@media (max-width: 900px)
+		{
+			.navbar
+			{
+				padding: 0 25px;
+			}
+
+			.nav-links
+			{
+				gap: 14px;
+				font-size: 11px;
+			}
+
+			.content-section
+			{
+				width: calc(100% - 40px);
+			}
+
+			.inquiry-section
+			{
+				width: calc(100% - 40px);
+			}
+
+			.events-grid
+			{
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			.footer-content
+			{
+				grid-template-columns: 1fr 1fr;
+				gap: 30px;
+			}
+
+			.logo img
+			{
+				width: 70px;
+				height: 70px;
+			}
+
+			.footer-logo img
+			{
+				width: 70px;
+				height: 70px;
+			}
+		}
+
+		@media (max-width: 760px)
+		{
+			.nav-links
+			{
+				position: absolute;
+				top: calc(100% - 1px);
+				right: 20px;
+				left: 20px;
+				display: none;
+				align-items: stretch;
+				gap: 0;
+				padding: 7px;
+				border: 1px solid #ffffff25;
+				border-radius: 5px;
+				background: rgba(8, 5, 29, 0.97);
+				box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+				font-size: 12px;
+			}
+
+			.navbar.menu-open .nav-links
+			{
+				display: grid;
+			}
+
+			.nav-links a
+			{
+				padding: 11px 10px;
+				border-radius: 4px;
+			}
+
+			.nav-links a:hover
+			{
+				background: #ffffff10;
+			}
+
+			.nav-links a::after
+			{
+				display: none;
+			}
+
+			.menu-button
+			{
+				display: flex;
+			}
+		}
+
+		@media (max-width: 600px)
+		{
+			.navbar
+			{
+				padding: 0 20px;
+			}
+
+			.nav-links
+			{
+				right: 12px;
+				left: 12px;
+			}
+
+			.nav-buttons
+			{
+				display: flex;
+			}
+
+			.nav-profile span
+			{
+				display: none;
+			}
+
+			.logo img
+			{
+				width: 72px;
+				height: 72px;
+			}
+
+			.hero
+			{
+				padding: 110px 25px 55px;
+			}
+
+			.hero h1
+			{
+				font-size: 38px;
+			}
+
+			.hero p
+			{
+				font-size: 13px;
+			}
+
+			.gradient
+			{
+				filter: blur(50px);
+			}
+
+			.gradient-purple
+			{
+				width: 330px;
+				height: 330px;
+			}
+
+			.gradient-blue
+			{
+				width: 300px;
+				height: 300px;
+			}
+
+			.gradient-pink
+			{
+				width: 280px;
+				height: 280px;
+			}
+
+			.gradient-violet
+			{
+				width: 330px;
+				height: 330px;
+			}
+
+			.gradient-orange
+			{
+				width: 300px;
+				height: 300px;
+			}
+
+			.gradient-cyan
+			{
+				width: 260px;
+				height: 260px;
+			}
+
+			.gradient-pink-small
+			{
+				width: 220px;
+				height: 220px;
+			}
+
+			.content-section
+			{
+				width: calc(100% - 30px);
+			}
+
+			.inquiry-section
+			{
+				width: calc(100% - 30px);
+				flex-direction: column;
+				align-items: flex-start;
+				padding: 25px;
+			}
+
+			.section-heading h2
+			{
+				font-size: 26px;
+			}
+
+			.detail-card
+			{
+				padding: 16px;
+			}
+
+			.detail-heading
+			{
+				align-items: flex-start;
+			}
+
+			.detail-title
+			{
+				font-size: 18px;
+			}
+
+			.events-grid
+			{
+				grid-template-columns: minmax(0, 1fr);
+			}
+
+			.footer-content
+			{
+				grid-template-columns: 1fr;
+				gap: 28px;
+			}
+
+			.footer-logo img
+			{
+				width: 65px;
+				height: 65px;
+			}
+
+			.developer
+			{
+				align-items: flex-start;
+				flex-wrap: wrap;
+			}
+
+			.quote
+			{
+				width: 100%;
+				margin-left: 57px;
+				text-align: left;
+			}
+
+			.back-to-top
+			{
+				right: 18px;
+				bottom: 18px;
+			}
+
+			.cursor-gradient
+			{
+				width: 300px;
+				height: 300px;
+				filter: blur(24px);
+			}
+
+			.navbar.scrolled
+			{
+				height: 64px;
+			}
+		}
+
+		@media (max-width: 380px)
+		{
+			.login-button
+			{
+				display: none;
+			}
+
+			.hero-title-row
+			{
+				gap: 10px;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce)
+		{
+			html
+			{
+				scroll-behavior: auto;
+			}
+
+			.gradient
+			{
+				animation: none;
+			}
+
+			.detail-card,
+			.event-card,
+			.inquiry-section,
+			.inquiry-section .mission-icon,
+			.hero-image,
+			.reveal
+			{
+				transition: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="cursor-gradient">
+	</div>
+
+	<nav class="navbar">
+
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
+
+			<span class="brand-name">
+				<span class="brand-edu">
+					Edu
+				</span>
+				<span class="brand-bridge">
+					Bridge
+				</span>
+			</span>
+		</a>
+
+		<div class="nav-links" id="navLinks">
+
+			<a href="landingpage.html">
+				Home
+			</a>
+
+			<a href="about.html">
+				About EduBridge
+			</a>
+
+			<a href="announcements.html" class="active" aria-current="page">
+				Announcements
+			</a>
+
+			<a href="faq.html">
+				FAQs
+			</a>
+
+			<a href="contact.html">
+				Contact
+			</a>
+
+		</div>
+
+		<div class="nav-buttons">
+
+			<button class="theme-button" id="themeButton" type="button" aria-label="Toggle theme">
+				<svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z">
+					</path>
+				</svg>
+			</button>
+
+			<a class="login-button" href="contact.html#contactForm">
+				Login
+			</a>
+
+			<div class="nav-profile">
+				<img src="resume.jpg" alt="Administrator">
+
+				<span>
+					Administrator
+				</span>
+			</div>
+
+			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
+					</path>
+				</svg>
+			</button>
+
+		</div>
+
+	</nav>
+
+
+	<section class="hero">
+
+		<div class="hero-image">
+		</div>
+
+		<div class="hero-base">
+		</div>
+
+		<div class="gradient-layer">
+			<div class="gradient gradient-purple">
+			</div>
+			<div class="gradient gradient-blue">
+			</div>
+			<div class="gradient gradient-pink">
+			</div>
+			<div class="gradient gradient-violet">
+			</div>
+			<div class="gradient gradient-orange">
+			</div>
+			<div class="gradient gradient-cyan">
+			</div>
+			<div class="gradient gradient-pink-small">
+			</div>
+		</div>
+
+		<div class="hero-overlay">
+		</div>
+
+		<div class="hero-content">
+
+			<div class="hero-label">
+				ANNOUNCEMENT DETAILS
+			</div>
+
+			<div class="hero-title-row">
+
+				<a class="hero-back" id="backButton" href="announcements.html" title="Back to Announcements">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M15 18.6 8.4 12 15 5.4 16.4 6.8 11.2 12l5.2 5.2L15 18.6z">
+						</path>
+					</svg>
+
+					<span>
+						Back to Announcements
+					</span>
+				</a>
+
+				<h1>
+					Announcement
+					<span>
+						Details
+					</span>
+				</h1>
+
+			</div>
+
+			<p>
+				Read the full announcement, dates, and information
+				from the EduBridge school community.
+			</p>
+
+		</div>
+
+	</section>
+
+
+	<main>
+
+		<section class="content-section detail-section reveal" aria-label="Announcement details">
+
+			<article class="detail-card" id="announcementDetails" aria-live="polite">
+
+				<div class="empty-state">
+
+					<strong>
+						Loading announcement
+					</strong>
+
+				</div>
+
+			</article>
+
+		</section>
+
+
+		<section class="content-section events-section reveal" id="upcomingEvents" aria-labelledby="eventsHeading">
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					MARK YOUR CALENDAR
+				</div>
+
+				<h2 id="eventsHeading">
+					Upcoming Events
+				</h2>
+
+				<p>
+					Don't miss these important dates and school activities.
+				</p>
+
+			</div>
+
+			<div class="events-grid" id="eventsList">
+			</div>
+
+		</section>
+
+
+		<section class="inquiry-section reveal" aria-labelledby="inquiryHeading">
+
+			<div class="inquiry-item">
+
+				<div class="mission-icon">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2v2zm2.1-7.3c-.7.7-1.4 1.1-1.8 1.6-.2.3-.3.6-.3 1.2h-2c0-1.1.2-1.7.7-2.3.4-.5 1-.9 1.6-1.5.5-.5.8-.9.8-1.5 0-.9-.7-1.5-1.7-1.5S10.5 8.5 10.5 9.5h-2c0-2.1 1.6-3.6 3.9-3.6 2.4 0 4 1.5 4 3.6 0 1.1-.4 1.8-1.3 2.7z">
+						</path>
+					</svg>
+				</div>
+
+				<div>
+
+					<h3 id="inquiryHeading">
+						Have a question?
+					</h3>
+
+					<p>
+						Submit an inquiry and we'll get back to you.
+					</p>
+
+				</div>
+
+			</div>
+
+			<a class="inquiry-button" href="contact.html#contactForm">
+				Go to My Inquiries
+			</a>
+
+		</section>
+
+	</main>
+
+
+	<footer>
+
+		<div class="footer-content">
+
+			<div>
+
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
+
+					<span class="brand-name">
+						<span class="brand-edu">
+							Edu
+						</span>
+						<span class="brand-bridge">
+							Bridge
+						</span>
+					</span>
+				</a>
+
+				<p class="footer-description">
+					A smart inquiry and FAQ system for school announcements
+					and information.
+				</p>
+
+				<h4>
+					Follow Us
+				</h4>
+
+				<div class="social-icons">
+
+					<a href="https://www.facebook.com/" target="_blank" class="social-icon" aria-label="EduBridge on Facebook">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M14 8h3V4h-3c-3.3 0-5 1.7-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="https://www.instagram.com/" target="_blank" class="social-icon" aria-label="EduBridge on Instagram">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M7 2h10c2.8 0 5 2.2 5 5v10c0 2.8-2.2 5-5 5H7c-2.8 0-5-2.2-5-5V7c0-2.8 2.2-5 5-5zm0 2C5.3 4 4 5.3 4 7v10c0 1.7 1.3 3 3 3h10c1.7 0 3-1.3 3-3V7c0-1.7-1.3-3-3-3H7zm5 3.5A4.5 4.5 0 1 1 12 16a4.5 4.5 0 0 1 0-9zm0 2A2.5 2.5 0 1 0 12 14a2.5 2.5 0 0 0 0-4.5zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="https://x.com/" target="_blank" class="social-icon" aria-label="EduBridge on X">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.2 2H21l-6.1 7 7.2 13H16.5l-4.3-7.7L5.5 22H2.7l6.5-7.5L2.3 2h5.7l3.9 7L18.2 2zm-1 17.7h1.6L7 4.2H5.3l11.9 15.5z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="mailto:edubridge@gmail.com" class="social-icon" aria-label="Email EduBridge">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z">
+							</path>
+						</svg>
+					</a>
+
+				</div>
+
+			</div>
+
+
+			<div>
+
+				<h4>
+					Quick Links
+				</h4>
+
+				<ul class="footer-links">
+
+					<li>
+						<a href="landingpage.html">
+							Home
+						</a>
+					</li>
+
+					<li>
+						<a href="about.html">
+							About EduBridge
+						</a>
+					</li>
+
+					<li>
+						<a href="announcements.html">
+							Announcements
+						</a>
+					</li>
+
+					<li>
+						<a href="faq.html">
+							FAQs
+						</a>
+					</li>
+
+					<li>
+						<a href="contact.html">
+							Contact
+						</a>
+					</li>
+
+					<li>
+						<a href="contact.html#contactForm">
+							Login
+						</a>
+					</li>
+
+				</ul>
+
+			</div>
+
+
+			<div>
+
+				<h4>
+					Contacts
+				</h4>
+
+				<div class="contact">
+					<span class="contact-icon">
+						✉
+					</span>
+
+					<a href="mailto:edubridge@gmail.com">
+						edubridge@gmail.com
+					</a>
+				</div>
+
+				<div class="contact">
+					<span class="contact-icon">
+						✉
+					</span>
+
+					<a href="mailto:edubridge@escr.edu.ph">
+						edubridge@escr.edu.ph
+					</a>
+				</div>
+
+				<div class="contact">
+					<span class="contact-icon">
+						☎
+					</span>
+
+					<a href="tel:+639123456789">
+						(+63) 912 345 6789
+					</a>
+				</div>
+
+			</div>
+
+
+			<div>
+
+				<div class="question-box">
+
+					<div class="question-icon">
+						?
+					</div>
+
+					<h4>
+						Have a question?
+					</h4>
+
+					<p>
+						Find the information you need and stay connected
+						with your school community.
+					</p>
+
+					<a class="question-button" href="contact.html#contactForm">
+						Get Started →
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class="footer-bottom">
+
+			<div class="developer">
+
+				<div class="developer-icon">
+					✦
+				</div>
+
+				<p>
+					Developed with passion by
+					<br>
+					<strong>
+						Lyza, Kaye, Briana &amp; Rhealyn
+					</strong>
+					<br>
+					BSIT 3rd Year Students
+				</p>
+
+				<div class="quote">
+					"Your bridge to school information"
+				</div>
+
+			</div>
+
+			<div class="copyright">
+				© 2026 EduBridge. All Rights Reserved.
+			</div>
+
+		</div>
+
+	</footer>
+
+
+	<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">
+
+		<svg viewBox="0 0 24 24" aria-hidden="true">
+			<path d="M12 5l-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z">
+			</path>
+		</svg>
+
+	</button>
+
+
+	<script>
+		try
+		{
+			document.body.classList.add("js");
+
+			const themeButton = document.getElementById("themeButton");
+			const themeIcon = document.getElementById("themeIcon");
+			const hero = document.querySelector(".hero");
+			const heroImage = document.querySelector(".hero-image");
+			const navbar = document.querySelector(".navbar");
+			const menuButton = document.getElementById("menuButton");
+			const backToTop = document.getElementById("backToTop");
+
+			function updateThemeIcon()
+			{
+				if (document.body.classList.contains("dark-mode"))
+				{
+					themeIcon.innerHTML = `
+						<path d="M21 12.8A9 9 0 0 1 11.2 3 7 7 0 1 0 21 12.8z">
+						</path>
+					`;
+				}
+				else
+				{
+					themeIcon.innerHTML = `
+						<path d="M12 3V1m0 22v-2M4.22 4.22 2.81 2.81m18.38 18.38-1.41-1.41M3 12H1m22 0h-2M4.22 19.78l-1.41 1.41M21.19 2.81l-1.41 1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z">
+						</path>
+					`;
+				}
+			}
+
+			const savedTheme = localStorage.getItem("edubridge-theme");
+
+			if (savedTheme === "dark")
+			{
+				document.body.classList.add("dark-mode");
+			}
+
+			updateThemeIcon();
+
+
+			themeButton.addEventListener("click", function()
+			{
+
+				const rect = themeButton.getBoundingClientRect();
+
+				document.body.style.setProperty(
+					"--theme-x",
+					rect.left + rect.width / 2 + "px"
+				);
+
+				document.body.style.setProperty(
+					"--theme-y",
+					rect.top + rect.height / 2 + "px"
+				);
+
+				const isCurrentlyDark =
+					document.body.classList.contains("dark-mode");
+
+				document.body.style.setProperty(
+					"--theme-circle",
+					isCurrentlyDark ? "#f3f3f3" : "#090817"
+				);
+
+				document.body.classList.add("theme-changing");
+
+				setTimeout(function()
+				{
+
+					document.body.classList.toggle("dark-mode");
+
+					const isDark =
+						document.body.classList.contains("dark-mode");
+
+					localStorage.setItem(
+						"edubridge-theme",
+						isDark ? "dark" : "light"
+					);
+
+					updateThemeIcon();
+
+				}, 100);
+
+				setTimeout(function()
+				{
+					document.body.classList.remove("theme-changing");
+				}, 750);
+
+			});
+
+
+			menuButton.addEventListener("click", function()
+			{
+				const isOpen = navbar.classList.toggle("menu-open");
+
+				menuButton.setAttribute("aria-expanded", String(isOpen));
+				menuButton.setAttribute(
+					"aria-label",
+					isOpen ? "Close navigation menu" : "Open navigation menu"
+				);
+			});
+
+			document.querySelectorAll(".nav-links a").forEach(function(link)
+			{
+				link.addEventListener("click", function()
+				{
+					navbar.classList.remove("menu-open");
+					menuButton.setAttribute("aria-expanded", "false");
+					menuButton.setAttribute("aria-label", "Open navigation menu");
+				});
+			});
+
+			function updateNavbar()
+			{
+
+				if (window.scrollY > 40)
+				{
+					navbar.classList.add("scrolled");
+				}
+				else
+				{
+					navbar.classList.remove("scrolled");
+				}
+
+			}
+
+			updateNavbar();
+
+			window.addEventListener("scroll", updateNavbar);
+
+
+			let targetX = 50;
+			let targetY = 50;
+
+			let cursorX = 50;
+			let cursorY = 50;
+
+			let purpleX = 4;
+			let purpleY = 5;
+
+			let blueX = 93;
+			let blueY = 8;
+
+			let pinkX = 15;
+			let pinkY = 57;
+
+			let violetX = 55;
+			let violetY = 38;
+
+			let orangeX = 94;
+			let orangeY = 88;
+
+			let cyanX = 5;
+			let cyanY = 93;
+
+			let pinkSmallX = 78;
+			let pinkSmallY = 67;
+
+
+			hero.addEventListener("mousemove", function(event)
+			{
+
+				const rect = hero.getBoundingClientRect();
+
+				targetX =
+					((event.clientX - rect.left) / rect.width) * 100;
+
+				targetY =
+					((event.clientY - rect.top) / rect.height) * 100;
+
+				const moveX =
+					(event.clientX - rect.left) / rect.width - 0.5;
+
+				const moveY =
+					(event.clientY - rect.top) / rect.height - 0.5;
+
+				heroImage.style.transform =
+					`scale(1.04) translate(${moveX * -10}px, ${moveY * -7}px)`;
+
+			});
+
+
+			hero.addEventListener("mouseleave", function()
+			{
+
+				targetX = 50;
+				targetY = 50;
+
+				heroImage.style.transform =
+					"scale(1.04) translate(0, 0)";
+
+			});
+
+
+			function animateGradient()
+			{
+
+				cursorX +=
+					(targetX - cursorX) * 0.04;
+
+				cursorY +=
+					(targetY - cursorY) * 0.04;
+
+
+				const purpleTargetX =
+					4 + (cursorX - 50) * 0.35;
+
+				const purpleTargetY =
+					5 + (cursorY - 50) * 0.25;
+
+
+				const blueTargetX =
+					93 + (cursorX - 50) * 0.3;
+
+				const blueTargetY =
+					8 + (cursorY - 50) * 0.25;
+
+
+				const pinkTargetX =
+					15 + (cursorX - 50) * 0.5;
+
+				const pinkTargetY =
+					57 + (cursorY - 50) * 0.45;
+
+
+				const violetTargetX =
+					55 + (cursorX - 50) * 0.65;
+
+				const violetTargetY =
+					38 + (cursorY - 50) * 0.55;
+
+
+				const orangeTargetX =
+					94 + (cursorX - 50) * 0.3;
+
+				const orangeTargetY =
+					88 + (cursorY - 50) * 0.35;
+
+
+				const cyanTargetX =
+					5 + (cursorX - 50) * 0.28;
+
+				const cyanTargetY =
+					93 + (cursorY - 50) * 0.25;
+
+
+				const pinkSmallTargetX =
+					78 + (cursorX - 50) * 0.48;
+
+				const pinkSmallTargetY =
+					67 + (cursorY - 50) * 0.42;
+
+
+				purpleX +=
+					(purpleTargetX - purpleX) * 0.025;
+
+				purpleY +=
+					(purpleTargetY - purpleY) * 0.025;
+
+
+				blueX +=
+					(blueTargetX - blueX) * 0.02;
+
+				blueY +=
+					(blueTargetY - blueY) * 0.02;
+
+
+				pinkX +=
+					(pinkTargetX - pinkX) * 0.022;
+
+				pinkY +=
+					(pinkTargetY - pinkY) * 0.022;
+
+
+				violetX +=
+					(violetTargetX - violetX) * 0.018;
+
+				violetY +=
+					(violetTargetY - violetY) * 0.018;
+
+
+				orangeX +=
+					(orangeTargetX - orangeX) * 0.021;
+
+				orangeY +=
+					(orangeTargetY - orangeY) * 0.021;
+
+
+				cyanX +=
+					(cyanTargetX - cyanX) * 0.019;
+
+				cyanY +=
+					(cyanTargetY - cyanY) * 0.019;
+
+
+				pinkSmallX +=
+					(pinkSmallTargetX - pinkSmallX) * 0.023;
+
+				pinkSmallY +=
+					(pinkSmallTargetY - pinkSmallY) * 0.023;
+
+
+				hero.style.setProperty(
+					"--purple-x",
+					purpleX + "%"
+				);
+
+				hero.style.setProperty(
+					"--purple-y",
+					purpleY + "%"
+				);
+
+				hero.style.setProperty(
+					"--blue-x",
+					blueX + "%"
+				);
+
+				hero.style.setProperty(
+					"--blue-y",
+					blueY + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-x",
+					pinkX + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-y",
+					pinkY + "%"
+				);
+
+				hero.style.setProperty(
+					"--violet-x",
+					violetX + "%"
+				);
+
+				hero.style.setProperty(
+					"--violet-y",
+					violetY + "%"
+				);
+
+				hero.style.setProperty(
+					"--orange-x",
+					orangeX + "%"
+				);
+
+				hero.style.setProperty(
+					"--orange-y",
+					orangeY + "%"
+				);
+
+				hero.style.setProperty(
+					"--cyan-x",
+					cyanX + "%"
+				);
+
+				hero.style.setProperty(
+					"--cyan-y",
+					cyanY + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-small-x",
+					pinkSmallX + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-small-y",
+					pinkSmallY + "%"
+				);
+
+				requestAnimationFrame(animateGradient);
+
+			}
+
+			animateGradient();
+
+
+			let audioContext;
+
+			function playClickSound()
+			{
+
+				try
+				{
+
+					if (!audioContext)
+					{
+						audioContext =
+							new (
+								window.AudioContext ||
+								window.webkitAudioContext
+							)();
+					}
+
+					if (audioContext.state === "suspended")
+					{
+						audioContext.resume();
+					}
+
+					const oscillator =
+						audioContext.createOscillator();
+
+					const gain =
+						audioContext.createGain();
+
+					oscillator.type = "sine";
+
+					oscillator.frequency.setValueAtTime(
+						520,
+						audioContext.currentTime
+					);
+
+					oscillator.frequency.exponentialRampToValueAtTime(
+						300,
+						audioContext.currentTime + 0.045
+					);
+
+					gain.gain.setValueAtTime(
+						0.045,
+						audioContext.currentTime
+					);
+
+					gain.gain.exponentialRampToValueAtTime(
+						0.001,
+						audioContext.currentTime + 0.06
+					);
+
+					oscillator.connect(gain);
+					gain.connect(audioContext.destination);
+
+					oscillator.start();
+
+					oscillator.stop(
+						audioContext.currentTime + 0.06
+					);
+
+				}
+				catch (error)
+				{
+				}
+
+			}
+
+
+			document.addEventListener("click", function(event)
+			{
+
+				const clickable =
+					event.target.closest(
+						"button, a, .mission-item"
+					);
+
+				if (clickable)
+				{
+					playClickSound();
+				}
+
+			});
+
+
+			const revealItems =
+				document.querySelectorAll(".reveal");
+
+			const revealObserver =
+				new IntersectionObserver(
+					function(entries)
+					{
+
+						entries.forEach(function(entry)
+						{
+
+							if (entry.isIntersecting)
+							{
+
+								entry.target.classList.add("visible");
+
+								revealObserver.unobserve(
+									entry.target
+								);
+
+							}
+
+						});
+
+					},
+					{
+						threshold: 0.12
+					}
+				);
+
+
+			revealItems.forEach(function(item)
+			{
+				revealObserver.observe(item);
+			});
+
+
+			const cursorGradient =
+				document.querySelector(".cursor-gradient");
+
+			let cursorMouseX =
+				window.innerWidth / 2;
+
+			let cursorMouseY =
+				window.innerHeight / 2;
+
+			let gradientX =
+				cursorMouseX;
+
+			let gradientY =
+				cursorMouseY;
+
+
+			document.addEventListener("mousemove", function(event)
+			{
+
+				cursorMouseX =
+					event.clientX;
+
+				cursorMouseY =
+					event.clientY;
+
+				document.body.classList.add(
+					"cursor-ready"
+				);
+
+			});
+
+
+			function moveCursorGradient()
+			{
+
+				gradientX +=
+					(cursorMouseX - gradientX) * 0.12;
+
+				gradientY +=
+					(cursorMouseY - gradientY) * 0.12;
+
+				cursorGradient.style.left =
+					gradientX + "px";
+
+				cursorGradient.style.top =
+					gradientY + "px";
+
+				requestAnimationFrame(
+					moveCursorGradient
+				);
+
+			}
+
+			moveCursorGradient();
+
+
+			window.addEventListener("scroll", function()
+			{
+
+				if (window.scrollY > 450)
+				{
+					backToTop.classList.add("show");
+				}
+				else
+				{
+					backToTop.classList.remove("show");
+				}
+
+			});
+
+
+			backToTop.addEventListener("click", function()
+			{
+
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
+
+			});
+
+
+			const announcements = [
+				{
+					id: "enrollment-second-semester",
+					category: "General Announcement",
+					title: "Enrollment for 2nd Semester S.Y. 2026-2027",
+					description: "Enrollment for 2nd Semester S.Y. 2026-2027 is now open. Students are encouraged to complete their enrollment within the scheduled enrollment period and submit all required documents.",
+					date: "July 27, 2026",
+					dateTime: "2026-07-27T13:43",
+					time: "1:43 PM",
+					icon: "megaphone",
+					tone: "purple",
+					groups: ["general", "enrollment"]
+				},
+				{
+					id: "final-examinations",
+					category: "Academics",
+					title: "Schedule of Final Examinations",
+					description: "The schedule for the Final Examinations is now available. Students are advised to check their exam dates and times and prepare accordingly.",
+					date: "November 29, 2026",
+					dateTime: "2026-11-29T23:11",
+					time: "11:11 PM",
+					icon: "calendar",
+					tone: "blue",
+					groups: ["academic"]
+				},
+				{
+					id: "library-reopening",
+					category: "Campus",
+					title: "Library Reopening Announcement",
+					description: "The library renovation is now complete. The library is officially open and ready to welcome students. Please observe the library rules and operating hours.",
+					date: "August 15, 2026",
+					dateTime: "2026-08-15T14:15",
+					time: "2:15 PM",
+					icon: "books",
+					tone: "lavender",
+					groups: ["campus"]
+				},
+				{
+					id: "sports-fest-2026",
+					category: "Events",
+					title: "Sports Fest 2026",
+					description: "Get ready for our upcoming Sports Fest! Students are invited to join the activities, support their teams, and enjoy a fun-filled celebration with the school community.",
+					date: "November 30, 2026",
+					dateTime: "2026-11-30T07:31",
+					time: "7:31 AM",
+					icon: "party",
+					tone: "sky",
+					groups: ["campus"]
+				},
+				{
+					id: "teams-password-reset",
+					category: "General Announcement",
+					title: "Microsoft Teams Account Password Reset",
+					description: "Having trouble accessing your Microsoft Teams account? For password resets or account recovery, please message Sir CJ for assistance.",
+					date: "August 5, 2026",
+					dateTime: "2026-08-05T09:23",
+					time: "9:23 AM",
+					icon: "tools",
+					tone: "gray",
+					groups: ["general", "account"]
+				}
+			];
+
+			const upcomingEvents = [
+				{
+					id: "sports-fest-2026",
+					title: "Sports Fest 2026",
+					date: "November 30, 2026",
+					day: "30",
+					month: "NOV",
+					time: "7:31 AM"
+				},
+				{
+					id: "library-reopening",
+					title: "Library Reopening",
+					date: "August 15, 2026",
+					day: "15",
+					month: "AUG",
+					time: "2:15 PM"
+				},
+				{
+					id: "teams-password-reset",
+					title: "Account Password Reset",
+					date: "August 5, 2026",
+					day: "05",
+					month: "AUG",
+					time: "9:23 AM"
+				}
+			];
+
+			const icons = {
+				megaphone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l12-5v16L7 15H3V9zm4 2v2.7l10 4.2V6.8L7 11zm-3 2h1v-2H4v2zm7 2.4 2-.4 1.4 4.3-2 .6L11 15.4zM21 9v6l2-3-2-3z"></path></svg>',
+				calendar: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 15H5V9h14zm-11-8h3v3H8z"></path></svg>',
+				books: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13a2 2 0 0 1 2 2v15H6a3 3 0 0 1-3-3V5a2 2 0 0 1 1-2zm2 15h11V5H6v13zm-1 2h14v2H5a4 4 0 0 1-4-4h2a2 2 0 0 0 2 2zm3-12h7v2H8zm0 4h7v2H8z"></path></svg>',
+				party: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 22 13.6-4.1L6.1 8.4 2 22zm4.8-11.4 4.6 4.6-6.7 2 2.1-6.6zm12-7.8 1.4 1.4-2.3 2.3-1.4-1.4 2.3-2.3zM20 9h2v2h-2V9zM15 2h2v2h-2V2zm5 11h2v2h-2v-2zm-6-7 1.4 1.4-2.3 2.3-1.4-1.4L14 6zm7-4 1.4 1.4-2.3 2.3-1.4-1.4L21 1z"></path></svg>',
+				tools: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 19.6 13.4 11a6.5 6.5 0 0 0-8.2-8.2l3.6 3.6-2.4 2.4-3.6-3.6A6.5 6.5 0 0 0 11 13.4l8.6 8.6a1.7 1.7 0 0 0 2.4-2.4zM4 20.6 15.6 9l-1.4-1.4L2.6 19.2A1 1 0 0 0 4 20.6z"></path></svg>'
+			};
+
+			const detailsContainer =
+				document.getElementById("announcementDetails");
+
+			const eventsList =
+				document.getElementById("eventsList");
+
+			const backButton =
+				document.getElementById("backButton");
+
+
+			backButton.addEventListener("click", function(event)
+			{
+
+				let canGoBack = false;
+
+				try
+				{
+					canGoBack =
+						Boolean(document.referrer) &&
+						new URL(document.referrer).origin ===
+							window.location.origin &&
+						window.history.length > 1;
+				}
+				catch (error)
+				{
+					canGoBack = false;
+				}
+
+				if (canGoBack)
+				{
+					event.preventDefault();
+					window.history.back();
+				}
+
+			});
+
+
+			function renderAnnouncementDetails()
+			{
+
+				const params =
+					new URLSearchParams(window.location.search);
+
+				const announcementId =
+					params.get("id") || "";
+
+				const announcement =
+					announcements.find(function(item)
+					{
+						return item.id === announcementId;
+					});
+
+
+				if (!announcement)
+				{
+
+					detailsContainer.innerHTML = "";
+
+					const missingState =
+						document.createElement("div");
+
+					missingState.className = "empty-state";
+
+					const missingTitle =
+						document.createElement("strong");
+
+					missingTitle.textContent =
+						"Announcement not found";
+
+					const missingText =
+						document.createElement("p");
+
+					missingText.textContent =
+						"It may have been removed or the link " +
+						"may be incomplete.";
+
+					missingState.append(missingTitle, missingText);
+					detailsContainer.append(missingState);
+
+					return;
+
+				}
+
+
+				document.title =
+					announcement.title + " | EduBridge";
+
+				detailsContainer.replaceChildren();
+
+
+				const heading =
+					document.createElement("div");
+
+				heading.className = "detail-heading";
+
+				const icon =
+					document.createElement("span");
+
+				icon.className = "announcement-icon";
+				icon.dataset.tone = announcement.tone;
+				icon.innerHTML = icons[announcement.icon];
+
+				const titleBlock =
+					document.createElement("div");
+
+				const meta =
+					document.createElement("div");
+
+				meta.className = "detail-meta";
+
+				const dot =
+					document.createElement("span");
+
+				dot.className = "category-dot";
+
+				const category =
+					document.createElement("span");
+
+				category.textContent = announcement.category;
+
+				meta.append(dot, category);
+
+				const title =
+					document.createElement("h2");
+
+				title.className = "detail-title";
+				title.textContent = announcement.title;
+
+				titleBlock.append(meta, title);
+				heading.append(icon, titleBlock);
+
+
+				const dateRow =
+					document.createElement("div");
+
+				dateRow.className = "detail-date-row";
+
+				const published =
+					document.createElement("time");
+
+				published.dateTime = announcement.dateTime;
+				published.innerHTML =
+					'<svg viewBox="0 0 24 24" aria-hidden="true">' +
+					'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6 4.3 2.5-1 1.7-5.3-3.1V6h2v6.6z"></path>' +
+					'</svg>';
+				published.append(
+					document.createTextNode(
+						"Published " + announcement.date
+					)
+				);
+
+				const time = document.createElement("span");
+				time.innerHTML =
+					'<svg viewBox="0 0 24 24" aria-hidden="true">' +
+					'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6 4.3 2.5-1 1.7-5.3-3.1V6h2v6.6z"></path>' +
+					'</svg>';
+				time.append(
+					document.createTextNode(announcement.time)
+				);
+
+				dateRow.append(published, time);
+
+
+				const body =
+					document.createElement("div");
+
+				body.className = "detail-body";
+
+				const paragraph =
+					document.createElement("p");
+
+				paragraph.textContent = announcement.description;
+
+				body.append(paragraph);
+
+
+				detailsContainer.append(heading, dateRow, body);
+
+			}
+
+
+			function createEventCard(eventItem)
+			{
+				const card = document.createElement("a");
+				card.className = "event-card";
+				card.href =
+					"announcedetails.html?id=" +
+					encodeURIComponent(eventItem.id);
+
+				const badge = document.createElement("span");
+				badge.className = "event-date-badge";
+
+				const day = document.createElement("strong");
+				day.textContent = eventItem.day;
+
+				const month = document.createElement("span");
+				month.textContent = eventItem.month;
+
+				badge.append(day, month);
+
+				const copy = document.createElement("span");
+				copy.className = "event-copy";
+
+				const title = document.createElement("strong");
+				title.textContent = eventItem.title;
+
+				const date = document.createElement("time");
+				date.textContent = eventItem.date;
+
+				const eventTime = document.createElement("span");
+				eventTime.className = "event-time";
+
+				const clock = document.createElement("span");
+				clock.className = "clock-icon";
+				clock.setAttribute("aria-hidden", "true");
+
+				eventTime.append(
+					clock,
+					document.createTextNode(eventItem.time)
+				);
+
+				copy.append(title, date, eventTime);
+				card.append(badge, copy);
+
+				return card;
+			}
+
+
+			function renderEvents()
+			{
+				eventsList.replaceChildren();
+
+				upcomingEvents.forEach(function(eventItem)
+				{
+					eventsList.append(
+						createEventCard(eventItem)
+					);
+				});
+			}
+
+
+			renderAnnouncementDetails();
+			renderEvents();
+		}
+		catch (error)
+		{
+			document.body.classList.remove("js");
+		}
+	</script>
+
+</body>
+</html>
