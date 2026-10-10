@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>EduBridge | Student Portal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<style>
 		*
@@ -299,7 +300,7 @@
 		{
 			transform: translateY(-2px);
 			border-color: #a970ff;
-			background: #7138c8;
+			background: var(--purple);
 		}
 
 		.menu-button
@@ -817,6 +818,11 @@
 			color: #3470dc;
 		}
 
+		body.dark-mode .announcement-card:nth-child(2) .announcement-icon
+		{
+			color: #8db4ff;
+		}
+
 		.announcement-card:nth-child(3) .announcement-icon
 		{
 			background: var(--purple-light);
@@ -1068,8 +1074,8 @@
 			justify-content: center;
 			gap: 4px;
 			border-radius: 5px;
-			background: white;
-			color: #7138c8;
+			background: var(--surface);
+			color: var(--purple);
 			box-shadow: 0 7px 18px rgba(0, 0, 0, 0.2);
 		}
 
@@ -1894,7 +1900,7 @@
 		</div>
 
 		<div class="hero-content">
-			<div class="hero-copy reveal">
+			<div class="hero-copy">
 				<div class="hero-label">
 					STUDENT PORTAL
 				</div>
@@ -1916,7 +1922,7 @@
 				</div>
 			</div>
 
-			<a class="hero-notice reveal" href="announcements.html" aria-label="Read the enrollment announcement">
+			<a class="hero-notice" href="announcements.html" aria-label="Read the enrollment announcement">
 				<span class="notice-icon">
 					<svg viewBox="0 0 24 24" aria-hidden="true">
 						<path d="M3 10v4h3l5 4V6l-5 4H3zm12.5 2a3.5 3.5 0 0 0-2-3.16v6.32a3.5 3.5 0 0 0 2-3.16zm-2-8.45v2.06a7 7 0 0 1 0 12.78v2.06a9 9 0 0 0 0-16.9z">
