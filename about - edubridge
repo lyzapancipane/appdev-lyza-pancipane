@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <title>About EduBridge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         * {
@@ -254,6 +255,20 @@
             transition: 0.25s ease;
         }
 
+        .menu-button
+        {
+            display: none;
+            width: 34px;
+            height: 34px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffff55;
+            border-radius: 5px;
+            background: #ffffff12;
+            color: white;
+            transition: 0.25s ease;
+        }
+
         .theme-button {
             width: 34px;
             display: flex;
@@ -261,7 +276,9 @@
             justify-content: center;
         }
 
-        .theme-button:hover {
+        .theme-button:hover,
+        .menu-button:hover
+        {
             background: #ffffff20;
             border-color: #ffffff88;
             transform: translateY(-2px) rotate(8deg);
@@ -271,14 +288,25 @@
             transform: scale(0.88);
         }
 
-        .theme-button svg {
+        .menu-button:active
+        {
+            transform: scale(0.88);
+        }
+
+        .theme-button svg,
+        .menu-button svg
+        {
             width: 15px;
             height: 15px;
             fill: currentColor;
         }
 
-        .login-button {
+        .login-button
+        {
+            display: inline-flex;
             padding: 0 15px;
+            align-items: center;
+            justify-content: center;
             font-size: 12px;
         }
 
@@ -1080,8 +1108,12 @@
             margin-bottom: 13px;
         }
 
-        .question-button {
+        .question-button
+        {
+            display: inline-flex;
             height: 32px;
+            align-items: center;
+            justify-content: center;
             padding: 0 14px;
             border: none;
             border-radius: 5px;
@@ -1361,14 +1393,64 @@
             }
         }
 
+        @media (max-width: 760px)
+        {
+            .nav-links
+            {
+                position: absolute;
+                top: calc(100% - 1px);
+                right: 20px;
+                left: 20px;
+                display: none;
+                align-items: stretch;
+                gap: 0;
+                padding: 7px;
+                border: 1px solid #ffffff25;
+                border-radius: 5px;
+                background: rgba(8, 5, 29, 0.97);
+                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+                font-size: 12px;
+            }
+
+            .navbar.menu-open .nav-links
+            {
+                display: grid;
+            }
+
+            .nav-links a
+            {
+                padding: 11px 10px;
+                border-radius: 4px;
+            }
+
+            .nav-links a:hover
+            {
+                background: #ffffff10;
+            }
+
+            .nav-links a::after
+            {
+                display: none;
+            }
+
+            .menu-button
+            {
+                display: flex;
+            }
+        }
+
         @media (max-width: 600px) {
             .navbar {
                 padding: 0 20px;
             }
 
-            .nav-links,
+            .nav-links {
+                right: 12px;
+                left: 12px;
+            }
+
             .nav-buttons {
-                display: none;
+                display: flex;
             }
 
             .logo img {
@@ -1483,6 +1565,14 @@
             }
         }
 
+        @media (max-width: 380px)
+        {
+            .login-button
+            {
+                display: none;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -1509,7 +1599,7 @@
 
     <nav class="navbar">
 
-        <a href="index.html" class="logo">
+        <a href="landingpage.html" class="logo">
             <img src="Edubridge-Logo.png">
 
             <span class="brand-name">
@@ -1517,8 +1607,8 @@
             </span>
         </a>
 
-        <div class="nav-links">
-            <a href="index.html">
+        <div class="nav-links" id="navLinks">
+            <a href="landingpage.html">
                 Home
             </a>
 
@@ -1526,15 +1616,15 @@
                 About EduBridge
             </a>
 
-            <a href="#">
+            <a href="announcements.html">
                 Announcements
             </a>
 
-            <a href="#">
+            <a href="faq.html">
                 FAQs
             </a>
 
-            <a href="#">
+            <a href="contact.html">
                 Contact
             </a>
         </div>
@@ -1548,8 +1638,15 @@
                 </svg>
             </button>
 
-            <button class="login-button">
+            <a class="login-button" href="contact.html#contactForm">
                 Login
+            </a>
+
+            <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
+                    </path>
+                </svg>
             </button>
 
         </div>
@@ -1930,13 +2027,13 @@
 
             <div>
 
-                <div class="logo footer-logo">
+                <a href="landingpage.html" class="logo footer-logo" aria-label="EduBridge home">
                     <img src="Edubridge-Logo.png">
 
                     <span class="brand-name">
                         <span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span>
                     </span>
-                </div>
+                </a>
 
                 <p class="footer-description">
                     A smart inquiry and FAQ system for school announcements
@@ -1991,7 +2088,7 @@
                 <ul class="footer-links">
 
                     <li>
-                        <a href="index.html">
+                        <a href="landingpage.html">
                             Home
                         </a>
                     </li>
@@ -2003,25 +2100,25 @@
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="announcements.html">
                             Announcements
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="faq.html">
                             FAQs
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="contact.html">
                             Contact
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
+                        <a href="contact.html#contactForm">
                             Login
                         </a>
                     </li>
@@ -2062,9 +2159,9 @@
                         ☎
                     </span>
 
-                    <span>
+                    <a href="tel:+639123456789">
                         (+63) 912 345 6789
-                    </span>
+                    </a>
                 </div>
 
             </div>
@@ -2087,9 +2184,9 @@
                         with your school community.
                     </p>
 
-                    <button class="question-button">
+                    <a class="question-button" href="contact.html#contactForm">
                         Get Started →
-                    </button>
+                    </a>
 
                 </div>
 
@@ -2220,7 +2317,29 @@
 
 
         const navbar = document.querySelector(".navbar");
+        const menuButton = document.getElementById("menuButton");
         const heroImage = document.querySelector(".hero-image");
+
+        menuButton.addEventListener("click", function()
+        {
+            const isOpen = navbar.classList.toggle("menu-open");
+
+            menuButton.setAttribute("aria-expanded", String(isOpen));
+            menuButton.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+            );
+        });
+
+        document.querySelectorAll(".nav-links a").forEach(function(link)
+        {
+            link.addEventListener("click", function()
+            {
+                navbar.classList.remove("menu-open");
+                menuButton.setAttribute("aria-expanded", "false");
+                menuButton.setAttribute("aria-label", "Open navigation menu");
+            });
+        });
 
         function updateNavbar() {
 
