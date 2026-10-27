@@ -2505,17 +2505,33 @@
 			.metrics-grid
 			{
 					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+					grid-template-columns: repeat(3, minmax(0, 1fr));
 					gap: 16px;
+			}
+
+			.metrics-grid.grid-inquiries,
+			.metrics-grid.grid-faqs
+			{
+					grid-template-columns: repeat(4, minmax(0, 1fr));
 			}
 	
 			.stat-card
 			{
 					background: var(--surface);
 					border: 1px solid var(--border);
-					border-radius: 16px;
+					border-radius: 5px;
 					padding: 20px;
-					box-shadow: 0 12px 30px var(--shadow);
+					box-shadow: 0 5px 20px var(--shadow);
+					transition: 0.3s ease;
+			}
+
+			.stat-card:hover
+			{
+					transform: translateY(-5px);
+					border-color: #a970ff;
+					box-shadow:
+							0 15px 35px var(--shadow),
+							0 0 22px rgba(113, 56, 200, 0.08);
 			}
 	
 			.stat-card .stat-label
@@ -2553,9 +2569,9 @@
 			{
 					background: var(--surface);
 					border: 1px solid var(--border);
-					border-radius: 16px;
+					border-radius: 5px;
 					padding: 24px;
-					box-shadow: 0 12px 30px var(--shadow);
+					box-shadow: 0 5px 20px var(--shadow);
 			}
 	
 			.panel + .panel
@@ -2847,7 +2863,7 @@
 			.quick-grid
 			{
 					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+					grid-template-columns: repeat(3, minmax(0, 1fr));
 					gap: 18px;
 			}
 	
@@ -2859,17 +2875,20 @@
 					padding: 22px;
 					background: var(--surface);
 					border: 1px solid var(--border);
-					border-radius: 16px;
+					border-radius: 5px;
 					text-decoration: none;
-					box-shadow: 0 12px 30px var(--shadow);
-					transition: transform 0.18s ease, border-color 0.18s ease;
+					box-shadow: 0 5px 20px var(--shadow);
+					transition: 0.3s ease;
 			}
 	
 			.quick-card:hover,
 			.quick-card:focus-visible
 			{
-					transform: translateY(-3px);
-					border-color: var(--purple);
+					transform: translateY(-5px);
+					border-color: #a970ff;
+					box-shadow:
+							0 15px 35px var(--shadow),
+							0 0 22px rgba(113, 56, 200, 0.08);
 			}
 	
 			.quick-card h3
@@ -3238,18 +3257,91 @@
 			@media (prefers-reduced-motion: reduce)
 			{
 					.btn,
-					.quick-card
+					.quick-card,
+					.stat-card
 					{
 								transition: none;
 								}
 	
 								.btn:hover,
 								.quick-card:hover,
-								.quick-card:focus-visible
+								.quick-card:focus-visible,
+								.stat-card:hover
 								{
 										transform: none;
 								}
 			}
+
+		@media (max-width: 900px)
+		{
+			.metrics-grid,
+			.metrics-grid.grid-inquiries,
+			.metrics-grid.grid-faqs
+			{
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (max-width: 760px)
+		{
+			.navbar.menu-open
+			{
+				height: auto;
+				flex-wrap: wrap;
+				background: rgba(8, 5, 29, 0.97);
+				box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+				backdrop-filter: blur(14px);
+			}
+
+			.nav-links
+			{
+				display: none;
+			}
+
+			.navbar.menu-open .nav-links
+			{
+				order: 3;
+				display: flex;
+				flex-basis: 100%;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 0;
+				padding: 2px 0 8px;
+				font-size: 12px;
+			}
+
+			.navbar.menu-open .nav-links a
+			{
+				padding: 11px 10px;
+				border-radius: 4px;
+			}
+
+			.navbar.menu-open .nav-links a:hover
+			{
+				background: #ffffff10;
+			}
+
+			.navbar.menu-open .nav-links a::after
+			{
+				display: none;
+			}
+
+			.quick-grid
+			{
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
+
+		@media (max-width: 560px)
+		{
+			.metrics-grid,
+			.metrics-grid.grid-inquiries,
+			.metrics-grid.grid-faqs,
+			.quick-grid
+			{
+				grid-template-columns: minmax(0, 1fr);
+			}
+		}
 
 	</style>
 </head>
@@ -3412,7 +3504,7 @@
 
 			</div>
 
-			<div class="metrics-grid">
+			<div class="metrics-grid grid-users">
 
 				<div class="stat-card">
 					<div class="stat-label">
@@ -3502,7 +3594,7 @@
 
 			</div>
 
-			<div class="metrics-grid">
+			<div class="metrics-grid grid-inquiries">
 
 				<div class="stat-card">
 					<div class="stat-label">
@@ -3628,7 +3720,7 @@
 
 			</div>
 
-			<div class="metrics-grid">
+			<div class="metrics-grid grid-faqs">
 
 				<div class="stat-card is-unavailable">
 					<div class="stat-label">
@@ -3700,7 +3792,7 @@
 
 			</div>
 
-			<div class="metrics-grid">
+			<div class="metrics-grid grid-announcements">
 
 				<div class="stat-card">
 					<div class="stat-label">
@@ -3818,30 +3910,6 @@
 						Overview of announcements, creation, and categories.
 					</p>
 				</a>
-
-			</div>
-
-		</section>
-
-		<section class="content-section reveal">
-
-			<div class="section-heading">
-
-				<div class="section-label">
-					QUICK LINKS
-				</div>
-
-				<h2>
-					Admin Shortcuts
-				</h2>
-
-				<p>
-					Jump to other administrative tools.
-				</p>
-
-			</div>
-
-			<div class="quick-grid">
 
 				<a class="quick-card" href="activitylogs.html">
 					<h3>
