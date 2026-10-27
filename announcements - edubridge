@@ -275,16 +275,15 @@
 
 		.nav-links a::after
 		{
-			content: "";
 			position: absolute;
-			left: 50%;
+			right: 50%;
 			bottom: -7px;
-			width: 0;
+			left: 50%;
 			height: 2px;
 			border-radius: 10px;
 			background: #b77aff;
-			transform: translateX(-50%);
-			transition: width 0.25s ease;
+			content: "";
+			transition: left 0.25s ease, right 0.25s ease;
 		}
 
 		.nav-links a:hover,
@@ -294,9 +293,135 @@
 		}
 
 		.nav-links a:hover::after,
+		.nav-links a:focus-visible::after,
 		.nav-links .active::after
 		{
+			right: 0;
+			left: 0;
+		}
+
+		.account-menu
+		{
+			position: absolute;
+			top: calc(100% - 1px);
+			right: 36px;
+			width: 264px;
+			display: none;
+			flex-direction: column;
+			gap: 2px;
+			padding: 8px;
+			border: 1px solid #ffffff25;
+			border-radius: 6px;
+			background: rgba(8, 5, 29, 0.97);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+			z-index: 1001;
+		}
+
+		.navbar.menu-open .account-menu
+		{
+			display: flex;
+		}
+
+		.account-menu-label
+		{
+			padding: 6px 10px;
+			color: #ffffff80;
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+
+		.account-menu-item
+		{
+			display: flex;
+			align-items: center;
+			gap: 8px;
 			width: 100%;
+			padding: 10px;
+			border: 0;
+			border-radius: 4px;
+			background: none;
+			color: #ffffffdd;
+			font-family: inherit;
+			font-size: 13px;
+			text-align: left;
+			text-decoration: none;
+			cursor: pointer;
+			transition: background 0.15s ease, color 0.15s ease;
+		}
+
+		.account-menu-item:hover,
+		.account-menu-item:focus-visible
+		{
+			background: #ffffff10;
+			color: #c58cff;
+		}
+
+		.account-menu-item[aria-disabled="true"]
+		{
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+
+		.account-menu-item[aria-disabled="true"]:hover
+		{
+			background: none;
+			color: #ffffffdd;
+		}
+
+		.account-menu-divider
+		{
+			height: 1px;
+			margin: 4px 0;
+			background: #ffffff25;
+		}
+
+		.submenu-parent
+		{
+			justify-content: space-between;
+		}
+
+		.submenu-caret
+		{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex: 0 0 auto;
+			transition: transform 0.2s ease;
+		}
+
+		.submenu-caret svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.submenu-parent[aria-expanded="true"] .submenu-caret
+		{
+			transform: rotate(180deg);
+		}
+
+		.account-submenu
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			margin: 2px 0;
+			padding-left: 14px;
+			border-left: 1px solid #ffffff2d;
+		}
+
+		.account-submenu[hidden]
+		{
+			display: none;
+		}
+
+		.account-submenu .account-menu-item
+		{
+			padding: 8px 10px;
+			font-size: 12px;
 		}
 
 		.nav-buttons
@@ -319,7 +444,7 @@
 
 		.menu-button
 		{
-			display: none;
+			display: inline-flex;
 			width: 34px;
 			height: 34px;
 			align-items: center;
@@ -2174,52 +2299,6 @@
 			}
 		}
 
-		@media (max-width: 760px)
-		{
-			.nav-links
-			{
-				position: absolute;
-				top: calc(100% - 1px);
-				right: 20px;
-				left: 20px;
-				display: none;
-				align-items: stretch;
-				gap: 0;
-				padding: 7px;
-				border: 1px solid #ffffff25;
-				border-radius: 5px;
-				background: rgba(8, 5, 29, 0.97);
-				box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
-				font-size: 12px;
-			}
-
-			.navbar.menu-open .nav-links
-			{
-				display: grid;
-			}
-
-			.nav-links a
-			{
-				padding: 11px 10px;
-				border-radius: 4px;
-			}
-
-			.nav-links a:hover
-			{
-				background: #ffffff10;
-			}
-
-			.nav-links a::after
-			{
-				display: none;
-			}
-
-			.menu-button
-			{
-				display: flex;
-			}
-		}
-
 		@media (max-width: 600px)
 		{
 			.navbar
@@ -2227,10 +2306,11 @@
 				padding: 0 20px;
 			}
 
-			.nav-links
+			.account-menu
 			{
 				right: 12px;
 				left: 12px;
+				width: auto;
 			}
 
 			.nav-buttons
@@ -2450,7 +2530,7 @@
 			</a>
 
 			<a href="inquiries.html">
-				My Inquiries
+				Inquiries
 			</a>
 
 			<a href="contact.html">
@@ -2475,27 +2555,30 @@
 				</svg>
 			</a>
 
-			<a class="nav-profile" href="inquiries.html">
-				<img src="junior.jpg" alt="Junior Slickback">
-
-				<span class="nav-profile-text">
-					<strong>
-						Junior Slickback
-					</strong>
-
-					<small>
-						Student
-					</small>
-				</span>
-			</a>
-
-			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="accountMenu" aria-expanded="false">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
 					</path>
 				</svg>
 			</button>
 
+			<a class="nav-profile" href="profile.html">
+				<img src="resume.jpg" alt="Resume Dizon">
+
+				<span class="nav-profile-text">
+					<strong>
+						Resume Dizon
+					</strong>
+
+					<small>
+						Administrator
+					</small>
+				</span>
+			</a>
+
+		</div>
+
+		<div class="account-menu" id="accountMenu" role="menu" aria-label="Account menu">
 		</div>
 
 	</nav>
@@ -2824,7 +2907,7 @@
 			</div>
 
 			<a class="inquiry-button" href="inquiries.html">
-				Go to My Inquiries
+				Go to Inquiries
 			</a>
 
 		</section>
@@ -2929,7 +3012,7 @@
 
 					<li>
 						<a href="inquiries.html">
-							My Inquiries
+							Inquiries
 						</a>
 					</li>
 
@@ -3054,6 +3137,7 @@
 	</button>
 
 
+	<script src="profile-sync.js"></script>
 	<script>
 		try
 		{
@@ -3183,6 +3267,184 @@
 					closeMenu();
 				}
 			});
+
+			
+			const accountMenu = document.getElementById("accountMenu");
+
+			function createMenuItem(item)
+			{
+				let el;
+
+				if (item.href)
+				{
+					el = document.createElement("a");
+					el.setAttribute("href", item.href);
+				}
+				else
+				{
+					el = document.createElement("button");
+					el.setAttribute("type", "button");
+				}
+
+				el.className = "account-menu-item";
+				el.setAttribute("role", "menuitem");
+				el.textContent = item.label;
+
+				if (item.action === "logout")
+				{
+					el.addEventListener("click", function(event)
+					{
+						event.preventDefault();
+						logOut();
+					});
+				}
+				else if (item.href)
+				{
+					el.addEventListener("click", closeMenu);
+				}
+
+				return el;
+			}
+
+			function logOut()
+			{
+				localStorage.removeItem("edubridge-role");
+				window.location.href = "logout.html";
+			}
+
+			function buildAccountMenu()
+			{
+				const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+				const items = [];
+
+				const announcementChildren = [
+					{ label: "All Announcements", href: "announcements.html" },
+					{ label: "Create Announcement", href: "createannounce.html" },
+					{ label: "Categories", href: "categories.html" }
+				];
+
+				if (role !== "teacher" && role !== "student")
+				{
+					items.push({ label: "Announcement Management", children: announcementChildren });
+					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
+					items.push({ label: "User Management", href: "usermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
+					items.push({ label: "Activity Logs", href: "activitylogs.html" });
+					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "Log Out", action: "logout" });
+				}
+				else if (role === "teacher")
+				{
+					items.push({ label: "Announcement Management", children: announcementChildren });
+					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
+					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "Log Out", action: "logout" });
+				}
+				else if (role === "student")
+				{
+					items.push({ label: "Profile", href: "profile.html" });
+					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Log Out", action: "logout" });
+				}
+
+				accountMenu.innerHTML = "";
+
+				const label = document.createElement("div");
+				label.className = "account-menu-label";
+				label.textContent = role === "teacher" ? "Teacher" : (role === "student" ? "Student" : "Administrator");
+				accountMenu.appendChild(label);
+
+				items.forEach(function(item)
+				{
+					if (item.action === "logout")
+					{
+						const divider = document.createElement("div");
+						divider.className = "account-menu-divider";
+						accountMenu.appendChild(divider);
+					}
+
+					if (item.children)
+					{
+						const toggle = document.createElement("button");
+						toggle.className = "account-menu-item submenu-parent";
+						toggle.type = "button";
+						toggle.setAttribute("role", "menuitem");
+						toggle.setAttribute("aria-expanded", "false");
+						toggle.setAttribute("aria-controls", "announcementSubmenu");
+						toggle.textContent = item.label;
+
+						const caret = document.createElement("span");
+						caret.className = "submenu-caret";
+						caret.setAttribute("aria-hidden", "true");
+						caret.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>';
+						toggle.appendChild(caret);
+
+						const submenu = document.createElement("div");
+						submenu.className = "account-submenu";
+						submenu.id = "announcementSubmenu";
+						submenu.setAttribute("role", "group");
+						submenu.setAttribute("aria-label", item.label);
+						submenu.hidden = true;
+
+						item.children.forEach(function(child)
+						{
+							submenu.appendChild(createMenuItem(child));
+						});
+
+						toggle.addEventListener("click", function()
+						{
+							const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+							toggle.setAttribute("aria-expanded", String(!isExpanded));
+							submenu.hidden = isExpanded;
+						});
+
+						accountMenu.appendChild(toggle);
+						accountMenu.appendChild(submenu);
+					}
+					else
+					{
+						accountMenu.appendChild(createMenuItem(item));
+					}
+				});
+			}
+
+			function applyNavProfile()
+			{
+				const profile = document.querySelector(".nav-profile");
+
+				if (!profile)
+				{
+					return;
+				}
+
+				const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+				const img = profile.querySelector("img");
+				const name = profile.querySelector(".nav-profile-text strong");
+				const roleText = profile.querySelector(".nav-profile-text small");
+
+				if (role === "student" || role === "teacher")
+				{
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+					img.alt = "Junior Slickback";
+					name.textContent = "Junior Slickback";
+					roleText.textContent = "Student";
+					profile.setAttribute("href", "inquiries.html");
+				}
+				else
+				{
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
+					img.alt = "Resume Dizon";
+					name.textContent = "Resume Dizon";
+					roleText.textContent = "Administrator";
+					profile.setAttribute("href", "profile.html");
+				}
+			}
+
+			buildAccountMenu();
+			applyNavProfile();
 
 			function updateNavbar()
 			{
