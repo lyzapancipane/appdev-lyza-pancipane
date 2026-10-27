@@ -3252,21 +3252,27 @@
 					gap: 14px;
 			}
 
-			.cover-preview
+			.profile-header-card
 			{
-					position: relative;
-					height: 170px;
-					border-radius: 12px;
-					overflow: hidden;
 					border: 1px solid var(--border);
-					background:
-							radial-gradient(circle at 22% 28%, rgba(113, 56, 200, 0.4), transparent 55%),
-							radial-gradient(circle at 78% 72%, rgba(233, 79, 142, 0.28), transparent 55%),
-							#0d0a26;
-					margin-bottom: 20px;
+					border-radius: 8px;
+					background: var(--surface);
+					box-shadow: 0 5px 20px var(--shadow);
+					overflow: hidden;
+					margin-bottom: 26px;
 			}
 
-			.cover-preview img
+			.profile-cover
+			{
+					height: 200px;
+					overflow: hidden;
+					background:
+							radial-gradient(circle at 22% 28%, rgba(113, 56, 200, 0.45), transparent 55%),
+							radial-gradient(circle at 78% 72%, rgba(233, 79, 142, 0.3), transparent 55%),
+							#0d0a26;
+			}
+
+			.profile-cover img
 			{
 					width: 100%;
 					height: 100%;
@@ -3274,39 +3280,161 @@
 					display: block;
 			}
 
-			.display-preview
+			.profile-identity
 			{
 					display: flex;
 					align-items: center;
-					gap: 14px;
-					padding: 14px 16px;
-					border: 1px solid var(--border);
-					border-radius: 12px;
-					background: var(--surface-soft);
-					margin-bottom: 20px;
+					gap: 18px;
+					flex-wrap: wrap;
+					padding: 0 24px 22px;
 			}
 
-			.display-preview img
+			.profile-avatar
 			{
-					width: 46px;
-					height: 46px;
+					position: relative;
+					z-index: 1;
+					width: 110px;
+					height: 110px;
+					min-width: 110px;
+					margin-top: -48px;
 					border-radius: 50%;
 					object-fit: cover;
-					border: 2px solid var(--purple-light);
+					border: 4px solid var(--surface);
+					background: var(--surface-soft);
+					box-shadow: 0 8px 22px var(--shadow);
 			}
 
-			.display-preview small
+			.profile-id-text
 			{
-					display: block;
-					font-size: 11.5px;
-					color: var(--text-muted);
-					margin-bottom: 2px;
+					flex: 1 1 240px;
+					padding-top: 10px;
 			}
 
-			.display-preview strong
+			.profile-name-row
 			{
-					font-size: 15px;
+					display: flex;
+					align-items: center;
+					gap: 12px;
+					flex-wrap: wrap;
+					margin-bottom: 6px;
+			}
+
+			.profile-name-row h3
+			{
+					font-size: 22px;
+					font-weight: 600;
 					color: var(--text);
+			}
+
+			.profile-role-badge
+			{
+					display: inline-flex;
+					align-items: center;
+					padding: 4px 12px;
+					border-radius: 999px;
+					background: var(--purple-light);
+					color: var(--purple);
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 0.4px;
+			}
+
+			.profile-bio
+			{
+					max-width: 560px;
+					font-size: 13.5px;
+					color: var(--text-soft);
+					line-height: 1.7;
+			}
+
+			.profile-bio.is-empty
+			{
+					color: var(--text-muted);
+					font-style: italic;
+			}
+
+			#editProfileBtn
+			{
+					margin-top: 10px;
+			}
+
+			.profile-edit
+			{
+					border-top: 1px solid var(--border);
+					padding-top: 24px;
+			}
+
+			.info-grid
+			{
+					display: grid;
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+					gap: 0 26px;
+			}
+
+			.info-item
+			{
+					padding: 14px 2px;
+					border-bottom: 1px solid var(--border);
+			}
+
+			.info-item dt
+			{
+					font-size: 11.5px;
+					font-weight: 600;
+					letter-spacing: 0.06em;
+					text-transform: uppercase;
+					color: var(--text-muted);
+					margin-bottom: 5px;
+			}
+
+			.info-item dd
+			{
+					margin: 0;
+					font-size: 14px;
+					font-weight: 500;
+					color: var(--text);
+					overflow-wrap: break-word;
+			}
+
+			.info-item.info-item-wide
+			{
+					grid-column: 1 / -1;
+			}
+
+			@media (max-width: 640px)
+			{
+					.profile-cover
+					{
+							height: 150px;
+					}
+
+					.profile-identity
+					{
+							padding: 0 16px 18px;
+					}
+
+					.profile-avatar
+					{
+							width: 88px;
+							height: 88px;
+							min-width: 88px;
+							margin-top: -40px;
+					}
+
+					.profile-name-row h3
+					{
+							font-size: 19px;
+					}
+
+					#editProfileBtn
+					{
+							width: 100%;
+					}
+
+					.info-grid
+					{
+							grid-template-columns: minmax(0, 1fr);
+					}
 			}
 
 			.avatar-row
@@ -3442,7 +3570,7 @@
 										gap: 10px;
 								}
 	
-								.cover-preview
+								.profile-cover
 								{
 										height: 130px;
 								}
@@ -3669,106 +3797,194 @@
 						Nickname, profile picture, bio, and cover photo are yours to personalize. Official account details stay with your school records.
 					</div>
 
-					<div class="cover-preview">
-						<img id="coverImage" alt="Custom cover photo preview" hidden>
-					</div>
+					<div class="profile-header-card">
 
-					<div class="display-preview">
-						<img src="resume.jpg" alt="Resume Dizon" id="displayAvatar">
-						<div>
-							<small>
-								Display name preview
-							</small>
-							<strong id="displayName">
-								Resume Dizon
-							</strong>
+						<div class="profile-cover">
+							<img id="coverImage" alt="Cover photo" hidden>
 						</div>
-					</div>
 
-					<div class="field">
-						<label for="nicknameInput">
-							Nickname
-						</label>
-						<input type="text" id="nicknameInput" maxlength="30" autocomplete="off" placeholder="e.g. Dizon">
-					</div>
+						<div class="profile-identity">
 
-					<div class="field">
-						<label for="bioInput">
-							Bio
-						</label>
-						<textarea id="bioInput" maxlength="160" placeholder="A short introduction shown with your personalized profile"></textarea>
-						<div class="char-counter" id="bioCounter" aria-live="polite">
-							0 / 160 characters
+							<img class="profile-avatar" src="resume.jpg" alt="Resume Dizon" id="displayAvatar">
+
+							<div class="profile-id-text">
+
+								<div class="profile-name-row">
+
+									<h3 id="displayName">
+										Resume Dizon
+									</h3>
+
+									<span class="profile-role-badge" id="profileRoleBadge">
+										Administrator
+									</span>
+
+								</div>
+
+								<p class="profile-bio is-empty" id="profileBioDisplay">
+									No bio added yet.
+								</p>
+
+							</div>
+
+							<button class="btn btn-primary" type="button" id="editProfileBtn" aria-expanded="false" aria-controls="profileEdit">
+								Edit Profile
+							</button>
+
 						</div>
+
 					</div>
 
-					<div class="field">
-						<label>
-							Profile Picture
-						</label>
-						<div class="avatar-row">
-							<img class="avatar-preview" src="resume.jpg" alt="Profile picture preview" id="avatarPreview">
-							<div class="upload-row">
-								<button class="btn btn-secondary" type="button" id="avatarUploadBtn">
-									Upload / Change Picture
-								</button>
-								<button class="btn btn-ghost" type="button" id="avatarRemoveBtn" hidden>
-									Remove Picture
-								</button>
+					<div class="profile-edit" id="profileEdit" hidden>
+
+						<div class="field">
+							<label for="nicknameInput">
+								Nickname
+							</label>
+							<input type="text" id="nicknameInput" maxlength="30" autocomplete="off" placeholder="e.g. Dizon">
+						</div>
+
+						<div class="field">
+							<label for="bioInput">
+								Bio
+							</label>
+							<textarea id="bioInput" maxlength="160" placeholder="A short introduction shown with your personalized profile"></textarea>
+							<div class="char-counter" id="bioCounter" aria-live="polite">
+								0 / 160 characters
 							</div>
 						</div>
-						<input type="file" id="avatarInput" accept=".jpg,.jpeg,.png" hidden>
-					</div>
 
-					<div class="field">
-						<label>
-							Cover Photo
-						</label>
-						<div class="upload-row">
-							<button class="btn btn-secondary" type="button" id="coverUploadBtn">
-								Upload / Change Cover
+						<div class="field">
+							<label>
+								Profile Picture
+							</label>
+							<div class="avatar-row">
+								<img class="avatar-preview" src="resume.jpg" alt="Profile picture preview" id="avatarPreview">
+								<div class="upload-row">
+									<button class="btn btn-secondary" type="button" id="avatarUploadBtn">
+										Upload / Change Picture
+									</button>
+									<button class="btn btn-ghost" type="button" id="avatarRemoveBtn" hidden>
+										Remove Picture
+									</button>
+								</div>
+							</div>
+							<input type="file" id="avatarInput" accept=".jpg,.jpeg,.png" hidden>
+						</div>
+
+						<div class="field">
+							<label>
+								Cover Photo
+							</label>
+							<div class="upload-row">
+								<button class="btn btn-secondary" type="button" id="coverUploadBtn">
+									Upload / Change Cover
+								</button>
+								<button class="btn btn-ghost" type="button" id="coverRemoveBtn" hidden>
+									Remove Cover
+								</button>
+							</div>
+							<input type="file" id="coverInput" accept=".jpg,.jpeg,.png" hidden>
+						</div>
+
+						<div class="form-actions">
+							<button class="btn btn-primary" type="button" id="savePersonalization">
+								Save Changes
 							</button>
-							<button class="btn btn-ghost" type="button" id="coverRemoveBtn" hidden>
-								Remove Cover
+							<button class="btn btn-secondary" type="button" id="cancelPersonalization">
+								Cancel
 							</button>
 						</div>
-						<input type="file" id="coverInput" accept=".jpg,.jpeg,.png" hidden>
-					</div>
 
-					<div class="form-actions">
-						<button class="btn btn-primary" type="button" id="savePersonalization">
-							Save Changes
-						</button>
-						<button class="btn btn-secondary" type="button" id="cancelPersonalization">
-							Cancel
-						</button>
 					</div>
 
 					<div class="panel-subheading">
 						Official account details
 					</div>
 
-					<dl class="kv-list">
-						<dt>
-							Official full name
-						</dt>
-						<dd id="profileOfficialName">
-							Resume Dizon
-						</dd>
+					<dl class="info-grid">
 
-						<dt>
-							School email
-						</dt>
-						<dd>
-							Not available
-						</dd>
+						<div class="info-item student-field" hidden>
+							<dt>
+								Student ID
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
 
-						<dt>
-							Role
-						</dt>
-						<dd id="profileOfficialRole">
-							Administrator
-						</dd>
+						<div class="info-item">
+							<dt>
+								Official full name
+							</dt>
+							<dd id="profileOfficialName">
+								Resume Dizon
+							</dd>
+						</div>
+
+						<div class="info-item">
+							<dt>
+								School email
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
+
+						<div class="info-item student-field" hidden>
+							<dt>
+								Course / Program
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
+
+						<div class="info-item student-field" hidden>
+							<dt>
+								Year level
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
+
+						<div class="info-item student-field" hidden>
+							<dt>
+								Section / Block
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
+
+						<div class="info-item">
+							<dt>
+								Contact number
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
+
+						<div class="info-item">
+							<dt>
+								Address
+							</dt>
+							<dd>
+								Not available
+							</dd>
+						</div>
+
+						<div class="info-item info-item-wide">
+							<dt>
+								Role
+							</dt>
+							<dd id="profileOfficialRole">
+								Administrator
+							</dd>
+						</div>
+
 					</dl>
 
 					<p class="readonly-note">
@@ -5472,6 +5688,10 @@
 			const coverRemoveBtn = document.getElementById("coverRemoveBtn");
 			const savePersonalization = document.getElementById("savePersonalization");
 			const cancelPersonalization = document.getElementById("cancelPersonalization");
+			const profileBioDisplay = document.getElementById("profileBioDisplay");
+			const profileRoleBadge = document.getElementById("profileRoleBadge");
+			const editProfileBtn = document.getElementById("editProfileBtn");
+			const profileEdit = document.getElementById("profileEdit");
 
 			let pendingAvatar = null;
 			let pendingCover = null;
@@ -5513,6 +5733,22 @@
 				bioCounter.textContent = bioInput.value.length + " / 160 characters";
 			}
 
+			function renderBio(value)
+			{
+				const trimmed = value.trim();
+
+				if (trimmed)
+				{
+					profileBioDisplay.textContent = trimmed;
+					profileBioDisplay.classList.remove("is-empty");
+				}
+				else
+				{
+					profileBioDisplay.textContent = "No bio added yet.";
+					profileBioDisplay.classList.add("is-empty");
+				}
+			}
+
 			nicknameInput.value = localStorage.getItem("edubridge-nickname") || "";
 			bioInput.value = localStorage.getItem("edubridge-bio") || "";
 
@@ -5520,13 +5756,28 @@
 			renderAvatar(EduBridgeProfile.savedPicture(settingsRole));
 			renderCover(localStorage.getItem("edubridge-cover") || "");
 			renderBioCounter();
+			renderBio(bioInput.value);
+
+			profileRoleBadge.textContent = officialRole;
+
+			if (settingsRole === "student")
+			{
+				document.querySelectorAll(".student-field").forEach(function(field)
+				{
+					field.hidden = false;
+				});
+			}
 
 			nicknameInput.addEventListener("input", function()
 			{
 				renderNickname(nicknameInput.value);
 			});
 
-			bioInput.addEventListener("input", renderBioCounter);
+			bioInput.addEventListener("input", function()
+			{
+				renderBioCounter();
+				renderBio(bioInput.value);
+			});
 
 			function readImageFile(input, onLoaded)
 			{
@@ -5649,12 +5900,16 @@
 
 				renderNickname(nickname);
 				renderBioCounter();
+				renderBio(bioInput.value);
 				applyNavProfile();
+
+				profileEdit.hidden = true;
+				editProfileBtn.setAttribute("aria-expanded", "false");
 
 				showSettingsToast("Changes saved.");
 			});
 
-			cancelPersonalization.addEventListener("click", function()
+			function revertPersonalization()
 			{
 				const storedNickname = localStorage.getItem("edubridge-nickname") || "";
 				const storedBio = localStorage.getItem("edubridge-bio") || "";
@@ -5671,8 +5926,41 @@
 				renderAvatar(EduBridgeProfile.savedPicture(settingsRole));
 				renderCover(localStorage.getItem("edubridge-cover") || "");
 				renderBioCounter();
+				renderBio(storedBio);
+			}
 
-				showSettingsToast("Unsaved changes discarded.");
+			function closeProfileEdit(showNotice)
+			{
+				revertPersonalization();
+
+				profileEdit.hidden = true;
+				editProfileBtn.setAttribute("aria-expanded", "false");
+
+				if (showNotice)
+				{
+					showSettingsToast("Unsaved changes discarded.");
+				}
+			}
+
+			cancelPersonalization.addEventListener("click", function()
+			{
+				closeProfileEdit(true);
+			});
+
+			editProfileBtn.addEventListener("click", function()
+			{
+				if (profileEdit.hidden)
+				{
+					revertPersonalization();
+
+					profileEdit.hidden = false;
+					editProfileBtn.setAttribute("aria-expanded", "true");
+					nicknameInput.focus();
+				}
+				else
+				{
+					closeProfileEdit(true);
+				}
 			});
 
 		}
