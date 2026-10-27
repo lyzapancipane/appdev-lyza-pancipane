@@ -4725,6 +4725,7 @@
 	</button>
 
 
+	<script src="profile-sync.js"></script>
 	<script>
 		try
 		{
@@ -4926,7 +4927,6 @@
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
 					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
 					items.push({ label: "Settings", href: "settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
@@ -5015,7 +5015,7 @@
 
 				if (role === "student" || role === "teacher")
 				{
-					img.src = "junior.jpg";
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
 					img.alt = "Junior Slickback";
 					name.textContent = "Junior Slickback";
 					roleText.textContent = "Student";
@@ -5023,7 +5023,7 @@
 				}
 				else
 				{
-					img.src = "resume.jpg";
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
 					img.alt = "Resume Dizon";
 					name.textContent = "Resume Dizon";
 					roleText.textContent = "Administrator";
@@ -5555,7 +5555,10 @@ const faqTableBody = document.getElementById("faqTableBody");
 	
 			const faqCategories = ["Enrollment", "Academics", "Events", "General"];
 	
-			let faqs = [
+			const faqsStorageKey = "edubridge-faqs";
+			const faqDraftsStorageKey = "edubridge-faq-drafts";
+
+			const faqSeedRecords = [
 				{
 					id: "FAQ-001",
 					question: "How do I submit an inquiry?",
@@ -5621,13 +5624,125 @@ const faqTableBody = document.getElementById("faqTableBody");
 					updated: "Sep 30, 2026"
 				}
 			];
-	
+
+			function loadFaqRecords()
+			{
+				let saved = null;
+
+				try
+				{
+					saved = JSON.parse(localStorage.getItem(faqsStorageKey) || "null");
+				}
+				catch (error)
+				{
+					saved = null;
+				}
+
+				if (!Array.isArray(saved))
+				{
+					return faqSeedRecords.map(function(faq)
+					{
+						return Object.assign({}, faq);
+					});
+				}
+
+				return saved;
+			}
+
+			function persistFaqRecords()
+			{
+				try
+				{
+					localStorage.setItem(faqsStorageKey, JSON.stringify(faqs));
+				}
+				catch (error)
+				{
+					showToast("This browser could not save the FAQ list.");
+				}
+			}
+
+			function importFaqDrafts()
+			{
+				let drafts = [];
+
+				try
+				{
+					const saved = JSON.parse(localStorage.getItem(faqDraftsStorageKey) || "[]");
+
+					if (Array.isArray(saved))
+					{
+						drafts = saved;
+					}
+				}
+				catch (error)
+				{
+					return;
+				}
+
+				if (drafts.length === 0)
+				{
+					return;
+				}
+
+				let imported = 0;
+
+				drafts.forEach(function(draft)
+				{
+					if (!draft || !draft.question || !draft.answer)
+					{
+						return;
+					}
+
+					const alreadyAdded = faqs.some(function(faq)
+					{
+						return Boolean(faq.fromInquiry) && faq.fromInquiry === draft.fromInquiry;
+					});
+
+					if (alreadyAdded)
+					{
+						return;
+					}
+
+					faqs.push(
+					{
+						id: "FAQ-" + String(faqCounter).padStart(3, "0"),
+						question: String(draft.question),
+						answer: String(draft.answer),
+						category: faqCategories.indexOf(draft.category) !== -1 ? draft.category : "General",
+						status: "unpublished",
+						updated: "Just now",
+						fromInquiry: draft.fromInquiry || null
+					});
+
+					faqCounter++;
+					imported++;
+				});
+
+				try
+				{
+					localStorage.setItem(faqDraftsStorageKey, "[]");
+				}
+				catch (error)
+				{
+					return;
+				}
+
+				if (imported > 0)
+				{
+					persistFaqRecords();
+					showToast(imported === 1 ? "1 inquiry response imported as an FAQ draft." :
+						String(imported) + " inquiry responses imported as FAQ drafts.");
+				}
+			}
+
+			let faqs = loadFaqRecords();
+
 			let faqCounter = faqs.reduce(function(max, faq)
 			{
 				const value = parseInt(faq.id.slice(4), 10) || 0;
 				return value > max ? value : max;
 			}, 0) + 1;
-	
+
 			let editingFaqId = null;
 			let deletingFaqId = null;
 	
@@ -5873,6 +5988,7 @@ const faqTableBody = document.getElementById("faqTableBody");
 					showToast("FAQ added.");
 				}
 	
+	persistFaqRecords();
 				closeFaqModal();
 				renderFaqs();
 			});
@@ -5906,6 +6022,7 @@ const faqTableBody = document.getElementById("faqTableBody");
 				{
 					faq.status = faq.status === "published" ? "unpublished" : "published";
 					faq.updated = "Just now";
+					persistFaqRecords();
 					renderFaqs();
 					showToast(faq.status === "published" ? "FAQ published." : "FAQ unpublished.");
 				}
@@ -5930,6 +6047,7 @@ const faqTableBody = document.getElementById("faqTableBody");
 				{
 					return faq.id !== deletingFaqId;
 				});
+				persistFaqRecords();
 	
 				closeDeleteModal();
 				renderFaqs();
@@ -6019,6 +6137,7 @@ const faqTableBody = document.getElementById("faqTableBody");
 			});
 	
 			fillCategoryOptions(categoryFilter, true);
+			importFaqDrafts();
 			renderFaqs();
 
 		}
@@ -6029,4 +6148,3 @@ const faqTableBody = document.getElementById("faqTableBody");
 	</script>
 
 </body>
-
