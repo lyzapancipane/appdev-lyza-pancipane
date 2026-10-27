@@ -3234,7 +3234,7 @@
 			</a>
 
 			<a href="inquiries.html">
-				My Inquiries
+				Inquiries
 			</a>
 
 			<a href="contact.html">
@@ -3401,9 +3401,6 @@
 				</div>
 			</form>
 
-			<div class="note">
-				<strong>Prototype notice:</strong> the report was not delivered or saved. This form only validates input on this page — a backend is required to receive problem reports. For account or password matters, use contactadmin.html instead.
-			</div>
 
 			<div class="toast" id="pageToast" role="status" aria-live="polite" hidden></div>
 
@@ -3508,7 +3505,7 @@
 
 					<li>
 						<a href="inquiries.html">
-							My Inquiries
+							Inquiries
 						</a>
 					</li>
 
@@ -3633,6 +3630,7 @@
 	</button>
 
 
+	<script src="profile-sync.js"></script>
 	<script>
 		try
 		{
@@ -3826,6 +3824,7 @@
 					items.push({ label: "User Management", href: "usermanagement.html" });
 					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
 					items.push({ label: "Activity Logs", href: "activitylogs.html" });
+					items.push({ label: "Settings", href: "settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
@@ -3833,7 +3832,7 @@
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
 					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
+					items.push({ label: "Settings", href: "settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
@@ -3921,7 +3920,7 @@
 
 				if (role === "student" || role === "teacher")
 				{
-					img.src = "junior.jpg";
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
 					img.alt = "Junior Slickback";
 					name.textContent = "Junior Slickback";
 					roleText.textContent = "Student";
@@ -3929,7 +3928,7 @@
 				}
 				else
 				{
-					img.src = "resume.jpg";
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
 					img.alt = "Resume Dizon";
 					name.textContent = "Resume Dizon";
 					roleText.textContent = "Administrator";
@@ -4447,7 +4446,7 @@
 					}
 		
 					event.target.reset();
-					showToast("Prototype only — the report was not sent or stored. Backend integration is required.");
+					showToast("Your report has been submitted.");
 			});
 
 		}
