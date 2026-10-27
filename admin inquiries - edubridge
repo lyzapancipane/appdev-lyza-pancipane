@@ -1,0 +1,6571 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Send an inquiry to the EduBridge team, review the follow-up steps, and reach the school through the official contact details.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		Inquiries | EduBridge
+	</title>
+	<style>
+		*
+		{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		:root
+		{
+			--background: #f3f3f3;
+			--surface: #ffffff;
+			--surface-soft: #faf9fc;
+			--text: #17152d;
+			--text-soft: #696774;
+			--text-muted: #77737e;
+			--border: #e1e1e1;
+			--purple: #7138c8;
+			--purple-light: #eee5ff;
+			--purple-soft: #eadcff;
+			--green: #1f9d63;
+			--green-soft: #e7f6ee;
+			--amber: #a4670f;
+			--amber-soft: #fbf1dd;
+			--red: #d64550;
+			--red-soft: #fdeced;
+			--shadow: rgba(40, 24, 75, 0.08);
+			--mission-text: #eee8f6;
+		}
+
+		body.dark-mode
+		{
+			--background: #090817;
+			--surface: #131124;
+			--surface-soft: #18162b;
+			--text: #f7f3ff;
+			--text-soft: #c4bfd2;
+			--text-muted: #9e99ae;
+			--border: #2d2941;
+			--purple: #a970ff;
+			--purple-light: #251b3b;
+			--purple-soft: #241934;
+			--green: #4cd08d;
+			--green-soft: #16301f;
+			--amber: #f2b45f;
+			--amber-soft: #33280f;
+			--red: #ff7b85;
+			--red-soft: #331a1e;
+			--shadow: rgba(0, 0, 0, 0.35);
+		}
+
+		html
+		{
+			scroll-behavior: smooth;
+		}
+
+		body
+		{
+			font-family: Poppins, Arial, sans-serif;
+			color: var(--text);
+			background: var(--background);
+			overflow-x: hidden;
+			transition: background 0.45s ease, color 0.45s ease;
+		}
+
+		body.dark-mode
+		{
+			background:
+				radial-gradient(
+					circle at 12% 10%,
+					rgba(113, 56, 200, 0.12),
+					transparent 28%
+				),
+				radial-gradient(
+					circle at 88% 45%,
+					rgba(68, 72, 190, 0.08),
+					transparent 30%
+				),
+				#090817;
+		}
+
+		a
+		{
+			color: inherit;
+			text-decoration: none;
+		}
+
+		button,
+		input,
+		select
+		{
+			font: inherit;
+		}
+
+		button
+		{
+			font-family: inherit;
+			cursor: pointer;
+		}
+
+		button:focus-visible,
+		a:focus-visible,
+		input:focus-visible,
+		select:focus-visible
+		{
+			outline: 2px solid #a970ff;
+			outline-offset: 2px;
+		}
+
+		[hidden]
+		{
+			display: none !important;
+		}
+
+		body.theme-changing::before
+		{
+			content: "";
+			position: fixed;
+			width: 30px;
+			height: 30px;
+			left: var(--theme-x);
+			top: var(--theme-y);
+			transform: translate(-50%, -50%) scale(0);
+			border-radius: 50%;
+			background: var(--theme-circle);
+			z-index: 9999;
+			pointer-events: none;
+			animation: themeReveal 0.65s ease-out forwards;
+		}
+
+		@keyframes themeReveal
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) scale(0);
+				opacity: 0.35;
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) scale(100);
+				opacity: 0;
+			}
+		}
+
+		.cursor-gradient
+		{
+			position: fixed;
+			width: 500px;
+			height: 500px;
+			left: 0;
+			top: 0;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			pointer-events: none;
+			z-index: 9998;
+			opacity: 0;
+			background:
+				radial-gradient(
+					circle,
+					rgba(185, 120, 255, 0.16) 0%,
+					rgba(86, 105, 255, 0.10) 28%,
+					rgba(225, 80, 160, 0.06) 48%,
+					transparent 72%
+				);
+			filter: blur(32px);
+			transition: opacity 0.35s ease;
+		}
+
+		body.cursor-ready .cursor-gradient
+		{
+			opacity: 1;
+		}
+
+		body.dark-mode .cursor-gradient
+		{
+			background:
+				radial-gradient(
+					circle,
+					rgba(174, 112, 255, 0.23) 0%,
+					rgba(88, 103, 255, 0.14) 30%,
+					rgba(228, 78, 173, 0.08) 50%,
+					transparent 73%
+				);
+		}
+
+		.navbar
+		{
+			height: 88px;
+			padding: 0 36px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 20;
+			color: white;
+			transition:
+				height 0.3s ease,
+				background 0.3s ease,
+				box-shadow 0.3s ease,
+				backdrop-filter 0.3s ease;
+		}
+
+		.navbar.scrolled
+		{
+			height: 72px;
+			background: rgba(8, 5, 29, 0.82);
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+			backdrop-filter: blur(14px);
+		}
+
+		.logo
+		{
+			display: flex;
+			align-items: center;
+			gap: 2px;
+			font-size: 18px;
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		.logo img
+		{
+			width: 90px;
+			height: 90px;
+			object-fit: contain;
+			flex-shrink: 0;
+			transition: transform 0.3s ease;
+		}
+
+		.logo:hover img
+		{
+			transform: rotate(-4deg) scale(1.04);
+		}
+
+		.brand-name
+		{
+			display: flex;
+			align-items: center;
+			margin-left: -3px;
+			letter-spacing: -0.4px;
+		}
+
+		.brand-edu
+		{
+			color: white;
+		}
+
+		.brand-bridge
+		{
+			color: #7339c2;
+		}
+
+		.nav-links
+		{
+			display: flex;
+			align-items: center;
+			gap: 28px;
+			font-size: 13px;
+		}
+
+		.nav-links a
+		{
+			position: relative;
+			color: #ffffffdd;
+			transition: 0.2s;
+		}
+
+		.nav-links a::after
+		{
+			position: absolute;
+			right: 50%;
+			bottom: -7px;
+			left: 50%;
+			height: 2px;
+			border-radius: 10px;
+			background: #b77aff;
+			content: "";
+			transition: left 0.25s ease, right 0.25s ease;
+		}
+
+		.nav-links a:hover,
+		.nav-links .active
+		{
+			color: #c58cff;
+		}
+
+		.nav-links a:hover::after,
+		.nav-links a:focus-visible::after,
+		.nav-links .active::after
+		{
+			right: 0;
+			left: 0;
+		}
+
+		.account-menu
+		{
+			position: absolute;
+			top: calc(100% - 1px);
+			right: 36px;
+			width: 264px;
+			display: none;
+			flex-direction: column;
+			gap: 2px;
+			padding: 8px;
+			border: 1px solid #ffffff25;
+			border-radius: 6px;
+			background: rgba(8, 5, 29, 0.97);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+			z-index: 1001;
+		}
+
+		.navbar.menu-open .account-menu
+		{
+			display: flex;
+		}
+
+		.account-menu-label
+		{
+			padding: 6px 10px;
+			color: #ffffff80;
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+
+		.account-menu-item
+		{
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			width: 100%;
+			padding: 10px;
+			border: 0;
+			border-radius: 4px;
+			background: none;
+			color: #ffffffdd;
+			font-family: inherit;
+			font-size: 13px;
+			text-align: left;
+			text-decoration: none;
+			cursor: pointer;
+			transition: background 0.15s ease, color 0.15s ease;
+		}
+
+		.account-menu-item:hover,
+		.account-menu-item:focus-visible
+		{
+			background: #ffffff10;
+			color: #c58cff;
+		}
+
+		.account-menu-item[aria-disabled="true"]
+		{
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+
+		.account-menu-item[aria-disabled="true"]:hover
+		{
+			background: none;
+			color: #ffffffdd;
+		}
+
+		.account-menu-divider
+		{
+			height: 1px;
+			margin: 4px 0;
+			background: #ffffff25;
+		}
+
+		.submenu-parent
+		{
+			justify-content: space-between;
+		}
+
+		.submenu-caret
+		{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex: 0 0 auto;
+			transition: transform 0.2s ease;
+		}
+
+		.submenu-caret svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.submenu-parent[aria-expanded="true"] .submenu-caret
+		{
+			transform: rotate(180deg);
+		}
+
+		.account-submenu
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			margin: 2px 0;
+			padding-left: 14px;
+			border-left: 1px solid #ffffff2d;
+		}
+
+		.account-submenu[hidden]
+		{
+			display: none;
+		}
+
+		.account-submenu .account-menu-item
+		{
+			padding: 8px 10px;
+			font-size: 12px;
+		}
+
+		.nav-buttons
+		{
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.theme-button,
+		.login-button
+		{
+			height: 34px;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			background: #ffffff12;
+			color: white;
+			transition: 0.25s ease;
+		}
+
+		.menu-button
+		{
+			display: inline-flex;
+			width: 34px;
+			height: 34px;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			background: #ffffff12;
+			color: white;
+			transition: 0.25s ease;
+		}
+
+		.theme-button
+		{
+			width: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.theme-button:hover,
+		.menu-button:hover
+		{
+			background: #ffffff20;
+			border-color: #ffffff88;
+			transform: translateY(-2px) rotate(8deg);
+		}
+
+		.theme-button:active
+		{
+			transform: scale(0.88);
+		}
+
+		.menu-button:active
+		{
+			transform: scale(0.88);
+		}
+
+		.theme-button svg,
+		.menu-button svg
+		{
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
+		}
+
+		.login-button
+		{
+			display: inline-flex;
+			padding: 0 15px;
+			align-items: center;
+			justify-content: center;
+			font-size: 12px;
+		}
+
+		.login-button:hover
+		{
+			background: #7138c8;
+			border-color: #a970ff;
+			transform: translateY(-2px);
+		}
+
+		.login-button:active
+		{
+			transform: scale(0.96);
+		}
+
+		.nav-profile
+		{
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: #ffffffdd;
+			font-size: 12px;
+			white-space: nowrap;
+		}
+
+		.nav-profile img
+		{
+			width: 34px;
+			height: 34px;
+			border: 1px solid #ffffff55;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		.nav-profile:hover img
+		{
+			border-color: #c58cff;
+		}
+
+		.nav-profile-text
+		{
+			display: flex;
+			flex-direction: column;
+			line-height: 1.3;
+		}
+
+		.nav-profile-text strong
+		{
+			color: white;
+			font-size: 12px;
+			font-weight: 600;
+		}
+
+		.nav-profile-text small
+		{
+			color: #ffffff99;
+			font-size: 10px;
+		}
+
+		.nav-bell
+		{
+			display: flex;
+			width: 34px;
+			height: 34px;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			background: #ffffff12;
+			color: white;
+			transition: 0.25s ease;
+		}
+
+		.nav-bell:hover,
+		.nav-bell:focus-visible
+		{
+			background: #7138c8;
+			border-color: #a970ff;
+			transform: translateY(-2px);
+		}
+
+		.nav-bell:active
+		{
+			transform: scale(0.88);
+		}
+
+		.nav-bell svg
+		{
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
+		}
+
+		.hero
+		{
+			min-height: 470px;
+			padding: 130px 36px 70px;
+			display: flex;
+			align-items: center;
+			position: relative;
+			overflow: hidden;
+			isolation: isolate;
+			background: #08051d;
+		}
+
+		.hero-image
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -10;
+			background-image: url("Edubridge-Hero-About.png");
+			background-size: cover;
+			background-position: center;
+			opacity: 0.62;
+			transform: scale(1.04);
+			transition: transform 0.25s ease-out;
+		}
+
+		.hero-base
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -9;
+			background:
+				linear-gradient(
+					135deg,
+					rgba(5, 5, 35, 0.7),
+					rgba(14, 4, 40, 0.32),
+					rgba(5, 5, 30, 0.65)
+				);
+		}
+
+		.gradient-layer
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -8;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		.gradient
+		{
+			position: absolute;
+			border-radius: 50%;
+			filter: blur(65px);
+			mix-blend-mode: screen;
+			opacity: 0.72;
+		}
+
+		.gradient-purple
+		{
+			width: 430px;
+			height: 430px;
+			background: #7138c8;
+			left: var(--purple-x, 4%);
+			top: var(--purple-y, 5%);
+			animation: purpleFloat 12s ease-in-out infinite alternate;
+		}
+
+		.gradient-blue
+		{
+			width: 390px;
+			height: 390px;
+			background: #315ee8;
+			left: var(--blue-x, 93%);
+			top: var(--blue-y, 8%);
+			animation: blueFloat 14s ease-in-out infinite alternate;
+		}
+
+		.gradient-pink
+		{
+			width: 360px;
+			height: 360px;
+			background: #d94f91;
+			left: var(--pink-x, 15%);
+			top: var(--pink-y, 57%);
+			animation: pinkFloat 13s ease-in-out infinite alternate;
+		}
+
+		.gradient-violet
+		{
+			width: 430px;
+			height: 430px;
+			background: #933cff;
+			left: var(--violet-x, 55%);
+			top: var(--violet-y, 38%);
+			animation: violetFloat 15s ease-in-out infinite alternate;
+		}
+
+		.gradient-orange
+		{
+			width: 400px;
+			height: 400px;
+			background: #e69a42;
+			left: var(--orange-x, 94%);
+			top: var(--orange-y, 88%);
+			animation: orangeFloat 11s ease-in-out infinite alternate;
+		}
+
+		.gradient-cyan
+		{
+			width: 340px;
+			height: 340px;
+			background: #387ee8;
+			left: var(--cyan-x, 5%);
+			top: var(--cyan-y, 93%);
+			animation: cyanFloat 16s ease-in-out infinite alternate;
+		}
+
+		.gradient-pink-small
+		{
+			width: 270px;
+			height: 270px;
+			background: #b73fbd;
+			left: var(--pink-small-x, 78%);
+			top: var(--pink-small-y, 67%);
+			animation: smallPinkFloat 12s ease-in-out infinite alternate;
+		}
+
+		.hero-overlay
+		{
+			position: absolute;
+			inset: 0;
+			z-index: -6;
+			pointer-events: none;
+			background:
+				linear-gradient(
+					90deg,
+					rgba(5, 5, 35, 0.58),
+					rgba(10, 5, 35, 0.12),
+					rgba(5, 5, 35, 0.52)
+				);
+		}
+
+		.hero-content
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+			position: relative;
+			z-index: 5;
+		}
+
+		.hero-label
+		{
+			color: #c18cff;
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			margin-bottom: 12px;
+		}
+
+		.hero h1
+		{
+			color: white;
+			font-size: 52px;
+			line-height: 1.1;
+			font-weight: 600;
+			margin-bottom: 18px;
+		}
+
+		.hero h1 span
+		{
+			color: #b77aff;
+		}
+
+		.hero p
+		{
+			max-width: 650px;
+			color: #d5d1df;
+			font-size: 15px;
+			line-height: 1.8;
+		}
+
+		.hero-actions
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 10px;
+			margin-top: 24px;
+		}
+
+		.question-button
+		{
+			display: inline-flex;
+			height: 32px;
+			align-items: center;
+			justify-content: center;
+			padding: 0 14px;
+			border: none;
+			border-radius: 5px;
+			background: #7138c8;
+			color: white;
+			font-size: 10px;
+			transition: 0.2s ease;
+		}
+
+		.question-button:hover
+		{
+			background: #8c50df;
+			transform: translateY(-1px);
+		}
+
+		.question-button:active
+		{
+			transform: scale(0.95);
+		}
+		.content-section
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 45px 0;
+		}
+
+		.section-heading
+		{
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.section-label
+		{
+			color: var(--purple);
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			margin-bottom: 6px;
+		}
+
+		.section-heading h2
+		{
+			font-size: 32px;
+			font-weight: 600;
+			color: var(--text);
+			margin-bottom: 10px;
+		}
+
+		.section-heading p
+		{
+			max-width: 650px;
+			margin: 0 auto;
+			color: var(--text-muted);
+			font-size: 13px;
+			line-height: 1.7;
+		}
+
+		.contact-section
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+			padding: 45px 0 55px;
+		}
+
+		.contact-top
+		{
+			display: grid;
+			grid-template-columns: 1.5fr 0.8fr;
+			gap: 18px;
+			margin-bottom: 18px;
+		}
+
+		.contact-bottom
+		{
+			display: grid;
+			grid-template-columns: 0.8fr 1.5fr;
+			gap: 18px;
+		}
+
+		.contact-card
+		{
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 5px 20px var(--shadow);
+			transition: 0.3s ease;
+		}
+
+		.contact-card:hover
+		{
+			transform: translateY(-5px);
+			border-color: #a970ff;
+			box-shadow: 0 15px 35px var(--shadow),
+				0 0 22px rgba(113, 56, 200, 0.08);
+		}
+
+		.contact-form-card
+		{
+			padding: 25px;
+		}
+
+		.contact-form-card h2,
+		.reach-card h2
+		{
+			color: var(--text);
+			font-size: 21px;
+			font-weight: 600;
+			margin-bottom: 8px;
+		}
+
+		.contact-form-card > p,
+		.reach-card > p
+		{
+			color: var(--text-soft);
+			font-size: 12px;
+			line-height: 1.7;
+			margin-bottom: 22px;
+		}
+
+		.form-row
+		{
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 15px;
+		}
+
+		.form-group
+		{
+			margin-bottom: 15px;
+		}
+
+		.form-group label
+		{
+			display: block;
+			color: var(--text);
+			font-size: 11px;
+			font-weight: 600;
+			margin-bottom: 7px;
+		}
+
+		.form-group input,
+		.form-group textarea
+		{
+			width: 100%;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 12px;
+			outline: none;
+			transition: 0.2s ease;
+		}
+
+		.form-group input
+		{
+			height: 40px;
+			padding: 0 12px;
+		}
+
+		.form-group textarea
+		{
+			min-height: 125px;
+			padding: 11px 12px;
+			resize: vertical;
+		}
+
+		.form-group input::placeholder,
+		.form-group textarea::placeholder
+		{
+			color: var(--text-muted);
+		}
+
+		.form-group input:focus,
+		.form-group textarea:focus
+		{
+			border-color: var(--purple);
+			box-shadow: 0 0 0 3px var(--purple-light);
+		}
+
+		.send-button
+		{
+			height: 40px;
+			padding: 0 17px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			border: none;
+			border-radius: 5px;
+			background: #7138c8;
+			color: white;
+			font-size: 11px;
+			font-weight: 600;
+			transition: 0.25s ease;
+		}
+
+		.send-button:hover
+		{
+			background: #5f2fb0;
+			transform: translateY(-2px);
+			box-shadow: 0 8px 18px rgba(113, 56, 200, 0.22);
+		}
+
+		.send-button:active
+		{
+			transform: scale(0.97);
+		}
+
+		.send-button svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.stats-grid
+		{
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+			gap: 14px;
+			margin-bottom: 24px;
+		}
+
+		.stat-card
+		{
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 18px;
+			box-shadow: 0 10px 26px var(--shadow);
+		}
+
+		.stat-card .stat-label
+		{
+			display: block;
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 0.6px;
+			text-transform: uppercase;
+			color: var(--text-muted);
+			margin-bottom: 8px;
+		}
+
+		.stat-card .stat-value
+		{
+			font-size: 30px;
+			font-weight: 700;
+			color: var(--purple);
+		}
+
+		.section-link-row
+		{
+			display: flex;
+			justify-content: center;
+			margin-bottom: 20px;
+		}
+
+		.section-link
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 7px;
+			height: 34px;
+			padding: 0 15px;
+			border: 1px solid var(--purple);
+			border-radius: 999px;
+			background: var(--surface);
+			color: var(--purple);
+			font-size: 11.5px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: 0.2s ease;
+		}
+
+		.section-link:hover
+		{
+			background: var(--purple);
+			color: white;
+		}
+
+		.respond-button
+		{
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			height: 30px;
+			padding: 0 14px;
+			border-radius: 5px;
+			background: #7138c8;
+			color: white;
+			font-size: 11px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: 0.2s ease;
+		}
+
+		.respond-button:hover
+		{
+			background: #5f2fb0;
+			transform: translateY(-1px);
+		}
+
+		.state-icon--sleeping
+		{
+			position: relative;
+			background: var(--purple-light);
+			color: var(--purple);
+		}
+
+		.sleep-z
+		{
+			position: absolute;
+			top: 7px;
+			right: 7px;
+			color: var(--purple);
+			font-size: 9px;
+			font-weight: 700;
+			line-height: 1;
+			animation: sleepFloat 2.4s ease-in-out infinite;
+		}
+
+		.sleep-z--mid
+		{
+			top: 3px;
+			right: 3px;
+			font-size: 11px;
+			animation-delay: 0.4s;
+		}
+
+		.sleep-z--big
+		{
+			top: -1px;
+			right: -1px;
+			font-size: 13px;
+			animation-delay: 0.8s;
+		}
+
+		@keyframes sleepFloat
+		{
+			0%, 100%
+			{
+				opacity: 0.35;
+				transform: translateY(2px);
+			}
+			50%
+			{
+				opacity: 1;
+				transform: translateY(-2px);
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce)
+		{
+			.sleep-z
+			{
+				animation: none;
+				opacity: 0.7;
+			}
+
+			.respond-button:hover
+			{
+				transform: none;
+			}
+		}
+
+		.state-card
+		{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+			width: 100%;
+			padding: 34px 24px;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			background: var(--surface);
+			text-align: center;
+			transition: 0.25s ease;
+		}
+
+		.state-card[hidden]
+		{
+			display: none;
+		}
+
+		.state-icon
+		{
+			display: flex;
+			width: 46px;
+			height: 46px;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			background: var(--surface-soft);
+			color: var(--text-muted);
+			transition: 0.25s ease;
+		}
+
+		.state-icon svg
+		{
+			width: 22px;
+			height: 22px;
+			fill: currentColor;
+		}
+
+		.state-title
+		{
+			margin: 4px 0 0;
+			color: var(--text);
+			font-size: 16px;
+			font-weight: 600;
+		}
+
+		.state-text
+		{
+			max-width: 360px;
+			margin: 0;
+			color: var(--text-soft);
+			font-size: 12px;
+			line-height: 1.7;
+		}
+
+		.state-card--error .state-icon
+		{
+			background: var(--red-soft);
+			color: var(--red);
+		}
+
+		.state-card--error .state-title
+		{
+			color: var(--red);
+		}
+
+		.state-button
+		{
+			display: inline-flex;
+			height: 36px;
+			margin-top: 8px;
+			align-items: center;
+			justify-content: center;
+			padding: 0 16px;
+			border: 1px solid #7138c8;
+			border-radius: 5px;
+			background: #7138c8;
+			color: white;
+			font-family: Poppins, Arial, sans-serif;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			text-decoration: none;
+			transition: 0.25s ease;
+		}
+
+		.state-button:hover
+		{
+			background: #5f2fb0;
+			border-color: #5f2fb0;
+			transform: translateY(-2px);
+			box-shadow: 0 8px 18px rgba(113, 56, 200, 0.22);
+		}
+
+		.state-button:active
+		{
+			transform: scale(0.97);
+		}
+
+		.state-button:focus-visible
+		{
+			outline: none;
+			box-shadow: 0 0 0 3px var(--purple-light);
+		}
+
+		.state-button[disabled]
+		{
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+
+		.state-button[disabled]:hover
+		{
+			background: #7138c8;
+			border-color: #7138c8;
+			transform: none;
+			box-shadow: none;
+		}
+
+		.reach-card
+		{
+			padding: 25px;
+		}
+
+		.reach-item
+		{
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 17px;
+		}
+
+		.reach-icon
+		{
+			width: 38px;
+			height: 38px;
+			min-width: 38px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 5px;
+			background: var(--purple-light);
+			color: var(--purple);
+		}
+
+		.reach-icon svg
+		{
+			width: 17px;
+			height: 17px;
+			fill: currentColor;
+		}
+
+		.reach-item h4
+		{
+			color: var(--text);
+			font-size: 11px;
+			font-weight: 600;
+			margin-bottom: 3px;
+		}
+
+		.reach-item a,
+		.reach-item p
+		{
+			color: var(--text-soft);
+			font-size: 11px;
+			line-height: 1.5;
+		}
+
+		.reach-item a:hover
+		{
+			color: var(--purple);
+		}
+
+		.reach-socials
+		{
+			display: flex;
+			gap: 8px;
+			margin-top: 22px;
+		}
+
+		.reach-social
+		{
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+			color: var(--text-soft);
+			transition: 0.2s ease;
+		}
+
+		.reach-social:hover
+		{
+			background: var(--purple);
+			border-color: var(--purple);
+			color: white;
+			transform: translateY(-2px);
+		}
+
+		.reach-social svg
+		{
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
+		}
+
+
+		.inquiry-top
+		{
+			display: grid;
+			grid-template-columns: 1.5fr 0.8fr;
+			gap: 18px;
+		}
+
+		#inquirySection
+		{
+			scroll-margin-top: 100px;
+		}
+
+		.inquiry-note
+		{
+			margin-top: 15px;
+			padding: 10px 12px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+			color: var(--text-muted);
+			font-size: 11px;
+			line-height: 1.6;
+		}
+
+		.form-group select
+		{
+			width: 100%;
+			height: 40px;
+			padding: 0 12px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 12px;
+			outline: none;
+			transition: 0.2s ease;
+		}
+
+		.form-group select:focus
+		{
+			border-color: var(--purple);
+			box-shadow: 0 0 0 3px var(--purple-light);
+		}
+
+		.form-error
+		{
+			display: block;
+			margin-top: 6px;
+			color: var(--red);
+			font-size: 11px;
+			line-height: 1.5;
+		}
+
+		.form-error[hidden]
+		{
+			display: none;
+		}
+
+		.form-group .file-control
+		{
+			display: inline-flex;
+			height: 36px;
+			align-items: center;
+			gap: 7px;
+			margin-bottom: 0;
+			padding: 0 14px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+			color: var(--text);
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: 0.2s ease;
+		}
+
+		.form-group .file-control:hover
+		{
+			border-color: var(--purple);
+			color: var(--purple);
+		}
+
+		.file-control svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.form-group .file-input
+		{
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			border: none;
+			overflow: hidden;
+			clip: rect(0 0 0 0);
+			white-space: nowrap;
+		}
+
+		.file-hint
+		{
+			margin-top: 7px;
+			color: var(--text-muted);
+			font-size: 11px;
+			line-height: 1.5;
+		}
+
+		.file-selection
+		{
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-top: 10px;
+			padding: 9px 12px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+		}
+
+		.file-selection[hidden]
+		{
+			display: none;
+		}
+
+		.file-name
+		{
+			flex: 1;
+			min-width: 0;
+			color: var(--text);
+			font-size: 11px;
+			font-weight: 600;
+			overflow-wrap: anywhere;
+		}
+
+		.file-remove
+		{
+			display: inline-flex;
+			width: 26px;
+			height: 26px;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text-muted);
+			cursor: pointer;
+			transition: 0.2s ease;
+		}
+
+		.file-remove:hover
+		{
+			border-color: var(--red);
+			color: var(--red);
+		}
+
+		.file-remove svg
+		{
+			width: 12px;
+			height: 12px;
+			fill: currentColor;
+		}
+
+		.inquiry-sidebar
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 18px;
+		}
+
+		.tips-card
+		{
+			padding: 25px;
+		}
+
+		.tips-card h2
+		{
+			color: var(--text);
+			font-size: 21px;
+			font-weight: 600;
+			margin-bottom: 8px;
+		}
+
+		.tips-card > p
+		{
+			color: var(--text-soft);
+			font-size: 12px;
+			line-height: 1.7;
+			margin-bottom: 16px;
+		}
+
+		.tips-list
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.tips-list li
+		{
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+			color: var(--text-soft);
+			font-size: 12px;
+			line-height: 1.6;
+		}
+
+		.tips-list svg
+		{
+			width: 15px;
+			height: 15px;
+			min-width: 15px;
+			margin-top: 2px;
+			fill: var(--purple);
+		}
+
+		.inquiries-toolbar
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			margin-bottom: 14px;
+		}
+
+		.status-tabs
+		{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.status-tab
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 7px;
+			height: 34px;
+			padding: 0 13px;
+			border: 1px solid var(--border);
+			border-radius: 999px;
+			background: var(--surface);
+			color: var(--text-soft);
+			font-family: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: 0.2s ease;
+		}
+
+		.status-tab:hover
+		{
+			border-color: var(--purple);
+			color: var(--purple);
+		}
+
+		.status-tab.active
+		{
+			border-color: var(--purple);
+			background: var(--purple);
+			color: white;
+		}
+
+		.tab-count
+		{
+			display: inline-flex;
+			min-width: 18px;
+			height: 18px;
+			align-items: center;
+			justify-content: center;
+			padding: 0 5px;
+			border-radius: 999px;
+			background: var(--surface-soft);
+			color: var(--text-muted);
+			font-size: 10px;
+		}
+
+		.status-tab.active .tab-count
+		{
+			background: rgba(255, 255, 255, 0.22);
+			color: white;
+		}
+
+		.toolbar-controls
+		{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.toolbar-search
+		{
+			width: 200px;
+			height: 34px;
+			padding: 0 12px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 11px;
+			outline: none;
+			transition: 0.2s ease;
+		}
+
+		.toolbar-search:focus
+		{
+			border-color: var(--purple);
+			box-shadow: 0 0 0 3px var(--purple-light);
+		}
+
+		.toolbar-filter
+		{
+			height: 34px;
+			padding: 0 10px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text);
+			font-family: inherit;
+			font-size: 11px;
+			outline: none;
+		}
+
+		.results-summary
+		{
+			margin: 0 0 12px;
+			color: var(--text-muted);
+			font-size: 11px;
+		}
+
+		.table-wrap
+		{
+			overflow-x: auto;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			background: var(--surface);
+		}
+
+		.table-wrap[hidden]
+		{
+			display: none;
+		}
+
+		.inquiries-table
+		{
+			width: 100%;
+			min-width: 640px;
+			border-collapse: collapse;
+		}
+
+		.inquiries-table th
+		{
+			padding: 12px 16px;
+			border-bottom: 1px solid var(--border);
+			color: var(--text-muted);
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 0.6px;
+			text-align: left;
+			text-transform: uppercase;
+			white-space: nowrap;
+		}
+
+		.inquiries-table td
+		{
+			padding: 13px 16px;
+			border-bottom: 1px solid var(--border);
+			color: var(--text-soft);
+			font-size: 12px;
+			vertical-align: middle;
+		}
+
+		.inquiries-table tbody tr:last-child td
+		{
+			border-bottom: none;
+		}
+
+		.inquiries-table tbody tr:hover
+		{
+			background: var(--surface-soft);
+		}
+
+		.cell-id
+		{
+			color: var(--text);
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		.cell-subject
+		{
+			max-width: 240px;
+			color: var(--text);
+			font-weight: 600;
+		}
+
+		.status-badge
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 4px 10px;
+			border-radius: 999px;
+			font-size: 11px;
+			font-weight: 600;
+			white-space: nowrap;
+		}
+
+		.status-badge-icon
+		{
+			display: inline-flex;
+		}
+
+		.status-badge svg
+		{
+			width: 12px;
+			height: 12px;
+			fill: currentColor;
+		}
+
+		.status-badge--pending
+		{
+			background: var(--amber-soft);
+			color: var(--amber);
+		}
+
+		.status-badge--answered
+		{
+			background: var(--green-soft);
+			color: var(--green);
+		}
+
+		.status-badge--closed
+		{
+			background: var(--surface-soft);
+			color: var(--text-muted);
+		}
+
+		.cell-response
+		{
+			max-width: 230px;
+			color: var(--text-soft);
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.cell-response--empty
+		{
+			color: var(--text-muted);
+		}
+
+		.view-button
+		{
+			height: 30px;
+			padding: 0 12px;
+			border: 1px solid var(--purple);
+			border-radius: 5px;
+			background: transparent;
+			color: var(--purple);
+			font-family: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: 0.2s ease;
+			white-space: nowrap;
+		}
+
+		.view-button:hover,
+		.view-button[aria-current="true"]
+		{
+			background: var(--purple);
+			color: white;
+		}
+
+		.pagination
+		{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 14px;
+			margin-top: 16px;
+		}
+
+		.pagination[hidden]
+		{
+			display: none;
+		}
+
+		.page-button
+		{
+			height: 32px;
+			padding: 0 14px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text-soft);
+			font-family: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: 0.2s ease;
+		}
+
+		.page-button:hover:not([disabled])
+		{
+			border-color: var(--purple);
+			color: var(--purple);
+		}
+
+		.page-button[disabled]
+		{
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		.page-info
+		{
+			color: var(--text-muted);
+			font-size: 11px;
+		}
+
+		.details-panel
+		{
+			padding: 26px;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			background: var(--surface);
+			box-shadow: 0 5px 20px var(--shadow);
+		}
+
+		.details-header
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 12px;
+			margin-bottom: 18px;
+			padding-bottom: 16px;
+			border-bottom: 1px solid var(--border);
+		}
+
+		.details-id
+		{
+			color: var(--text);
+			font-size: 17px;
+			font-weight: 600;
+		}
+
+		.details-close
+		{
+			display: inline-flex;
+			height: 30px;
+			margin-left: auto;
+			align-items: center;
+			gap: 6px;
+			padding: 0 12px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface-soft);
+			color: var(--text-soft);
+			font-family: inherit;
+			font-size: 11px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: 0.2s ease;
+		}
+
+		.details-close:hover
+		{
+			border-color: var(--red);
+			color: var(--red);
+		}
+
+		.details-grid
+		{
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 14px 22px;
+			margin-bottom: 18px;
+		}
+
+		.detail-field
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 3px;
+		}
+
+		.detail-field--wide
+		{
+			grid-column: 1 / -1;
+		}
+
+		.detail-label
+		{
+			color: var(--text-muted);
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+			text-transform: uppercase;
+		}
+
+		.detail-value
+		{
+			color: var(--text);
+			font-size: 12px;
+			line-height: 1.7;
+			overflow-wrap: anywhere;
+		}
+
+		.attachment-row
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.attachment-link
+		{
+			display: inline-flex;
+			height: 28px;
+			align-items: center;
+			gap: 6px;
+			padding: 0 11px;
+			border: 1px solid var(--purple);
+			border-radius: 5px;
+			color: var(--purple);
+			font-size: 11px;
+			font-weight: 600;
+			text-decoration: none;
+			transition: 0.2s ease;
+		}
+
+		.attachment-link:hover
+		{
+			background: var(--purple);
+			color: white;
+		}
+
+		.details-subheading
+		{
+			margin: 0 0 10px;
+			color: var(--text);
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		.conversation
+		{
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			margin-bottom: 18px;
+		}
+
+		.conversation-item
+		{
+			padding: 12px 14px;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			background: var(--surface-soft);
+		}
+
+		.conversation-meta
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 8px;
+			margin-bottom: 5px;
+			color: var(--text-muted);
+			font-size: 10px;
+			font-weight: 600;
+		}
+
+		.conversation-author
+		{
+			color: var(--purple);
+		}
+
+		.conversation-item p
+		{
+			margin: 0;
+			color: var(--text-soft);
+			font-size: 12px;
+			line-height: 1.7;
+			white-space: pre-line;
+		}
+
+		.pending-box
+		{
+			margin-bottom: 18px;
+			padding: 14px 16px;
+			border: 1px dashed var(--border);
+			border-radius: 6px;
+			background: var(--surface-soft);
+			color: var(--text-muted);
+			font-size: 12px;
+			line-height: 1.7;
+		}
+
+		.followup-area
+		{
+			padding-top: 16px;
+			border-top: 1px solid var(--border);
+		}
+
+		.followup-form
+		{
+			margin-top: 12px;
+		}
+
+		.followup-form[hidden]
+		{
+			display: none;
+		}
+
+		.followup-actions
+		{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-top: 10px;
+		}
+
+		.state-card--loading .state-icon svg
+		{
+			animation: loading-spin 1s linear infinite;
+		}
+
+		@keyframes loading-spin
+		{
+			to
+			{
+				transform: rotate(360deg);
+			}
+		}
+
+		footer
+		{
+			position: relative;
+			overflow: hidden;
+			padding: 42px 36px 16px;
+			background:
+				radial-gradient(
+					circle at 12% 20%,
+					rgba(125, 65, 210, 0.8),
+					transparent 30%
+				),
+				radial-gradient(
+					circle at 82% 18%,
+					rgba(45, 95, 210, 0.7),
+					transparent 32%
+				),
+				radial-gradient(
+					circle at 50% 85%,
+					rgba(255, 255, 255, 0.16),
+					transparent 28%
+				),
+				linear-gradient(
+					135deg,
+					#5b279e 0%,
+					#252a82 38%,
+					#080817 72%,
+					#000000 100%
+				);
+			color: white;
+		}
+
+		body.dark-mode footer
+		{
+			background:
+				radial-gradient(
+					circle at 12% 20%,
+					rgba(135, 67, 230, 0.48),
+					transparent 30%
+				),
+				radial-gradient(
+					circle at 82% 18%,
+					rgba(48, 80, 210, 0.4),
+					transparent 32%
+				),
+				radial-gradient(
+					circle at 50% 85%,
+					rgba(165, 95, 255, 0.12),
+					transparent 28%
+				),
+				linear-gradient(
+					135deg,
+					#251047 0%,
+					#121442 38%,
+					#070711 72%,
+					#020207 100%
+				);
+		}
+
+		footer::before,
+		footer::after
+		{
+			content: "";
+			position: absolute;
+			border-radius: 50%;
+			pointer-events: none;
+			filter: blur(90px);
+		}
+
+		footer::before
+		{
+			width: 500px;
+			height: 500px;
+			top: -280px;
+			right: -120px;
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		footer::after
+		{
+			width: 450px;
+			height: 450px;
+			bottom: -300px;
+			left: 15%;
+			background: rgba(76, 86, 220, 0.3);
+		}
+
+		.footer-content,
+		.footer-bottom
+		{
+			position: relative;
+			z-index: 2;
+		}
+
+		.footer-content
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: 1.45fr 0.8fr 1fr 1.05fr;
+			gap: 55px;
+			padding-bottom: 30px;
+			border-bottom: 1px solid #ffffff25;
+		}
+
+		.footer-logo
+		{
+			margin-bottom: 7px;
+		}
+
+		.footer-logo img
+		{
+			width: 78px;
+			height: 78px;
+			object-fit: contain;
+		}
+
+		.footer-description
+		{
+			max-width: 270px;
+			color: #d3d0df;
+			font-size: 11px;
+			line-height: 1.7;
+			margin-bottom: 14px;
+		}
+
+		footer h4
+		{
+			font-size: 13px;
+			font-weight: 600;
+			margin-bottom: 9px;
+		}
+
+		.social-icons
+		{
+			display: flex;
+			align-items: center;
+			gap: 9px;
+		}
+
+		.social-icon
+		{
+			width: 34px;
+			height: 34px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff30;
+			border-radius: 5px;
+			background: #ffffff10;
+			color: #d0ccdc;
+			transition: 0.2s ease;
+		}
+
+		.social-icon:hover
+		{
+			color: white;
+			background: #7138c8;
+			border-color: #a86be8;
+			transform: translateY(-2px);
+		}
+
+		.social-icon:active
+		{
+			transform: scale(0.9);
+		}
+
+		.social-icon svg
+		{
+			width: 16px;
+			height: 16px;
+			fill: currentColor;
+		}
+
+		.footer-links
+		{
+			list-style: none;
+		}
+
+		.footer-links li
+		{
+			margin-bottom: 8px;
+		}
+
+		.footer-links a
+		{
+			display: flex;
+			align-items: center;
+			gap: 9px;
+			color: #d0ccdc;
+			font-size: 11px;
+			transition: 0.2s;
+		}
+
+		.footer-links a:hover
+		{
+			color: white;
+			transform: translateX(2px);
+		}
+
+		.footer-links svg
+		{
+			width: 13px;
+			height: 13px;
+			fill: currentColor;
+			flex-shrink: 0;
+		}
+
+		.contact
+		{
+			display: flex;
+			align-items: flex-start;
+			gap: 9px;
+			margin-bottom: 12px;
+			color: #d0ccdc;
+			font-size: 11px;
+		}
+
+		.contact-icon
+		{
+			width: 14px;
+			height: 14px;
+			min-width: 14px;
+			margin-top: 1px;
+			color: #c58cff;
+		}
+
+		.contact-icon svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.contact a
+		{
+			transition: 0.2s;
+		}
+
+		.contact a:hover
+		{
+			color: white;
+		}
+
+		.question-box
+		{
+			padding: 18px;
+			border: 1px solid #ffffff25;
+			border-radius: 5px;
+			background: rgba(255, 255, 255, 0.08);
+			backdrop-filter: blur(8px);
+			transition: 0.3s ease;
+		}
+
+		.question-box:hover
+		{
+			transform: translateY(-4px);
+			background: rgba(255, 255, 255, 0.11);
+		}
+
+		.question-icon
+		{
+			width: 38px;
+			height: 38px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 11px;
+			border-radius: 5px;
+			background: #7138c866;
+			color: white;
+		}
+
+		.question-icon svg
+		{
+			width: 18px;
+			height: 18px;
+			fill: currentColor;
+		}
+
+		.question-box h4
+		{
+			font-size: 14px;
+			margin-bottom: 7px;
+		}
+
+		.question-box p
+		{
+			color: #d0ccdc;
+			font-size: 10px;
+			line-height: 1.7;
+			margin-bottom: 13px;
+		}
+
+		.footer-bottom
+		{
+			width: 100%;
+			max-width: 1180px;
+			margin: 0 auto;
+		}
+
+		.developer
+		{
+			min-height: 70px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 17px 0;
+			border-bottom: 1px solid #ffffff25;
+		}
+
+		.developer-icon
+		{
+			width: 45px;
+			height: 45px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			color: #d0ccdc;
+		}
+
+		.developer-icon svg
+		{
+			width: 19px;
+			height: 19px;
+			fill: currentColor;
+		}
+
+		.developer p
+		{
+			color: #aaa7b8;
+			font-size: 10px;
+			line-height: 1.6;
+		}
+
+		.developer strong
+		{
+			color: white;
+			font-size: 11px;
+		}
+
+		.quote
+		{
+			margin-left: auto;
+			color: #d0ccd8;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 1.5;
+			text-align: right;
+		}
+
+		.copyright
+		{
+			padding-top: 14px;
+			text-align: center;
+			color: #aaa7b8;
+			font-size: 9px;
+		}
+
+		.back-to-top
+		{
+			position: fixed;
+			right: 28px;
+			bottom: 28px;
+			width: 42px;
+			height: 42px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ffffff30;
+			border-radius: 6px;
+			background: #7138c8;
+			color: white;
+			z-index: 100;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(15px);
+			transition: 0.3s ease;
+			box-shadow: 0 8px 25px rgba(55, 25, 100, 0.3);
+		}
+
+		.back-to-top.show
+		{
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.back-to-top:hover
+		{
+			background: #8c50df;
+			transform: translateY(-3px);
+		}
+
+		.back-to-top:active
+		{
+			transform: scale(0.9);
+		}
+
+		.back-to-top svg
+		{
+			width: 17px;
+			height: 17px;
+			fill: currentColor;
+		}
+
+		.reveal
+		{
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		body.js .reveal
+		{
+			opacity: 0;
+			transform: translateY(28px);
+			transition:
+				opacity 0.7s ease,
+				transform 0.7s ease;
+		}
+
+		body.js .reveal.visible
+		{
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		@keyframes purpleFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-20px, -15px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(45px, 35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(10px, 70px);
+			}
+		}
+
+		@keyframes blueFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(20px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(-55px, 35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-15px, -30px);
+			}
+		}
+
+		@keyframes pinkFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(15px, -20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(-40px, 35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(35px, 55px);
+			}
+		}
+
+		@keyframes violetFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-25px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(55px, -35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-40px, 45px);
+			}
+		}
+
+		@keyframes orangeFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-20px, -25px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(45px, -55px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-35px, 35px);
+			}
+		}
+
+		@keyframes cyanFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(25px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(-45px, -30px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(35px, -55px);
+			}
+		}
+
+		@keyframes smallPinkFloat
+		{
+			0%
+			{
+				transform: translate(-50%, -50%) translate(-15px, 20px);
+			}
+
+			50%
+			{
+				transform: translate(-50%, -50%) translate(35px, -35px);
+			}
+
+			100%
+			{
+				transform: translate(-50%, -50%) translate(-30px, 45px);
+			}
+		}
+
+		.toast-container
+		{
+			position: fixed;
+			top: 96px;
+			right: 24px;
+			z-index: 2000;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			width: min(340px, calc(100vw - 48px));
+			pointer-events: none;
+		}
+
+		.toast
+		{
+			display: flex;
+			align-items: flex-start;
+			gap: 10px;
+			padding: 12px 14px;
+			border: 1px solid var(--border);
+			border-left: 3px solid var(--purple);
+			border-radius: 6px;
+			background: var(--surface);
+			box-shadow: 0 10px 28px var(--shadow);
+			opacity: 0;
+			pointer-events: auto;
+			transform: translateX(24px);
+			transition: opacity 0.25s ease, transform 0.25s ease;
+		}
+
+		.toast--visible
+		{
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		.toast--leaving
+		{
+			opacity: 0;
+			transform: translateX(24px);
+		}
+
+		.toast--success
+		{
+			border-left-color: var(--green);
+		}
+
+		.toast--error
+		{
+			border-left-color: var(--red);
+		}
+
+		.toast--info
+		{
+			border-left-color: var(--purple);
+		}
+
+		.toast-icon
+		{
+			display: flex;
+			width: 26px;
+			height: 26px;
+			min-width: 26px;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			background: var(--purple-light);
+			color: var(--purple);
+		}
+
+		.toast--success .toast-icon
+		{
+			background: var(--green-soft);
+			color: var(--green);
+		}
+
+		.toast--error .toast-icon
+		{
+			background: var(--red-soft);
+			color: var(--red);
+		}
+
+		.toast-icon svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+		}
+
+		.toast-body
+		{
+			flex: 1;
+			min-width: 0;
+		}
+
+		.toast-message
+		{
+			margin: 2px 0 0;
+			color: var(--text);
+			font-size: 12px;
+			line-height: 1.6;
+			overflow-wrap: anywhere;
+		}
+
+		.toast-close
+		{
+			display: inline-flex;
+			width: 20px;
+			height: 20px;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			border-radius: 4px;
+			background: transparent;
+			color: var(--text-muted);
+			cursor: pointer;
+			transition: 0.2s ease;
+		}
+
+		.toast-close:hover
+		{
+			background: var(--surface-soft);
+			color: var(--text);
+		}
+
+		.toast-close svg
+		{
+			width: 10px;
+			height: 10px;
+			fill: currentColor;
+		}
+
+		@media (max-width: 1120px)
+		{
+			.nav-profile-text
+			{
+				display: none;
+			}
+		}
+
+		@media (max-width: 900px)
+		{
+			.navbar
+			{
+				padding: 0 25px;
+			}
+
+			.nav-links
+			{
+				gap: 14px;
+				font-size: 11px;
+			}
+
+			.content-section
+			{
+				width: calc(100% - 40px);
+			}
+
+			.inquiry-top
+			{
+				grid-template-columns: 1fr;
+			}
+
+			.footer-content
+			{
+				grid-template-columns: 1fr 1fr;
+				gap: 30px;
+			}
+
+			.logo img
+			{
+				width: 70px;
+				height: 70px;
+			}
+
+			.footer-logo img
+			{
+				width: 70px;
+				height: 70px;
+			}
+		}
+
+		@media (max-width: 600px)
+		{
+			.navbar
+			{
+				padding: 0 20px;
+			}
+
+			.account-menu
+			{
+				right: 12px;
+				left: 12px;
+				width: auto;
+			}
+
+			.nav-buttons
+			{
+				display: flex;
+			}
+
+			.nav-profile span
+			{
+				display: none;
+			}
+
+			.logo img
+			{
+				width: 72px;
+				height: 72px;
+			}
+
+			.hero
+			{
+				padding: 110px 25px 55px;
+			}
+
+			.hero h1
+			{
+				font-size: 38px;
+			}
+
+			.hero p
+			{
+				font-size: 13px;
+			}
+
+			.gradient
+			{
+				filter: blur(50px);
+			}
+
+			.gradient-purple
+			{
+				width: 330px;
+				height: 330px;
+			}
+
+			.gradient-blue
+			{
+				width: 300px;
+				height: 300px;
+			}
+
+			.gradient-pink
+			{
+				width: 280px;
+				height: 280px;
+			}
+
+			.gradient-violet
+			{
+				width: 330px;
+				height: 330px;
+			}
+
+			.gradient-orange
+			{
+				width: 300px;
+				height: 300px;
+			}
+
+			.gradient-cyan
+			{
+				width: 260px;
+				height: 260px;
+			}
+
+			.gradient-pink-small
+			{
+				width: 220px;
+				height: 220px;
+			}
+
+			.content-section
+			{
+				width: calc(100% - 30px);
+			}
+
+			.contact-card
+			{
+				padding: 20px;
+			}
+
+			.section-heading h2
+			{
+				font-size: 26px;
+			}
+
+
+			.form-row
+			{
+				grid-template-columns: 1fr;
+			}
+
+			.footer-content
+			{
+				grid-template-columns: 1fr;
+				gap: 28px;
+			}
+
+			.footer-logo img
+			{
+				width: 65px;
+				height: 65px;
+			}
+
+			.developer
+			{
+				align-items: flex-start;
+				flex-wrap: wrap;
+			}
+
+			.quote
+			{
+				width: 100%;
+				margin-left: 57px;
+				text-align: left;
+			}
+
+			.back-to-top
+			{
+				right: 18px;
+				bottom: 18px;
+			}
+
+			.cursor-gradient
+			{
+				width: 300px;
+				height: 300px;
+				filter: blur(24px);
+			}
+
+			.navbar.scrolled
+			{
+				height: 64px;
+			}
+
+			.inquiries-toolbar
+			{
+				align-items: stretch;
+				flex-direction: column;
+			}
+
+			.toolbar-controls
+			{
+				width: 100%;
+			}
+
+			.toolbar-search
+			{
+				flex: 1;
+				width: auto;
+				min-width: 0;
+			}
+
+			.toolbar-filter
+			{
+				flex: 1;
+			}
+
+			.inquiries-table th,
+			.inquiries-table td
+			{
+				padding: 10px 12px;
+			}
+
+			.cell-subject
+			{
+				max-width: 160px;
+			}
+
+			.details-panel
+			{
+				padding: 20px;
+			}
+
+			.details-grid
+			{
+				grid-template-columns: 1fr;
+			}
+
+			.toast-container
+			{
+				top: 84px;
+				right: 16px;
+				left: 16px;
+				width: auto;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce)
+		{
+			html
+			{
+				scroll-behavior: auto;
+			}
+
+			.gradient
+			{
+				animation: none;
+			}
+
+			.contact-card,
+			.send-button,
+			.hero-image,
+			.state-card,
+			.state-icon,
+			.state-button,
+			.status-tab,
+			.view-button,
+			.page-button,
+			.file-control,
+			.file-remove,
+			.toast,
+			.reveal
+			{
+				transition: none;
+			}
+
+			.state-card--loading .state-icon svg
+			{
+				animation: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="cursor-gradient">
+	</div>
+
+
+	<nav class="navbar">
+
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
+
+			<span class="brand-name">
+				<span class="brand-edu">
+					Edu
+				</span>
+				<span class="brand-bridge">
+					Bridge
+				</span>
+			</span>
+		</a>
+
+		<div class="nav-links" id="navLinks">
+
+			<a href="landingpage.html">
+				Home
+			</a>
+
+			<a href="about.html">
+				About EduBridge
+			</a>
+
+			<a href="announcements.html">
+				Announcements
+			</a>
+
+			<a href="faq.html">
+				FAQs
+			</a>
+
+			<a href="inquiries.html" class="active" aria-current="page">
+				Inquiries
+			</a>
+
+			<a href="contact.html">
+				Contact
+			</a>
+
+		</div>
+
+		<div class="nav-buttons">
+
+			<button class="theme-button" id="themeButton" type="button" aria-label="Toggle theme">
+				<svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z">
+					</path>
+				</svg>
+			</button>
+
+			<a class="nav-bell" href="announcements.html" aria-label="Notifications">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
+					</path>
+				</svg>
+			</a>
+
+			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="accountMenu" aria-expanded="false">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
+					</path>
+				</svg>
+			</button>
+
+			<a class="nav-profile" href="profile.html">
+				<img src="resume.jpg" alt="Resume Dizon">
+
+				<span class="nav-profile-text">
+					<strong>
+						Resume Dizon
+					</strong>
+
+					<small>
+						Administrator
+					</small>
+				</span>
+			</a>
+
+		</div>
+
+		<div class="account-menu" id="accountMenu" role="menu" aria-label="Account menu">
+		</div>
+
+	</nav>
+
+	<section class="hero">
+
+		<div class="hero-image">
+		</div>
+
+		<div class="hero-base">
+		</div>
+
+		<div class="gradient-layer">
+			<div class="gradient gradient-purple">
+			</div>
+			<div class="gradient gradient-blue">
+			</div>
+			<div class="gradient gradient-pink">
+			</div>
+			<div class="gradient gradient-violet">
+			</div>
+			<div class="gradient gradient-orange">
+			</div>
+			<div class="gradient gradient-cyan">
+			</div>
+			<div class="gradient gradient-pink-small">
+			</div>
+		</div>
+
+		<div class="hero-overlay">
+		</div>
+
+		<div class="hero-content">
+
+			<div class="hero-label">
+				ASK EDUBRIDGE
+			</div>
+
+			<h1>
+				Inquiries
+			</h1>
+
+			<p id="heroDescription">
+				Review the questions you have sent and track the
+				responses from the admin team.
+			</p>
+
+			<div class="hero-actions" id="heroActions">
+				<a class="question-button" href="#inquirySection" id="writeInquiryLink">
+					Write an Inquiry
+				</a>
+
+				<a class="login-button" href="faq.html">
+					Browse FAQs
+				</a>
+			</div>
+
+		</div>
+
+	</section>
+
+
+	<main>
+
+		<section class="content-section reveal" id="inquirySection" aria-labelledby="inqHeading">
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					SUBMIT AN INQUIRY
+				</div>
+
+				<h2 id="inqHeading">
+					Submit a New Inquiry
+				</h2>
+
+				<p>
+					Fill out the form below and our team will get back to you.
+				</p>
+
+			</div>
+
+			<div class="inquiry-top">
+
+				<div class="contact-card contact-form-card">
+
+					<h2>
+						Inquiry Form
+					</h2>
+
+					<p>
+						Provide the category, subject, and full details of your
+						concern. Our team will get back to you.
+					</p>
+
+					<form id="inquiryForm" novalidate>
+
+						<div class="form-row">
+
+							<div class="form-group">
+								<label for="inqCategory">
+									Category
+								</label>
+
+								<select id="inqCategory" required>
+									<option value="">
+										Select a category
+									</option>
+
+									<option value="General">
+										General
+									</option>
+
+									<option value="Enrollment">
+										Enrollment
+									</option>
+
+									<option value="Tuition & Payments">
+										Tuition &amp; Payments
+									</option>
+
+									<option value="Academic Requirements">
+										Academic Requirements
+									</option>
+
+									<option value="Scholarships & Financial Aid">
+										Scholarships &amp; Financial Aid
+									</option>
+
+									<option value="Campus Life">
+										Campus Life
+									</option>
+
+									<option value="Account & Access">
+										Account &amp; Access
+									</option>
+								</select>
+
+								<span class="form-error" id="categoryError" role="alert" hidden>
+								</span>
+							</div>
+
+							<div class="form-group">
+								<label for="inqSubject">
+									Subject
+								</label>
+
+								<input type="text" id="inqSubject" placeholder="Enter a brief subject" required>
+
+								<span class="form-error" id="subjectError" role="alert" hidden>
+								</span>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label for="inqDetails">
+								Details
+							</label>
+
+							<textarea id="inqDetails" placeholder="Provide more details about your inquiry..." required></textarea>
+
+							<span class="form-error" id="detailsError" role="alert" hidden>
+							</span>
+						</div>
+
+						<div class="form-group">
+							<label for="inqFile">
+								Attach File (optional)
+							</label>
+
+							<input class="file-input" type="file" id="inqFile" accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf">
+
+							<label class="file-control" for="inqFile">
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M16.5 6v11.5a4.5 4.5 0 0 1-9 0V5a3 3 0 0 1 6 0v10.5a1.5 1.5 0 0 1-3 0V6H9v9.5a3 3 0 0 0 6 0V5a5 5 0 0 0-10 0v12.5a5.5 5.5 0 0 0 11 0V6h-1.5z">
+									</path>
+								</svg>
+
+								Choose File
+							</label>
+
+							<p class="file-hint">
+								Upload supporting documents or images.
+								Allowed: JPG, PNG, WEBP, or PDF &middot; up to 5 MB.
+							</p>
+
+							<div class="file-selection" id="fileSelection" hidden>
+
+								<span class="file-name" id="fileName">
+								</span>
+
+								<button class="file-remove" id="removeFileButton" type="button" aria-label="Remove selected file" title="Remove file">
+									<svg viewBox="0 0 24 24" aria-hidden="true">
+										<path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z">
+										</path>
+									</svg>
+								</button>
+
+							</div>
+
+							<span class="form-error" id="fileError" role="alert" hidden>
+							</span>
+						</div>
+
+						<button type="submit" class="send-button" id="submitButton">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M2.5 3.8 22 12 2.5 20.2 5.2 13 15 12 5.2 11 2.5 3.8z">
+								</path>
+							</svg>
+
+							<span id="submitLabel">
+								Submit Inquiry
+							</span>
+						</button>
+
+					</form>
+
+					<p class="inquiry-note">
+						For immediate responses, contact the EduBridge team through the details beside this form.
+					</p>
+
+				</div>
+
+				<div class="inquiry-sidebar">
+
+					<div class="contact-card tips-card">
+
+						<h2>
+							Tips for Faster Response
+						</h2>
+
+						<p>
+							Follow these tips so our team can answer you
+							faster.
+						</p>
+
+						<ul class="tips-list">
+
+							<li>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z">
+									</path>
+								</svg>
+
+								Choose the correct category.
+							</li>
+
+							<li>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z">
+									</path>
+								</svg>
+
+								Provide complete details.
+							</li>
+
+							<li>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z">
+									</path>
+								</svg>
+
+								Attach supporting documents.
+							</li>
+
+							<li>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z">
+									</path>
+								</svg>
+
+								Keep your contact information updated.
+							</li>
+
+						</ul>
+
+					</div>
+
+					<div class="contact-card reach-card">
+
+					<h2>
+						Reach the Team
+					</h2>
+
+					<p>
+						You can also contact us directly through the
+						information below.
+					</p>
+
+					<div class="reach-item">
+						<div class="reach-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z">
+								</path>
+							</svg>
+						</div>
+
+						<div>
+							<h4>
+								Email
+							</h4>
+
+							<a href="mailto:edubridge@gmail.com">
+								edubridge@gmail.com
+							</a>
+						</div>
+					</div>
+
+					<div class="reach-item">
+						<div class="reach-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z">
+								</path>
+							</svg>
+						</div>
+
+						<div>
+							<h4>
+								Phone
+							</h4>
+
+							<a href="tel:+639123456789">
+								(+63) 912 345 6789
+							</a>
+						</div>
+					</div>
+
+					<div class="reach-item">
+						<div class="reach-icon">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z">
+								</path>
+							</svg>
+						</div>
+
+						<div>
+							<h4>
+								Office Hours
+							</h4>
+
+							<p>
+								Monday &ndash; Friday<br>
+								8:00 AM &ndash; 5:00 PM
+							</p>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</section>
+
+
+		<section class="content-section reveal" id="myInquiries" aria-labelledby="myInquiriesHeading">
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					TRACK YOUR INQUIRIES
+				</div>
+
+				<h2 id="myInquiriesHeading">
+					Inquiries
+				</h2>
+
+				<p>
+					Track the inquiries you have sent and their current status.
+				</p>
+
+			</div>
+
+			<div class="inquiries-toolbar">
+
+				<div class="status-tabs" id="statusTabs" role="group" aria-label="Filter inquiries by status">
+
+					<button class="status-tab active" type="button" data-status="all" aria-pressed="true">
+						All
+						<span class="tab-count">
+							0
+						</span>
+					</button>
+
+					<button class="status-tab" type="button" data-status="Pending" aria-pressed="false">
+						Pending
+						<span class="tab-count">
+							0
+						</span>
+					</button>
+
+					<button class="status-tab" type="button" data-status="Answered" aria-pressed="false">
+						Answered
+						<span class="tab-count">
+							0
+						</span>
+					</button>
+
+					<button class="status-tab" type="button" data-status="Closed" aria-pressed="false">
+						Closed
+						<span class="tab-count">
+							0
+						</span>
+					</button>
+
+				</div>
+
+				<div class="toolbar-controls">
+
+					<input class="toolbar-search" id="inquirySearch" type="search" placeholder="Search inquiries" aria-label="Search inquiries">
+
+					<select class="toolbar-filter" id="inquiryCategoryFilter" aria-label="Filter inquiries by category">
+
+						<option value="all">
+							All categories
+						</option>
+
+						<option value="General">
+							General
+						</option>
+
+						<option value="Enrollment">
+							Enrollment
+						</option>
+
+						<option value="Tuition & Payments">
+							Tuition &amp; Payments
+						</option>
+
+						<option value="Academic Requirements">
+							Academic Requirements
+						</option>
+
+						<option value="Scholarships & Financial Aid">
+							Scholarships &amp; Financial Aid
+						</option>
+
+						<option value="Campus Life">
+							Campus Life
+						</option>
+
+						<option value="Account & Access">
+							Account &amp; Access
+						</option>
+
+					</select>
+
+				</div>
+
+			</div>
+
+			<p class="results-summary" id="resultsSummary" aria-live="polite">
+			</p>
+
+			<div class="state-card state-card--loading" id="inquiriesLoading" role="status">
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M12 4V2a10 10 0 0 0 0 20v-2a8 8 0 0 1 0-16z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					Loading Inquiries
+				</h3>
+
+				<p class="state-text">
+					Please wait while your inquiries are being retrieved.
+				</p>
+
+			</div>
+
+			<div class="table-wrap" id="inquiriesTableWrap" hidden>
+
+				<table class="inquiries-table">
+
+					<thead>
+						<tr>
+							<th scope="col">
+								Inquiry ID
+							</th>
+
+							<th scope="col">
+								Subject
+							</th>
+
+							<th scope="col">
+								Category
+							</th>
+
+							<th scope="col">
+								Status
+							</th>
+
+							<th scope="col">
+								Date Submitted
+							</th>
+
+							<th scope="col">
+								Latest Response
+							</th>
+
+							<th scope="col">
+								Action
+							</th>
+						</tr>
+					</thead>
+
+					<tbody id="inquiriesBody">
+					</tbody>
+
+				</table>
+
+			</div>
+
+			<div class="state-card state-card--empty" id="myInquiriesEmpty" role="status" hidden>
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 12h-4a3 3 0 0 1-6 0H5V5h14v10z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					No Inquiries Yet
+				</h3>
+
+				<p class="state-text">
+					You haven't submitted any inquiries yet.
+				</p>
+
+				<a class="state-button" href="#inquirySection">
+					Submit an Inquiry
+				</a>
+
+			</div>
+
+			<div class="state-card state-card--empty" id="inquiriesNoMatches" role="status" hidden>
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					No Matching Inquiries
+				</h3>
+
+				<p class="state-text">
+					No inquiries match your search or selected filters.
+				</p>
+
+				<button class="state-button" id="clearFiltersButton" type="button">
+					Clear Filters
+				</button>
+
+			</div>
+
+			<div class="state-card state-card--error" id="inquiriesError" role="alert" hidden>
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 12.9-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					Unable to Load Inquiries
+				</h3>
+
+				<p class="state-text">
+					Your inquiries could not be loaded right now. Your saved
+					data has not been changed.
+				</p>
+
+				<button class="state-button" id="retryListButton" type="button">
+					Try Again
+				</button>
+
+			</div>
+
+			<div class="pagination" id="inquiriesPagination" hidden>
+
+				<button class="page-button" id="prevPageButton" type="button">
+					Previous
+				</button>
+
+				<span class="page-info" id="pageInfo">
+				</span>
+
+				<button class="page-button" id="nextPageButton" type="button">
+					Next
+				</button>
+
+			</div>
+
+		</section>
+
+
+		<section class="content-section" id="inquiryDetailsSection" aria-labelledby="inquiryDetailsHeading" hidden>
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					SELECTED INQUIRY
+				</div>
+
+				<h2 id="inquiryDetailsHeading">
+					Inquiry Details
+				</h2>
+
+				<p>
+					Review the full details, response, and follow-up history of
+					the selected inquiry.
+				</p>
+
+			</div>
+
+			<div class="details-panel" id="detailsPanel" aria-live="polite">
+			</div>
+
+		</section>
+
+		<section class="content-section" id="adminInquirySection" aria-labelledby="adminInquiryHeading" hidden>
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					STUDENT INQUIRIES
+				</div>
+
+				<h2 id="adminInquiryHeading">
+					Pending Responses
+				</h2>
+
+				<p>
+					Student inquiries that have not yet received an official response.
+				</p>
+
+			</div>
+
+			<div class="section-link-row">
+
+				<a class="section-link" href="inquirymanagement.html">
+					View Answered Inquiries
+				</a>
+
+			</div>
+
+			<div class="stats-grid">
+
+				<div class="stat-card">
+
+					<div class="stat-label">
+						Pending Responses
+					</div>
+
+					<div class="stat-value" id="adminStatPending">
+						0
+					</div>
+
+				</div>
+
+				<div class="stat-card">
+
+					<div class="stat-label">
+						Answered Inquiries
+					</div>
+
+					<div class="stat-value" id="adminStatAnswered">
+						0
+					</div>
+
+				</div>
+
+				<div class="stat-card">
+
+					<div class="stat-label">
+						Total Inquiries
+					</div>
+
+					<div class="stat-value" id="adminStatTotal">
+						0
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="inquiries-toolbar">
+
+				<div class="toolbar-controls">
+
+					<input type="search" id="adminSearch" class="toolbar-search" placeholder="Search inquiries" aria-label="Search student inquiries">
+
+					<select id="adminCategoryFilter" class="toolbar-filter" aria-label="Filter pending inquiries by category">
+						<option value="all">
+							All categories
+						</option>
+						<option value="General">
+							General
+						</option>
+						<option value="Enrollment">
+							Enrollment
+						</option>
+						<option value="Tuition & Payments">
+							Tuition &amp; Payments
+						</option>
+						<option value="Academic Requirements">
+							Academic Requirements
+						</option>
+						<option value="Scholarships & Financial Aid">
+							Scholarships &amp; Financial Aid
+						</option>
+						<option value="Campus Life">
+							Campus Life
+						</option>
+						<option value="Account & Access">
+							Account &amp; Access
+						</option>
+					</select>
+
+				</div>
+
+			</div>
+
+			<p class="results-summary" id="adminSummary" aria-live="polite">
+			</p>
+
+			<div class="state-card state-card--loading" id="adminLoading" role="status">
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M12 4V2a10 10 0 0 0 0 20v-2a8 8 0 0 1 0-16z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					Loading Inquiries
+				</h3>
+
+				<p class="state-text">
+					Please wait while the pending student inquiries are being retrieved.
+				</p>
+
+			</div>
+
+			<div class="table-wrap" id="adminTableWrap" hidden>
+
+				<table class="inquiries-table">
+
+					<thead>
+						<tr>
+							<th scope="col">
+								Inquiry ID
+							</th>
+
+							<th scope="col">
+								Student Name
+							</th>
+
+							<th scope="col">
+								Subject
+							</th>
+
+							<th scope="col">
+								Category
+							</th>
+
+							<th scope="col">
+								Date Submitted
+							</th>
+
+							<th scope="col">
+								Status
+							</th>
+
+							<th scope="col">
+								Action
+							</th>
+						</tr>
+					</thead>
+
+					<tbody id="adminInquiryRows">
+					</tbody>
+
+				</table>
+
+			</div>
+
+			<div class="state-card state-card--empty" id="adminEmpty" role="status" hidden>
+
+				<span class="state-icon state-icon--sleeping" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8 8.4 8.4 0 1 0 20.2 14.6z">
+						</path>
+					</svg>
+					<span class="sleep-z">z</span>
+					<span class="sleep-z sleep-z--mid">z</span>
+					<span class="sleep-z sleep-z--big">z</span>
+				</span>
+
+				<h3 class="state-title">
+					You're all caught up!
+				</h3>
+
+				<p class="state-text">
+					There are no unanswered student inquiries right now. Check back when a new inquiry arrives.
+				</p>
+
+			</div>
+
+			<div class="state-card" id="adminNoMatches" role="status" hidden>
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					No matching inquiries
+				</h3>
+
+				<p class="state-text">
+					No pending inquiries match your search or category filter.
+				</p>
+
+			</div>
+
+			<div class="state-card state-card--error" id="adminError" role="status" hidden>
+
+				<span class="state-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24">
+						<path d="M12 2 1 21h22L12 2zm1 15h-2v-2h2v2zm0-4h-2V9h2v4z">
+						</path>
+					</svg>
+				</span>
+
+				<h3 class="state-title">
+					Inquiries could not be loaded
+				</h3>
+
+				<p class="state-text">
+					The saved inquiry records in this browser could not be read.
+				</p>
+
+				<button class="state-button" type="button" id="adminRetryButton">
+					Try Again
+				</button>
+
+			</div>
+
+		</section>
+
+	</main>
+
+	<footer>
+
+		<div class="footer-content">
+
+			<div>
+
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
+
+					<span class="brand-name">
+						<span class="brand-edu">
+							Edu
+						</span>
+						<span class="brand-bridge">
+							Bridge
+						</span>
+					</span>
+				</a>
+
+				<p class="footer-description">
+					A smart inquiry and FAQ system for school announcements
+					and information.
+				</p>
+
+				<h4>
+					Follow Us
+				</h4>
+
+				<div class="social-icons">
+
+					<a href="https://www.facebook.com/" target="_blank" class="social-icon" aria-label="EduBridge on Facebook">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M14 8h3V4h-3c-3.3 0-5 1.7-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="https://www.instagram.com/" target="_blank" class="social-icon" aria-label="EduBridge on Instagram">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M7 2h10c2.8 0 5 2.2 5 5v10c0 2.8-2.2 5-5 5H7c-2.8 0-5-2.2-5-5V7c0-2.8 2.2-5 5-5zm0 2C5.3 4 4 5.3 4 7v10c0 1.7 1.3 3 3 3h10c1.7 0 3-1.3 3-3V7c0-1.7-1.3-3-3-3H7zm5 3.5A4.5 4.5 0 1 1 12 16a4.5 4.5 0 0 1 0-9zm0 2A2.5 2.5 0 1 0 12 14a2.5 2.5 0 0 0 0-4.5zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="https://x.com/" target="_blank" class="social-icon" aria-label="EduBridge on X">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.2 2H21l-6.1 7 7.2 13H16.5l-4.3-7.7L5.5 22H2.7l6.5-7.5L2.3 2h5.7l3.9 7L18.2 2zm-1 17.7h1.6L7 4.2H5.3l11.9 15.5z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="mailto:edubridge@gmail.com" class="social-icon" aria-label="Email EduBridge">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z">
+							</path>
+						</svg>
+					</a>
+
+				</div>
+
+			</div>
+
+
+			<div>
+
+				<h4>
+					Quick Links
+				</h4>
+
+				<ul class="footer-links">
+
+					<li>
+						<a href="landingpage.html">
+							Home
+						</a>
+					</li>
+
+					<li>
+						<a href="about.html">
+							About EduBridge
+						</a>
+					</li>
+
+					<li>
+						<a href="announcements.html">
+							Announcements
+						</a>
+					</li>
+
+					<li>
+						<a href="faq.html">
+							FAQs
+						</a>
+					</li>
+
+					<li>
+						<a href="inquiries.html">
+							Inquiries
+						</a>
+					</li>
+
+					<li>
+						<a href="contact.html">
+							Contact
+						</a>
+					</li>
+
+				</ul>
+
+			</div>
+
+
+			<div>
+
+				<h4>
+					Contacts
+				</h4>
+
+				<div class="contact">
+					<span class="contact-icon">
+						✉
+					</span>
+
+					<a href="mailto:edubridge@gmail.com">
+						edubridge@gmail.com
+					</a>
+				</div>
+
+				<div class="contact">
+					<span class="contact-icon">
+						✉
+					</span>
+
+					<a href="mailto:edubridge@escr.edu.ph">
+						edubridge@escr.edu.ph
+					</a>
+				</div>
+
+				<div class="contact">
+					<span class="contact-icon">
+						☎
+					</span>
+
+					<a href="tel:+639123456789">
+						(+63) 912 345 6789
+					</a>
+				</div>
+
+			</div>
+
+
+			<div>
+
+				<div class="question-box">
+
+					<div class="question-icon">
+						?
+					</div>
+
+					<h4>
+						Have a question?
+					</h4>
+
+					<p>
+						Find the information you need and stay connected
+						with your school community.
+					</p>
+
+					<a class="question-button" href="inquiries.html">
+						Get Started →
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class="footer-bottom">
+
+			<div class="developer">
+
+				<div class="developer-icon">
+					✦
+				</div>
+
+				<p>
+					Developed with passion by
+					<br>
+					<strong>
+						Lyza, Kaye, Briana &amp; Rhealyn
+					</strong>
+					<br>
+					BSIT 3rd Year Students
+				</p>
+
+				<div class="quote">
+					"Your bridge to school information"
+				</div>
+
+			</div>
+
+			<div class="copyright">
+				© 2026 EduBridge. All Rights Reserved.
+			</div>
+
+		</div>
+
+	</footer>
+
+
+	<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">
+
+		<svg viewBox="0 0 24 24" aria-hidden="true">
+			<path d="M12 5l-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z">
+			</path>
+		</svg>
+
+	</button>
+
+
+	<script src="profile-sync.js"></script>
+	<script>
+		try
+		{
+			document.body.classList.add("js");
+
+			const themeButton = document.getElementById("themeButton");
+			const themeIcon = document.getElementById("themeIcon");
+			const hero = document.querySelector(".hero");
+			const heroImage = document.querySelector(".hero-image");
+			const navbar = document.querySelector(".navbar");
+			const menuButton = document.getElementById("menuButton");
+			const backToTop = document.getElementById("backToTop");
+
+			function updateThemeIcon()
+			{
+				if (document.body.classList.contains("dark-mode"))
+				{
+					themeIcon.innerHTML = `
+						<path d="M21 12.8A9 9 0 0 1 11.2 3 7 7 0 1 0 21 12.8z">
+						</path>
+					`;
+				}
+				else
+				{
+					themeIcon.innerHTML = `
+						<path d="M12 3V1m0 22v-2M4.22 4.22 2.81 2.81m18.38 18.38-1.41-1.41M3 12H1m22 0h-2M4.22 19.78l-1.41 1.41M21.19 2.81l-1.41 1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z">
+						</path>
+					`;
+				}
+			}
+
+			const savedTheme = localStorage.getItem("edubridge-theme");
+
+			if (savedTheme === "dark")
+			{
+				document.body.classList.add("dark-mode");
+			}
+
+			updateThemeIcon();
+
+
+			themeButton.addEventListener("click", function()
+			{
+
+				const rect = themeButton.getBoundingClientRect();
+
+				document.body.style.setProperty(
+					"--theme-x",
+					rect.left + rect.width / 2 + "px"
+				);
+
+				document.body.style.setProperty(
+					"--theme-y",
+					rect.top + rect.height / 2 + "px"
+				);
+
+				const isCurrentlyDark =
+					document.body.classList.contains("dark-mode");
+
+				document.body.style.setProperty(
+					"--theme-circle",
+					isCurrentlyDark ? "#f3f3f3" : "#090817"
+				);
+
+				document.body.classList.add("theme-changing");
+
+				setTimeout(function()
+				{
+
+					document.body.classList.toggle("dark-mode");
+
+					const isDark =
+						document.body.classList.contains("dark-mode");
+
+					localStorage.setItem(
+						"edubridge-theme",
+						isDark ? "dark" : "light"
+					);
+
+					updateThemeIcon();
+
+				}, 100);
+
+				setTimeout(function()
+				{
+					document.body.classList.remove("theme-changing");
+				}, 750);
+
+			});
+
+
+			menuButton.addEventListener("click", function()
+			{
+				const isOpen = navbar.classList.toggle("menu-open");
+
+				menuButton.setAttribute("aria-expanded", String(isOpen));
+				menuButton.setAttribute(
+					"aria-label",
+					isOpen ? "Close navigation menu" : "Open navigation menu"
+				);
+			});
+
+			function closeMenu()
+			{
+				navbar.classList.remove("menu-open");
+				menuButton.setAttribute("aria-expanded", "false");
+				menuButton.setAttribute("aria-label", "Open navigation menu");
+			}
+
+			document.querySelectorAll(".nav-links a").forEach(function(link)
+			{
+				link.addEventListener("click", closeMenu);
+			});
+
+			document.addEventListener("keydown", function(event)
+			{
+				if (event.key === "Escape")
+				{
+					closeMenu();
+				}
+			});
+
+			document.addEventListener("click", function(event)
+			{
+				if (!navbar.contains(event.target))
+				{
+					closeMenu();
+				}
+			});
+
+			
+			const accountMenu = document.getElementById("accountMenu");
+
+			function createMenuItem(item)
+			{
+				let el;
+
+				if (item.href)
+				{
+					el = document.createElement("a");
+					el.setAttribute("href", item.href);
+				}
+				else
+				{
+					el = document.createElement("button");
+					el.setAttribute("type", "button");
+				}
+
+				el.className = "account-menu-item";
+				el.setAttribute("role", "menuitem");
+				el.textContent = item.label;
+
+				if (item.action === "logout")
+				{
+					el.addEventListener("click", function(event)
+					{
+						event.preventDefault();
+						logOut();
+					});
+				}
+				else if (item.href)
+				{
+					el.addEventListener("click", closeMenu);
+				}
+
+				return el;
+			}
+
+			function logOut()
+			{
+				localStorage.removeItem("edubridge-role");
+				window.location.href = "logout.html";
+			}
+
+			function buildAccountMenu()
+			{
+				const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+				const items = [];
+
+				const announcementChildren = [
+					{ label: "All Announcements", href: "announcements.html" },
+					{ label: "Create Announcement", href: "createannounce.html" },
+					{ label: "Categories", href: "categories.html" }
+				];
+
+				if (role !== "teacher" && role !== "student")
+				{
+					items.push({ label: "Announcement Management", children: announcementChildren });
+					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
+					items.push({ label: "User Management", href: "usermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
+					items.push({ label: "Activity Logs", href: "activitylogs.html" });
+					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "Log Out", action: "logout" });
+				}
+				else if (role === "teacher")
+				{
+					items.push({ label: "Announcement Management", children: announcementChildren });
+					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
+					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "Log Out", action: "logout" });
+				}
+				else if (role === "student")
+				{
+					items.push({ label: "Profile", href: "profile.html" });
+					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Log Out", action: "logout" });
+				}
+
+				accountMenu.innerHTML = "";
+
+				const label = document.createElement("div");
+				label.className = "account-menu-label";
+				label.textContent = role === "teacher" ? "Teacher" : (role === "student" ? "Student" : "Administrator");
+				accountMenu.appendChild(label);
+
+				items.forEach(function(item)
+				{
+					if (item.action === "logout")
+					{
+						const divider = document.createElement("div");
+						divider.className = "account-menu-divider";
+						accountMenu.appendChild(divider);
+					}
+
+					if (item.children)
+					{
+						const toggle = document.createElement("button");
+						toggle.className = "account-menu-item submenu-parent";
+						toggle.type = "button";
+						toggle.setAttribute("role", "menuitem");
+						toggle.setAttribute("aria-expanded", "false");
+						toggle.setAttribute("aria-controls", "announcementSubmenu");
+						toggle.textContent = item.label;
+
+						const caret = document.createElement("span");
+						caret.className = "submenu-caret";
+						caret.setAttribute("aria-hidden", "true");
+						caret.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>';
+						toggle.appendChild(caret);
+
+						const submenu = document.createElement("div");
+						submenu.className = "account-submenu";
+						submenu.id = "announcementSubmenu";
+						submenu.setAttribute("role", "group");
+						submenu.setAttribute("aria-label", item.label);
+						submenu.hidden = true;
+
+						item.children.forEach(function(child)
+						{
+							submenu.appendChild(createMenuItem(child));
+						});
+
+						toggle.addEventListener("click", function()
+						{
+							const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+							toggle.setAttribute("aria-expanded", String(!isExpanded));
+							submenu.hidden = isExpanded;
+						});
+
+						accountMenu.appendChild(toggle);
+						accountMenu.appendChild(submenu);
+					}
+					else
+					{
+						accountMenu.appendChild(createMenuItem(item));
+					}
+				});
+			}
+
+			function applyNavProfile()
+			{
+				const profile = document.querySelector(".nav-profile");
+
+				if (!profile)
+				{
+					return;
+				}
+
+				const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+				const img = profile.querySelector("img");
+				const name = profile.querySelector(".nav-profile-text strong");
+				const roleText = profile.querySelector(".nav-profile-text small");
+
+				if (role === "student" || role === "teacher")
+				{
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+					img.alt = "Junior Slickback";
+					name.textContent = "Junior Slickback";
+					roleText.textContent = "Student";
+					profile.setAttribute("href", "inquiries.html");
+				}
+				else
+				{
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
+					img.alt = "Resume Dizon";
+					name.textContent = "Resume Dizon";
+					roleText.textContent = "Administrator";
+					profile.setAttribute("href", "profile.html");
+				}
+			}
+
+			buildAccountMenu();
+			applyNavProfile();
+
+			function updateNavbar()
+			{
+
+				if (window.scrollY > 40)
+				{
+					navbar.classList.add("scrolled");
+				}
+				else
+				{
+					navbar.classList.remove("scrolled");
+				}
+
+			}
+
+			updateNavbar();
+
+			window.addEventListener("scroll", updateNavbar);
+
+
+			let targetX = 50;
+			let targetY = 50;
+
+			let cursorX = 50;
+			let cursorY = 50;
+
+			let purpleX = 4;
+			let purpleY = 5;
+
+			let blueX = 93;
+			let blueY = 8;
+
+			let pinkX = 15;
+			let pinkY = 57;
+
+			let violetX = 55;
+			let violetY = 38;
+
+			let orangeX = 94;
+			let orangeY = 88;
+
+			let cyanX = 5;
+			let cyanY = 93;
+
+			let pinkSmallX = 78;
+			let pinkSmallY = 67;
+
+
+			hero.addEventListener("mousemove", function(event)
+			{
+
+				const rect = hero.getBoundingClientRect();
+
+				targetX =
+					((event.clientX - rect.left) / rect.width) * 100;
+
+				targetY =
+					((event.clientY - rect.top) / rect.height) * 100;
+
+				const moveX =
+					(event.clientX - rect.left) / rect.width - 0.5;
+
+				const moveY =
+					(event.clientY - rect.top) / rect.height - 0.5;
+
+				heroImage.style.transform =
+					`scale(1.04) translate(${moveX * -10}px, ${moveY * -7}px)`;
+
+			});
+
+
+			hero.addEventListener("mouseleave", function()
+			{
+
+				targetX = 50;
+				targetY = 50;
+
+				heroImage.style.transform =
+					"scale(1.04) translate(0, 0)";
+
+			});
+
+
+			function animateGradient()
+			{
+
+				cursorX +=
+					(targetX - cursorX) * 0.04;
+
+				cursorY +=
+					(targetY - cursorY) * 0.04;
+
+
+				const purpleTargetX =
+					4 + (cursorX - 50) * 0.35;
+
+				const purpleTargetY =
+					5 + (cursorY - 50) * 0.25;
+
+
+				const blueTargetX =
+					93 + (cursorX - 50) * 0.3;
+
+				const blueTargetY =
+					8 + (cursorY - 50) * 0.25;
+
+
+				const pinkTargetX =
+					15 + (cursorX - 50) * 0.5;
+
+				const pinkTargetY =
+					57 + (cursorY - 50) * 0.45;
+
+
+				const violetTargetX =
+					55 + (cursorX - 50) * 0.65;
+
+				const violetTargetY =
+					38 + (cursorY - 50) * 0.55;
+
+
+				const orangeTargetX =
+					94 + (cursorX - 50) * 0.3;
+
+				const orangeTargetY =
+					88 + (cursorY - 50) * 0.35;
+
+
+				const cyanTargetX =
+					5 + (cursorX - 50) * 0.28;
+
+				const cyanTargetY =
+					93 + (cursorY - 50) * 0.25;
+
+
+				const pinkSmallTargetX =
+					78 + (cursorX - 50) * 0.48;
+
+				const pinkSmallTargetY =
+					67 + (cursorY - 50) * 0.42;
+
+
+				purpleX +=
+					(purpleTargetX - purpleX) * 0.025;
+
+				purpleY +=
+					(purpleTargetY - purpleY) * 0.025;
+
+
+				blueX +=
+					(blueTargetX - blueX) * 0.02;
+
+				blueY +=
+					(blueTargetY - blueY) * 0.02;
+
+
+				pinkX +=
+					(pinkTargetX - pinkX) * 0.022;
+
+				pinkY +=
+					(pinkTargetY - pinkY) * 0.022;
+
+
+				violetX +=
+					(violetTargetX - violetX) * 0.018;
+
+				violetY +=
+					(violetTargetY - violetY) * 0.018;
+
+
+				orangeX +=
+					(orangeTargetX - orangeX) * 0.021;
+
+				orangeY +=
+					(orangeTargetY - orangeY) * 0.021;
+
+
+				cyanX +=
+					(cyanTargetX - cyanX) * 0.019;
+
+				cyanY +=
+					(cyanTargetY - cyanY) * 0.019;
+
+
+				pinkSmallX +=
+					(pinkSmallTargetX - pinkSmallX) * 0.023;
+
+				pinkSmallY +=
+					(pinkSmallTargetY - pinkSmallY) * 0.023;
+
+
+				hero.style.setProperty(
+					"--purple-x",
+					purpleX + "%"
+				);
+
+				hero.style.setProperty(
+					"--purple-y",
+					purpleY + "%"
+				);
+
+				hero.style.setProperty(
+					"--blue-x",
+					blueX + "%"
+				);
+
+				hero.style.setProperty(
+					"--blue-y",
+					blueY + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-x",
+					pinkX + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-y",
+					pinkY + "%"
+				);
+
+				hero.style.setProperty(
+					"--violet-x",
+					violetX + "%"
+				);
+
+				hero.style.setProperty(
+					"--violet-y",
+					violetY + "%"
+				);
+
+				hero.style.setProperty(
+					"--orange-x",
+					orangeX + "%"
+				);
+
+				hero.style.setProperty(
+					"--orange-y",
+					orangeY + "%"
+				);
+
+				hero.style.setProperty(
+					"--cyan-x",
+					cyanX + "%"
+				);
+
+				hero.style.setProperty(
+					"--cyan-y",
+					cyanY + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-small-x",
+					pinkSmallX + "%"
+				);
+
+				hero.style.setProperty(
+					"--pink-small-y",
+					pinkSmallY + "%"
+				);
+
+				requestAnimationFrame(animateGradient);
+
+			}
+
+			animateGradient();
+
+
+			let audioContext;
+
+			function playClickSound()
+			{
+
+				try
+				{
+
+					if (!audioContext)
+					{
+						audioContext =
+							new (
+								window.AudioContext ||
+								window.webkitAudioContext
+							)();
+					}
+
+					if (audioContext.state === "suspended")
+					{
+						audioContext.resume();
+					}
+
+					const oscillator =
+						audioContext.createOscillator();
+
+					const gain =
+						audioContext.createGain();
+
+					oscillator.type = "sine";
+
+					oscillator.frequency.setValueAtTime(
+						520,
+						audioContext.currentTime
+					);
+
+					oscillator.frequency.exponentialRampToValueAtTime(
+						300,
+						audioContext.currentTime + 0.045
+					);
+
+					gain.gain.setValueAtTime(
+						0.045,
+						audioContext.currentTime
+					);
+
+					gain.gain.exponentialRampToValueAtTime(
+						0.001,
+						audioContext.currentTime + 0.06
+					);
+
+					oscillator.connect(gain);
+					gain.connect(audioContext.destination);
+
+					oscillator.start();
+
+					oscillator.stop(
+						audioContext.currentTime + 0.06
+					);
+
+				}
+				catch (error)
+				{
+				}
+
+			}
+
+
+			document.addEventListener("click", function(event)
+			{
+
+				const clickable =
+					event.target.closest(
+						"button, a, .mission-item"
+					);
+
+				if (clickable)
+				{
+					playClickSound();
+				}
+
+			});
+
+
+			const revealItems =
+				document.querySelectorAll(".reveal");
+
+			const revealObserver =
+				new IntersectionObserver(
+					function(entries)
+					{
+
+						entries.forEach(function(entry)
+						{
+
+							if (entry.isIntersecting)
+							{
+
+								entry.target.classList.add("visible");
+
+								revealObserver.unobserve(
+									entry.target
+								);
+
+							}
+
+						});
+
+					},
+					{
+						threshold: 0.12
+					}
+				);
+
+
+			revealItems.forEach(function(item)
+			{
+				revealObserver.observe(item);
+			});
+
+
+			const cursorGradient =
+				document.querySelector(".cursor-gradient");
+
+			let cursorMouseX =
+				window.innerWidth / 2;
+
+			let cursorMouseY =
+				window.innerHeight / 2;
+
+			let gradientX =
+				cursorMouseX;
+
+			let gradientY =
+				cursorMouseY;
+
+
+			document.addEventListener("mousemove", function(event)
+			{
+
+				cursorMouseX =
+					event.clientX;
+
+				cursorMouseY =
+					event.clientY;
+
+				document.body.classList.add(
+					"cursor-ready"
+				);
+
+			});
+
+
+			function moveCursorGradient()
+			{
+
+				gradientX +=
+					(cursorMouseX - gradientX) * 0.12;
+
+				gradientY +=
+					(cursorMouseY - gradientY) * 0.12;
+
+				cursorGradient.style.left =
+					gradientX + "px";
+
+				cursorGradient.style.top =
+					gradientY + "px";
+
+				requestAnimationFrame(
+					moveCursorGradient
+				);
+
+			}
+
+			moveCursorGradient();
+
+
+			window.addEventListener("scroll", function()
+			{
+
+				if (window.scrollY > 450)
+				{
+					backToTop.classList.add("show");
+				}
+				else
+				{
+					backToTop.classList.remove("show");
+				}
+
+			});
+
+
+			backToTop.addEventListener("click", function()
+			{
+
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
+
+			});
+
+			const toastContainer = document.createElement("div");
+			toastContainer.className = "toast-container";
+			document.body.append(toastContainer);
+
+			const toastDurations =
+			{
+				success: 2000,
+				info: 2000,
+				error: 3000
+			};
+
+			const toastIcons =
+			{
+				success:
+					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.1 14.9-4.2-4.2 1.4-1.4 2.8 2.8 6.6-6.6 1.4 1.4-8 8z"></path></svg>',
+				error:
+					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 12.9-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"></path></svg>',
+				info:
+					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>'
+			};
+
+			function showToast(message, type)
+			{
+
+				const kind = toastIcons[type] ? type : "info";
+
+				while (toastContainer.children.length >= 3)
+				{
+					toastContainer.firstElementChild.remove();
+				}
+
+
+				const toast = document.createElement("div");
+				toast.className = "toast toast--" + kind;
+				toast.setAttribute("role", kind === "error" ? "alert" : "status");
+
+
+				const icon = document.createElement("span");
+				icon.className = "toast-icon";
+				icon.setAttribute("aria-hidden", "true");
+				icon.innerHTML = toastIcons[kind];
+
+
+				const body = document.createElement("div");
+				body.className = "toast-body";
+
+				const text = document.createElement("p");
+				text.className = "toast-message";
+				text.textContent = message;
+
+				body.append(text);
+
+
+				const closeButton = document.createElement("button");
+				closeButton.className = "toast-close";
+				closeButton.type = "button";
+				closeButton.setAttribute("aria-label", "Dismiss notification");
+				closeButton.innerHTML =
+					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"></path></svg>';
+
+
+				toast.append(icon, body, closeButton);
+				toastContainer.append(toast);
+
+
+				let dismissTimer = null;
+
+				function dismissToast()
+				{
+
+					if (dismissTimer === null)
+					{
+						return;
+					}
+
+					window.clearTimeout(dismissTimer);
+					dismissTimer = null;
+
+					toast.classList.add("toast--leaving");
+
+					window.setTimeout(function()
+					{
+						toast.remove();
+					}, 250);
+
+				}
+
+				closeButton.addEventListener("click", dismissToast);
+
+				window.requestAnimationFrame(function()
+				{
+					toast.classList.add("toast--visible");
+				});
+
+				dismissTimer = window.setTimeout(dismissToast, toastDurations[kind]);
+
+			}
+
+			const inquiryForm = document.getElementById("inquiryForm");
+			const submitButton = document.getElementById("submitButton");
+			const submitLabel = document.getElementById("submitLabel");
+
+			const categorySelect = document.getElementById("inqCategory");
+			const subjectInput = document.getElementById("inqSubject");
+			const detailsInput = document.getElementById("inqDetails");
+			const fileInput = document.getElementById("inqFile");
+			const fileSelection = document.getElementById("fileSelection");
+			const fileName = document.getElementById("fileName");
+			const removeFileButton = document.getElementById("removeFileButton");
+
+			const categoryError = document.getElementById("categoryError");
+			const subjectError = document.getElementById("subjectError");
+			const detailsError = document.getElementById("detailsError");
+			const fileError = document.getElementById("fileError");
+
+			const statusTabs = document.getElementById("statusTabs");
+			const inquirySearch = document.getElementById("inquirySearch");
+			const inquiryCategoryFilter = document.getElementById("inquiryCategoryFilter");
+			const resultsSummary = document.getElementById("resultsSummary");
+			const inquiriesLoading = document.getElementById("inquiriesLoading");
+			const inquiriesTableWrap = document.getElementById("inquiriesTableWrap");
+			const inquiriesBody = document.getElementById("inquiriesBody");
+			const myInquiriesEmpty = document.getElementById("myInquiriesEmpty");
+			const inquiriesNoMatches = document.getElementById("inquiriesNoMatches");
+			const inquiriesError = document.getElementById("inquiriesError");
+			const retryListButton = document.getElementById("retryListButton");
+			const clearFiltersButton = document.getElementById("clearFiltersButton");
+			const inquiriesPagination = document.getElementById("inquiriesPagination");
+			const pageInfo = document.getElementById("pageInfo");
+			const prevPageButton = document.getElementById("prevPageButton");
+			const nextPageButton = document.getElementById("nextPageButton");
+
+			const inquiryDetailsSection = document.getElementById("inquiryDetailsSection");
+			const detailsPanel = document.getElementById("detailsPanel");
+
+			const inquiriesStorageKey = "edubridge-inquiries";
+			const studentName = "Junior Slickback";
+			const inquiryPageSize = 6;
+			const maxAttachmentSize = 5 * 1024 * 1024;
+
+			const allowedAttachmentTypes = [
+				"image/jpeg",
+				"image/png",
+				"image/webp",
+				"application/pdf"
+			];
+
+			const statusIcons =
+			{
+				"Pending":
+					'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6 4.3 2.5-1 1.7-5.3-3.1V6h2v6.6z"></path></svg>',
+				"Answered":
+					'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.1 14.9-4.2-4.2 1.4-1.4 2.8 2.8 6.6-6.6 1.4 1.4-8 8z"></path></svg>',
+				"Closed":
+					'<svg viewBox="0 0 24 24"><path d="M20 5h-3.2V4a2 2 0 0 0-2-2h-5.6a2 2 0 0 0-2 2v1H4v2h16V5zM4 9v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9H4zm5 4h6v2H9v-2z"></path></svg>'
+			};
+
+			let selectedInquiryId = null;
+			let selectedAttachmentData = null;
+			let selectedAttachmentName = "";
+			let selectedAttachmentType = "";
+			let isSubmittingInquiry = false;
+			let activeStatus = "all";
+			let activeCategory = "all";
+			let activeQuery = "";
+			let currentPage = 1;
+
+			function buildElement(tagName, className, text)
+			{
+
+				const element = document.createElement(tagName);
+
+				if (className)
+				{
+					element.className = className;
+				}
+
+				if (typeof text === "string")
+				{
+					element.textContent = text;
+				}
+
+				return element;
+
+			}
+
+			function formatInquiryDate(isoValue)
+			{
+
+				const date = new Date(isoValue);
+
+				if (isNaN(date.getTime()))
+				{
+					return "—";
+				}
+
+				return date.toLocaleString(undefined,
+				{
+					month: "short",
+					day: "numeric",
+					year: "numeric",
+					hour: "numeric",
+					minute: "2-digit"
+				});
+
+			}
+
+			function formatFileSize(bytes)
+			{
+
+				if (bytes >= 1024 * 1024)
+				{
+					return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+				}
+
+				return Math.max(1, Math.round(bytes / 1024)) + " KB";
+
+			}
+
+			function generateInquiryId(records)
+			{
+
+				let maxSequence = 0;
+				const currentYear = String(new Date().getFullYear());
+
+				records.forEach(function(entry)
+				{
+					const match = /^#INQ-(\d{4})-(\d{4,})$/.exec(entry.id || "");
+
+					if (match)
+					{
+						maxSequence = Math.max(maxSequence, Number(match[2]));
+					}
+				});
+
+				const nextSequence = String(maxSequence + 1).padStart(4, "0");
+
+				return "#INQ-" + currentYear + "-" + nextSequence;
+
+			}
+
+			function readInquiryRecords()
+			{
+
+				let saved = null;
+
+				try
+				{
+					saved = JSON.parse(localStorage.getItem(inquiriesStorageKey) || "[]");
+				}
+				catch (error)
+				{
+					return { ok: false, records: [] };
+				}
+
+				if (!Array.isArray(saved))
+				{
+					return { ok: false, records: [] };
+				}
+
+
+				let changed = false;
+
+				const migrated = saved.map(function(record)
+				{
+
+					const entry = Object.assign({}, record || {});
+
+					if (!entry.id)
+					{
+						entry.id = generateInquiryId(saved);
+						changed = true;
+					}
+
+					if (!entry.createdAt)
+					{
+						entry.createdAt = entry.savedAt || new Date().toISOString();
+						changed = true;
+					}
+
+					if (!entry.updatedAt)
+					{
+						entry.updatedAt = entry.createdAt;
+						changed = true;
+					}
+
+					if (!entry.status)
+					{
+						entry.status = "Pending";
+						changed = true;
+					}
+
+					if (entry.status === "In Progress")
+					{
+						entry.status = "Pending";
+						changed = true;
+					}
+
+					if (entry.status === "Resolved")
+					{
+						entry.status = "Closed";
+						changed = true;
+					}
+
+					if (!entry.category)
+					{
+						entry.category = "General";
+						changed = true;
+					}
+
+					if (!entry.student)
+					{
+						entry.student = studentName;
+						changed = true;
+					}
+
+					if (!Array.isArray(entry.followUps))
+					{
+						entry.followUps = [];
+						changed = true;
+					}
+
+					return entry;
+
+				});
+
+
+				if (changed)
+				{
+
+					try
+					{
+						localStorage.setItem(inquiriesStorageKey, JSON.stringify(migrated));
+					}
+					catch (error)
+					{
+					}
+
+				}
+
+
+				return { ok: true, records: migrated };
+
+			}
+
+			function getOwnInquiries(records)
+			{
+
+				return records.filter(function(entry)
+				{
+					return !entry.student || entry.student === studentName;
+				});
+
+			}
+
+			function writeInquiryRecords(records)
+			{
+				localStorage.setItem(inquiriesStorageKey, JSON.stringify(records));
+			}
+
+			function findInquiryRecord(inquiryId)
+			{
+
+				const result = readInquiryRecords();
+
+				if (!result.ok)
+				{
+					return null;
+				}
+
+				const matches = result.records.filter(function(entry)
+				{
+					return entry.id === inquiryId;
+				});
+
+				return matches.length > 0 ? matches[0] : null;
+
+			}
+
+			function createStatusBadge(status)
+			{
+
+				const badge = buildElement("span", "status-badge");
+
+				let modifier = "pending";
+
+				if (status === "Answered")
+				{
+					modifier = "answered";
+				}
+				else if (status === "Closed")
+				{
+					modifier = "closed";
+				}
+
+				badge.classList.add("status-badge--" + modifier);
+
+				const icon = buildElement("span", "status-badge-icon");
+				icon.setAttribute("aria-hidden", "true");
+				icon.innerHTML = statusIcons[status] || statusIcons["Pending"];
+
+				badge.append(icon, document.createTextNode(status));
+
+				return badge;
+
+			}
+
+			function createInquiryRow(entry)
+			{
+
+				const row = document.createElement("tr");
+
+
+				const idCell = buildElement("td", "cell-id", entry.id);
+				idCell.title = entry.id;
+
+
+				const subjectCell = buildElement("td", "cell-subject", entry.subject);
+				subjectCell.title = entry.subject;
+
+
+				const categoryCell = buildElement("td", null, entry.category);
+
+
+				const statusCell = document.createElement("td");
+				statusCell.append(createStatusBadge(entry.status));
+
+
+				const createdCell = buildElement("td", "cell-created");
+
+				const createdTime = document.createElement("time");
+				createdTime.dateTime = entry.createdAt;
+				createdTime.textContent = formatInquiryDate(entry.createdAt);
+
+				createdCell.append(createdTime);
+
+
+				const responseCell = buildElement("td", "cell-response");
+
+				if (entry.response && entry.response.text)
+				{
+
+					const responseText = entry.response.text.trim();
+
+					responseCell.textContent = responseText.length > 70
+						? responseText.slice(0, 70) + "…"
+						: responseText;
+					responseCell.title = responseText;
+
+				}
+				else
+				{
+
+					responseCell.textContent = "—";
+					responseCell.classList.add("cell-response--empty");
+
+				}
+
+
+				const actionCell = document.createElement("td");
+
+				const viewButton = buildElement("button", "view-button", "View Details");
+				viewButton.type = "button";
+
+				if (entry.id === selectedInquiryId)
+				{
+					viewButton.setAttribute("aria-current", "true");
+				}
+
+				viewButton.addEventListener("click", function()
+				{
+					selectInquiry(entry.id);
+				});
+
+				actionCell.append(viewButton);
+
+
+				row.append(idCell, subjectCell, categoryCell, statusCell, createdCell, responseCell, actionCell);
+
+				return row;
+
+			}
+
+			function updateTabCounts(records)
+			{
+
+				const counts =
+				{
+					"all": records.length,
+					"Pending": 0,
+					"Answered": 0,
+					"Closed": 0
+				};
+
+				records.forEach(function(entry)
+				{
+					if (counts[entry.status] !== undefined)
+					{
+						counts[entry.status] += 1;
+					}
+				});
+
+				statusTabs.querySelectorAll("[data-status]").forEach(function(tab)
+				{
+					const count = counts[tab.dataset.status];
+
+					if (typeof count === "number")
+					{
+						tab.querySelector(".tab-count").textContent = count;
+					}
+				});
+
+			}
+
+			function renderInquiries()
+			{
+
+				const result = readInquiryRecords();
+
+				if (!result.ok)
+				{
+					inquiriesLoading.hidden = true;
+					inquiriesTableWrap.hidden = true;
+					myInquiriesEmpty.hidden = true;
+					inquiriesNoMatches.hidden = true;
+					inquiriesPagination.hidden = true;
+					inquiriesError.hidden = false;
+					resultsSummary.textContent = "";
+					return;
+				}
+
+				inquiriesError.hidden = true;
+
+
+				const allRecords = getOwnInquiries(result.records).sort(function(a, b)
+				{
+					return new Date(b.updatedAt) - new Date(a.updatedAt);
+				});
+
+				updateTabCounts(allRecords);
+
+
+				if (allRecords.length === 0)
+				{
+					inquiriesLoading.hidden = true;
+					inquiriesTableWrap.hidden = true;
+					inquiriesNoMatches.hidden = true;
+					inquiriesPagination.hidden = true;
+					resultsSummary.textContent = "";
+					myInquiriesEmpty.hidden = false;
+					return;
+				}
+
+				myInquiriesEmpty.hidden = true;
+
+
+				const query = activeQuery.trim().toLowerCase();
+
+				const filtered = allRecords.filter(function(entry)
+				{
+
+					const matchesStatus =
+						activeStatus === "all" || entry.status === activeStatus;
+
+					const matchesCategory =
+						activeCategory === "all" || entry.category === activeCategory;
+
+					const haystack = [
+						entry.id,
+						entry.subject,
+						entry.message,
+						entry.category
+					].join(" ").toLowerCase();
+
+					const matchesQuery = !query || haystack.indexOf(query) !== -1;
+
+					return matchesStatus && matchesCategory && matchesQuery;
+
+				});
+
+
+				if (filtered.length === 0)
+				{
+					inquiriesLoading.hidden = true;
+					inquiriesTableWrap.hidden = true;
+					inquiriesPagination.hidden = true;
+					resultsSummary.textContent = "0 inquiries";
+					inquiriesNoMatches.hidden = false;
+					return;
+				}
+
+				inquiriesNoMatches.hidden = true;
+
+
+				const pageCount = Math.max(1, Math.ceil(filtered.length / inquiryPageSize));
+
+				if (currentPage > pageCount)
+				{
+					currentPage = pageCount;
+				}
+
+
+				const startIndex = (currentPage - 1) * inquiryPageSize;
+				const pageRecords = filtered.slice(startIndex, startIndex + inquiryPageSize);
+
+
+				inquiriesBody.replaceChildren();
+
+				pageRecords.forEach(function(entry)
+				{
+					inquiriesBody.append(createInquiryRow(entry));
+				});
+
+
+				inquiriesLoading.hidden = true;
+				inquiriesTableWrap.hidden = false;
+				inquiriesPagination.hidden = pageCount <= 1;
+
+				pageInfo.textContent = "Page " + currentPage + " of " + pageCount;
+
+				prevPageButton.disabled = currentPage <= 1;
+				nextPageButton.disabled = currentPage >= pageCount;
+
+				resultsSummary.textContent = filtered.length +
+					(filtered.length === 1 ? " inquiry" : " inquiries");
+
+			}
+
+			function selectInquiry(inquiryId)
+			{
+
+				selectedInquiryId = inquiryId;
+
+				renderDetails();
+				renderInquiries();
+
+			}
+
+			function closeInquiryDetails()
+			{
+
+				selectedInquiryId = null;
+				inquiryDetailsSection.hidden = true;
+				detailsPanel.replaceChildren();
+				renderInquiries();
+
+			}
+
+			function createDetailField(label, value, wide)
+			{
+
+				const field = buildElement("div", "detail-field");
+
+				if (wide)
+				{
+					field.classList.add("detail-field--wide");
+				}
+
+				field.append(
+					buildElement("span", "detail-label", label),
+					buildElement("span", "detail-value", value)
+				);
+
+				return field;
+
+			}
+
+			function createConversationItem(author, date, text)
+			{
+
+				const item = buildElement("div", "conversation-item");
+
+				const meta = buildElement("div", "conversation-meta");
+
+				const authorLabel = buildElement("span", "conversation-author", author);
+				const time = document.createElement("time");
+				time.dateTime = date;
+				time.textContent = formatInquiryDate(date);
+
+				meta.append(authorLabel, time);
+
+				item.append(meta, buildElement("p", null, text));
+
+				return item;
+
+			}
+
+			function renderDetails()
+			{
+
+				const entry = selectedInquiryId ? findInquiryRecord(selectedInquiryId) : null;
+
+				if (!entry || entry.student !== studentName)
+				{
+					closeInquiryDetails();
+					return;
+				}
+
+				detailsPanel.replaceChildren();
+				inquiryDetailsSection.hidden = false;
+
+
+				const header = buildElement("div", "details-header");
+
+				header.append(
+					buildElement("span", "details-id", entry.id),
+					createStatusBadge(entry.status)
+				);
+
+				const closeButton = buildElement("button", "details-close", "Close Details");
+				closeButton.type = "button";
+				closeButton.addEventListener("click", closeInquiryDetails);
+
+				header.append(closeButton);
+
+
+				const grid = buildElement("div", "details-grid");
+
+				grid.append(createDetailField("Submitted", formatInquiryDate(entry.createdAt)));
+				grid.append(createDetailField("Last Updated", formatInquiryDate(entry.updatedAt)));
+				grid.append(createDetailField("Category", entry.category, true));
+				grid.append(createDetailField("Subject", entry.subject, true));
+				grid.append(createDetailField("Inquiry Details", entry.message, true));
+
+
+				const attachmentField = buildElement("div", "detail-field detail-field--wide");
+				attachmentField.append(buildElement("span", "detail-label", "Attachment"));
+
+				if (entry.attachment && entry.attachment.data)
+				{
+
+					const attachmentRow = buildElement("div", "attachment-row");
+
+					const attachmentLink = buildElement("a", "attachment-link", "Open Attachment");
+					attachmentLink.href = entry.attachment.data;
+					attachmentLink.target = "_blank";
+					attachmentLink.rel = "noopener";
+					attachmentLink.setAttribute("download", entry.attachment.name || "attachment");
+
+					attachmentRow.append(
+						buildElement("span", "detail-value", entry.attachment.name || "Attachment"),
+						attachmentLink
+					);
+
+					attachmentField.append(attachmentRow);
+
+					attachmentField.append(buildElement(
+						"span",
+						"file-hint",
+						"Visible only to you."
+					));
+
+				}
+				else
+				{
+
+					attachmentField.append(buildElement(
+						"span",
+						"detail-value",
+						"No attachment was included with this inquiry."
+					));
+
+				}
+
+				grid.append(attachmentField);
+
+				detailsPanel.append(header, grid);
+
+
+				const hasResponse = Boolean(entry.response && entry.response.text);
+
+				if (hasResponse || entry.followUps.length > 0)
+				{
+
+					detailsPanel.append(buildElement("h3", "details-subheading", "Conversation"));
+
+					const conversation = buildElement("div", "conversation");
+
+					const events = [];
+
+					entry.followUps.forEach(function(followUp)
+					{
+						events.push(
+						{
+							author: studentName,
+							text: followUp.text,
+							date: followUp.date
+						});
+					});
+
+					if (hasResponse)
+					{
+						events.push(
+						{
+							author: "EduBridge Team",
+							text: entry.response.text,
+							date: entry.response.date || entry.updatedAt
+						});
+					}
+
+					events.sort(function(a, b)
+					{
+						return new Date(a.date) - new Date(b.date);
+					});
+
+					events.forEach(function(item)
+					{
+						conversation.append(createConversationItem(item.author, item.date, item.text));
+					});
+
+					detailsPanel.append(conversation);
+
+				}
+
+
+				if (!hasResponse)
+				{
+
+					const pendingBox = buildElement(
+						"div",
+						"pending-box",
+						"No response has been received yet. You can ask a follow-up " +
+						"question below or check this page again later."
+					);
+
+					detailsPanel.append(pendingBox);
+
+				}
+
+
+				const followupArea = buildElement("div", "followup-area");
+
+				if (entry.status !== "Closed")
+				{
+
+					followupArea.innerHTML =
+						'<button class="view-button" id="askFollowupButton" type="button">' +
+							'Ask Follow-up Question' +
+						'</button>' +
+						'<form class="followup-form" id="followupForm" novalidate hidden>' +
+							'<div class="form-group">' +
+								'<label for="followupText">' +
+									'Your Follow-up Question' +
+								'</label>' +
+								'<textarea id="followupText" placeholder="Add more details or ask a follow-up question..."></textarea>' +
+								'<span class="form-error" id="followupError" role="alert" hidden></span>' +
+							'</div>' +
+							'<div class="followup-actions">' +
+								'<button class="state-button" id="followupSubmitButton" type="submit">' +
+									'Submit Follow-up' +
+								'</button>' +
+								'<button class="page-button" id="followupCancelButton" type="button">' +
+									'Cancel' +
+								'</button>' +
+							'</div>' +
+						'</form>';
+
+					const askButton = followupArea.querySelector("#askFollowupButton");
+					const followupForm = followupArea.querySelector("#followupForm");
+					const followupText = followupArea.querySelector("#followupText");
+					const followupError = followupArea.querySelector("#followupError");
+					const followupSubmitButton = followupArea.querySelector("#followupSubmitButton");
+					const followupCancelButton = followupArea.querySelector("#followupCancelButton");
+
+					askButton.addEventListener("click", function()
+					{
+						followupForm.hidden = false;
+						followupText.focus();
+					});
+
+					followupCancelButton.addEventListener("click", function()
+					{
+						followupError.hidden = true;
+						followupForm.hidden = true;
+					});
+
+					followupForm.addEventListener("submit", function(event)
+					{
+
+						event.preventDefault();
+
+						const text = followupText.value.trim();
+
+						if (text.length < 5)
+						{
+							showFieldError(followupError,
+								"Please enter your follow-up question with at least 5 characters.");
+							showToast("Please enter at least 5 characters for your follow-up.", "info");
+							return;
+						}
+
+						followupError.hidden = true;
+
+
+						const result = readInquiryRecords();
+
+						if (!result.ok)
+						{
+							showFieldError(followupError,
+								"Your follow-up could not be saved. Please try again.");
+							showToast("Failed to submit follow-up. Please try again.", "error");
+							return;
+						}
+
+
+						const stored = result.records.filter(function(item)
+						{
+							return item.id === entry.id;
+						})[0];
+
+						if (!stored)
+						{
+							showFieldError(followupError,
+								"This inquiry could not be found anymore.");
+							showToast("This inquiry could not be found anymore.", "error");
+							return;
+						}
+
+
+						stored.followUps.push(
+						{
+							text: text,
+							date: new Date().toISOString()
+						});
+
+						stored.updatedAt = new Date().toISOString();
+
+
+						try
+						{
+							writeInquiryRecords(result.records);
+						}
+						catch (error)
+						{
+							showFieldError(followupError,
+								"Your follow-up could not be saved. Please try again.");
+							showToast("Failed to submit follow-up. Please try again.", "error");
+							return;
+						}
+
+
+						followupForm.hidden = true;
+
+						showToast("Follow-up submitted successfully.", "success");
+
+						renderDetails();
+						renderInquiries();
+
+					});
+
+				}
+				else
+				{
+
+					followupArea.append(buildElement(
+						"p",
+						"pending-box",
+						"Follow-up questions are not available for closed inquiries."
+					));
+
+				}
+
+				detailsPanel.append(followupArea);
+
+			}
+
+			function showFieldError(element, message)
+			{
+				element.textContent = message;
+				element.hidden = false;
+			}
+
+			function clearSelectedAttachment()
+			{
+
+				selectedAttachmentData = null;
+				selectedAttachmentName = "";
+				selectedAttachmentType = "";
+
+				fileInput.value = "";
+				fileName.textContent = "";
+				fileSelection.hidden = true;
+
+			}
+
+			function setActiveTab(status)
+			{
+
+				activeStatus = status;
+				currentPage = 1;
+
+				statusTabs.querySelectorAll("[data-status]").forEach(function(tab)
+				{
+					const isActive = tab.dataset.status === status;
+
+					tab.classList.toggle("active", isActive);
+					tab.setAttribute("aria-pressed", String(isActive));
+				});
+
+				renderInquiries();
+
+			}
+
+			fileInput.addEventListener("change", function()
+			{
+
+				fileError.hidden = true;
+				fileSelection.hidden = true;
+
+				const file = fileInput.files && fileInput.files[0];
+
+				if (!file)
+				{
+					clearSelectedAttachment();
+					return;
+				}
+
+
+				if (allowedAttachmentTypes.indexOf(file.type) === -1)
+				{
+					showFieldError(fileError,
+						"Unsupported file type. Allowed: JPG, PNG, WEBP, or PDF.");
+					showToast("File upload failed. Please choose another file.", "error");
+					clearSelectedAttachment();
+					return;
+				}
+
+				if (file.size > maxAttachmentSize)
+				{
+					showFieldError(fileError,
+						"The file is too large. The maximum size is 5 MB.");
+					showToast("File upload failed. The maximum size is 5 MB.", "error");
+					clearSelectedAttachment();
+					return;
+				}
+
+
+				const reader = new FileReader();
+
+				reader.onload = function()
+				{
+
+					selectedAttachmentData = reader.result;
+					selectedAttachmentName = file.name;
+					selectedAttachmentType = file.type;
+
+					fileName.textContent = file.name + " · " + formatFileSize(file.size);
+					fileSelection.hidden = false;
+
+				};
+
+				reader.onerror = function()
+				{
+					showFieldError(fileError,
+						"The file could not be read. Please try another file.");
+					showToast("File upload failed. Please choose another file.", "error");
+					clearSelectedAttachment();
+				};
+
+				reader.readAsDataURL(file);
+
+			});
+
+			removeFileButton.addEventListener("click", function()
+			{
+				fileError.hidden = true;
+				clearSelectedAttachment();
+			});
+
+			inquiryForm.addEventListener("submit", function(event)
+			{
+
+				event.preventDefault();
+
+				if (isSubmittingInquiry)
+				{
+					return;
+				}
+
+				categoryError.hidden = true;
+				subjectError.hidden = true;
+				detailsError.hidden = true;
+
+
+				let valid = true;
+
+				if (!categorySelect.value)
+				{
+					showFieldError(categoryError, "Please choose a category.");
+					valid = false;
+				}
+
+				if (subjectInput.value.trim().length < 3)
+				{
+					showFieldError(subjectError,
+						"Please enter a subject with at least 3 characters.");
+					valid = false;
+				}
+
+				if (detailsInput.value.trim().length < 10)
+				{
+					showFieldError(detailsError,
+						"Please provide at least 10 characters of details.");
+					valid = false;
+				}
+
+				if (!valid)
+				{
+					showToast("Please complete all required fields.", "info");
+					return;
+				}
+
+
+				isSubmittingInquiry = true;
+				submitButton.disabled = true;
+				submitLabel.textContent = "Submitting...";
+
+
+				const result = readInquiryRecords();
+
+				if (!result.ok)
+				{
+
+					isSubmittingInquiry = false;
+					submitButton.disabled = false;
+					submitLabel.textContent = "Submit Inquiry";
+
+					showToast("Failed to submit inquiry. Please try again.", "error");
+					return;
+
+				}
+
+
+				const now = new Date().toISOString();
+
+				const entry =
+				{
+					id: generateInquiryId(result.records),
+					student: studentName,
+					category: categorySelect.value,
+					subject: subjectInput.value.trim(),
+					message: detailsInput.value.trim(),
+					status: "Pending",
+					createdAt: now,
+					updatedAt: now,
+					savedAt: now,
+					followUps: [],
+					response: null,
+					attachment: selectedAttachmentData
+						? {
+							name: selectedAttachmentName,
+							type: selectedAttachmentType,
+							data: selectedAttachmentData
+						}
+						: null
+				};
+
+
+				result.records.unshift(entry);
+
+
+				try
+				{
+					writeInquiryRecords(result.records);
+				}
+				catch (error)
+				{
+
+					isSubmittingInquiry = false;
+					submitButton.disabled = false;
+					submitLabel.textContent = "Submit Inquiry";
+
+					showToast(selectedAttachmentData
+						? "Browser storage is full. Try removing the attachment or using a smaller file."
+						: "Failed to submit inquiry. Please try again.", "error");
+					return;
+
+				}
+
+
+				inquiryForm.reset();
+				clearSelectedAttachment();
+
+				activeStatus = "all";
+				activeCategory = "all";
+				activeQuery = "";
+				currentPage = 1;
+
+				inquirySearch.value = "";
+				inquiryCategoryFilter.value = "all";
+
+				statusTabs.querySelectorAll("[data-status]").forEach(function(tab)
+				{
+					const isActive = tab.dataset.status === "all";
+
+					tab.classList.toggle("active", isActive);
+					tab.setAttribute("aria-pressed", String(isActive));
+				});
+
+				renderInquiries();
+
+				showToast("Inquiry submitted successfully!", "success");
+
+				isSubmittingInquiry = false;
+				submitButton.disabled = false;
+				submitLabel.textContent = "Submit Inquiry";
+
+			});
+
+			statusTabs.addEventListener("click", function(event)
+			{
+
+				const tab = event.target.closest("[data-status]");
+
+				if (!tab)
+				{
+					return;
+				}
+
+				setActiveTab(tab.dataset.status);
+
+			});
+
+			inquirySearch.addEventListener("input", function()
+			{
+				activeQuery = inquirySearch.value;
+				currentPage = 1;
+				renderInquiries();
+			});
+
+			inquiryCategoryFilter.addEventListener("change", function()
+			{
+				activeCategory = inquiryCategoryFilter.value;
+				currentPage = 1;
+				renderInquiries();
+			});
+
+			prevPageButton.addEventListener("click", function()
+			{
+
+				if (currentPage > 1)
+				{
+					currentPage -= 1;
+					renderInquiries();
+				}
+
+			});
+
+			nextPageButton.addEventListener("click", function()
+			{
+				currentPage += 1;
+				renderInquiries();
+			});
+
+			clearFiltersButton.addEventListener("click", function()
+			{
+
+				activeStatus = "all";
+				activeCategory = "all";
+				activeQuery = "";
+				currentPage = 1;
+
+				inquirySearch.value = "";
+				inquiryCategoryFilter.value = "all";
+
+				statusTabs.querySelectorAll("[data-status]").forEach(function(tab)
+				{
+					const isActive = tab.dataset.status === "all";
+
+					tab.classList.toggle("active", isActive);
+					tab.setAttribute("aria-pressed", String(isActive));
+				});
+
+				renderInquiries();
+
+			});
+
+			retryListButton.addEventListener("click", function()
+			{
+				renderInquiries();
+			});
+
+			const adminRoleKey = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+			const isAdminInquiryView = adminRoleKey !== "student" && adminRoleKey !== "teacher";
+
+			const adminInquirySection = document.getElementById("adminInquirySection");
+			const adminStatPending = document.getElementById("adminStatPending");
+			const adminStatAnswered = document.getElementById("adminStatAnswered");
+			const adminStatTotal = document.getElementById("adminStatTotal");
+			const adminSearch = document.getElementById("adminSearch");
+			const adminCategoryFilter = document.getElementById("adminCategoryFilter");
+			const adminSummary = document.getElementById("adminSummary");
+			const adminLoading = document.getElementById("adminLoading");
+			const adminTableWrap = document.getElementById("adminTableWrap");
+			const adminInquiryRows = document.getElementById("adminInquiryRows");
+			const adminEmpty = document.getElementById("adminEmpty");
+			const adminNoMatches = document.getElementById("adminNoMatches");
+			const adminError = document.getElementById("adminError");
+			const adminRetryButton = document.getElementById("adminRetryButton");
+			const heroDescription = document.getElementById("heroDescription");
+			const writeInquiryLink = document.getElementById("writeInquiryLink");
+			const inquirySection = document.getElementById("inquirySection");
+			const myInquiriesSection = document.getElementById("myInquiries");
+
+			let adminQuery = "";
+			let adminCategory = "all";
+
+			function renderAdminStats(records)
+			{
+
+				let pending = 0;
+				let answered = 0;
+
+				records.forEach(function(entry)
+				{
+					if (entry.status === "Pending")
+					{
+						pending += 1;
+					}
+					else if (entry.status === "Answered")
+					{
+						answered += 1;
+					}
+				});
+
+				adminStatPending.textContent = String(pending);
+				adminStatAnswered.textContent = String(answered);
+				adminStatTotal.textContent = String(records.length);
+
+			}
+
+			function getFilteredPendingInquiries(records)
+			{
+
+				const query = adminQuery.toLowerCase();
+
+				const pending = records.filter(function(entry)
+				{
+					return entry.status === "Pending";
+				});
+
+				pending.sort(function(a, b)
+				{
+					return String(b.createdAt).localeCompare(String(a.createdAt));
+				});
+
+				return pending.filter(function(entry)
+				{
+					if (adminCategory !== "all" && entry.category !== adminCategory)
+					{
+						return false;
+					}
+
+					if (!query)
+					{
+						return true;
+					}
+
+					return String(entry.id || "").toLowerCase().includes(query) ||
+						String(entry.student || "").toLowerCase().includes(query) ||
+						String(entry.subject || "").toLowerCase().includes(query);
+				});
+
+			}
+
+			function createAdminInquiryRow(entry)
+			{
+
+				const row = document.createElement("tr");
+
+				const idCell = buildElement("td", "cell-id", entry.id);
+				idCell.title = entry.id;
+
+				const studentCell = buildElement("td", null, entry.student || "Not available");
+				studentCell.title = entry.student || "";
+
+				const subjectCell = buildElement("td", "cell-subject", entry.subject || "—");
+				subjectCell.title = entry.subject || "";
+
+				const categoryCell = buildElement("td", null, entry.category || "General");
+
+				const createdCell = buildElement("td", "cell-created");
+
+				const createdTime = document.createElement("time");
+				createdTime.dateTime = entry.createdAt;
+				createdTime.textContent = formatInquiryDate(entry.createdAt);
+
+				createdCell.append(createdTime);
+
+				const statusCell = document.createElement("td");
+				statusCell.append(createStatusBadge(entry.status));
+
+				const actionCell = document.createElement("td");
+
+				const respondLink = buildElement("a", "respond-button", "Respond");
+				respondLink.href = "response.html?id=" + encodeURIComponent(entry.id);
+
+				actionCell.append(respondLink);
+
+				row.append(idCell, studentCell, subjectCell, categoryCell, createdCell, statusCell, actionCell);
+
+				return row;
+
+			}
+
+			function renderAdminInquiries()
+			{
+
+				const result = readInquiryRecords();
+
+				adminLoading.hidden = true;
+
+				if (!result.ok)
+				{
+					adminTableWrap.hidden = true;
+					adminEmpty.hidden = true;
+					adminNoMatches.hidden = true;
+					adminError.hidden = false;
+					adminSummary.textContent = "";
+					return;
+				}
+
+				adminError.hidden = true;
+				renderAdminStats(result.records);
+
+				const pending = result.records.filter(function(entry)
+				{
+					return entry.status === "Pending";
+				});
+
+				if (pending.length === 0)
+				{
+					adminTableWrap.hidden = true;
+					adminNoMatches.hidden = true;
+					adminEmpty.hidden = false;
+					adminSummary.textContent = "";
+					return;
+				}
+
+				const filtered = getFilteredPendingInquiries(result.records);
+
+				adminEmpty.hidden = true;
+
+				if (filtered.length === 0)
+				{
+					adminTableWrap.hidden = true;
+					adminNoMatches.hidden = false;
+					adminSummary.textContent = "No pending inquiries match your filters.";
+					return;
+				}
+
+				adminNoMatches.hidden = true;
+				adminTableWrap.hidden = false;
+				adminSummary.textContent = "Showing " + filtered.length + " of " + pending.length +
+					" pending " + (pending.length === 1 ? "inquiry" : "inquiries") + ".";
+
+				adminInquiryRows.replaceChildren();
+
+				filtered.forEach(function(entry)
+				{
+					adminInquiryRows.append(createAdminInquiryRow(entry));
+				});
+
+			}
+
+			function applyPageRole()
+			{
+
+				if (isAdminInquiryView)
+				{
+					heroDescription.textContent =
+						"Review student inquiries and respond to questions that need your attention.";
+					writeInquiryLink.hidden = true;
+
+					inquirySection.hidden = true;
+					myInquiriesSection.hidden = true;
+					adminInquirySection.hidden = false;
+
+					renderAdminInquiries();
+				}
+				else
+				{
+					adminInquirySection.hidden = true;
+					renderInquiries();
+				}
+
+			}
+
+			adminSearch.addEventListener("input", function()
+			{
+				adminQuery = adminSearch.value.trim();
+				renderAdminInquiries();
+			});
+
+			adminCategoryFilter.addEventListener("change", function()
+			{
+				adminCategory = adminCategoryFilter.value;
+				renderAdminInquiries();
+			});
+
+			adminRetryButton.addEventListener("click", function()
+			{
+				renderAdminInquiries();
+			});
+
+			applyPageRole();
+		}
+		catch (error)
+		{
+			document.body.classList.remove("js");
+		}
+	</script>
+</body>
+</html>
