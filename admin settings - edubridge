@@ -3739,6 +3739,9 @@
 						<button class="btn btn-primary" type="button" id="savePersonalization">
 							Save Changes
 						</button>
+						<button class="btn btn-secondary" type="button" id="cancelPersonalization">
+							Cancel
+						</button>
 					</div>
 
 					<div class="panel-subheading">
@@ -4362,6 +4365,7 @@
 	<div class="toast" id="pageToast" hidden>
 	</div>
 
+	<script src="profile-sync.js"></script>
 	<script>
 		try
 		{
@@ -4555,6 +4559,7 @@
 					items.push({ label: "User Management", href: "usermanagement.html" });
 					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
 					items.push({ label: "Activity Logs", href: "activitylogs.html" });
+					items.push({ label: "Settings", href: "settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
@@ -4562,7 +4567,7 @@
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
 					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
+					items.push({ label: "Settings", href: "settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
@@ -4650,7 +4655,7 @@
 
 				if (role === "student" || role === "teacher")
 				{
-					img.src = "junior.jpg";
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
 					img.alt = "Junior Slickback";
 					name.textContent = "Junior Slickback";
 					roleText.textContent = "Student";
@@ -4658,7 +4663,7 @@
 				}
 				else
 				{
-					img.src = "resume.jpg";
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
 					img.alt = "Resume Dizon";
 					name.textContent = "Resume Dizon";
 					roleText.textContent = "Administrator";
@@ -5466,6 +5471,7 @@
 			const coverUploadBtn = document.getElementById("coverUploadBtn");
 			const coverRemoveBtn = document.getElementById("coverRemoveBtn");
 			const savePersonalization = document.getElementById("savePersonalization");
+			const cancelPersonalization = document.getElementById("cancelPersonalization");
 
 			let pendingAvatar = null;
 			let pendingCover = null;
@@ -5511,7 +5517,7 @@
 			bioInput.value = localStorage.getItem("edubridge-bio") || "";
 
 			renderNickname(nicknameInput.value);
-			renderAvatar(localStorage.getItem("edubridge-avatar") || "");
+			renderAvatar(EduBridgeProfile.savedPicture(settingsRole));
 			renderCover(localStorage.getItem("edubridge-cover") || "");
 			renderBioCounter();
 
@@ -5609,11 +5615,11 @@
 					{
 						if (pendingAvatar)
 						{
-							localStorage.setItem("edubridge-avatar", pendingAvatar);
+							EduBridgeProfile.savePicture(settingsRole, pendingAvatar);
 						}
 						else
 						{
-							localStorage.removeItem("edubridge-avatar");
+							EduBridgeProfile.clearPicture(settingsRole);
 						}
 					}
 
@@ -5643,8 +5649,30 @@
 
 				renderNickname(nickname);
 				renderBioCounter();
+				applyNavProfile();
 
 				showSettingsToast("Changes saved.");
+			});
+
+			cancelPersonalization.addEventListener("click", function()
+			{
+				const storedNickname = localStorage.getItem("edubridge-nickname") || "";
+				const storedBio = localStorage.getItem("edubridge-bio") || "";
+
+				pendingAvatar = null;
+				pendingCover = null;
+				avatarInput.value = "";
+				coverInput.value = "";
+
+				nicknameInput.value = storedNickname;
+				bioInput.value = storedBio;
+
+				renderNickname(storedNickname);
+				renderAvatar(EduBridgeProfile.savedPicture(settingsRole));
+				renderCover(localStorage.getItem("edubridge-cover") || "");
+				renderBioCounter();
+
+				showSettingsToast("Unsaved changes discarded.");
 			});
 
 		}
