@@ -24,6 +24,10 @@
             --purple: #7138c8;
             --purple-light: #eee5ff;
             --purple-soft: #eadcff;
+            --green: #1f9d63;
+            --green-soft: #e7f6ee;
+            --red: #d64550;
+            --red-soft: #fdeced;
             --shadow: rgba(40, 24, 75, 0.08);
         }
 
@@ -39,6 +43,10 @@
             --purple: #a970ff;
             --purple-light: #251b3b;
             --purple-soft: #241934;
+            --green: #4cd08d;
+            --green-soft: #16301f;
+            --red: #ff7b85;
+            --red-soft: #331a1e;
             --shadow: rgba(0, 0, 0, 0.35);
         }
 
@@ -231,16 +239,15 @@
 
         .nav-links a::after
         {
-            content: "";
             position: absolute;
-            left: 50%;
+            right: 50%;
             bottom: -7px;
-            width: 0;
+            left: 50%;
             height: 2px;
             border-radius: 10px;
             background: #b77aff;
-            transform: translateX(-50%);
-            transition: width 0.25s ease;
+            content: "";
+            transition: left 0.25s ease, right 0.25s ease;
         }
 
         .nav-links a:hover,
@@ -250,9 +257,135 @@
         }
 
         .nav-links a:hover::after,
+        .nav-links a:focus-visible::after,
         .nav-links .active::after
         {
+            right: 0;
+            left: 0;
+        }
+
+        .account-menu
+        {
+            position: absolute;
+            top: calc(100% - 1px);
+            right: 36px;
+            width: 264px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            padding: 8px;
+            border: 1px solid #ffffff25;
+            border-radius: 6px;
+            background: rgba(8, 5, 29, 0.97);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+            z-index: 1001;
+        }
+
+        .navbar.menu-open .account-menu
+        {
+            display: flex;
+        }
+
+        .account-menu-label
+        {
+            padding: 6px 10px;
+            color: #ffffff80;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .account-menu-item
+        {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             width: 100%;
+            padding: 10px;
+            border: 0;
+            border-radius: 4px;
+            background: none;
+            color: #ffffffdd;
+            font-family: inherit;
+            font-size: 13px;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .account-menu-item:hover,
+        .account-menu-item:focus-visible
+        {
+            background: #ffffff10;
+            color: #c58cff;
+        }
+
+        .account-menu-item[aria-disabled="true"]
+        {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .account-menu-item[aria-disabled="true"]:hover
+        {
+            background: none;
+            color: #ffffffdd;
+        }
+
+        .account-menu-divider
+        {
+            height: 1px;
+            margin: 4px 0;
+            background: #ffffff25;
+        }
+
+        .submenu-parent
+        {
+            justify-content: space-between;
+        }
+
+        .submenu-caret
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            transition: transform 0.2s ease;
+        }
+
+        .submenu-caret svg
+        {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .submenu-parent[aria-expanded="true"] .submenu-caret
+        {
+            transform: rotate(180deg);
+        }
+
+        .account-submenu
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin: 2px 0;
+            padding-left: 14px;
+            border-left: 1px solid #ffffff2d;
+        }
+
+        .account-submenu[hidden]
+        {
+            display: none;
+        }
+
+        .account-submenu .account-menu-item
+        {
+            padding: 8px 10px;
+            font-size: 12px;
         }
 
         .nav-buttons
@@ -278,7 +411,7 @@
 
         .menu-button
         {
-            display: none;
+            display: inline-flex;
             width: 34px;
             height: 34px;
             align-items: center;
@@ -740,24 +873,6 @@
             width: 14px;
             height: 14px;
             fill: currentColor;
-        }
-
-        .success-message
-        {
-            display: none;
-            margin-top: 13px;
-            padding: 10px 12px;
-            border: 1px solid #b9e4a7;
-            border-radius: 5px;
-            background: #eef9e9;
-            color: #4a8b37;
-            font-size: 11px;
-            line-height: 1.5;
-        }
-
-        .success-message.show
-        {
-            display: block;
         }
 
         .feedback-card
@@ -1458,6 +1573,138 @@
             }
         }
 
+        .toast-container
+        {
+            position: fixed;
+            top: 96px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: min(340px, calc(100vw - 48px));
+            pointer-events: none;
+        }
+
+        .toast
+        {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--purple);
+            border-radius: 6px;
+            background: var(--surface);
+            box-shadow: 0 10px 28px var(--shadow);
+            opacity: 0;
+            pointer-events: auto;
+            transform: translateX(24px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .toast--visible
+        {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast--leaving
+        {
+            opacity: 0;
+            transform: translateX(24px);
+        }
+
+        .toast--success
+        {
+            border-left-color: var(--green);
+        }
+
+        .toast--error
+        {
+            border-left-color: var(--red);
+        }
+
+        .toast--info
+        {
+            border-left-color: var(--purple);
+        }
+
+        .toast-icon
+        {
+            display: flex;
+            width: 26px;
+            height: 26px;
+            min-width: 26px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        .toast--success .toast-icon
+        {
+            background: var(--green-soft);
+            color: var(--green);
+        }
+
+        .toast--error .toast-icon
+        {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+
+        .toast-icon svg
+        {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .toast-body
+        {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .toast-message
+        {
+            margin: 2px 0 0;
+            color: var(--text);
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .toast-close
+        {
+            display: inline-flex;
+            width: 20px;
+            height: 20px;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .toast-close:hover
+        {
+            background: var(--surface-soft);
+            color: var(--text);
+        }
+
+        .toast-close svg
+        {
+            width: 10px;
+            height: 10px;
+            fill: currentColor;
+        }
+
         @media (max-width: 1200px)
         {
             .contact-section
@@ -1507,52 +1754,6 @@
             }
         }
 
-        @media (max-width: 760px)
-        {
-            .nav-links
-            {
-                position: absolute;
-                top: calc(100% - 1px);
-                right: 20px;
-                left: 20px;
-                display: none;
-                align-items: stretch;
-                gap: 0;
-                padding: 7px;
-                border: 1px solid #ffffff25;
-                border-radius: 5px;
-                background: rgba(8, 5, 29, 0.97);
-                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
-                font-size: 12px;
-            }
-
-            .navbar.menu-open .nav-links
-            {
-                display: grid;
-            }
-
-            .nav-links a
-            {
-                padding: 11px 10px;
-                border-radius: 4px;
-            }
-
-            .nav-links a:hover
-            {
-                background: #ffffff10;
-            }
-
-            .nav-links a::after
-            {
-                display: none;
-            }
-
-            .menu-button
-            {
-                display: inline-flex;
-            }
-        }
-
         @media (max-width: 600px)
         {
             .navbar
@@ -1565,10 +1766,11 @@
                 height: 64px;
             }
 
-            .nav-links
+            .account-menu
             {
                 right: 12px;
                 left: 12px;
+                width: auto;
             }
 
             .logo img
@@ -1720,6 +1922,14 @@
                 bottom: 12px;
                 font-size: 11px;
             }
+
+            .toast-container
+            {
+                top: 84px;
+                right: 16px;
+                left: 16px;
+                width: auto;
+            }
         }
 
         @media (prefers-reduced-motion: reduce)
@@ -1736,7 +1946,8 @@
 
             .reveal,
             .contact-card,
-            .hero-image
+            .hero-image,
+            .toast
             {
                 transition: none;
             }
@@ -1771,7 +1982,7 @@
                 FAQs
             </a>
             <a href="inquiries.html">
-                My Inquiries
+                Inquiries
             </a>
             <a href="contact.html" class="active">
                 Contact
@@ -1791,26 +2002,29 @@
                 </svg>
             </a>
 
-            <a class="nav-profile" href="inquiries.html">
-                <img src="junior.jpg" alt="Junior Slickback">
-
-                <span class="nav-profile-text">
-                    <strong>
-                        Junior Slickback
-                    </strong>
-
-                    <small>
-                        Student
-                    </small>
-                </span>
-            </a>
-
-            <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+            <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="accountMenu" aria-expanded="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
                     </path>
                 </svg>
             </button>
+
+            <a class="nav-profile" href="profile.html">
+                <img src="resume.jpg" alt="Resume Dizon">
+
+                <span class="nav-profile-text">
+                    <strong>
+                        Resume Dizon
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+                </span>
+            </a>
+        </div>
+
+        <div class="account-menu" id="accountMenu" role="menu" aria-label="Account menu">
         </div>
     </nav>
 
@@ -1920,11 +2134,6 @@
 
                         Send Message
                     </button>
-
-                    <div class="success-message" id="successMessage">
-                        Your message has been sent successfully.
-                        Thank you for reaching out to EduBridge.
-                    </div>
                 </form>
             </div>
 
@@ -2148,7 +2357,7 @@
 
                     <li>
                         <a href="inquiries.html">
-                            My Inquiries
+                            Inquiries
                         </a>
                     </li>
 
@@ -2262,6 +2471,7 @@
         </svg>
     </button>
 
+    <script src="profile-sync.js"></script>
     <script>
         document.body.classList.add("js");
 
@@ -2271,8 +2481,105 @@
         const themeButton = document.getElementById("themeButton");
         const themeIcon = document.getElementById("themeIcon");
         const backToTop = document.getElementById("backToTop");
+        const toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container";
+        document.body.append(toastContainer);
+
+        const toastDurations =
+        {
+            success: 2000,
+            info: 2000,
+            error: 3000
+        };
+
+        const toastIcons =
+        {
+            success:
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.1 14.9-4.2-4.2 1.4-1.4 2.8 2.8 6.6-6.6 1.4 1.4-8 8z"></path></svg>',
+            error:
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 12.9-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"></path></svg>',
+            info:
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>'
+        };
+
+        function showToast(message, type)
+        {
+
+            const kind = toastIcons[type] ? type : "info";
+
+            while (toastContainer.children.length >= 3)
+            {
+                toastContainer.firstElementChild.remove();
+            }
+
+
+            const toast = document.createElement("div");
+            toast.className = "toast toast--" + kind;
+            toast.setAttribute("role", kind === "error" ? "alert" : "status");
+
+
+            const icon = document.createElement("span");
+            icon.className = "toast-icon";
+            icon.setAttribute("aria-hidden", "true");
+            icon.innerHTML = toastIcons[kind];
+
+
+            const body = document.createElement("div");
+            body.className = "toast-body";
+
+            const text = document.createElement("p");
+            text.className = "toast-message";
+            text.textContent = message;
+
+            body.append(text);
+
+
+            const closeButton = document.createElement("button");
+            closeButton.className = "toast-close";
+            closeButton.type = "button";
+            closeButton.setAttribute("aria-label", "Dismiss notification");
+            closeButton.innerHTML =
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"></path></svg>';
+
+
+            toast.append(icon, body, closeButton);
+            toastContainer.append(toast);
+
+
+            let dismissTimer = null;
+
+            function dismissToast()
+            {
+
+                if (dismissTimer === null)
+                {
+                    return;
+                }
+
+                window.clearTimeout(dismissTimer);
+                dismissTimer = null;
+
+                toast.classList.add("toast--leaving");
+
+                window.setTimeout(function()
+                {
+                    toast.remove();
+                }, 250);
+
+            }
+
+            closeButton.addEventListener("click", dismissToast);
+
+            window.requestAnimationFrame(function()
+            {
+                toast.classList.add("toast--visible");
+            });
+
+            dismissTimer = window.setTimeout(dismissToast, toastDurations[kind]);
+
+        }
+
         const contactForm = document.getElementById("contactForm");
-        const successMessage = document.getElementById("successMessage");
 
         function updateThemeIcon()
         {
@@ -2383,6 +2690,184 @@
             }
         });
 
+        
+        const accountMenu = document.getElementById("accountMenu");
+
+        function createMenuItem(item)
+        {
+        	let el;
+
+        	if (item.href)
+        	{
+        		el = document.createElement("a");
+        		el.setAttribute("href", item.href);
+        	}
+        	else
+        	{
+        		el = document.createElement("button");
+        		el.setAttribute("type", "button");
+        	}
+
+        	el.className = "account-menu-item";
+        	el.setAttribute("role", "menuitem");
+        	el.textContent = item.label;
+
+        	if (item.action === "logout")
+        	{
+        		el.addEventListener("click", function(event)
+        		{
+        			event.preventDefault();
+        			logOut();
+        		});
+        	}
+        	else if (item.href)
+        	{
+        		el.addEventListener("click", closeMenu);
+        	}
+
+        	return el;
+        }
+
+        function logOut()
+        {
+        	localStorage.removeItem("edubridge-role");
+        	window.location.href = "logout.html";
+        }
+
+        function buildAccountMenu()
+        {
+        	const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+        	const items = [];
+
+        	const announcementChildren = [
+        		{ label: "All Announcements", href: "announcements.html" },
+        		{ label: "Create Announcement", href: "createannounce.html" },
+        		{ label: "Categories", href: "categories.html" }
+        	];
+
+        	if (role !== "teacher" && role !== "student")
+        	{
+        		items.push({ label: "Announcement Management", children: announcementChildren });
+        		items.push({ label: "FAQs Management", href: "faqmanagement.html" });
+        		items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
+        		items.push({ label: "User Management", href: "usermanagement.html" });
+        		items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
+        		items.push({ label: "Activity Logs", href: "activitylogs.html" });
+        		items.push({ label: "Settings", href: "settings.html" });
+        		items.push({ label: "Report a Problem", href: "reportproblem.html" });
+        		items.push({ label: "Log Out", action: "logout" });
+        	}
+        	else if (role === "teacher")
+        	{
+        		items.push({ label: "Announcement Management", children: announcementChildren });
+        		items.push({ label: "FAQs Management", href: "faqmanagement.html" });
+        		items.push({ label: "Settings", href: "settings.html" });
+        		items.push({ label: "Report a Problem", href: "reportproblem.html" });
+        		items.push({ label: "Log Out", action: "logout" });
+        	}
+        	else if (role === "student")
+        	{
+        		items.push({ label: "Profile", href: "profile.html" });
+        		items.push({ label: "Settings", href: "settings.html" });
+        		items.push({ label: "Log Out", action: "logout" });
+        	}
+
+        	accountMenu.innerHTML = "";
+
+        	const label = document.createElement("div");
+        	label.className = "account-menu-label";
+        	label.textContent = role === "teacher" ? "Teacher" : (role === "student" ? "Student" : "Administrator");
+        	accountMenu.appendChild(label);
+
+        	items.forEach(function(item)
+        	{
+        		if (item.action === "logout")
+        		{
+        			const divider = document.createElement("div");
+        			divider.className = "account-menu-divider";
+        			accountMenu.appendChild(divider);
+        		}
+
+        		if (item.children)
+        		{
+        			const toggle = document.createElement("button");
+        			toggle.className = "account-menu-item submenu-parent";
+        			toggle.type = "button";
+        			toggle.setAttribute("role", "menuitem");
+        			toggle.setAttribute("aria-expanded", "false");
+        			toggle.setAttribute("aria-controls", "announcementSubmenu");
+        			toggle.textContent = item.label;
+
+        			const caret = document.createElement("span");
+        			caret.className = "submenu-caret";
+        			caret.setAttribute("aria-hidden", "true");
+        			caret.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>';
+        			toggle.appendChild(caret);
+
+        			const submenu = document.createElement("div");
+        			submenu.className = "account-submenu";
+        			submenu.id = "announcementSubmenu";
+        			submenu.setAttribute("role", "group");
+        			submenu.setAttribute("aria-label", item.label);
+        			submenu.hidden = true;
+
+        			item.children.forEach(function(child)
+        			{
+        				submenu.appendChild(createMenuItem(child));
+        			});
+
+        			toggle.addEventListener("click", function()
+        			{
+        				const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+        				toggle.setAttribute("aria-expanded", String(!isExpanded));
+        				submenu.hidden = isExpanded;
+        			});
+
+        			accountMenu.appendChild(toggle);
+        			accountMenu.appendChild(submenu);
+        		}
+        		else
+        		{
+        			accountMenu.appendChild(createMenuItem(item));
+        		}
+        	});
+        }
+
+        function applyNavProfile()
+        {
+        	const profile = document.querySelector(".nav-profile");
+
+        	if (!profile)
+        	{
+        		return;
+        	}
+
+        	const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+        	const img = profile.querySelector("img");
+        	const name = profile.querySelector(".nav-profile-text strong");
+        	const roleText = profile.querySelector(".nav-profile-text small");
+
+        	if (role === "student" || role === "teacher")
+        	{
+        		img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+        		img.alt = "Junior Slickback";
+        		name.textContent = "Junior Slickback";
+        		roleText.textContent = "Student";
+        		profile.setAttribute("href", "inquiries.html");
+        	}
+        	else
+        	{
+        		img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
+        		img.alt = "Resume Dizon";
+        		name.textContent = "Resume Dizon";
+        		roleText.textContent = "Administrator";
+        		profile.setAttribute("href", "profile.html");
+        	}
+        }
+
+        buildAccountMenu();
+        applyNavProfile();
+
         window.addEventListener("scroll", function()
         {
             if (window.scrollY > 50)
@@ -2440,13 +2925,14 @@
         {
             event.preventDefault();
 
-            successMessage.classList.add("show");
+            if (!contactForm.checkValidity())
+            {
+                return;
+            }
+
             contactForm.reset();
 
-            setTimeout(function()
-            {
-                successMessage.classList.remove("show");
-            }, 5000);
+            showToast("Your message has been sent successfully!", "success");
         });
 
         let cursorMouseX = window.innerWidth / 2;
