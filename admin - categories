@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -603,7 +604,7 @@
 			position: absolute;
 			inset: 0;
 			z-index: -10;
-			background-image: url("Edubridge-Hero-About.png");
+			background-image: linear-gradient(135deg, rgba(41, 62, 82, 0.88), rgba(18, 24, 48, 0.92)), url("Edubridge-Hero-About.png");
 			background-size: cover;
 			background-position: center;
 			opacity: 0.62;
@@ -809,7 +810,7 @@
 			max-width: 1180px;
 			margin-left: auto;
 			margin-right: auto;
-			padding: 45px 0;
+			padding: 45px 20px 60px;
 		}
 
 		.announcements-section
@@ -3158,6 +3159,12 @@
 					.list-row
 					{
 								flex-direction: column;
+								align-items: stretch;
+								}
+
+								.row-actions
+								{
+										justify-content: flex-start;
 								}
 	
 								.kv-list
@@ -3202,8 +3209,8 @@
 
 	<nav class="navbar">
 
-		<a href="landingpage.html" class="logo">
-			<img src="Edubridge-Logo.png" alt="EduBridge">
+		<a href="admindashboard.html" class="logo">
+			<img src="edubridgelogo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -3217,27 +3224,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="landingpage.html">
+			<a href="admindashboard.html">
 				Home
 			</a>
 
-			<a href="about.html">
+			<a href="adminabout.html">
 				About EduBridge
 			</a>
 
-			<a href="announcements.html">
+			<a href="adminannouncements.html">
 				Announcements
 			</a>
 
-			<a href="faq.html">
+			<a href="adminfaq.html">
 				FAQs
 			</a>
 
-			<a href="inquiries.html">
+			<a href="admininquiries.html">
 				Inquiries
 			</a>
 
-			<a href="contact.html">
+			<a href="admincontact.html">
 				Contact
 			</a>
 
@@ -3252,7 +3259,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="announcements.html" aria-label="Notifications">
+			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -3266,8 +3273,8 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="profile.html">
-				<img src="resume.jpg" alt="Resume Dizon">
+			<a class="nav-profile" href="adminprofile.html">
+				<img src="edubridgelogo.png" alt="Profile">
 
 				<span class="nav-profile-text">
 					<strong>
@@ -3319,7 +3326,7 @@
 		<div class="hero-content">
 
 			<div class="hero-label">
-				ANNOUNCEMENTS
+				ADMIN
 			</div>
 
 			<h1>
@@ -3463,8 +3470,8 @@
 
 			<div>
 
-				<a href="landingpage.html" class="logo footer-logo">
-					<img src="Edubridge-Logo.png" alt="EduBridge">
+				<a href="admindashboard.html" class="logo footer-logo">
+					<img src="edubridgelogo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -3529,37 +3536,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="landingpage.html">
+						<a href="admindashboard.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="about.html">
+						<a href="adminabout.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="announcements.html">
+						<a href="adminannouncements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="faq.html">
+						<a href="adminfaq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="inquiries.html">
+						<a href="admininquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="contact.html">
+						<a href="admincontact.html">
 							Contact
 						</a>
 					</li>
@@ -3625,7 +3632,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="inquiries.html">
+					<a class="question-button" href="admininquiries.html">
 						Get Started →
 					</a>
 
@@ -3850,7 +3857,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "logout.html";
+				window.location.href = "bothlogout.html";
 			}
 
 			function buildAccountMenu()
@@ -3859,36 +3866,36 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "announcements.html" },
-					{ label: "Create Announcement", href: "createannounce.html" },
-					{ label: "Categories", href: "categories.html" }
+					{ label: "All Announcements", href: "adminannouncements.html" },
+					{ label: "Create Announcement", href: "admincreateannounce.html" },
+					{ label: "Categories", href: "admincategories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
-					items.push({ label: "User Management", href: "usermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
-					items.push({ label: "Activity Logs", href: "activitylogs.html" });
-					items.push({ label: "Settings", href: "settings.html" });
-					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "FAQs Management", href: "adminfaq.html" });
+					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
+					items.push({ label: "User Management", href: "adminusermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
+					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Report a Problem", href: "bothreport.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
-					items.push({ label: "Settings", href: "settings.html" });
-					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "FAQs Management", href: "adminfaq.html" });
+					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Report a Problem", href: "bothreport.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "profile.html" });
-					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Profile", href: "adminprofile.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -3967,21 +3974,39 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (role === "student" || role === "teacher")
+				if (img && !img.dataset.fallbackBound)
+				{
+					img.dataset.fallbackBound = "true";
+					img.addEventListener("error", function()
+					{
+						this.onerror = null;
+						this.src = "edubridgelogo.png";
+					});
+				}
+
+				if (role === "student")
 				{
 					img.src = "junior.jpg";
-					img.alt = "Junior Slickback";
-					name.textContent = "Junior Slickback";
+					img.alt = "Student";
+					name.textContent = "Student";
 					roleText.textContent = "Student";
-					profile.setAttribute("href", "inquiries.html");
+					profile.setAttribute("href", "admininquiries.html");
+				}
+				else if (role === "teacher")
+				{
+					img.src = "junior.jpg";
+					img.alt = "Teacher";
+					name.textContent = "Teacher";
+					roleText.textContent = "Teacher";
+					profile.setAttribute("href", "admininquiries.html");
 				}
 				else
 				{
 					img.src = "resume.jpg";
-					img.alt = "Resume Dizon";
+					img.alt = "Administrator";
 					name.textContent = "Resume Dizon";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "profile.html");
+					profile.setAttribute("href", "adminprofile.html");
 				}
 			}
 
@@ -4035,39 +4060,42 @@
 			let pinkSmallY = 67;
 
 
-			hero.addEventListener("mousemove", function(event)
+			if (hero && heroImage)
 			{
+				hero.addEventListener("mousemove", function(event)
+				{
 
-				const rect = hero.getBoundingClientRect();
+					const rect = hero.getBoundingClientRect();
 
-				targetX =
-					((event.clientX - rect.left) / rect.width) * 100;
+					targetX =
+						((event.clientX - rect.left) / rect.width) * 100;
 
-				targetY =
-					((event.clientY - rect.top) / rect.height) * 100;
+					targetY =
+						((event.clientY - rect.top) / rect.height) * 100;
 
-				const moveX =
-					(event.clientX - rect.left) / rect.width - 0.5;
+					const moveX =
+						(event.clientX - rect.left) / rect.width - 0.5;
 
-				const moveY =
-					(event.clientY - rect.top) / rect.height - 0.5;
+					const moveY =
+						(event.clientY - rect.top) / rect.height - 0.5;
 
-				heroImage.style.transform =
-					scale(1.04) translate(${moveX * -10}px, ${moveY * -7}px);
+					heroImage.style.transform =
+						"scale(1.04) translate(" + (moveX * -10) + "px, " + (moveY * -7) + "px)";
 
-			});
+				});
 
 
-			hero.addEventListener("mouseleave", function()
-			{
+				hero.addEventListener("mouseleave", function()
+				{
 
-				targetX = 50;
-				targetY = 50;
+					targetX = 50;
+					targetY = 50;
 
-				heroImage.style.transform =
-					"scale(1.04) translate(0, 0)";
+					heroImage.style.transform =
+						"scale(1.04) translate(0, 0)";
 
-			});
+				});
+			}
 
 
 			function animateGradient()
@@ -4416,11 +4444,14 @@
 				gradientY +=
 					(cursorMouseY - gradientY) * 0.12;
 
-				cursorGradient.style.left =
-					gradientX + "px";
+				if (cursorGradient)
+				{
+					cursorGradient.style.left =
+						gradientX + "px";
 
-				cursorGradient.style.top =
-					gradientY + "px";
+					cursorGradient.style.top =
+						gradientY + "px";
+				}
 
 				requestAnimationFrame(
 					moveCursorGradient
@@ -4428,7 +4459,10 @@
 
 			}
 
-			moveCursorGradient();
+			if (cursorGradient)
+			{
+				moveCursorGradient();
+			}
 
 
 			window.addEventListener("scroll", function()
@@ -4492,7 +4526,7 @@
 					row.dataset.renaming = "true";
 		
 					const heading = row.querySelector("h3");
-					const originalName = heading.childNodes[0].textContent;
+					const originalName = heading.textContent.trim();
 		
 					const input = document.createElement("input");
 					input.type = "text";
@@ -4539,7 +4573,7 @@
 										return;
 								}
 		
-								heading.childNodes[0].textContent = value;
+								heading.textContent = value;
 								endRename();
 								showToast("Category renamed.");
 					});
@@ -4639,3 +4673,4 @@
 	</script>
 
 </body>
+</html>
