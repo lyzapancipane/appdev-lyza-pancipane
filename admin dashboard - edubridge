@@ -3351,8 +3351,8 @@
 
 	<nav class="navbar">
 
-		<a href="landingpage.html" class="logo">
-			<img src="Edubridge-Logo.png" alt="EduBridge">
+		<a href="admindashboard.html" class="logo">
+			<img src="edubridgelogo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -3366,27 +3366,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="landingpage.html">
+			<a href="admindashboard.html">
 				Home
 			</a>
 
-			<a href="about.html">
+			<a href="adminabout.html">
 				About EduBridge
 			</a>
 
-			<a href="announcements.html">
+			<a href="adminannouncements.html">
 				Announcements
 			</a>
 
-			<a href="faq.html">
+			<a href="adminfaq.html">
 				FAQs
 			</a>
 
-			<a href="inquiries.html">
+			<a href="admininquiries.html">
 				Inquiries
 			</a>
 
-			<a href="contact.html">
+			<a href="admincontact.html">
 				Contact
 			</a>
 
@@ -3401,7 +3401,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="announcements.html" aria-label="Notifications">
+			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -3415,7 +3415,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="profile.html">
+			<a class="nav-profile" href="adminprofile.html">
 				<img src="resume.jpg" alt="Resume Dizon">
 
 				<span class="nav-profile-text">
@@ -3875,7 +3875,7 @@
 
 			<div class="quick-grid">
 
-				<a class="quick-card" href="usermanagement.html">
+				<a class="quick-card" href="adminusermanagement.html">
 					<h3>
 						User Management
 					</h3>
@@ -3884,7 +3884,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="faqmanagement.html">
+				<a class="quick-card" href="adminfaq.html">
 					<h3>
 						FAQs Management
 					</h3>
@@ -3893,7 +3893,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="inquirymanagement.html">
+				<a class="quick-card" href="admininquiries.html">
 					<h3>
 						Inquiries Management
 					</h3>
@@ -3902,7 +3902,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="announcemanagement.html">
+				<a class="quick-card" href="adminannouncemanagement.html">
 					<h3>
 						Announcement Management
 					</h3>
@@ -3911,7 +3911,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="activitylogs.html">
+				<a class="quick-card" href="adminactivitylogs.html">
 					<h3>
 						Activity Logs
 					</h3>
@@ -3920,7 +3920,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="notifications.html">
+				<a class="quick-card" href="adminnotifications.html">
 					<h3>
 						Notifications
 					</h3>
@@ -3929,7 +3929,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="contactadmin.html?type=account">
+				<a class="quick-card" href="admincontact.html?type=account">
 					<h3>
 						Account Requests
 					</h3>
@@ -3938,7 +3938,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="contactadmin.html?type=password">
+				<a class="quick-card" href="admincontact.html?type=password">
 					<h3>
 						Password Requests
 					</h3>
@@ -3947,7 +3947,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="reportproblem.html">
+				<a class="quick-card" href="bothreport.html">
 					<h3>
 						Report a Problem
 					</h3>
@@ -3968,8 +3968,8 @@
 
 			<div>
 
-				<a href="landingpage.html" class="logo footer-logo">
-					<img src="Edubridge-Logo.png" alt="EduBridge">
+				<a href="admindashboard.html" class="logo footer-logo">
+					<img src="edubridgelogo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -4034,37 +4034,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="landingpage.html">
+						<a href="admindashboard.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="about.html">
+						<a href="adminabout.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="announcements.html">
+						<a href="adminannouncements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="faq.html">
+						<a href="adminfaq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="inquiries.html">
+						<a href="admininquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="contact.html">
+						<a href="admincontact.html">
 							Contact
 						</a>
 					</li>
@@ -4130,7 +4130,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="inquiries.html">
+					<a class="question-button" href="admininquiries.html">
 						Get Started →
 					</a>
 
@@ -4355,7 +4355,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "logout.html";
+				window.location.href = "bothlogout.html";
 			}
 
 			function buildAccountMenu()
@@ -4364,36 +4364,36 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "announcements.html" },
-					{ label: "Create Announcement", href: "createannounce.html" },
-					{ label: "Categories", href: "categories.html" }
+					{ label: "All Announcements", href: "adminannouncements.html" },
+					{ label: "Create Announcement", href: "admincreateannounce.html" },
+					{ label: "Categories", href: "admincategories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
-					items.push({ label: "User Management", href: "usermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
-					items.push({ label: "Activity Logs", href: "activitylogs.html" });
-					items.push({ label: "Settings", href: "settings.html" });
-					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "FAQs Management", href: "adminfaq.html" });
+					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
+					items.push({ label: "User Management", href: "adminusermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
+					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Report a Problem", href: "bothreport.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
-					items.push({ label: "Settings", href: "settings.html" });
-					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "FAQs Management", href: "adminfaq.html" });
+					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Report a Problem", href: "bothreport.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "profile.html" });
-					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Profile", href: "adminprofile.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -4472,13 +4472,21 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (role === "student" || role === "teacher")
+				if (role === "student")
 				{
-					img.src = "junior.jpg";
-					img.alt = "Junior Slickback";
-					name.textContent = "Junior Slickback";
-					roleText.textContent = "Student";
-					profile.setAttribute("href", "inquiries.html");
+					if (img) img.src = "junior.jpg";
+					if (img) img.alt = "Student";
+					if (name) name.textContent = "Student";
+					if (roleText) roleText.textContent = "Student";
+					profile.setAttribute("href", "admininquiries.html");
+				}
+				else if (role === "teacher")
+				{
+					if (img) img.src = "junior.jpg";
+					if (img) img.alt = "Teacher";
+					if (name) name.textContent = "Teacher";
+					if (roleText) roleText.textContent = "Teacher";
+					profile.setAttribute("href", "admininquiries.html");
 				}
 				else
 				{
@@ -4486,7 +4494,7 @@
 					img.alt = "Resume Dizon";
 					name.textContent = "Resume Dizon";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "profile.html");
+					profile.setAttribute("href", "adminprofile.html");
 				}
 			}
 
