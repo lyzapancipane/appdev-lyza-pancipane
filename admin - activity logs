@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity Logs | EduBridge</title>
+  <style>body{font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;margin:0;color:#123047}.wrap{max-width:720px;margin:48px auto;padding:28px;background:#fff;border:1px solid #dbe5f1;border-radius:14px}a{color:#1f6aa5;font-weight:700;text-decoration:none}a:hover{text-decoration:underline}.muted{color:#567}</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Activity Logs</h1>
+    <p class="muted">This admin page is not yet implemented. Navigation has been fixed to keep admin and student areas separate.</p>
+    <p><a href="admindashboard.html">&larr; Back to Dashboard</a></p>
+  </div>
+</body>
+</html>
