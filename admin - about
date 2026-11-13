@@ -1657,8 +1657,8 @@
 
     <nav class="navbar">
 
-        <a href="landingpage.html" class="logo">
-            <img src="Edubridge-Logo.png">
+        <a href="admindashboard.html" class="logo">
+            <img src="edubridgelogo.png">
 
             <span class="brand-name">
                 <span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span>
@@ -1666,27 +1666,27 @@
         </a>
 
         <div class="nav-links" id="navLinks">
-            <a href="landingpage.html">
+            <a href="admindashboard.html">
                 Home
             </a>
 
-            <a href="about.html" class="active">
+            <a href="adminabout.html" class="active">
                 About EduBridge
             </a>
 
-            <a href="announcements.html">
+            <a href="adminannouncements.html">
                 Announcements
             </a>
 
-            <a href="faq.html">
+            <a href="adminfaq.html">
                 FAQs
             </a>
 
-            <a href="inquiries.html">
-                My Inquiries
+            <a href="admininquiries.html">
+                Inquiries
             </a>
 
-            <a href="contact.html">
+            <a href="admincontact.html">
                 Contact
             </a>
         </div>
@@ -1700,14 +1700,14 @@
                 </svg>
             </button>
 
-            <a class="nav-bell" href="announcements.html" aria-label="Notifications">
+            <a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
                     </path>
                 </svg>
             </a>
 
-            <a class="nav-profile" href="inquiries.html">
+            <a class="nav-profile" href="adminprofile.html">
                 <img src="junior.jpg" alt="Junior Slickback">
 
                 <span class="nav-profile-text">
@@ -2106,8 +2106,8 @@
 
             <div>
 
-                <a href="landingpage.html" class="logo footer-logo" aria-label="EduBridge home">
-                    <img src="Edubridge-Logo.png">
+                <a href="admindashboard.html" class="logo footer-logo" aria-label="EduBridge home">
+                    <img src="edubridgelogo.png">
 
                     <span class="brand-name">
                         <span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span>
@@ -2167,37 +2167,37 @@
                 <ul class="footer-links">
 
                     <li>
-                        <a href="landingpage.html">
+                        <a href="admindashboard.html">
                             Home
                         </a>
                     </li>
 
                     <li>
-                        <a href="about.html">
+                        <a href="adminabout.html">
                             About EduBridge
                         </a>
                     </li>
 
                     <li>
-                        <a href="announcements.html">
+                        <a href="adminannouncements.html">
                             Announcements
                         </a>
                     </li>
 
                     <li>
-                        <a href="faq.html">
+                        <a href="adminfaq.html">
                             FAQs
                         </a>
                     </li>
 
                     <li>
-                        <a href="inquiries.html">
-                            My Inquiries
+                        <a href="admininquiries.html">
+                            Inquiries
                         </a>
                     </li>
 
                     <li>
-                        <a href="contact.html">
+                        <a href="admincontact.html">
                             Contact
                         </a>
                     </li>
@@ -2263,7 +2263,7 @@
                         with your school community.
                     </p>
 
-                    <a class="question-button" href="inquiries.html">
+                    <a class="question-button" href="admininquiries.html">
                         Get Started →
                     </a>
 
