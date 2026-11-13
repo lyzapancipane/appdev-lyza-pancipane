@@ -2,7 +2,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Inquiries Management | EduBridge</title>
+	<title>Respond to Inquiry | EduBridge</title>
 	<style>
 		*
 		{
@@ -588,8 +588,8 @@
 
 		.hero
 		{
-			min-height: 470px;
-			padding: 130px 36px 70px;
+			min-height: 400px;
+			padding: 112px 36px 56px;
 			display: flex;
 			align-items: center;
 			position: relative;
@@ -809,7 +809,7 @@
 			max-width: 1180px;
 			margin-left: auto;
 			margin-right: auto;
-			padding: 45px 0;
+			padding: 24px 0 45px;
 		}
 
 		.announcements-section
@@ -820,7 +820,7 @@
 		.section-heading
 		{
 			text-align: center;
-			margin-bottom: 30px;
+			margin-bottom: 24px;
 		}
 
 		.section-label
@@ -847,6 +847,23 @@
 			color: var(--text-muted);
 			font-size: 13px;
 			line-height: 1.7;
+		}
+
+		.response-workspace-heading
+		{
+			margin-bottom: 14px;
+			text-align: left;
+		}
+
+		.response-workspace-heading h2
+		{
+			margin-bottom: 5px;
+		}
+
+		.response-workspace-heading p
+		{
+			max-width: 660px;
+			margin: 0;
 		}
 
 		.toolbar
@@ -2479,6 +2496,10 @@
 			.inquiry-section,
 			.inquiry-section .mission-icon,
 			.hero-image,
+			.editor-shell,
+			.confirm-overlay,
+			.attach-button,
+			.response-back-link,
 			.state-card,
 			.state-icon,
 			.state-button,
@@ -2507,41 +2528,6 @@
 					display: grid;
 					grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 					gap: 18px;
-			}
-	
-			.stat-card
-			{
-					background: var(--surface);
-					border: 1px solid var(--border);
-					border-radius: 16px;
-					padding: 20px;
-					box-shadow: 0 12px 30px var(--shadow);
-			}
-	
-			.stat-card .stat-label
-			{
-					display: block;
-					font-size: 12px;
-					font-weight: 600;
-					letter-spacing: 0.6px;
-					text-transform: uppercase;
-					color: var(--text-muted);
-					margin-bottom: 8px;
-			}
-	
-			.stat-card .stat-value
-			{
-					font-size: 30px;
-					font-weight: 700;
-					color: var(--purple);
-			}
-	
-			.stat-card .stat-hint
-			{
-					display: block;
-					font-size: 11.5px;
-					color: var(--text-muted);
-					margin-top: 6px;
 			}
 	
 			.panel
@@ -2620,71 +2606,6 @@
 			.table-wrap
 			{
 					overflow-x: auto;
-			}
-	
-			.data-table
-			{
-					width: 100%;
-					border-collapse: collapse;
-					font-size: 13px;
-					min-width: 640px;
-			}
-	
-			.data-table th,
-			.data-table td
-			{
-					text-align: left;
-					padding: 13px 12px;
-					border-bottom: 1px solid var(--border);
-					color: var(--text-soft);
-					vertical-align: top;
-			}
-	
-			.data-table th
-			{
-					font-size: 11px;
-					font-weight: 600;
-					letter-spacing: 0.6px;
-					text-transform: uppercase;
-					color: var(--text);
-			}
-	
-			.data-table tbody tr:last-child td
-			{
-					border-bottom: 0;
-			}
-	
-			.data-table select
-			{
-					padding: 8px 10px;
-					border-radius: 8px;
-					border: 1px solid var(--border);
-					background: var(--surface-soft);
-					color: var(--text);
-					font-family: inherit;
-					font-size: 12.5px;
-			}
-	
-			.data-table details summary
-			{
-					cursor: pointer;
-					font-size: 12.5px;
-					font-weight: 600;
-					color: var(--purple);
-			}
-	
-			.data-table details p
-			{
-					margin-top: 8px;
-					font-size: 12.5px;
-					line-height: 1.6;
-					color: var(--text-soft);
-			}
-	
-			.status-cell select
-			{
-					display: block;
-					margin-top: 8px;
 			}
 	
 			.btn
@@ -3153,164 +3074,745 @@
 					display: none;
 			}
 
-			.stats-grid
+			.response-back-link
+			{
+				display: inline-flex;
+				align-items: center;
+				gap: 7px;
+				height: 36px;
+				padding: 0 15px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: var(--surface);
+				color: var(--purple);
+				font-size: 12px;
+				font-weight: 600;
+				text-decoration: none;
+				margin-bottom: 18px;
+				transition: 0.2s ease;
+			}
+
+			.response-back-link svg
+			{
+				width: 14px;
+				height: 14px;
+				fill: currentColor;
+			}
+
+			.response-back-link:hover
+			{
+				border-color: var(--purple);
+				background: var(--purple-light);
+				color: var(--purple);
+				transform: translateY(-1px);
+			}
+
+			.detail-status
+			{
+				display: inline-flex;
+				align-items: center;
+			}
+
+			#responseWorkflow
 			{
 					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-					gap: 14px;
-					margin-bottom: 24px;
+					grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+					gap: 18px;
+					align-items: start;
 			}
 
-			.mg-toolbar
+			.response-panel
 			{
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					gap: 10px;
-					margin-bottom: 16px;
+					min-width: 0;
+					padding: 22px;
+					border-radius: 14px;
 			}
 
-			.mg-toolbar input,
-			.mg-toolbar select
+			#responseWorkflow .panel + .panel
 			{
-					height: 38px;
-					border: 1px solid var(--border);
-					border-radius: 5px;
-					background: var(--surface-soft);
-					color: var(--text);
-					font-family: inherit;
-					font-size: 12px;
-					outline: none;
-					transition: 0.2s ease;
+					margin-top: 0;
 			}
 
-			.mg-toolbar input
-			{
-					flex: 1;
-					min-width: 200px;
-					padding: 0 12px;
-			}
-
-			.mg-toolbar input::placeholder
-			{
-					color: var(--text-muted);
-			}
-
-			.mg-toolbar select
-			{
-					padding: 0 10px;
-					cursor: pointer;
-			}
-
-			.mg-toolbar input:focus,
-			.mg-toolbar select:focus
-			{
-					border-color: var(--purple);
-					box-shadow: 0 0 0 3px var(--purple-light);
-			}
-
-			.mg-summary
+			.response-panel-title
 			{
 					margin: 0 0 14px;
-					color: var(--text-muted);
-					font-size: 12px;
+					color: var(--text);
+					font-size: 15px;
+					font-weight: 600;
 			}
 
-			.mg-pagination
-			{
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					gap: 14px;
-					margin-top: 18px;
-			}
-
-			.mg-page-info
-			{
-					color: var(--text-soft);
-					font-size: 12px;
-			}
-
-			.row-actions
-			{
-					display: flex;
-					flex-wrap: wrap;
-					gap: 6px;
-			}
-
-			.modal-backdrop
-			{
-					position: fixed;
-					inset: 0;
-					z-index: 1500;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					padding: 20px;
-					background: rgba(8, 5, 29, 0.55);
-					backdrop-filter: blur(4px);
-			}
-
-			.modal-backdrop[hidden]
-			{
-					display: none;
-			}
-
-			.modal-card
-			{
-					width: 100%;
-					max-width: 520px;
-					max-height: calc(100vh - 40px);
-					overflow-y: auto;
-					padding: 24px;
-					border: 1px solid var(--border);
-					border-radius: 6px;
-					background: var(--surface);
-					box-shadow: 0 20px 60px rgba(8, 5, 29, 0.35);
-			}
-
-			.modal-head
+			.response-panel-heading
 			{
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
+					flex-wrap: wrap;
 					gap: 12px;
-					margin-bottom: 16px;
+					margin-bottom: 14px;
 			}
 
-			.modal-head h3
+			.response-panel-heading .response-panel-title
 			{
-					color: var(--text);
-					font-size: 17px;
+					margin: 0;
+			}
+
+			.response-count
+			{
+					margin: 6px 0 0;
+					color: var(--text-muted);
+					font-size: 11px;
+			}
+
+			.response-recipient
+			{
+					display: inline-flex;
+					align-items: center;
+					max-width: 100%;
+					margin: -3px 0 15px;
+					padding: 6px 10px;
+					border: 1px solid var(--border);
+					border-radius: 7px;
+					background: var(--surface-soft);
+					color: var(--text-soft);
+					font-size: 12px;
+					overflow-wrap: anywhere;
+			}
+
+			.response-draft-note
+			{
+					margin: 6px 0 0;
+					color: var(--purple);
+					font-size: 11px;
 					font-weight: 600;
 			}
 
-			.modal-close
+			.inquiry-identity
 			{
-					width: 30px;
-					height: 30px;
+				display: flex;
+				align-items: center;
+				gap: 13px;
+				padding: 13px 15px;
+				margin-bottom: 16px;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				background: var(--surface-soft);
+			}
+
+			.inquiry-avatar
+			{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 42px;
+				height: 42px;
+				flex-shrink: 0;
+				border-radius: 50%;
+				background: linear-gradient(135deg, #7138c8, #a06be0);
+				color: #ffffff;
+				font-size: 14px;
+				font-weight: 700;
+			}
+
+			.inquiry-identity-copy
+			{
+				min-width: 0;
+			}
+
+			.inquiry-identity-label
+			{
+				margin: 0 0 3px;
+				color: var(--text-muted);
+				font-size: 10px;
+				font-weight: 600;
+				letter-spacing: 0.8px;
+				text-transform: uppercase;
+			}
+
+			.inquiry-identity-name
+			{
+				margin: 0;
+				color: var(--text);
+				font-size: 15px;
+				font-weight: 600;
+				word-break: break-word;
+			}
+
+			.inquiry-icon
+			{
+				display: inline-flex;
+				width: 13px;
+				height: 13px;
+				margin-right: 6px;
+				color: var(--purple);
+				vertical-align: -2px;
+			}
+
+			.inquiry-icon svg
+			{
+				width: 100%;
+				height: 100%;
+				fill: currentColor;
+			}
+
+			.mg-detail-label.inquiry-label
+			{
+				display: inline-flex;
+				align-items: center;
+			}
+
+			.inquiry-field--emphasis .mg-detail-value
+			{
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--text);
+			}
+
+			.inquiry-field--message
+			{
+				padding: 13px 15px;
+				border-left: 3px solid var(--purple);
+				border-radius: 0 10px 10px 0;
+				background: var(--surface-soft);
+			}
+
+			.inquiry-field--message .mg-detail-value
+			{
+				color: var(--text-soft);
+				line-height: 1.75;
+				white-space: pre-wrap;
+				word-break: break-word;
+			}
+
+			.response-editor-label
+			{
+				display: block;
+				margin: 0 0 6px;
+				color: var(--text);
+				font-size: 12px;
+				font-weight: 600;
+			}
+
+			.editor-shell
+			{
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				background: var(--surface-soft);
+				transition: 0.2s ease;
+			}
+
+			.editor-shell:focus-within
+			{
+				border-color: var(--purple);
+				box-shadow: 0 0 0 3px var(--purple-light);
+			}
+
+			.editor-shell.is-invalid
+			{
+				border-color: var(--red);
+			}
+
+			.editor-shell textarea
+			{
+				width: 100%;
+				min-height: 210px;
+				max-height: 360px;
+				padding: 14px 15px;
+				border: none;
+				border-radius: 10px;
+				background: transparent;
+				color: var(--text);
+				font-family: inherit;
+				font-size: 13px;
+				line-height: 1.7;
+				outline: none;
+				resize: vertical;
+			}
+
+			.editor-shell textarea:focus
+			{
+				border-color: transparent;
+				box-shadow: none;
+			}
+
+			.editor-shell textarea::placeholder
+			{
+				color: var(--text-muted);
+			}
+
+			.response-guide
+			{
+				margin: 8px 0 0;
+				color: var(--text-muted);
+				font-size: 11px;
+				line-height: 1.6;
+			}
+
+			.confirm-overlay
+			{
+				position: fixed;
+				inset: 0;
+				z-index: 2000;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 20px;
+				background: rgba(8, 6, 24, 0.55);
+			}
+
+			.confirm-dialog
+			{
+				width: 100%;
+				max-width: 380px;
+				padding: 22px;
+				border: 1px solid var(--border);
+				border-radius: 14px;
+				background: var(--surface);
+				box-shadow: 0 24px 60px rgba(10, 5, 35, 0.35);
+			}
+
+			.confirm-title
+			{
+				margin: 0 0 8px;
+				color: var(--text);
+				font-size: 16px;
+				font-weight: 600;
+			}
+
+			.confirm-text
+			{
+				margin: 0;
+				color: var(--text-soft);
+				font-size: 12.5px;
+				line-height: 1.7;
+			}
+
+			.confirm-dialog .modal-actions
+			{
+				margin-top: 18px;
+			}
+
+			.history-section
+			{
+				margin-top: 18px;
+				padding-top: 16px;
+				border-top: 1px solid var(--border);
+			}
+
+			.history-title
+			{
+				margin: 0 0 12px;
+				color: var(--text);
+				font-size: 12px;
+				font-weight: 600;
+				letter-spacing: 0.6px;
+				text-transform: uppercase;
+			}
+
+			.history-list
+			{
+				display: grid;
+				gap: 10px;
+			}
+
+			.history-item
+			{
+				padding: 12px 14px;
+				border: 1px solid var(--border);
+				border-left: 3px solid var(--purple);
+				border-radius: 10px;
+				background: var(--surface-soft);
+			}
+
+			.history-head
+			{
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 8px;
+				margin-bottom: 8px;
+			}
+
+			.history-chip
+			{
+				display: inline-flex;
+				align-items: center;
+				padding: 2px 9px;
+				border-radius: 999px;
+				background: var(--purple-light);
+				color: var(--purple);
+				font-size: 9.5px;
+				font-weight: 700;
+				letter-spacing: 0.6px;
+				text-transform: uppercase;
+			}
+
+			.history-meta
+			{
+				color: var(--text-muted);
+				font-size: 10.5px;
+			}
+
+			.history-text
+			{
+				margin: 0;
+				color: var(--text-soft);
+				font-size: 12px;
+				line-height: 1.7;
+				white-space: pre-wrap;
+				word-break: break-word;
+			}
+
+			.history-files
+			{
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+				margin: 8px 0 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			.history-file
+			{
+				color: var(--purple);
+				font-size: 11px;
+				font-weight: 600;
+				text-decoration: none;
+			}
+
+			.history-file:hover
+			{
+				text-decoration: underline;
+			}
+
+			.response-attach
+			{
+				margin: 12px 0 0;
+			}
+
+			.attach-button
+			{
+				display: inline-flex;
+				align-items: center;
+				gap: 7px;
+				height: 36px;
+				padding: 0 14px;
+				border: 1px solid var(--border);
+				border-radius: 7px;
+				background: var(--surface);
+				color: var(--purple);
+				font-size: 11px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+			}
+
+			.attach-button:hover
+			{
+				border-color: var(--purple);
+				background: var(--purple-light);
+				transform: translateY(-1px);
+			}
+
+			.attach-button svg
+			{
+				width: 13px;
+				height: 13px;
+				fill: currentColor;
+			}
+
+			.attach-hint
+			{
+				margin: 0;
+				color: var(--text-muted);
+				font-size: 10px;
+				line-height: 1.5;
+			}
+
+			.attach-meta
+			{
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 3px 12px;
+				margin-top: 6px;
+			}
+
+			.attach-total
+			{
+				color: var(--text-soft);
+				font-size: 10px;
+				font-weight: 600;
+			}
+
+			.attach-list
+			{
+				display: grid;
+				gap: 6px;
+				margin: 10px 0 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			.attach-item
+			{
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 10px;
+				padding: 8px 12px;
+				border: 1px solid var(--border);
+				border-radius: 8px;
+				background: var(--surface-soft);
+			}
+
+			.attach-name
+			{
+				color: var(--purple);
+				font-size: 11.5px;
+				font-weight: 600;
+				text-decoration: none;
+				word-break: break-all;
+			}
+
+			.attach-name:hover
+			{
+				text-decoration: underline;
+			}
+
+			.attach-size
+			{
+				color: var(--text-muted);
+				font-size: 10px;
+			}
+
+			.attach-remove
+			{
+				margin-left: auto;
+				padding: 0;
+				border: none;
+				background: none;
+				color: var(--red);
+				font-family: inherit;
+				font-size: 10.5px;
+				font-weight: 600;
+				cursor: pointer;
+			}
+
+			.attach-remove:hover
+			{
+				text-decoration: underline;
+			}
+
+			#responseEditorPanel .modal-actions
+			{
+				gap: 8px;
+				margin-top: 16px;
+			}
+
+			#responseEditorPanel .cancel-button,
+			#responseEditorPanel .modal-save
+			{
+				min-height: 38px;
+				padding-right: 14px;
+				padding-left: 14px;
+				border-radius: 7px;
+			}
+
+			#responseEditorPanel .modal-save
+			{
+				background: linear-gradient(135deg, #7138c8, #8b50d7);
+				box-shadow: 0 5px 14px rgba(89, 42, 155, 0.2);
+			}
+
+			#responseEditorPanel .modal-save:hover
+			{
+				background: linear-gradient(135deg, #642fb5, #7d43c9);
+			}
+
+			@media (max-width: 900px)
+			{
+				#responseWorkflow
+				{
+					grid-template-columns: minmax(0, 1fr);
+				}
+			}
+
+			@media (max-width: 600px)
+			{
+				.response-workspace-heading
+				{
+					margin-bottom: 12px;
+				}
+
+				.response-workspace-heading h2
+				{
+					font-size: 26px;
+				}
+
+				.response-panel
+				{
+					padding: 18px;
+				}
+
+				.editor-shell textarea
+				{
+					min-height: 190px;
+				}
+
+				#responseEditorPanel .modal-actions
+				{
+					display: grid;
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+
+				#responseEditorPanel #responseSend
+				{
+					grid-column: 1 / -1;
+					grid-row: 1;
+				}
+
+				#responseEditorPanel .cancel-button,
+				#responseEditorPanel .modal-save
+				{
+					width: 100%;
+				}
+			}
+
+			.receipt-files
+			{
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 10px;
+				margin-top: 14px;
+				padding: 12px 15px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				background: var(--surface-soft);
+			}
+
+			.receipt-file
+			{
+				color: var(--purple);
+				font-size: 11.5px;
+				font-weight: 600;
+				text-decoration: none;
+			}
+
+			.receipt-file:hover
+			{
+				text-decoration: underline;
+			}
+
+			.receipt-head
+			{
 					display: flex;
 					align-items: center;
+					gap: 14px;
+					margin-bottom: 18px;
+					padding-bottom: 16px;
+					border-bottom: 1px solid var(--border);
+			}
+
+			.receipt-icon
+			{
+					display: flex;
+					width: 46px;
+					height: 46px;
+					flex-shrink: 0;
+					align-items: center;
 					justify-content: center;
+					border-radius: 50%;
+					background: var(--purple-light);
+					color: var(--purple);
+			}
+
+			.receipt-icon svg
+			{
+					width: 22px;
+					height: 22px;
+					fill: none;
+					stroke: currentColor;
+					stroke-width: 2.5;
+					stroke-linecap: round;
+					stroke-linejoin: round;
+			}
+
+			.receipt-title
+			{
+					margin: 0;
+					color: var(--text);
+					font-size: 17px;
+					font-weight: 700;
+			}
+
+			.receipt-subtitle
+			{
+					margin: 4px 0 0;
+					color: var(--text-muted);
+					font-size: 12px;
+			}
+
+			.receipt-response
+			{
+					margin-top: 16px;
+					padding: 14px;
 					border: 1px solid var(--border);
-					border-radius: 5px;
+					border-radius: 6px;
 					background: var(--surface-soft);
+			}
+
+			.receipt-response .mg-detail-label
+			{
+					display: block;
+					margin-bottom: 7px;
+					color: var(--text-muted);
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 0.4px;
+					text-transform: uppercase;
+			}
+
+			.receipt-response p
+			{
+					margin: 0;
 					color: var(--text-soft);
-					cursor: pointer;
-					transition: 0.2s ease;
+					font-size: 13px;
+					line-height: 1.7;
+					white-space: pre-wrap;
 			}
 
-			.modal-close:hover
+			@media print
 			{
-					border-color: var(--red);
-					color: var(--red);
-			}
+					.navbar,
+					.hero,
+					footer,
+					.toast,
+					.response-back-link,
+					.receipt-actions
+					{
+							display: none !important;
+					}
 
-			.modal-close svg
-			{
-					width: 12px;
-					height: 12px;
-					fill: currentColor;
+					body
+					{
+							background: #fff !important;
+					}
+
+					.content-section
+					{
+							padding: 0;
+							max-width: none;
+					}
+
+					#responseReceipt
+					{
+							border: none;
+							box-shadow: none;
+							padding: 0;
+					}
 			}
 
 			.form-group
@@ -3351,7 +3853,7 @@
 
 			.form-group textarea
 			{
-					min-height: 96px;
+					min-height: 220px;
 					padding: 10px 12px;
 					line-height: 1.6;
 					resize: vertical;
@@ -3474,6 +3976,18 @@
 					outline-offset: 2px;
 			}
 
+			.modal-save:active
+			{
+				transform: translateY(0) scale(0.97);
+			}
+
+			.modal-save[disabled]
+			{
+				opacity: 0.6;
+				cursor: not-allowed;
+				transform: none;
+			}
+
 			.mg-detail-grid
 			{
 					display: grid;
@@ -3519,15 +4033,6 @@
 					font-weight: 600;
 			}
 
-			.mg-conversation-item
-			{
-					border: 1px solid var(--border);
-					border-radius: 6px;
-					padding: 10px 12px;
-					margin-bottom: 8px;
-					background: var(--surface-soft);
-			}
-
 			.mg-conversation-meta
 			{
 					display: flex;
@@ -3542,15 +4047,6 @@
 			{
 					color: var(--purple);
 					font-weight: 600;
-			}
-
-			.mg-conversation-item p
-			{
-					margin: 0;
-					color: var(--text-soft);
-					font-size: 12.5px;
-					line-height: 1.6;
-					white-space: pre-wrap;
 			}
 
 			.mg-empty-note
@@ -3615,8 +4111,8 @@
 
 	<nav class="navbar">
 
-		<a href="landingpage.html" class="logo">
-			<img src="Edubridge-Logo.png" alt="EduBridge">
+		<a href="admindashboard.html" class="logo">
+			<img src="edubridgelogo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -3630,27 +4126,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="landingpage.html">
+			<a href="admindashboard.html">
 				Home
 			</a>
 
-			<a href="about.html">
+			<a href="adminabout.html">
 				About EduBridge
 			</a>
 
-			<a href="announcements.html">
+			<a href="adminannouncements.html">
 				Announcements
 			</a>
 
-			<a href="faq.html">
+			<a href="adminfaq.html">
 				FAQs
 			</a>
 
-			<a href="inquiries.html">
+			<a href="admininquiries.html">
 				Inquiries
 			</a>
 
-			<a href="contact.html">
+			<a href="admincontact.html">
 				Contact
 			</a>
 
@@ -3665,7 +4161,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="announcements.html" aria-label="Notifications">
+			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -3679,7 +4175,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="profile.html">
+			<a class="nav-profile" href="adminprofile.html">
 				<img src="resume.jpg" alt="Resume Dizon">
 
 				<span class="nav-profile-text">
@@ -3732,15 +4228,15 @@
 		<div class="hero-content">
 
 			<div class="hero-label">
-				ADMIN TOOLS
+				STUDENT SUPPORT
 			</div>
 
 			<h1>
-				Inquiries Management
+				Respond to Inquiry
 			</h1>
 
 			<p>
-				Review student inquiries, respond to them, and manage their status.
+				Review the student's concern and prepare a helpful response.
 			</p>
 
 		</div>
@@ -3750,456 +4246,236 @@
 
 	<main>
 
-		<section class="content-section reveal">
+		<section class="content-section">
 
-			<div class="section-heading">
+			<div class="section-heading response-workspace-heading">
 
 				<div class="section-label">
-					STUDENT INQUIRIES
+					RESPONSE WORKSPACE
 				</div>
 
 				<h2>
-					Inquiries Management
+					Respond to Inquiry
 				</h2>
 
 				<p>
-					Review student inquiries, respond to them, and manage their status.
+					Review the student's concern and prepare a clear, helpful response.
 				</p>
 
 			</div>
 
-			<div class="stats-grid">
+			<a class="response-back-link" href="admininquiries.html">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z">
+					</path>
+				</svg>
 
-				<div class="stat-card">
-					<div class="stat-label">
-						Total Inquiries
-					</div>
-					<div class="stat-value" id="statTotal">
-						0
-					</div>
-					<div class="stat-hint">
-						All saved inquiry records
-					</div>
-				</div>
+				Back to Inquiries
+			</a>
 
-				<div class="stat-card">
-					<div class="stat-label">
-						Pending
-					</div>
-					<div class="stat-value" id="statPending">
-						0
-					</div>
-					<div class="stat-hint">
-						Waiting for a response
-					</div>
-				</div>
-
-				<div class="stat-card">
-					<div class="stat-label">
-						Answered
-					</div>
-					<div class="stat-value" id="statAnswered">
-						0
-					</div>
-					<div class="stat-hint">
-						A response has been sent
-					</div>
-				</div>
-
-				<div class="stat-card">
-					<div class="stat-label">
-						Closed
-					</div>
-					<div class="stat-value" id="statClosed">
-						0
-					</div>
-					<div class="stat-hint">
-						Resolved inquiries
-					</div>
-				</div>
-
-			</div>
-
-			<div class="mg-toolbar">
-
-				<input type="search" id="mgSearch" placeholder="Search inquiries" aria-label="Search inquiries">
-
-				<select id="mgCategoryFilter" aria-label="Filter inquiries by category">
-					<option value="all">
-						All categories
-					</option>
-					<option value="General">
-						General
-					</option>
-					<option value="Enrollment">
-						Enrollment
-					</option>
-					<option value="Tuition & Payments">
-						Tuition &amp; Payments
-					</option>
-					<option value="Academic Requirements">
-						Academic Requirements
-					</option>
-					<option value="Scholarships & Financial Aid">
-						Scholarships &amp; Financial Aid
-					</option>
-					<option value="Campus Life">
-						Campus Life
-					</option>
-					<option value="Account & Access">
-						Account &amp; Access
-					</option>
-				</select>
-
-				<select id="mgStatusFilter" aria-label="Filter inquiries by status">
-					<option value="all">
-						All statuses
-					</option>
-					<option value="Pending">
-						Pending
-					</option>
-					<option value="Answered">
-						Answered
-					</option>
-					<option value="Closed">
-						Closed
-					</option>
-				</select>
-
-				<button class="btn btn-ghost" type="button" id="mgClearFilters">
-					Clear Filters
-				</button>
-
-			</div>
-
-			<p class="mg-summary" id="mgSummary" aria-live="polite">
-			</p>
-
-			<div class="panel" id="mgPanel">
-				<div class="table-wrap">
-					<table class="data-table">
-						<thead>
-							<tr>
-							<th>Reference</th>
-							<th>Student</th>
-							<th>Subject</th>
-							<th>Category</th>
-							<th>Date Submitted</th>
-							<th>Date Answered</th>
-							<th>Responded By</th>
-							<th>Status</th>
-							<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody id="mgBody">
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="state-card" id="mgEmpty" role="status" hidden>
+			<div class="state-card" id="roleBlockedState" role="status" hidden>
 
 				<h3 class="state-title">
-					No Inquiries Yet
+					Admin workflow
 				</h3>
 
 				<p class="state-text">
-					Inquiries submitted by students will appear here.
+					This page is used by the admin team to respond to student inquiries.
 				</p>
+
+				<button class="state-button" type="button" id="blockedBackButton">
+					Back to Inquiries
+				</button>
 
 			</div>
 
-			<div class="state-card" id="mgNoMatches" role="status" hidden>
+			<div class="state-card" id="invalidInquiryState" role="status" hidden>
 
 				<h3 class="state-title">
-					No Matching Inquiries
+					Inquiry not available
 				</h3>
 
 				<p class="state-text">
-					Try adjusting your search or filters.
+					This inquiry could not be loaded. It may no longer be available, or the link may be incomplete.
 				</p>
 
-				<button class="state-button" type="button" id="mgClearFiltersEmpty">
-					Clear Filters
+				<button class="state-button" type="button" id="invalidBackButton">
+					Back to Inquiries
 				</button>
 
 			</div>
 
-			<div class="mg-pagination" id="mgPagination" hidden>
+			<div id="responseWorkflow" hidden>
 
-				<button class="btn btn-secondary btn-small" type="button" id="mgPrevPage">
-					Previous
-				</button>
+				<div class="panel response-panel inquiry-panel" id="inquiryDetailsPanel">
 
-				<span class="mg-page-info" id="mgPageInfo">
-					Page 1 of 1
-				</span>
+					<div class="response-panel-heading">
 
-				<button class="btn btn-secondary btn-small" type="button" id="mgNextPage">
-					Next
-				</button>
+						<h4 class="response-panel-title">
+							Student Inquiry Details
+						</h4>
 
+						<span class="detail-status" id="heroStatus" hidden>
+						</span>
+
+					</div>
+
+					<div class="inquiry-identity" id="inquiryIdentity" hidden>
+
+						<div class="inquiry-avatar" id="inquiryAvatar">
+						</div>
+
+						<div class="inquiry-identity-copy">
+
+							<p class="inquiry-identity-label">
+							Student
+							</p>
+
+							<p class="inquiry-identity-name" id="inquiryStudentName">
+							</p>
+
+						</div>
+
+					</div>
+
+					<div class="mg-detail-grid" id="inquiryDetailGrid">
+					</div>
+
+					<div class="history-section" id="historySection" hidden>
+
+						<h5 class="history-title">
+							Response History
+						</h5>
+
+						<div class="history-list" id="historyList">
+						</div>
+
+					</div>
+
+					<p class="mg-empty-note" id="closedNotice" hidden>
+						This inquiry is not awaiting a response.
+					</p>
+
+				</div>
+
+				<div class="panel response-panel" id="responseEditorPanel">
+
+					<h4 class="response-panel-title">
+						Your Response
+					</h4>
+
+					<p class="response-recipient" id="responseRecipient" hidden>
+					</p>
+
+					<form id="responseForm" novalidate>
+
+						<div class="form-group">
+
+							<label class="response-editor-label" for="responseText">
+								Message
+							</label>
+
+							<div class="editor-shell">
+
+								<textarea id="responseText" placeholder="Write a clear and helpful response to the student's inquiry..."></textarea>
+
+							</div>
+
+							<p class="response-guide">
+								Be clear, respectful, and specific. Include any relevant instructions or next steps.
+							</p>
+
+							<div class="response-attach" id="responseAttach">
+
+								<label class="attach-button" for="responseFiles">
+
+									<svg viewBox="0 0 24 24" aria-hidden="true">
+										<path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"></path>
+									</svg>
+
+									Add files
+								</label>
+
+								<input type="file" id="responseFiles" accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg" multiple hidden>
+
+								<div class="attach-meta">
+									<p class="attach-hint">PDF, DOC/DOCX, TXT, PNG or JPG. Up to 1.5 MB each; 3 MB total.</p>
+									<p class="attach-total" id="responseAttachmentTotal" aria-live="polite">0 KB of 3 MB used</p>
+								</div>
+
+								<ul class="attach-list" id="responseFileList" hidden>
+								</ul>
+
+							</div>
+
+							<p class="response-count" id="responseCount">
+								0 words / 0 characters
+							</p>
+
+							<p class="response-draft-note" id="draftNote" hidden>
+								A saved draft was restored for this inquiry.
+							</p>
+
+							<p class="field-error" id="responseError" hidden>
+							</p>
+
+						</div>
+
+						<div class="modal-actions">
+
+							<button class="cancel-button" type="button" id="responseCancel">
+								Cancel
+							</button>
+
+							<button class="cancel-button" type="button" id="responseDraft">
+								Save as Draft
+							</button>
+
+							<button class="modal-save" type="submit" id="responseSend">
+								Send Response
+							</button>
+
+						</div>
+
+					</form>
+
+				</div>
+
+			</div>
+
+			<div class="panel response-panel receipt-panel" id="responseReceipt" hidden>
 			</div>
 
 			<div class="toast" id="pageToast" role="status" aria-live="polite" hidden></div>
 
+			<div class="confirm-overlay" id="confirmOverlay" hidden>
+
+				<div class="confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmText">
+
+					<h4 class="confirm-title" id="confirmTitle">
+					</h4>
+
+					<p class="confirm-text" id="confirmText">
+					</p>
+
+					<div class="modal-actions">
+
+						<button class="cancel-button" type="button" id="confirmCancel">
+							Cancel
+						</button>
+
+						<button class="modal-save" type="button" id="confirmOk">
+							Confirm
+						</button>
+
+					</div>
+
+				</div>
+
+			</div>
+
 		</section>
 	</main>
-
-
-	<div class="modal-backdrop" id="inquiryModal" hidden>
-
-		<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="inquiryModalTitle">
-
-			<div class="modal-head">
-
-				<h3 id="inquiryModalTitle">
-					Inquiry Details
-				</h3>
-
-				<button class="modal-close" id="inquiryModalClose" type="button" aria-label="Close inquiry details">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3l6.3 6.3 6.3-6.3z">
-						</path>
-					</svg>
-				</button>
-
-			</div>
-
-			<div id="inquiryModalBody">
-			</div>
-
-		</div>
-
-	</div>
-
-	<div class="modal-backdrop" id="editModal" hidden>
-
-		<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
-
-			<div class="modal-head">
-
-				<h3 id="editModalTitle">
-					Edit Inquiry
-				</h3>
-
-				<button class="modal-close" id="editModalClose" type="button" aria-label="Close edit form">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3l6.3 6.3 6.3-6.3z">
-						</path>
-					</svg>
-				</button>
-
-			</div>
-
-			<form id="editForm" novalidate>
-
-				<div class="form-group">
-
-					<label for="editSubject">
-						Subject
-					</label>
-
-					<input type="text" id="editSubject">
-
-					<p class="field-error" id="editSubjectError" hidden>
-					</p>
-
-				</div>
-
-				<div class="form-group">
-
-					<label for="editCategory">
-						Category
-					</label>
-
-					<select id="editCategory">
-						<option value="General">
-							General
-						</option>
-						<option value="Enrollment">
-							Enrollment
-						</option>
-						<option value="Tuition & Payments">
-							Tuition &amp; Payments
-						</option>
-						<option value="Academic Requirements">
-							Academic Requirements
-						</option>
-						<option value="Scholarships & Financial Aid">
-							Scholarships &amp; Financial Aid
-						</option>
-						<option value="Campus Life">
-							Campus Life
-						</option>
-						<option value="Account & Access">
-							Account &amp; Access
-						</option>
-					</select>
-
-				</div>
-
-				<div class="form-group">
-
-					<label for="editMessage">
-						Inquiry Details
-					</label>
-
-					<textarea id="editMessage"></textarea>
-
-					<p class="field-error" id="editMessageError" hidden>
-					</p>
-
-				</div>
-
-				<div class="modal-actions">
-
-					<button class="cancel-button" type="button" id="editCancel">
-						Cancel
-					</button>
-
-					<button class="modal-save" type="submit">
-						Save Changes
-					</button>
-
-				</div>
-
-			</form>
-
-		</div>
-
-	</div>
-
-	<div class="modal-backdrop" id="faqDraftModal" hidden>
-
-		<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="faqDraftModalTitle">
-
-			<div class="modal-head">
-
-				<h3 id="faqDraftModalTitle">
-					Add to FAQs
-				</h3>
-
-				<button class="modal-close" id="faqDraftClose" type="button" aria-label="Close FAQ draft form">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3l6.3 6.3 6.3-6.3z">
-						</path>
-					</svg>
-				</button>
-
-			</div>
-
-			<form id="faqDraftForm" novalidate>
-
-				<p class="mg-empty-note">
-					Generalize the question and remove personal details before saving. The draft starts unpublished for review in FAQs Management.
-				</p>
-
-				<div class="form-group">
-
-					<label for="faqDraftQuestion">
-						Question
-					</label>
-
-					<input type="text" id="faqDraftQuestion">
-
-					<p class="field-error" id="faqDraftQuestionError" hidden>
-					</p>
-
-				</div>
-
-				<div class="form-group">
-
-					<label for="faqDraftAnswer">
-						Answer
-					</label>
-
-					<textarea id="faqDraftAnswer"></textarea>
-
-					<p class="field-error" id="faqDraftAnswerError" hidden>
-					</p>
-
-				</div>
-
-				<div class="form-group">
-
-					<label for="faqDraftCategory">
-						FAQ Category
-					</label>
-
-					<select id="faqDraftCategory">
-						<option value="General">
-							General
-						</option>
-						<option value="Enrollment">
-							Enrollment
-						</option>
-						<option value="Academics">
-							Academics
-						</option>
-						<option value="Events">
-							Events
-						</option>
-					</select>
-
-				</div>
-
-				<div class="modal-actions">
-
-					<button class="cancel-button" type="button" id="faqDraftCancel">
-						Cancel
-					</button>
-
-					<button class="modal-save" type="submit">
-						Save Draft
-					</button>
-
-				</div>
-
-			</form>
-
-		</div>
-
-	</div>
-
-	<div class="modal-backdrop" id="deleteModal" hidden>
-
-		<div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-describedby="deleteModalText">
-
-			<div class="modal-head">
-
-				<h3 id="deleteModalTitle">
-					Delete Inquiry
-				</h3>
-
-				<button class="modal-close" id="deleteModalClose" type="button" aria-label="Close delete confirmation">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3l6.3 6.3 6.3-6.3z">
-						</path>
-					</svg>
-				</button>
-
-			</div>
-
-			<p class="confirm-text" id="deleteModalText">
-				Are you sure you want to delete this inquiry? This action cannot be undone.
-			</p>
-
-			<div class="modal-actions">
-
-				<button class="cancel-button" type="button" id="deleteCancel">
-					Cancel
-				</button>
-
-				<button class="modal-save modal-save--danger" type="button" id="deleteConfirm">
-					Delete Inquiry
-				</button>
-
-			</div>
-
-		</div>
-
-	</div>
 
 
 	<footer>
@@ -4208,8 +4484,8 @@
 
 			<div>
 
-				<a href="landingpage.html" class="logo footer-logo">
-					<img src="Edubridge-Logo.png" alt="EduBridge">
+				<a href="admindashboard.html" class="logo footer-logo">
+					<img src="edubridgelogo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -4274,37 +4550,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="landingpage.html">
+						<a href="admindashboard.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="about.html">
+						<a href="adminabout.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="announcements.html">
+						<a href="adminannouncements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="faq.html">
+						<a href="adminfaq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="inquiries.html">
+						<a href="admininquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="contact.html">
+						<a href="admincontact.html">
 							Contact
 						</a>
 					</li>
@@ -4370,7 +4646,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="inquiries.html">
+					<a class="question-button" href="admininquiries.html">
 						Get Started →
 					</a>
 
@@ -4596,7 +4872,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "logout.html";
+				window.location.href = "bothlogout.html";
 			}
 
 			function buildAccountMenu()
@@ -4605,35 +4881,35 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "announcements.html" },
-					{ label: "Create Announcement", href: "createannounce.html" },
-					{ label: "Categories", href: "categories.html" }
+					{ label: "All Announcements", href: "adminannouncements.html" },
+					{ label: "Create Announcement", href: "admincreateannounce.html" },
+					{ label: "Categories", href: "admincategories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
-					items.push({ label: "User Management", href: "usermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
-					items.push({ label: "Activity Logs", href: "activitylogs.html" });
-					items.push({ label: "Settings", href: "settings.html" });
-					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "FAQs Management", href: "adminfaq.html" });
+					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
+					items.push({ label: "User Management", href: "adminusermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
+					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Report a Problem", href: "bothreport.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Settings", href: "settings.html" });
-					items.push({ label: "Report a Problem", href: "reportproblem.html" });
+					items.push({ label: "FAQs Management", href: "adminfaq.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Report a Problem", href: "bothreport.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "profile.html" });
-					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Profile", href: "adminprofile.html" });
+					items.push({ label: "Settings", href: "adminsettings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -4712,13 +4988,21 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (role === "student" || role === "teacher")
+				if (role === "student")
 				{
-					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
-					img.alt = "Junior Slickback";
-					name.textContent = "Junior Slickback";
-					roleText.textContent = "Student";
-					profile.setAttribute("href", "inquiries.html");
+					if (img) img.src = "junior.jpg";
+					if (img) img.alt = "Student";
+					if (name) name.textContent = "Student";
+					if (roleText) roleText.textContent = "Student";
+					profile.setAttribute("href", "admininquiries.html");
+				}
+				else if (role === "teacher")
+				{
+					if (img) img.src = "junior.jpg";
+					if (img) img.alt = "Teacher";
+					if (name) name.textContent = "Teacher";
+					if (roleText) roleText.textContent = "Teacher";
+					profile.setAttribute("href", "admininquiries.html");
 				}
 				else
 				{
@@ -4726,7 +5010,7 @@
 					img.alt = "Resume Dizon";
 					name.textContent = "Resume Dizon";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "profile.html");
+					profile.setAttribute("href", "adminprofile.html");
 				}
 			}
 
@@ -5227,112 +5511,45 @@
 			};
 
 			const inquiriesStorageKey = "edubridge-inquiries";
-			const inquiryPageSize = 6;
+			const responseWorkflow = document.getElementById("responseWorkflow");
+			const inquiryDetailGrid = document.getElementById("inquiryDetailGrid");
+			const closedNotice = document.getElementById("closedNotice");
+			const responseForm = document.getElementById("responseForm");
+			const responseText = document.getElementById("responseText");
+			const responseCount = document.getElementById("responseCount");
+			const responseError = document.getElementById("responseError");
+			const responseCancel = document.getElementById("responseCancel");
+			const responseDraft = document.getElementById("responseDraft");
+			const responseRecipient = document.getElementById("responseRecipient");
+			const draftNote = document.getElementById("draftNote");
+			const heroStatus = document.getElementById("heroStatus");
+			const inquiryIdentity = document.getElementById("inquiryIdentity");
+			const inquiryAvatar = document.getElementById("inquiryAvatar");
+			const inquiryStudentName = document.getElementById("inquiryStudentName");
+			const responseSend = document.getElementById("responseSend");
+			const responseShell = responseText.parentElement;
+			const confirmOverlay = document.getElementById("confirmOverlay");
+			const confirmTitle = document.getElementById("confirmTitle");
+			const confirmText = document.getElementById("confirmText");
+			const confirmCancel = document.getElementById("confirmCancel");
+			const confirmOk = document.getElementById("confirmOk");
+			const responseFiles = document.getElementById("responseFiles");
+			const responseFileList = document.getElementById("responseFileList");
+			const responseAttachmentTotal = document.getElementById("responseAttachmentTotal");
+			const historySection = document.getElementById("historySection");
+			const historyList = document.getElementById("historyList");
+			const responseEditorPanel = document.getElementById("responseEditorPanel");
+			const responseReceipt = document.getElementById("responseReceipt");
+			const invalidInquiryState = document.getElementById("invalidInquiryState");
+			const roleBlockedState = document.getElementById("roleBlockedState");
+			const invalidBackButton = document.getElementById("invalidBackButton");
+			const blockedBackButton = document.getElementById("blockedBackButton");
 
-			const mgPanel = document.getElementById("mgPanel");
-			const mgSearch = document.getElementById("mgSearch");
-			const mgCategoryFilter = document.getElementById("mgCategoryFilter");
-			const mgStatusFilter = document.getElementById("mgStatusFilter");
-			const mgClearFilters = document.getElementById("mgClearFilters");
-			const mgClearFiltersEmpty = document.getElementById("mgClearFiltersEmpty");
-			const mgSummary = document.getElementById("mgSummary");
-			const mgBody = document.getElementById("mgBody");
-			const mgEmpty = document.getElementById("mgEmpty");
-			const mgNoMatches = document.getElementById("mgNoMatches");
-			const mgPagination = document.getElementById("mgPagination");
-			const mgPageInfo = document.getElementById("mgPageInfo");
-			const mgPrevPage = document.getElementById("mgPrevPage");
-			const mgNextPage = document.getElementById("mgNextPage");
+			let activeInquiry = null;
 
-			const statTotal = document.getElementById("statTotal");
-			const statPending = document.getElementById("statPending");
-			const statAnswered = document.getElementById("statAnswered");
-			const statClosed = document.getElementById("statClosed");
-
-			const inquiryModal = document.getElementById("inquiryModal");
-			const inquiryModalBody = document.getElementById("inquiryModalBody");
-			const inquiryModalClose = document.getElementById("inquiryModalClose");
-			const editModal = document.getElementById("editModal");
-			const editModalClose = document.getElementById("editModalClose");
-			const editForm = document.getElementById("editForm");
-			const editSubject = document.getElementById("editSubject");
-			const editCategory = document.getElementById("editCategory");
-			const editMessage = document.getElementById("editMessage");
-			const editSubjectError = document.getElementById("editSubjectError");
-			const editMessageError = document.getElementById("editMessageError");
-			const editCancel = document.getElementById("editCancel");
-			const deleteModal = document.getElementById("deleteModal");
-			const deleteModalClose = document.getElementById("deleteModalClose");
-			const deleteModalText = document.getElementById("deleteModalText");
-			const deleteCancel = document.getElementById("deleteCancel");
-			const deleteConfirm = document.getElementById("deleteConfirm");
-
-			let selectedInquiryId = null;
-			let editInquiryId = null;
-			let pendingDeleteId = null;
-			let lastFocusedElement = null;
-			let activeQuery = "";
-			let activeCategory = "all";
-			let activeStatus = "all";
-			let currentPage = 1;
-
-			const faqDraftModal = document.getElementById("faqDraftModal");
-			const faqDraftClose = document.getElementById("faqDraftClose");
-			const faqDraftCancel = document.getElementById("faqDraftCancel");
-			const faqDraftForm = document.getElementById("faqDraftForm");
-			const faqDraftQuestion = document.getElementById("faqDraftQuestion");
-			const faqDraftAnswer = document.getElementById("faqDraftAnswer");
-			const faqDraftCategory = document.getElementById("faqDraftCategory");
-			const faqDraftQuestionError = document.getElementById("faqDraftQuestionError");
-			const faqDraftAnswerError = document.getElementById("faqDraftAnswerError");
-
-			const faqDraftsStorageKey = "edubridge-faq-drafts";
-			const faqCategoryOptions = ["Enrollment", "Academics", "Events", "General"];
-
-			let faqDraftInquiryId = null;
-
-			const sampleRecords =
-			[
-					{
-							id: "#INQ-2026-0101",
-							student: "Maria Santos",
-							category: "Enrollment",
-							subject: "Late enrollment requirements",
-							message: "What documents are needed for late enrollment?",
-							status: "Pending",
-							createdAt: "2026-10-10T09:00:00.000Z",
-							updatedAt: "2026-10-10T09:00:00.000Z",
-							response: null,
-							followUps: [],
-							attachment: null
-					},
-					{
-							id: "#INQ-2026-0102",
-							student: "Juan Dela Cruz",
-							category: "Academic Requirements",
-							subject: "Missing certificate of enrollment",
-							message: "My COE from last term is missing from the portal.",
-							status: "Pending",
-							createdAt: "2026-10-09T09:00:00.000Z",
-							updatedAt: "2026-10-09T09:00:00.000Z",
-							response: null,
-							followUps: [],
-							attachment: null
-					},
-					{
-							id: "#INQ-2026-0103",
-							student: "Rosa Villanueva",
-							category: "Campus Life",
-							subject: "Schedule of make-up classes",
-							message: "When will make-up classes after the storm take place?",
-							status: "Pending",
-							createdAt: "2026-10-07T09:00:00.000Z",
-							updatedAt: "2026-10-07T09:00:00.000Z",
-							response: null,
-							followUps: [],
-							attachment: null
-					}
-			];
+			const responderDisplayName = "Resume Dizon";
+			const responseRoleKey = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+			const canRespondToInquiries = responseRoleKey !== "student" && responseRoleKey !== "teacher";
 
 			function buildElement(tagName, className, text)
 			{
@@ -5554,22 +5771,108 @@
 
 			}
 
-			function seedSampleRecords()
+			const iconPaths =
+			{
+					inquiry: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z",
+					category: "M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z",
+					calendar: "M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z",
+					subject: "M5 4v3h5.5v12h3V7H19V4z",
+					message: "M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z",
+					attachment: "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
+			};
+
+			function createInquiryField(iconPath, label, value, wide, extraClass)
 			{
 
-					try
-					{
-							if (localStorage.getItem(inquiriesStorageKey) !== null)
-							{
-									return;
-							}
+					const field = buildElement("div", "mg-detail-field" + (wide ? " mg-detail-field--wide" : "") + (extraClass ? " " + extraClass : ""));
 
-							localStorage.setItem(inquiriesStorageKey, JSON.stringify(sampleRecords));
-					}
-					catch (error)
+					const labelRow = buildElement("span", "mg-detail-label inquiry-label");
+					const icon = document.createElement("span");
+					icon.className = "inquiry-icon";
+					icon.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"" + iconPath + "\"></path></svg>";
+					labelRow.append(icon, document.createTextNode(label));
+
+					field.append(labelRow);
+					field.append(buildElement("span", "mg-detail-value", value));
+
+					return field;
+
+			}
+
+			function renderHeroStatus(status)
+			{
+
+					heroStatus.replaceChildren(createStatusBadge(status));
+					heroStatus.hidden = false;
+
+			}
+
+			let currentFiles = [];
+			let pendingAttachmentBytes = 0;
+			let baselineSnapshot = "";
+
+			function responseSnapshot()
+			{
+
+					return JSON.stringify([
+						responseText.value.trim(),
+						pendingAttachmentBytes,
+						currentFiles.map(function(file)
+						{
+							return file.name + "|" + file.size;
+						})
+					]);
+
+			}
+
+			function isResponseDirty()
+			{
+
+					const hasContent = responseText.value.trim().length > 0 || currentFiles.length > 0;
+
+					return hasContent && responseSnapshot() !== baselineSnapshot;
+
+			}
+
+			window.addEventListener("beforeunload", function(event)
+			{
+
+					if (isResponseDirty())
 					{
-							return;
+							event.preventDefault();
+							event.returnValue = "";
 					}
+
+			});
+
+			let confirmProceed = null;
+			let confirmReturnFocus = null;
+
+			function openConfirm(options)
+			{
+
+					confirmTitle.textContent = options.title;
+					confirmText.textContent = options.text;
+					confirmOk.textContent = options.confirmLabel;
+					confirmCancel.textContent = options.cancelLabel;
+					confirmProceed = options.onConfirm;
+					confirmReturnFocus = document.activeElement;
+					confirmOverlay.hidden = false;
+					confirmCancel.focus();
+
+			}
+
+			function closeConfirm()
+			{
+
+					confirmOverlay.hidden = true;
+					confirmProceed = null;
+
+					if (confirmReturnFocus && typeof confirmReturnFocus.focus === "function")
+					{
+							confirmReturnFocus.focus();
+					}
+					confirmReturnFocus = null;
 
 			}
 
@@ -5578,366 +5881,296 @@
 					return buildElement("span", statusTone[status] || "badge badge-gray", status);
 			}
 
-			function renderStats(records)
+			function getReceiptReference(inquiryId)
 			{
 
-					const counts =
+					return "RSP-" + String(inquiryId).replace(/^#?INQ-/, "");
+
+			}
+
+			const draftStorageKey = "edubridge-response-drafts";
+
+			function readDraftMap()
+			{
+					try
 					{
-							pending: 0,
-							answered: 0,
-							closed: 0
+							const raw = localStorage.getItem(draftStorageKey);
+							const parsed = raw ? JSON.parse(raw) : "{}";
+
+							if (parsed && typeof parsed === "object" && !Array.isArray(parsed))
+							{
+									return parsed;
+							}
+					}
+					catch (error)
+					{
+					}
+
+					return {};
+			}
+
+			function getStoredDraft(inquiryId)
+			{
+					const drafts = readDraftMap();
+					const raw = drafts[inquiryId];
+
+					if (!raw)
+					{
+						return { text: "", files: [], by: "", savedAt: "" };
+					}
+
+					if (typeof raw === "string")
+					{
+						return { text: raw, files: [], by: "", savedAt: "" };
+					}
+
+					return {
+						text: String(raw.text || ""),
+						files: Array.isArray(raw.files) ? raw.files : [],
+						by: String(raw.by || ""),
+						savedAt: String(raw.savedAt || "")
+					};
+			}
+
+			function storeDraft(inquiryId, payload)
+			{
+					const drafts = readDraftMap();
+					const hasText = Boolean(payload && payload.text && payload.text.trim());
+					const hasFiles = Boolean(payload && Array.isArray(payload.files) && payload.files.length);
+
+					if (hasText || hasFiles)
+					{
+						drafts[inquiryId] = {
+							text: payload.text || "",
+							files: payload.files || [],
+							by: payload.by || responderDisplayName,
+							savedAt: new Date().toISOString()
+						};
+					}
+					else
+					{
+						delete drafts[inquiryId];
+					}
+
+					if (Object.keys(drafts).length)
+					{
+						localStorage.setItem(draftStorageKey, JSON.stringify(drafts));
+					}
+					else
+					{
+						localStorage.removeItem(draftStorageKey);
+					}
+			}
+
+			function formatFileSize(bytes)
+			{
+					if (bytes === 0)
+					{
+						return "0 KB";
+					}
+
+					if (bytes >= 1048576)
+					{
+						return (bytes / 1048576).toFixed(1) + " MB";
+					}
+
+					return Math.max(1, Math.round(bytes / 1024)) + " KB";
+
+			}
+
+			function renderFileList()
+			{
+
+					responseFileList.replaceChildren();
+
+					currentFiles.forEach(function(file, index)
+					{
+
+						const item = buildElement("li", "attach-item");
+
+						const link = buildElement("a", "attach-name", file.name);
+						link.href = file.data;
+						link.target = "_blank";
+						link.rel = "noopener";
+
+						const size = buildElement("span", "attach-size", formatFileSize(file.size));
+
+						const removeButton = buildElement("button", "attach-remove", "Remove");
+						removeButton.type = "button";
+						removeButton.addEventListener("click", function()
+						{
+							currentFiles.splice(index, 1);
+							renderFileList();
+						});
+
+						item.append(link, size, removeButton);
+						responseFileList.append(item);
+
+					});
+
+					responseFileList.hidden = currentFiles.length === 0;
+					const totalBytes = currentFiles.reduce(function(sum, file)
+					{
+						return sum + file.size;
+					}, pendingAttachmentBytes);
+					responseAttachmentTotal.textContent = formatFileSize(totalBytes) + " of 3 MB used";
+
+			}
+
+			function isSupportedResponseFile(file)
+			{
+					const extension = file.name.split(".").pop().toLowerCase();
+					const supportedExtensions = ["pdf", "doc", "docx", "txt", "png", "jpg", "jpeg"];
+
+					return supportedExtensions.indexOf(extension) !== -1;
+			}
+
+			function readFileAsAttachment(file)
+			{
+
+					const reader = new FileReader();
+
+					reader.onload = function()
+					{
+						pendingAttachmentBytes -= file.size;
+
+						currentFiles.push(
+						{
+							name: file.name,
+							type: file.type || "",
+							size: file.size,
+							data: String(reader.result)
+						});
+						renderFileList();
+
 					};
 
-					records.forEach(function(entry)
+					reader.onerror = function()
 					{
-							if (entry.status === "Pending")
-							{
-									counts.pending += 1;
-							}
-							else if (entry.status === "Answered")
-							{
-									counts.answered += 1;
-							}
-							else if (entry.status === "Closed")
-							{
-									counts.closed += 1;
-							}
-					});
+						pendingAttachmentBytes -= file.size;
+						renderFileList();
+						showToast(file.name + " could not be read and was not added.");
+					};
 
-					statTotal.textContent = String(records.length);
-					statPending.textContent = String(counts.pending);
-					statAnswered.textContent = String(counts.answered);
-					statClosed.textContent = String(counts.closed);
+					reader.readAsDataURL(file);
 
 			}
 
-			function getFilteredRecords(records)
+			function addFiles(fileList)
 			{
 
-					const query = activeQuery.toLowerCase();
+					const incoming = Array.prototype.slice.call(fileList || []);
 
-					return records.filter(function(entry)
+					if (!incoming.length)
+					{
+						return;
+					}
+
+					let projectedTotal = currentFiles.reduce(function(sum, file)
+					{
+						return sum + file.size;
+					}, pendingAttachmentBytes);
+
+					incoming.forEach(function(file)
 					{
 
-							if (activeCategory !== "all" && entry.category !== activeCategory)
-							{
-									return false;
-							}
+						if (!isSupportedResponseFile(file))
+						{
+							showToast(file.name + " is not a supported file type and was not added.");
+							return;
+						}
 
-							if (activeStatus !== "all" && entry.status !== activeStatus)
-							{
-									return false;
-							}
+						if (file.size > 1572864)
+						{
+							showToast(file.name + " is larger than 1.5 MB and was not added.");
+							return;
+						}
 
-							if (query)
-							{
-									const haystack = [
-											entry.id,
-											entry.subject,
-											entry.message,
-											entry.student,
-											entry.category
-									].join(" ").toLowerCase();
+						if (projectedTotal + file.size > 3145728)
+						{
+							showToast("Attachments must stay under 3 MB in total.");
+							return;
+						}
 
-									if (haystack.indexOf(query) === -1)
-									{
-											return false;
-									}
-							}
-
-							return true;
+						projectedTotal += file.size;
+						pendingAttachmentBytes += file.size;
+						readFileAsAttachment(file);
 
 					});
 
+					renderFileList();
+
 			}
 
-			function createInquiryRow(entry)
+			responseFiles.addEventListener("change", function()
 			{
 
-					const row = document.createElement("tr");
+					addFiles(responseFiles.files);
+					responseFiles.value = "";
 
+			});
 
-					const idCell = document.createElement("td");
-					idCell.textContent = entry.id;
-					idCell.title = entry.id;
+			function setCharacterCount()
+			{
+					const trimmed = responseText.value.trim();
+					const characters = trimmed.length;
+					const words = trimmed ? trimmed.split(/\s+/).length : 0;
 
+					responseCount.textContent = words + (words === 1 ? " word" : " words") + " / " + characters + " characters";
+			}
 
-					const studentCell = document.createElement("td");
-					studentCell.textContent = entry.student || "Not available";
+			function showResponseError(message)
+			{
+					responseError.hidden = false;
+					responseError.textContent = message;
+					responseText.classList.add("is-invalid");
+					responseShell.classList.add("is-invalid");
+			}
 
+			function hideResponseError()
+			{
+					responseError.hidden = true;
+					responseError.textContent = "";
+					responseText.classList.remove("is-invalid");
+					responseShell.classList.remove("is-invalid");
+			}
 
-					const subjectCell = document.createElement("td");
-					subjectCell.textContent = entry.subject || "—";
-					subjectCell.title = entry.subject || "";
+			function showInvalidInquiryState()
+			{
+					responseWorkflow.hidden = true;
+					responseReceipt.hidden = true;
+					invalidInquiryState.hidden = false;
+			}
 
+			function renderInquiryDetails(entry)
+			{
 
-					const categoryCell = document.createElement("td");
-					categoryCell.textContent = entry.category || "General";
+					inquiryDetailGrid.replaceChildren();
 
+					const studentName = (entry.student || "").trim();
 
-					const createdCell = document.createElement("td");
-
-					const createdTime = document.createElement("time");
-					createdTime.dateTime = entry.createdAt;
-					createdTime.textContent = formatInquiryDay(entry.createdAt);
-					createdCell.append(createdTime);
-
-
-					const answeredCell = document.createElement("td");
-
-					if (entry.response && entry.response.date)
+					if (studentName)
 					{
-							const answeredTime = document.createElement("time");
-							answeredTime.dateTime = entry.response.date;
-							answeredTime.textContent = formatInquiryDay(entry.response.date);
-							answeredCell.append(answeredTime);
+						inquiryAvatar.textContent = studentName.split(/\s+/).map(function(part)
+						{
+							return part.charAt(0);
+						}).join("").slice(0, 2).toUpperCase();
+						inquiryStudentName.textContent = studentName;
+						inquiryIdentity.hidden = false;
 					}
 					else
 					{
-							answeredCell.textContent = "—";
+						inquiryIdentity.hidden = true;
 					}
 
 
-					const byCell = document.createElement("td");
-					byCell.textContent = (entry.response && entry.response.by) ? entry.response.by : "—";
+					inquiryDetailGrid.append(createInquiryField(iconPaths.inquiry, "Inquiry ID", entry.id));
+					inquiryDetailGrid.append(createInquiryField(iconPaths.category, "Category", entry.category || "General"));
+					inquiryDetailGrid.append(createInquiryField(iconPaths.calendar, "Date Submitted", formatInquiryDate(entry.createdAt)));
 
 
-					const statusCell = document.createElement("td");
-					statusCell.append(createStatusBadge(entry.status));
-
-
-					const actionsCell = document.createElement("td");
-					const actionsWrap = buildElement("div", "row-actions");
-
-					const openButton = buildElement("button", "btn btn-secondary btn-small", "Open");
-					openButton.type = "button";
-					openButton.addEventListener("click", function()
-					{
-							openInquiryModal(entry.id);
-					});
-					actionsWrap.append(openButton);
-
-					if (entry.status === "Answered")
-					{
-
-							const closeButton = buildElement("button", "btn btn-ghost btn-small", "Close");
-							closeButton.type = "button";
-							closeButton.addEventListener("click", function()
-							{
-									applyStatusChange(entry.id, "Closed", "Inquiry closed.");
-							});
-							actionsWrap.append(closeButton);
-
-					}
-					else if (entry.status === "Closed")
-					{
-
-							const reopenButton = buildElement("button", "btn btn-ghost btn-small", "Reopen");
-							reopenButton.type = "button";
-							reopenButton.addEventListener("click", function()
-							{
-									reopenInquiry(entry.id);
-							});
-							actionsWrap.append(reopenButton);
-
-					}
-
-					const deleteButton = buildElement("button", "btn btn-danger btn-small", "Delete");
-					deleteButton.type = "button";
-					deleteButton.addEventListener("click", function()
-					{
-							openDeleteModal(entry.id);
-					});
-					actionsWrap.append(deleteButton);
-
-					actionsCell.append(actionsWrap);
-
-
-					row.append(idCell, studentCell, subjectCell, categoryCell, createdCell, answeredCell, byCell,
-							statusCell, actionsCell);
-
-					return row;
-
-			}
-
-			function renderTable()
-			{
-
-					const result = readInquiryRecords();
-					const records = result.ok ? result.records : [];
-
-					renderStats(records);
-
-
-					if (!result.ok)
-					{
-							mgSummary.textContent = "Inquiry records could not be read from this browser.";
-							mgPanel.hidden = true;
-							mgEmpty.hidden = true;
-							mgNoMatches.hidden = true;
-							mgPagination.hidden = true;
-							return;
-					}
-
-
-					const filtered = getFilteredRecords(records);
-
-					filtered.sort(function(a, b)
-					{
-							return String(b.updatedAt).localeCompare(String(a.updatedAt));
-					});
-
-
-					const totalPages = Math.max(1, Math.ceil(filtered.length / inquiryPageSize));
-
-					if (currentPage > totalPages)
-					{
-							currentPage = totalPages;
-					}
-
-					if (currentPage < 1)
-					{
-							currentPage = 1;
-					}
-
-
-					const startIndex = (currentPage - 1) * inquiryPageSize;
-					const pageRecords = filtered.slice(startIndex, startIndex + inquiryPageSize);
-
-					mgBody.replaceChildren();
-
-					pageRecords.forEach(function(entry)
-					{
-							mgBody.append(createInquiryRow(entry));
-					});
-
-
-					mgPanel.hidden = filtered.length === 0;
-					mgEmpty.hidden = records.length !== 0;
-					mgNoMatches.hidden = !(records.length > 0 && filtered.length === 0);
-					mgPagination.hidden = filtered.length <= inquiryPageSize;
-
-					mgPrevPage.disabled = currentPage <= 1;
-					mgNextPage.disabled = currentPage >= totalPages;
-					mgPageInfo.textContent = "Page " + currentPage + " of " + totalPages;
-
-
-					if (records.length === 0)
-					{
-							mgSummary.textContent = "No inquiries yet.";
-					}
-					else if (filtered.length === 0)
-					{
-							mgSummary.textContent = "No inquiries match the current filters.";
-					}
-					else
-					{
-
-							const shownFrom = startIndex + 1;
-							const shownTo = startIndex + pageRecords.length;
-
-							mgSummary.textContent = "Showing " + shownFrom + "-" + shownTo + " of " + filtered.length +
-									(filtered.length === records.length
-											? " inquiries"
-											: " inquiries (" + records.length + " total)");
-
-					}
-
-			}
-
-			function createDetailField(label, value, wide)
-			{
-
-					const field = buildElement("div", "mg-detail-field" + (wide ? " mg-detail-field--wide" : ""));
-
-					field.append(buildElement("span", "mg-detail-label", label));
-					field.append(buildElement("span", "mg-detail-value", value));
-
-					return field;
-
-			}
-
-			function createConversationItem(author, date, text)
-			{
-
-					const item = buildElement("div", "mg-conversation-item");
-
-					const meta = buildElement("div", "mg-conversation-meta");
-
-					meta.append(buildElement("span", "mg-conversation-author", author));
-
-					const time = document.createElement("time");
-					time.dateTime = date || "";
-					time.textContent = formatInquiryDate(date);
-					meta.append(time);
-
-					item.append(meta, buildElement("p", null, text));
-
-					return item;
-
-			}
-
-			function openBackdrop(backdrop)
-			{
-					lastFocusedElement = document.activeElement;
-					backdrop.hidden = false;
-			}
-
-			function closeBackdrop(backdrop)
-			{
-
-					backdrop.hidden = true;
-
-					if (lastFocusedElement && typeof lastFocusedElement.focus === "function" &&
-							document.contains(lastFocusedElement))
-					{
-							lastFocusedElement.focus();
-					}
-
-			}
-
-			function openInquiryModal(inquiryId)
-			{
-
-					const result = readInquiryRecords();
-
-					if (!result.ok)
-					{
-							showToast("Inquiry records could not be read from this browser.");
-							return;
-					}
-
-					const entry = findInquiryRecord(result.records, inquiryId);
-
-					if (!entry)
-					{
-							showToast("That inquiry is no longer available.");
-							selectedInquiryId = null;
-							closeBackdrop(inquiryModal);
-							renderTable();
-							return;
-					}
-
-					selectedInquiryId = entry.id;
-					inquiryModalBody.replaceChildren();
-
-
-					const detailGrid = buildElement("div", "mg-detail-grid");
-
-					detailGrid.append(createDetailField("Reference", entry.id));
-					detailGrid.append(createDetailField("Student", entry.student || "Not available"));
-					detailGrid.append(createDetailField("Category", entry.category || "General"));
-
-
-					const statusField = buildElement("div", "mg-detail-field");
-					statusField.append(buildElement("span", "mg-detail-label", "Status"));
-					statusField.append(createStatusBadge(entry.status));
-					detailGrid.append(statusField);
-
-					detailGrid.append(createDetailField("Date Submitted", formatInquiryDate(entry.createdAt)));
-					detailGrid.append(createDetailField("Last Updated", formatInquiryDate(entry.updatedAt)));
-					detailGrid.append(createDetailField("Subject", entry.subject || "—", true));
-					detailGrid.append(createDetailField("Inquiry Details", entry.message || "—", true));
+					inquiryDetailGrid.append(createInquiryField(iconPaths.subject, "Subject", entry.subject || "—", true, "inquiry-field--emphasis"));
+					inquiryDetailGrid.append(createInquiryField(iconPaths.message, "Full Inquiry Message", entry.message || "—", true, "inquiry-field--message"));
 
 
 					if (entry.attachment && entry.attachment.data)
@@ -5957,309 +6190,362 @@
 							attachmentRow.append(attachmentLink);
 
 							attachmentField.append(attachmentRow);
-							detailGrid.append(attachmentField);
+							inquiryDetailGrid.append(attachmentField);
 
 					}
 					else if (entry.attachment)
 					{
-							detailGrid.append(createDetailField("Attachment",
+							inquiryDetailGrid.append(createInquiryField(iconPaths.attachment, "Attachment",
 									"The attachment could not be loaded.", true));
 					}
 
-					inquiryModalBody.append(detailGrid);
 
-
-					inquiryModalBody.append(buildElement("h4", "mg-response-heading", "Conversation"));
-
-					const conversation = [];
-
-					(entry.followUps || []).forEach(function(item)
-					{
-							conversation.push(
-							{
-									author: entry.student || "Student",
-									date: item.date,
-									text: item.text
-							});
-					});
-
-					if (entry.response && entry.response.text)
-					{
-							conversation.push(
-							{
-									author: "EduBridge Team",
-									date: entry.response.date,
-									text: entry.response.text
-							});
-					}
-
-					conversation.sort(function(a, b)
-					{
-							return String(a.date).localeCompare(String(b.date));
-					});
-
-					if (conversation.length === 0)
-					{
-							inquiryModalBody.append(buildElement("p", "mg-empty-note",
-									"No response has been provided yet."));
-					}
-					else
-					{
-							conversation.forEach(function(item)
-							{
-									inquiryModalBody.append(createConversationItem(item.author, item.date, item.text));
-							});
-					}
-
-
-					if (entry.response && entry.response.text)
-					{
-							inquiryModalBody.append(buildElement("h4", "mg-response-heading", "Response Receipt"));
-
-							const receiptGrid = buildElement("div", "mg-detail-grid");
-
-							receiptGrid.append(createDetailField("Receipt Reference",
-									entry.response.receipt || getReceiptReference(entry.id)));
-							receiptGrid.append(createDetailField("Date Answered", formatInquiryDate(entry.response.date)));
-							receiptGrid.append(createDetailField("Responded By", entry.response.by || "Not available"));
-
-							inquiryModalBody.append(receiptGrid);
-					}
-
-
-					const actions = buildElement("div", "modal-actions");
-
-					if (entry.status === "Closed")
-					{
-
-							const reopenButton = buildElement("button", "modal-save", "Reopen Inquiry");
-							reopenButton.type = "button";
-							reopenButton.addEventListener("click", function()
-							{
-									reopenInquiry(entry.id);
-							});
-							actions.append(reopenButton);
-
-					}
-					else if (entry.status === "Pending")
-					{
-							const respondLink = buildElement("a", "modal-save", "Respond");
-							respondLink.href = "response.html?id=" + encodeURIComponent(entry.id);
-							actions.append(respondLink);
-					}
-
-					if (entry.response && entry.response.text)
-					{
-							const addFaqButton = buildElement("button", "cancel-button", "Add to FAQs");
-							addFaqButton.type = "button";
-							addFaqButton.addEventListener("click", function()
-							{
-									openFaqDraftModal(entry.id);
-							});
-							actions.append(addFaqButton);
-					}
-
-					const editButton = buildElement("button", "cancel-button", "Edit Inquiry");
-					editButton.type = "button";
-					editButton.addEventListener("click", function()
-					{
-							openEditModal(entry.id);
-					});
-					actions.append(editButton);
-
-					if (entry.status === "Answered")
-					{
-
-							const closeButton = buildElement("button", "cancel-button", "Close Inquiry");
-							closeButton.type = "button";
-							closeButton.addEventListener("click", function()
-							{
-									applyStatusChange(entry.id, "Closed", "Inquiry closed.");
-							});
-							actions.append(closeButton);
-
-					}
-
-					const deleteButton = buildElement("button", "btn btn-danger btn-small", "Delete Inquiry");
-					deleteButton.type = "button";
-					deleteButton.addEventListener("click", function()
-					{
-							openDeleteModal(entry.id);
-					});
-					actions.append(deleteButton);
-
-					inquiryModalBody.append(actions);
-
-
-					if (inquiryModal.hidden)
-					{
-							openBackdrop(inquiryModal);
-					}
+							renderHistory(entry);
 
 			}
 
-			function getReceiptReference(inquiryId)
+			function loadInquiryForResponse()
 			{
 
-					return "RSP-" + String(inquiryId).replace(/^#?INQ-/, "");
+					const params = new URLSearchParams(window.location.search);
+					const inquiryId = (params.get("id") || "").trim();
 
-			}
+					if (!inquiryId)
+					{
+							showInvalidInquiryState();
+							return;
+					}
 
-			function openFaqDraftModal(inquiryId)
-			{
 
 					const result = readInquiryRecords();
 
 					if (!result.ok)
 					{
-							showToast("Inquiry records could not be read from this browser.");
+							showInvalidInquiryState();
 							return;
 					}
+
 
 					const entry = findInquiryRecord(result.records, inquiryId);
 
-					if (!entry || !entry.response || !entry.response.text)
+					if (!entry)
 					{
-							showToast("That inquiry is no longer available.");
-							faqDraftInquiryId = null;
-							closeBackdrop(faqDraftModal);
-							renderTable();
+							showInvalidInquiryState();
 							return;
 					}
 
-					faqDraftInquiryId = entry.id;
-					faqDraftQuestion.value = entry.subject || "";
-					faqDraftAnswer.value = entry.response.text;
-					faqDraftCategory.value = faqCategoryOptions.indexOf(entry.category) !== -1 ? entry.category : "General";
-					faqDraftQuestionError.hidden = true;
-					faqDraftAnswerError.hidden = true;
-					faqDraftQuestion.classList.remove("is-invalid");
-					faqDraftAnswer.classList.remove("is-invalid");
 
-					openBackdrop(faqDraftModal);
-					faqDraftQuestion.focus();
+					activeInquiry = entry;
+					renderInquiryDetails(entry);
+					renderHeroStatus(entry.status);
+
+					if (entry.student)
+					{
+							responseRecipient.textContent = "To: " + entry.student;
+							responseRecipient.hidden = false;
+					}
+					else
+					{
+							responseRecipient.hidden = true;
+					}
+
+					const hasResponse = Boolean(entry.response && entry.response.text);
+
+					if (entry.status === "Pending")
+					{
+							responseWorkflow.hidden = false;
+							responseEditorPanel.hidden = false;
+							closedNotice.hidden = true;
+							responseReceipt.hidden = true;
+							invalidInquiryState.hidden = true;
+							hideResponseError();
+							const storedDraft = getStoredDraft(entry.id);
+
+							responseText.value = storedDraft.text;
+							currentFiles = storedDraft.files.slice();
+							renderFileList();
+							setCharacterCount();
+							draftNote.hidden = !storedDraft.text && !storedDraft.files.length;
+							draftNote.textContent = "A saved draft was restored for this inquiry.";
+							baselineSnapshot = responseSnapshot();
+					}
+					else if (hasResponse)
+					{
+							responseEditorPanel.hidden = true;
+							closedNotice.hidden = true;
+							invalidInquiryState.hidden = true;
+							renderReceipt(entry);
+							responseWorkflow.hidden = false;
+					}
+					else
+					{
+							responseWorkflow.hidden = false;
+							responseEditorPanel.hidden = true;
+							closedNotice.hidden = false;
+							responseReceipt.hidden = true;
+							invalidInquiryState.hidden = true;
+					}
 
 			}
 
-			faqDraftClose.addEventListener("click", function()
+			function createDetailField(label, value, wide)
 			{
-					faqDraftInquiryId = null;
-					closeBackdrop(faqDraftModal);
-			});
 
-			faqDraftCancel.addEventListener("click", function()
+					const field = buildElement("div", "mg-detail-field" + (wide ? " mg-detail-field--wide" : ""));
+
+					field.append(buildElement("span", "mg-detail-label", label));
+					field.append(buildElement("span", "mg-detail-value", value));
+
+					return field;
+
+			}
+
+			function renderHistory(entry)
 			{
-					faqDraftInquiryId = null;
-					closeBackdrop(faqDraftModal);
-			});
 
-			faqDraftForm.addEventListener("submit", function(event)
+					historyList.replaceChildren();
+
+					let items = [];
+
+					if (Array.isArray(entry.history) && entry.history.length)
+					{
+						items = entry.history;
+					}
+					else if (entry.response && entry.response.text)
+					{
+						items = [entry.response];
+					}
+
+					if (!items.length)
+					{
+						historySection.hidden = true;
+						return;
+					}
+
+					items.forEach(function(item)
+					{
+
+						const card = buildElement("div", "history-item");
+
+						const head = buildElement("div", "history-head");
+						head.append(buildElement("span", "history-chip", "Admin reply"));
+
+						const meta = [formatInquiryDate(item.date)];
+
+						if (item.by)
+						{
+							meta.push(item.by);
+						}
+
+						head.append(buildElement("span", "history-meta", meta.join(" \u00b7 ")));
+						card.append(head);
+
+						card.append(buildElement("p", "history-text", item.text || ""));
+
+						if (Array.isArray(item.attachments) && item.attachments.length)
+						{
+							const files = buildElement("ul", "history-files");
+
+							item.attachments.forEach(function(file)
+							{
+								const li = document.createElement("li");
+								const link = buildElement("a", "history-file", file.name);
+								link.href = file.data;
+								link.target = "_blank";
+								link.rel = "noopener";
+								li.append(link);
+								files.append(li);
+							});
+
+							card.append(files);
+						}
+
+						historyList.append(card);
+
+					});
+
+					historySection.hidden = false;
+
+			}
+
+			function renderReceipt(entry)
+			{
+
+					responseReceipt.replaceChildren();
+
+
+					const head = buildElement("div", "receipt-head");
+
+					const icon = document.createElement("div");
+					icon.className = "receipt-icon";
+					icon.innerHTML =
+							"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4.5 12.5 10 18 19.5 6.5\"></path></svg>";
+
+					const headText = buildElement("div", null);
+					headText.append(buildElement("h4", "receipt-title", "Response Receipt"));
+					headText.append(buildElement("p", "receipt-subtitle",
+							"Generated from the response saved for inquiry " + entry.id + "."));
+
+					head.append(icon, headText);
+					responseReceipt.append(head);
+
+
+					const detailGrid = buildElement("div", "mg-detail-grid");
+
+					detailGrid.append(createDetailField("Receipt Reference",
+							entry.response.receipt || getReceiptReference(entry.id)));
+					detailGrid.append(createDetailField("Inquiry ID", entry.id));
+					detailGrid.append(createDetailField("Recipient", entry.student || "Not available"));
+					detailGrid.append(createDetailField("Date and Time", formatInquiryDate(entry.response.date)));
+					detailGrid.append(createDetailField("Responded By", entry.response.by || "Not available"));
+					detailGrid.append(createDetailField("Original Inquiry", entry.subject || "—", true));
+
+
+					const statusField = buildElement("div", "mg-detail-field");
+					statusField.append(buildElement("span", "mg-detail-label", "Final Inquiry Status"));
+					statusField.append(createStatusBadge(entry.status));
+					detailGrid.append(statusField);
+
+					responseReceipt.append(detailGrid);
+
+
+					const responseBlock = buildElement("div", "receipt-response");
+					responseBlock.append(buildElement("span", "mg-detail-label", "Submitted Response"));
+					responseBlock.append(buildElement("p", null, entry.response.text));
+					responseReceipt.append(responseBlock);
+
+					if (Array.isArray(entry.response.attachments) && entry.response.attachments.length)
+					{
+
+							const filesBlock = buildElement("div", "receipt-files");
+							filesBlock.append(buildElement("span", "mg-detail-label", "Attachments"));
+
+							entry.response.attachments.forEach(function(file)
+							{
+								const link = buildElement("a", "receipt-file", file.name);
+								link.href = file.data;
+								link.target = "_blank";
+								link.rel = "noopener";
+								filesBlock.append(link);
+							});
+
+							responseReceipt.append(filesBlock);
+
+					}
+
+
+					const actions = buildElement("div", "modal-actions receipt-actions");
+
+					const printButton = buildElement("button", "cancel-button", "Print Receipt");
+					printButton.type = "button";
+					printButton.addEventListener("click", function()
+					{
+							window.print();
+					});
+
+					const backButton = buildElement("a", "modal-save", "Back to Inquiries");
+					backButton.href = "admininquiries.html";
+
+					actions.append(printButton, backButton);
+					responseReceipt.append(actions);
+
+					responseWorkflow.hidden = true;
+					invalidInquiryState.hidden = true;
+					responseReceipt.hidden = false;
+
+			}
+
+			function submitResponse(entry, records)
+			{
+					const text = responseText.value.trim();
+
+					responseSend.disabled = true;
+
+					const savedAt = new Date().toISOString();
+
+					entry.response =
+					{
+						text: text,
+						date: savedAt,
+						by: responderDisplayName,
+						receipt: getReceiptReference(entry.id),
+						attachments: currentFiles.slice()
+					};
+					entry.status = "Answered";
+					entry.updatedAt = savedAt;
+
+					if (!Array.isArray(entry.history))
+					{
+						entry.history = [];
+					}
+
+					entry.history.push(entry.response);
+
+
+					try
+					{
+						writeInquiryRecords(records);
+					}
+					catch (error)
+					{
+						responseSend.disabled = false;
+						showToast("This browser could not save that response.");
+						return;
+					}
+
+
+					activeInquiry = entry;
+					storeDraft(entry.id, null);
+					draftNote.hidden = true;
+					currentFiles = [];
+					renderFileList();
+					baselineSnapshot = responseSnapshot();
+
+					showToast("Response submitted successfully.");
+					renderReceipt(entry);
+					responseWorkflow.hidden = false;
+					responseEditorPanel.hidden = true;
+					closedNotice.hidden = true;
+					invalidInquiryState.hidden = true;
+					renderHistory(entry);
+					renderHeroStatus("Answered");
+			}
+
+
+			responseForm.addEventListener("submit", function(event)
 			{
 
 					event.preventDefault();
 
-					const question = faqDraftQuestion.value.trim();
-					const answer = faqDraftAnswer.value.trim();
-
-					let valid = true;
-
-
-					if (question.length < 5)
+					if (responseSend.disabled || !confirmOverlay.hidden)
 					{
-							faqDraftQuestionError.hidden = false;
-							faqDraftQuestionError.textContent = "Please enter a question with at least 5 characters.";
-							faqDraftQuestion.classList.add("is-invalid");
-							valid = false;
-					}
-					else
-					{
-							faqDraftQuestionError.hidden = true;
-							faqDraftQuestion.classList.remove("is-invalid");
+						return;
 					}
 
-
-					if (answer.length < 10)
+					if (pendingAttachmentBytes > 0)
 					{
-							faqDraftAnswerError.hidden = false;
-							faqDraftAnswerError.textContent = "Please provide an answer with at least 10 characters.";
-							faqDraftAnswer.classList.add("is-invalid");
-							valid = false;
-					}
-					else
-					{
-							faqDraftAnswerError.hidden = true;
-							faqDraftAnswer.classList.remove("is-invalid");
+						showToast("Wait for the selected attachments to finish loading before sending.");
+						return;
 					}
 
+					const text = responseText.value.trim();
 
-					if (!valid)
+					if (text.length < 5)
 					{
-							showToast("Please complete all required fields.");
+							showResponseError("Please enter a response with at least 5 characters.");
+							showToast("Please enter a response with at least 5 characters.");
 							return;
 					}
 
+					hideResponseError();
 
-					if (!faqDraftInquiryId)
+
+					if (!activeInquiry)
 					{
-							showToast("That inquiry is no longer available.");
-							closeBackdrop(faqDraftModal);
+							showInvalidInquiryState();
 							return;
 					}
 
-
-					let drafts = [];
-
-					try
-					{
-							const saved = JSON.parse(localStorage.getItem(faqDraftsStorageKey) || "[]");
-
-							if (Array.isArray(saved))
-							{
-									drafts = saved;
-							}
-					}
-					catch (error)
-					{
-							drafts = [];
-					}
-
-
-					drafts = drafts.filter(function(draft)
-					{
-							return draft.fromInquiry !== faqDraftInquiryId;
-					});
-
-					drafts.push(
-					{
-							id: "FAQDRAFT-" + String(Date.now()),
-							question: question,
-							answer: answer,
-							category: faqDraftCategory.value,
-							status: "unpublished",
-							fromInquiry: faqDraftInquiryId,
-							created: new Date().toISOString()
-					});
-
-
-					try
-					{
-							localStorage.setItem(faqDraftsStorageKey, JSON.stringify(drafts));
-					}
-					catch (error)
-					{
-							showToast("This browser could not save the FAQ draft.");
-							return;
-					}
-
-
-					faqDraftInquiryId = null;
-					closeBackdrop(faqDraftModal);
-					showToast("FAQ draft saved. Review it in FAQs Management.");
-
-			});
-
-			function applyStatusChange(inquiryId, nextStatus, confirmation)
-			{
 
 					const result = readInquiryRecords();
 
@@ -6269,409 +6555,151 @@
 							return;
 					}
 
-					const entry = findInquiryRecord(result.records, inquiryId);
+					const entry = findInquiryRecord(result.records, activeInquiry.id);
 
 					if (!entry)
 					{
 							showToast("That inquiry is no longer available.");
-							selectedInquiryId = null;
-							closeBackdrop(inquiryModal);
-							renderTable();
+							showInvalidInquiryState();
 							return;
 					}
 
-					entry.status = nextStatus;
-					entry.updatedAt = new Date().toISOString();
-
-
-					try
+					if (entry.status !== "Pending")
 					{
-							writeInquiryRecords(result.records);
-					}
-					catch (error)
-					{
-							showToast("This browser could not save that change.");
-							return;
-					}
-
-					showToast(confirmation);
-					renderTable();
-
-					if (!inquiryModal.hidden && selectedInquiryId === inquiryId)
-					{
-							openInquiryModal(inquiryId);
-					}
-
-			}
-
-			function reopenInquiry(inquiryId)
-			{
-
-					const result = readInquiryRecords();
-
-					if (!result.ok)
-					{
-							showToast("Inquiry records could not be read from this browser.");
-							return;
-					}
-
-					const entry = findInquiryRecord(result.records, inquiryId);
-
-					if (!entry)
-					{
-							showToast("That inquiry is no longer available.");
-							renderTable();
-							return;
-					}
-
-					const nextStatus = entry.response && entry.response.text ? "Answered" : "Pending";
-
-					applyStatusChange(inquiryId, nextStatus, "Inquiry reopened.");
-
-			}
-
-			function openEditModal(inquiryId)
-			{
-
-					const result = readInquiryRecords();
-
-					if (!result.ok)
-					{
-							showToast("Inquiry records could not be read from this browser.");
-							return;
-					}
-
-					const entry = findInquiryRecord(result.records, inquiryId);
-
-					if (!entry)
-					{
-							showToast("That inquiry is no longer available.");
-							renderTable();
-							return;
-					}
-
-					editInquiryId = entry.id;
-					editSubject.value = entry.subject || "";
-					editCategory.value = entry.category || "General";
-
-					if (editCategory.selectedIndex === -1)
-					{
-							editCategory.selectedIndex = 0;
-					}
-
-					editMessage.value = entry.message || "";
-
-					editSubjectError.hidden = true;
-					editMessageError.hidden = true;
-					editSubject.classList.remove("is-invalid");
-					editMessage.classList.remove("is-invalid");
-
-					openBackdrop(editModal);
-					editSubject.focus();
-
-			}
-
-			function openDeleteModal(inquiryId)
-			{
-
-					pendingDeleteId = inquiryId;
-					deleteModalText.textContent = "Are you sure you want to delete inquiry " + inquiryId +
-							"? This action cannot be undone.";
-
-					openBackdrop(deleteModal);
-
-			}
-
-			inquiryModalClose.addEventListener("click", function()
-			{
-					closeBackdrop(inquiryModal);
-			});
-
-			editModalClose.addEventListener("click", function()
-			{
-					closeBackdrop(editModal);
-			});
-
-			editCancel.addEventListener("click", function()
-			{
-					closeBackdrop(editModal);
-			});
-
-			deleteModalClose.addEventListener("click", function()
-			{
-					pendingDeleteId = null;
-					closeBackdrop(deleteModal);
-			});
-
-			deleteCancel.addEventListener("click", function()
-			{
-					pendingDeleteId = null;
-					closeBackdrop(deleteModal);
-			});
-
-			deleteConfirm.addEventListener("click", function()
-			{
-
-					if (!pendingDeleteId)
-					{
+							showToast("That inquiry is no longer awaiting a response. The latest details are shown.");
+							loadInquiryForResponse();
 							return;
 					}
 
 
-					const result = readInquiryRecords();
-
-					if (!result.ok)
+					openConfirm(
 					{
-							showToast("Inquiry records could not be read from this browser.");
-							return;
-					}
-
-
-					const remaining = result.records.filter(function(entry)
-					{
-							return entry.id !== pendingDeleteId;
+						title: "Send this response?",
+						text: "Send this response to " + (entry.student || "this student") + " for inquiry " + entry.id + "? The inquiry will be marked as Answered.",
+						confirmLabel: "Send Response",
+						cancelLabel: "Cancel",
+						onConfirm: function()
+						{
+							submitResponse(entry, result.records);
+						}
 					});
-
-					if (remaining.length === result.records.length)
-					{
-							showToast("That inquiry is no longer available.");
-					}
-					else
-					{
-
-							try
-							{
-									writeInquiryRecords(remaining);
-							}
-							catch (error)
-							{
-									showToast("This browser could not save that change.");
-									return;
-							}
-
-							showToast("Inquiry deleted.");
-
-					}
-
-
-					const wasSelected = selectedInquiryId === pendingDeleteId;
-
-					pendingDeleteId = null;
-					closeBackdrop(deleteModal);
-
-					if (wasSelected)
-					{
-							selectedInquiryId = null;
-							closeBackdrop(inquiryModal);
-					}
-
-					renderTable();
+					return;
 
 			});
 
-			[inquiryModal, editModal, deleteModal, faqDraftModal].forEach(function(backdrop)
+			responseText.addEventListener("input", function()
 			{
-					backdrop.addEventListener("click", function(event)
+					hideResponseError();
+					draftNote.hidden = true;
+					setCharacterCount();
+			});
+
+			responseCancel.addEventListener("click", function()
+			{
+					if (isResponseDirty())
 					{
-
-							if (event.target !== backdrop)
+						openConfirm(
+						{
+							title: "Leave without sending?",
+							text: "Your response has not been sent. Save it as a draft, or leave and discard the unsent text.",
+							confirmLabel: "Leave",
+							cancelLabel: "Keep Editing",
+							onConfirm: function()
 							{
-									return;
+								window.location.href = "admininquiries.html";
 							}
+						});
+						return;
+					}
 
-							if (backdrop === deleteModal)
-							{
-									pendingDeleteId = null;
-							}
+					window.location.href = "admininquiries.html";
+			});
 
-							if (backdrop === faqDraftModal)
-							{
-									faqDraftInquiryId = null;
-							}
+			confirmCancel.addEventListener("click", closeConfirm);
 
-							closeBackdrop(backdrop);
+			confirmOk.addEventListener("click", function()
+			{
+					const action = confirmProceed;
+					closeConfirm();
 
-					});
+					if (typeof action === "function")
+					{
+						action();
+					}
+			});
+
+			confirmOverlay.addEventListener("click", function(event)
+			{
+					if (event.target === confirmOverlay)
+					{
+						closeConfirm();
+					}
 			});
 
 			document.addEventListener("keydown", function(event)
 			{
-
-					if (event.key !== "Escape")
+					if (event.key === "Escape" && !confirmOverlay.hidden)
 					{
-							return;
+						closeConfirm();
 					}
-
-					if (!faqDraftModal.hidden)
-					{
-							faqDraftInquiryId = null;
-							closeBackdrop(faqDraftModal);
-					}
-					else if (!deleteModal.hidden)
-					{
-							pendingDeleteId = null;
-							closeBackdrop(deleteModal);
-					}
-					else if (!editModal.hidden)
-					{
-							closeBackdrop(editModal);
-					}
-					else if (!inquiryModal.hidden)
-					{
-							closeBackdrop(inquiryModal);
-					}
-
 			});
 
-			editForm.addEventListener("submit", function(event)
+			responseDraft.addEventListener("click", function()
 			{
+					const text = responseText.value.trim();
 
-					event.preventDefault();
-
-
-					const subject = editSubject.value.trim();
-					const message = editMessage.value.trim();
-
-					let valid = true;
-
-
-					if (subject.length < 3)
+					if (pendingAttachmentBytes > 0)
 					{
-							editSubjectError.hidden = false;
-							editSubjectError.textContent = "Please enter a subject with at least 3 characters.";
-							editSubject.classList.add("is-invalid");
-							valid = false;
-					}
-					else
-					{
-							editSubjectError.hidden = true;
-							editSubject.classList.remove("is-invalid");
+						showToast("Wait for the selected attachments to finish loading before saving this draft.");
+						return;
 					}
 
-
-					if (message.length < 10)
+					if (!text && !currentFiles.length)
 					{
-							editMessageError.hidden = false;
-							editMessageError.textContent = "Please provide at least 10 characters of details.";
-							editMessage.classList.add("is-invalid");
-							valid = false;
-					}
-					else
-					{
-							editMessageError.hidden = true;
-							editMessage.classList.remove("is-invalid");
+						showToast("Write a response or add an attachment before saving a draft.");
+						return;
 					}
 
-
-					if (!valid)
+					if (!activeInquiry)
 					{
-							showToast("Please complete all required fields.");
+							showInvalidInquiryState();
 							return;
 					}
-
-
-					const result = readInquiryRecords();
-
-					if (!result.ok)
-					{
-							showToast("Inquiry records could not be read from this browser.");
-							return;
-					}
-
-					const entry = findInquiryRecord(result.records, editInquiryId);
-
-					if (!entry)
-					{
-							showToast("That inquiry is no longer available.");
-							closeBackdrop(editModal);
-							renderTable();
-							return;
-					}
-
-					entry.subject = subject;
-					entry.category = editCategory.value;
-					entry.message = message;
-					entry.updatedAt = new Date().toISOString();
-
 
 					try
 					{
-							writeInquiryRecords(result.records);
+							storeDraft(activeInquiry.id, { text: text, files: currentFiles.slice(), by: responderDisplayName });
 					}
 					catch (error)
 					{
-							showToast("This browser could not save that change.");
+							showToast("This browser could not save that draft.");
 							return;
 					}
 
-					showToast("Inquiry updated.");
-					closeBackdrop(editModal);
-					renderTable();
-
-					if (!inquiryModal.hidden && selectedInquiryId === entry.id)
-					{
-							openInquiryModal(entry.id);
-					}
-
+					draftNote.hidden = false;
+					draftNote.textContent = "Draft saved at " + formatInquiryDate(new Date().toISOString()) + ".";
+					baselineSnapshot = responseSnapshot();
+					showToast("Draft saved. The inquiry is still pending.");
 			});
 
-			mgSearch.addEventListener("input", function()
+			invalidBackButton.addEventListener("click", function()
 			{
-					activeQuery = mgSearch.value.trim();
-					currentPage = 1;
-					renderTable();
+					window.location.href = "admininquiries.html";
 			});
 
-			mgCategoryFilter.addEventListener("change", function()
+			blockedBackButton.addEventListener("click", function()
 			{
-					activeCategory = mgCategoryFilter.value;
-					currentPage = 1;
-					renderTable();
+					window.location.href = "admininquiries.html";
 			});
 
-			mgStatusFilter.addEventListener("change", function()
+			if (!canRespondToInquiries)
 			{
-					activeStatus = mgStatusFilter.value;
-					currentPage = 1;
-					renderTable();
-			});
-
-			function resetFilters()
-			{
-
-					activeQuery = "";
-					activeCategory = "all";
-					activeStatus = "all";
-					currentPage = 1;
-
-					mgSearch.value = "";
-					mgCategoryFilter.value = "all";
-					mgStatusFilter.value = "all";
-
-					renderTable();
-
+					roleBlockedState.hidden = false;
 			}
-
-			mgClearFilters.addEventListener("click", resetFilters);
-			mgClearFiltersEmpty.addEventListener("click", resetFilters);
-
-			mgPrevPage.addEventListener("click", function()
+			else
 			{
-					if (currentPage > 1)
-					{
-							currentPage -= 1;
-							renderTable();
-					}
-			});
-
-			mgNextPage.addEventListener("click", function()
-			{
-					currentPage += 1;
-					renderTable();
-			});
-
-			seedSampleRecords();
-			renderTable();
+					loadInquiryForResponse();
+			}
 
 		}
 		catch (error)
