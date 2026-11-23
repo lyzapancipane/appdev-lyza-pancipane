@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="description" content="Browse frequently asked questions about EduBridge enrollment, announcements, accounts, and school services, or send an inquiry for more help.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>
-		FAQs | EduBridge
-	</title>
+	<title>Smart Search | EduBridge</title>
 	<style>
 		*
 		{
@@ -276,16 +272,15 @@
 
 		.nav-links a::after
 		{
-			content: "";
 			position: absolute;
-			left: 50%;
+			right: 50%;
 			bottom: -7px;
-			width: 0;
+			left: 50%;
 			height: 2px;
 			border-radius: 10px;
 			background: #b77aff;
-			transform: translateX(-50%);
-			transition: width 0.25s ease;
+			content: "";
+			transition: left 0.25s ease, right 0.25s ease;
 		}
 
 		.nav-links a:hover,
@@ -295,9 +290,11 @@
 		}
 
 		.nav-links a:hover::after,
+		.nav-links a:focus-visible::after,
 		.nav-links .active::after
 		{
-			width: 100%;
+			right: 0;
+			left: 0;
 		}
 
 		.nav-buttons
@@ -320,7 +317,7 @@
 
 		.menu-button
 		{
-			display: none;
+			display: inline-flex;
 			width: 34px;
 			height: 34px;
 			align-items: center;
@@ -681,6 +678,7 @@
 		{
 			transform: scale(0.95);
 		}
+
 		.content-section
 		{
 			width: 100%;
@@ -688,6 +686,11 @@
 			margin-left: auto;
 			margin-right: auto;
 			padding: 45px 0;
+		}
+
+		.announcements-section
+		{
+			scroll-margin-top: 100px;
 		}
 
 		.section-heading
@@ -722,113 +725,26 @@
 			line-height: 1.7;
 		}
 
-		#faqSection
-		{
-			scroll-margin-top: 100px;
-		}
-
-		.faq-layout
-		{
-			display: grid;
-			grid-template-columns: 250px minmax(0, 1fr);
-			gap: 30px;
-			align-items: start;
-		}
-
-		.faq-categories
-		{
-			position: sticky;
-			top: 100px;
-			padding: 22px;
-			border: 1px solid var(--border);
-			border-radius: 6px;
-			background: var(--surface);
-			box-shadow: 0 5px 20px var(--shadow);
-		}
-
-		.categories-title
-		{
-			margin-bottom: 14px;
-			color: var(--text);
-			font-size: 14px;
-			font-weight: 600;
-		}
-
-		.category-list
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 6px;
-		}
-
-		.category-button
-		{
-			display: flex;
-			width: 100%;
-			align-items: center;
-			justify-content: space-between;
-			gap: 10px;
-			padding: 10px 12px;
-			border: 0;
-			border-radius: 5px;
-			background: transparent;
-			color: var(--text-soft);
-			font-size: 12px;
-			font-weight: 500;
-			text-align: left;
-			cursor: pointer;
-			transition: 0.25s ease;
-		}
-
-		.category-button:hover
-		{
-			background: var(--surface-soft);
-			color: var(--text);
-		}
-
-		.category-button.is-active
-		{
-			background: var(--purple-light);
-			color: var(--purple);
-			font-weight: 600;
-		}
-
-		.category-button:focus-visible
-		{
-			outline: none;
-			border-radius: 5px;
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.category-count
-		{
-			color: var(--text-muted);
-			font-size: 11px;
-		}
-
-		.category-button.is-active .category-count
-		{
-			color: var(--purple);
-		}
-
-		.faq-search-row
+		.toolbar
 		{
 			display: flex;
 			flex-wrap: wrap;
-			gap: 10px;
-			margin-bottom: 16px;
+			align-items: center;
+			justify-content: center;
+			gap: 9px;
+			margin-bottom: 28px;
 		}
 
 		.search-field
 		{
 			display: flex;
-			flex: 1 1 240px;
-			height: 52px;
+			width: clamp(220px, 30vw, 320px);
+			height: 34px;
 			align-items: center;
-			gap: 10px;
-			padding: 0 16px;
+			gap: 8px;
+			padding: 0 10px;
 			border: 1px solid var(--border);
-			border-radius: 6px;
+			border-radius: 5px;
 			background: var(--surface);
 			color: var(--text-muted);
 			transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -842,9 +758,9 @@
 
 		.search-field svg
 		{
-			width: 18px;
-			height: 18px;
-			flex: 0 0 18px;
+			width: 15px;
+			height: 15px;
+			flex: 0 0 15px;
 			fill: currentColor;
 		}
 
@@ -856,7 +772,7 @@
 			outline: 0;
 			background: transparent;
 			color: var(--text);
-			font-size: 13px;
+			font-size: 12px;
 		}
 
 		.search-field input::placeholder
@@ -864,364 +780,15 @@
 			color: var(--text-muted);
 		}
 
-		.search-button
-		{
-			display: inline-flex;
-			height: 52px;
-			align-items: center;
-			justify-content: center;
-			gap: 8px;
-			padding: 0 24px;
-			border: 0;
-			border-radius: 6px;
-			background: var(--purple);
-			color: white;
-			font-size: 13px;
-			font-weight: 600;
-			cursor: pointer;
-			transition: 0.25s ease;
-		}
-
-		.search-button:hover
-		{
-			transform: translateY(-2px);
-			box-shadow: 0 8px 20px var(--shadow);
-		}
-
-		.search-button:active
-		{
-			transform: scale(0.96);
-		}
-
-		.search-button:focus-visible
-		{
-			outline: none;
-			border-radius: 6px;
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.search-button svg
-		{
-			width: 15px;
-			height: 15px;
-			fill: currentColor;
-		}
-
-		.popular-searches
-		{
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			gap: 8px;
-			margin-bottom: 24px;
-		}
-
-		.popular-label
-		{
-			margin-right: 4px;
-			color: var(--text-muted);
-			font-size: 11px;
-			font-weight: 600;
-			letter-spacing: 0.5px;
-			text-transform: uppercase;
-		}
-
-		.search-chip
-		{
-			padding: 7px 13px;
-			border: 1px solid var(--border);
-			border-radius: 999px;
-			background: var(--surface);
-			color: var(--text-soft);
-			font-size: 11px;
-			font-weight: 500;
-			cursor: pointer;
-			transition: 0.25s ease;
-		}
-
-		.search-chip:hover
-		{
-			border-color: var(--purple);
-			color: var(--purple);
-			transform: translateY(-2px);
-		}
-
-		.search-chip:active
-		{
-			transform: scale(0.96);
-		}
-
-		.search-chip:focus-visible
-		{
-			outline: none;
-			border-radius: 999px;
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.faq-toolbar
-		{
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			gap: 15px;
-			flex-wrap: wrap;
-			margin-bottom: 16px;
-		}
-
-		.faq-count
-		{
-			color: var(--text-soft);
-			font-size: 12px;
-		}
-
-		.sort-field
-		{
-			display: flex;
-			align-items: center;
-			gap: 8px;
-			color: var(--text-muted);
-			font-size: 12px;
-		}
-
-		.sort-field select
-		{
-			padding: 8px 12px;
-			border: 1px solid var(--border);
-			border-radius: 5px;
-			background: var(--surface);
-			color: var(--text);
-			font-family: inherit;
-			font-size: 12px;
-			cursor: pointer;
-			transition: border-color 0.2s ease, box-shadow 0.2s ease;
-		}
-
-		.sort-field select:focus-visible
-		{
-			outline: none;
-			border-color: var(--purple);
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.faq-list
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.faq-list[hidden]
-		{
-			display: none;
-		}
-
-		.faq-item
-		{
-			border: 1px solid var(--border);
-			border-radius: 6px;
-			background: var(--surface);
-			box-shadow: 0 5px 20px var(--shadow);
-			transition: border-color 0.3s ease;
-		}
-
-		.faq-item:hover
-		{
-			border-color: var(--purple);
-		}
-
-		.faq-item h3
-		{
-			margin: 0;
-		}
-
-		.faq-question
-		{
-			display: flex;
-			width: 100%;
-			align-items: center;
-			justify-content: space-between;
-			gap: 15px;
-			min-height: 54px;
-			padding: 14px 18px;
-			border: 0;
-			background: transparent;
-			color: var(--text);
-			font-size: 13px;
-			font-weight: 600;
-			text-align: left;
-			cursor: pointer;
-			transition: color 0.25s ease;
-		}
-
-		.faq-question:hover
-		{
-			color: var(--purple);
-		}
-
-		.faq-question:focus-visible
-		{
-			outline: none;
-			border-radius: 6px;
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.faq-toggle
+		.filter-wrap
 		{
 			position: relative;
-			width: 18px;
-			height: 18px;
-			min-width: 18px;
 		}
 
-		.faq-toggle::before,
-		.faq-toggle::after
-		{
-			content: "";
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 10px;
-			height: 2px;
-			border-radius: 2px;
-			background: var(--purple);
-			transform: translate(-50%, -50%);
-			transition: 0.25s ease;
-		}
-
-		.faq-toggle::after
-		{
-			transform: translate(-50%, -50%) rotate(90deg);
-		}
-
-		.faq-item.open .faq-toggle::after
-		{
-			transform: translate(-50%, -50%) rotate(0deg);
-		}
-
-		.faq-answer-wrap
-		{
-			display: grid;
-			grid-template-rows: 0fr;
-			transition: grid-template-rows 0.3s ease;
-		}
-
-		.faq-item.open .faq-answer-wrap
-		{
-			grid-template-rows: 1fr;
-		}
-
-		.faq-answer-inner
-		{
-			overflow: hidden;
-		}
-
-		.faq-answer
-		{
-			padding: 0 18px 16px;
-			color: var(--text-soft);
-			font-size: 12px;
-			line-height: 1.8;
-		}
-
-		.faq-answer a
-		{
-			color: var(--purple);
-			font-weight: 600;
-		}
-
-		.faq-answer a:hover
-		{
-			text-decoration: underline;
-		}
-
-		.faq-feedback
-		{
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			gap: 10px;
-			margin-top: 14px;
-			padding-top: 14px;
-			border-top: 1px solid var(--border);
-		}
-
-		.feedback-label
-		{
-			color: var(--text-muted);
-			font-size: 11px;
-			font-weight: 600;
-		}
-
-		.feedback-button
+		.filter-button
 		{
 			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			padding: 6px 12px;
-			border: 1px solid var(--border);
-			border-radius: 5px;
-			background: var(--surface);
-			color: var(--text-soft);
-			font-size: 11px;
-			font-weight: 600;
-			cursor: pointer;
-			transition: 0.25s ease;
-		}
-
-		.feedback-button svg
-		{
-			width: 13px;
-			height: 13px;
-			fill: currentColor;
-		}
-
-		.feedback-button:hover
-		{
-			border-color: var(--purple);
-			color: var(--purple);
-		}
-
-		.feedback-button.is-selected
-		{
-			border-color: var(--purple);
-			background: var(--purple-light);
-			color: var(--purple);
-		}
-
-		.feedback-button:focus-visible
-		{
-			outline: none;
-			border-radius: 5px;
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.feedback-thanks
-		{
-			width: 100%;
-			color: var(--green);
-			font-size: 11px;
-			font-weight: 600;
-		}
-
-		.faq-pagination
-		{
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
-			gap: 8px;
-			margin-top: 24px;
-		}
-
-		.faq-pagination[hidden]
-		{
-			display: none;
-		}
-
-		.page-button
-		{
-			display: inline-flex;
-			min-width: 34px;
+			min-width: 84px;
 			height: 34px;
 			align-items: center;
 			justify-content: center;
@@ -1230,60 +797,389 @@
 			border: 1px solid var(--border);
 			border-radius: 5px;
 			background: var(--surface);
-			color: var(--text-soft);
+			color: var(--text);
 			font-size: 12px;
-			font-weight: 600;
-			cursor: pointer;
-			transition: 0.25s ease;
+			transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 		}
 
-		.page-button:hover:not(:disabled)
+		.filter-button svg
 		{
-			border-color: var(--purple);
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
 			color: var(--purple);
-			transform: translateY(-2px);
 		}
 
-		.page-button.is-current
+		.filter-button:hover,
+		.filter-button[aria-expanded="true"]
+		{
+			border-color: #c5a4ef;
+			background: var(--purple-light);
+		}
+
+		.filter-panel
+		{
+			position: absolute;
+			z-index: 25;
+			top: calc(100% + 8px);
+			right: 0;
+			width: 230px;
+			padding: 14px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 14px 35px rgba(20, 13, 44, 0.15);
+		}
+
+		.filter-panel h3
+		{
+			margin: 0 0 12px;
+			color: var(--text);
+			font-size: 13px;
+			font-weight: 600;
+		}
+
+		.filter-panel label
+		{
+			display: block;
+			margin-bottom: 5px;
+			color: var(--text-soft);
+			font-size: 11px;
+		}
+
+		.filter-panel select
+		{
+			width: 100%;
+			height: 34px;
+			margin-bottom: 12px;
+			padding: 0 9px;
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			background: var(--surface);
+			color: var(--text);
+			font-size: 11px;
+		}
+
+		.filter-actions
+		{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.clear-filter,
+		.apply-filter
+		{
+			min-height: 30px;
+			padding: 0 11px;
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			background: var(--surface);
+			color: var(--text-soft);
+			font-size: 11px;
+			transition: 0.2s ease;
+		}
+
+		.apply-filter
 		{
 			border-color: var(--purple);
 			background: var(--purple);
-			color: white;
+			color: #ffffff;
 		}
 
-		.page-button.is-current:hover
+		.clear-filter:hover,
+		.apply-filter:hover
 		{
-			color: white;
-			transform: none;
+			transform: translateY(-1px);
 		}
 
-		.page-button:disabled
+		.clear-filter:hover
 		{
-			opacity: 0.45;
-			cursor: not-allowed;
+			border-color: var(--purple);
+			color: var(--purple);
 		}
 
-		.page-button:focus-visible
+		.apply-filter:hover
 		{
-			outline: none;
+			background: #8c50df;
+		}
+
+		.chips-heading
+		{
+			margin-bottom: 12px;
+			color: var(--text-muted);
+			font-size: 11px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		.chips
+		{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 8px;
+			margin-bottom: 26px;
+		}
+
+		.chip
+		{
+			display: inline-flex;
+			height: 34px;
+			align-items: center;
+			padding: 0 13px;
+			border: 1px solid var(--border);
 			border-radius: 5px;
-			box-shadow: 0 0 0 3px var(--purple-light);
+			background: var(--surface);
+			color: var(--text-soft);
+			font-size: 11px;
+			transition: 0.2s ease;
 		}
 
-		.faq-states
+		.chip:hover
 		{
-			margin-top: 12px;
+			transform: translateY(-1px);
+			border-color: #c5a4ef;
+			background: var(--purple-light);
+			color: var(--purple);
 		}
 
-		.state-card--error .state-icon
+		.chip.active
 		{
-			background: var(--red-soft);
-			color: var(--red);
+			border-color: var(--purple);
+			background: var(--purple);
+			color: #ffffff;
 		}
 
-		.state-card--error .state-title
+		.chip.active:hover
 		{
-			color: var(--red);
+			border-color: #8c50df;
+			background: #8c50df;
+			color: #ffffff;
+		}
+
+		.results-row
+		{
+			display: flex;
+			min-height: 22px;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+
+		.results-summary
+		{
+			color: var(--text-muted);
+			font-size: 11px;
+		}
+
+		.results-clear
+		{
+			border: 0;
+			background: transparent;
+			color: var(--purple);
+			font-size: 11px;
+			transition: 0.2s;
+		}
+
+		.results-clear:hover
+		{
+			color: #8c50df;
+			transform: translateX(2px);
+		}
+
+		.announcements-grid
+		{
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 18px;
+		}
+
+		.announcement-card
+		{
+			display: flex;
+			min-height: 185px;
+			flex-direction: column;
+			gap: 9px;
+			padding: 22px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 5px 20px var(--shadow);
+			transition: 0.3s ease;
+		}
+
+		.announcement-card:hover,
+		.announcement-card:focus-visible
+		{
+			transform: translateY(-5px);
+			border-color: #a970ff;
+			box-shadow:
+				0 15px 35px var(--shadow),
+				0 0 22px rgba(113, 56, 200, 0.08);
+		}
+
+		.card-top
+		{
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.announcement-icon
+		{
+			display: flex;
+			width: 45px;
+			height: 45px;
+			min-width: 45px;
+			align-items: center;
+			justify-content: center;
+			border-radius: 5px;
+			background: var(--purple-light);
+			color: var(--purple);
+			transition: 0.3s ease;
+		}
+
+		.announcement-icon svg
+		{
+			width: 22px;
+			height: 22px;
+			fill: currentColor;
+		}
+
+		.announcement-card:hover .announcement-icon
+		{
+			transform: rotate(-5deg) scale(1.08);
+		}
+
+		.announcement-icon[data-tone="purple"]
+		{
+			background: #6733b5;
+			color: #ffffff;
+		}
+
+		.announcement-icon[data-tone="blue"]
+		{
+			background: #d8ebff;
+			color: #1668c7;
+		}
+
+		.announcement-icon[data-tone="lavender"]
+		{
+			background: #eadcff;
+			color: #6632b0;
+		}
+
+		.announcement-icon[data-tone="sky"]
+		{
+			background: #e1ecff;
+			color: #1779e8;
+		}
+
+		.announcement-icon[data-tone="gray"]
+		{
+			background: #e9e7f2;
+			color: #505777;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="purple"]
+		{
+			background: #352250;
+			color: #d9c2ff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="blue"]
+		{
+			background: #1d2b42;
+			color: #8dbdff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="lavender"]
+		{
+			background: #30223f;
+			color: #d6b8ff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="sky"]
+		{
+			background: #1a2c45;
+			color: #8fc1ff;
+		}
+
+		body.dark-mode .announcement-icon[data-tone="gray"]
+		{
+			background: #29283c;
+			color: #c5c3df;
+		}
+
+		.card-category
+		{
+			color: var(--purple);
+			font-size: 10px;
+			font-weight: 600;
+			letter-spacing: 0.6px;
+			line-height: 1.5;
+			text-transform: uppercase;
+		}
+
+		.announcement-card h3
+		{
+			color: var(--purple);
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 1.4;
+		}
+
+		.announcement-card > p
+		{
+			flex: 1;
+			color: var(--text-soft);
+			font-size: 13px;
+			line-height: 1.7;
+		}
+
+		.card-footer
+		{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+		}
+
+		.card-meta
+		{
+			color: var(--text-muted);
+			font-size: 11px;
+			line-height: 1.6;
+		}
+
+		.card-link
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			color: var(--purple);
+			font-size: 11px;
+			font-weight: 600;
+			white-space: nowrap;
+			transition: 0.2s;
+		}
+
+		.card-link svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+			transition: 0.2s;
+		}
+
+		.announcement-card:hover .card-link svg
+		{
+			transform: translateX(3px);
 		}
 
 		.state-card
@@ -1293,12 +1189,19 @@
 			align-items: center;
 			gap: 10px;
 			width: 100%;
+			min-height: 190px;
+			justify-content: center;
 			padding: 34px 24px;
 			border: 1px solid var(--border);
 			border-radius: 6px;
 			background: var(--surface);
 			text-align: center;
 			transition: 0.25s ease;
+		}
+
+		.state-card[hidden]
+		{
+			display: none;
 		}
 
 		.state-icon
@@ -1338,6 +1241,28 @@
 			line-height: 1.7;
 		}
 
+		.state-card--success .state-icon
+		{
+			background: var(--green-soft);
+			color: var(--green);
+		}
+
+		.state-card--success .state-title
+		{
+			color: var(--green);
+		}
+
+		.state-card--error .state-icon
+		{
+			background: var(--red-soft);
+			color: var(--red);
+		}
+
+		.state-card--error .state-title
+		{
+			color: var(--red);
+		}
+
 		.state-button
 		{
 			display: inline-flex;
@@ -1375,6 +1300,165 @@
 		{
 			outline: none;
 			box-shadow: 0 0 0 3px var(--purple-light);
+		}
+
+		.state-button[disabled]
+		{
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+
+		.state-button[disabled]:hover
+		{
+			background: #7138c8;
+			border-color: #7138c8;
+			transform: none;
+			box-shadow: none;
+		}
+
+		.events-section
+		{
+			padding-top: 10px;
+			padding-bottom: 55px;
+		}
+
+		.events-grid
+		{
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 18px;
+		}
+
+		.event-card
+		{
+			display: flex;
+			align-items: center;
+			gap: 13px;
+			padding: 16px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 5px 20px var(--shadow);
+			transition: 0.3s ease;
+		}
+
+		.event-card:hover,
+		.event-card:focus-visible
+		{
+			transform: translateY(-5px);
+			border-color: #b77aff;
+			box-shadow:
+				0 15px 35px var(--shadow),
+				0 0 25px rgba(183, 122, 255, 0.1);
+		}
+
+		.event-date-badge
+		{
+			display: grid;
+			width: 45px;
+			height: 45px;
+			min-width: 45px;
+			align-content: center;
+			justify-items: center;
+			border-radius: 5px;
+			background: var(--purple-light);
+			color: var(--purple);
+		}
+
+		.event-date-badge strong
+		{
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 1;
+		}
+
+		.event-date-badge span
+		{
+			margin-top: 3px;
+			font-size: 8px;
+			font-weight: 600;
+			letter-spacing: 0.4px;
+			line-height: 1;
+		}
+
+		.event-copy
+		{
+			display: grid;
+			gap: 4px;
+			min-width: 0;
+		}
+
+		.event-copy strong
+		{
+			color: var(--text);
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 1.35;
+		}
+
+		.event-copy time
+		{
+			color: var(--text-muted);
+			font-size: 11px;
+			line-height: 1.4;
+		}
+
+		.event-time
+		{
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			color: var(--text-muted);
+			font-size: 10px;
+		}
+
+		.clock-icon
+		{
+			position: relative;
+			display: inline-block;
+			width: 9px;
+			height: 9px;
+			flex: 0 0 9px;
+			border: 1px solid currentColor;
+			border-radius: 50%;
+		}
+
+		.clock-icon::before,
+		.clock-icon::after
+		{
+			position: absolute;
+			content: "";
+			background: currentColor;
+		}
+
+		.clock-icon::before
+		{
+			top: 1px;
+			left: 3px;
+			width: 1px;
+			height: 3px;
+		}
+
+		.clock-icon::after
+		{
+			top: 4px;
+			left: 3px;
+			width: 3px;
+			height: 1px;
+		}
+
+		body.dark-mode .announcement-card,
+		body.dark-mode .event-card
+		{
+			background:
+				linear-gradient(
+					145deg,
+					rgba(25, 20, 39, 0.98),
+					rgba(14, 12, 25, 0.98)
+				);
+			box-shadow:
+				0 15px 40px rgba(0, 0, 0, 0.25),
+				0 0 25px rgba(113, 56, 200, 0.05);
 		}
 
 		.inquiry-section
@@ -1481,49 +1565,85 @@
 		{
 			position: relative;
 			overflow: hidden;
-			padding: 52px 36px 18px;
+			padding: 42px 36px 16px;
 			background:
-				radial-gradient(circle at 12% 20%, rgba(125, 65, 210, 0.75), transparent 32%),
-				radial-gradient(circle at 82% 18%, rgba(45, 95, 210, 0.6), transparent 34%),
-				radial-gradient(circle at 50% 85%, rgba(255, 255, 255, 0.14), transparent 30%),
-				linear-gradient(135deg, #5b279e 0%, #252a82 38%, #080817 72%, #000000 100%);
+				radial-gradient(
+					circle at 12% 20%,
+					rgba(125, 65, 210, 0.8),
+					transparent 30%
+				),
+				radial-gradient(
+					circle at 82% 18%,
+					rgba(45, 95, 210, 0.7),
+					transparent 32%
+				),
+				radial-gradient(
+					circle at 50% 85%,
+					rgba(255, 255, 255, 0.16),
+					transparent 28%
+				),
+				linear-gradient(
+					135deg,
+					#5b279e 0%,
+					#252a82 38%,
+					#080817 72%,
+					#000000 100%
+				);
 			color: white;
 		}
 
 		body.dark-mode footer
 		{
 			background:
-				radial-gradient(circle at 12% 20%, rgba(135, 67, 230, 0.45), transparent 32%),
-				radial-gradient(circle at 82% 18%, rgba(48, 80, 210, 0.38), transparent 34%),
-				radial-gradient(circle at 50% 85%, rgba(165, 95, 255, 0.12), transparent 30%),
-				linear-gradient(135deg, #251047 0%, #121442 38%, #070711 72%, #020207 100%);
+				radial-gradient(
+					circle at 12% 20%,
+					rgba(135, 67, 230, 0.48),
+					transparent 30%
+				),
+				radial-gradient(
+					circle at 82% 18%,
+					rgba(48, 80, 210, 0.4),
+					transparent 32%
+				),
+				radial-gradient(
+					circle at 50% 85%,
+					rgba(165, 95, 255, 0.12),
+					transparent 28%
+				),
+				linear-gradient(
+					135deg,
+					#251047 0%,
+					#121442 38%,
+					#070711 72%,
+					#020207 100%
+				);
 		}
 
 		footer::before,
 		footer::after
 		{
+			content: "";
 			position: absolute;
 			border-radius: 50%;
-			content: "";
 			pointer-events: none;
 			filter: blur(90px);
 		}
 
 		footer::before
 		{
-			top: -280px;
-			right: -120px;
 			width: 500px;
 			height: 500px;
+			top: -280px;
+			right: -120px;
 			background: rgba(255, 255, 255, 0.1);
 		}
 
 		footer::after
 		{
-			bottom: -300px;
-			left: 15%;
 			width: 450px;
 			height: 450px;
+			bottom: -300px;
+			left: 15%;
 			background: rgba(76, 86, 220, 0.3);
 		}
 
@@ -1536,12 +1656,12 @@
 
 		.footer-content
 		{
-			display: grid;
 			width: 100%;
 			max-width: 1180px;
+			margin: 0 auto;
+			display: grid;
 			grid-template-columns: 1.45fr 0.8fr 1fr 1.05fr;
 			gap: 55px;
-			margin: 0 auto;
 			padding-bottom: 30px;
 			border-bottom: 1px solid #ffffff25;
 		}
@@ -1561,17 +1681,17 @@
 		.footer-description
 		{
 			max-width: 270px;
-			margin-bottom: 16px;
 			color: #d3d0df;
 			font-size: 11px;
 			line-height: 1.7;
+			margin-bottom: 14px;
 		}
 
 		footer h4
 		{
-			margin-bottom: 12px;
 			font-size: 13px;
 			font-weight: 600;
+			margin-bottom: 9px;
 		}
 
 		.social-icons
@@ -1583,13 +1703,13 @@
 
 		.social-icon
 		{
-			display: flex;
 			width: 34px;
 			height: 34px;
+			display: flex;
 			align-items: center;
 			justify-content: center;
 			border: 1px solid #ffffff30;
-			border-radius: 6px;
+			border-radius: 5px;
 			background: #ffffff10;
 			color: #d0ccdc;
 			transition: 0.2s ease;
@@ -1597,10 +1717,10 @@
 
 		.social-icon:hover
 		{
-			transform: translateY(-2px);
-			border-color: #a86be8;
-			background: #7138c8;
 			color: white;
+			background: #7138c8;
+			border-color: #a86be8;
+			transform: translateY(-2px);
 		}
 
 		.social-icon:active
@@ -1628,7 +1748,6 @@
 		.footer-links a
 		{
 			display: flex;
-			min-height: 24px;
 			align-items: center;
 			gap: 9px;
 			color: #d0ccdc;
@@ -1638,22 +1757,16 @@
 
 		.footer-links a:hover
 		{
-			transform: translateX(2px);
 			color: white;
+			transform: translateX(2px);
 		}
 
 		.footer-links svg
 		{
 			width: 13px;
 			height: 13px;
-			flex-shrink: 0;
 			fill: currentColor;
-		}
-
-		.footer-links .link-arrow
-		{
-			margin-left: auto;
-			opacity: 0.6;
+			flex-shrink: 0;
 		}
 
 		.contact
@@ -1696,7 +1809,7 @@
 		{
 			padding: 18px;
 			border: 1px solid #ffffff25;
-			border-radius: 10px;
+			border-radius: 5px;
 			background: rgba(255, 255, 255, 0.08);
 			backdrop-filter: blur(8px);
 			transition: 0.3s ease;
@@ -1710,13 +1823,13 @@
 
 		.question-icon
 		{
-			display: flex;
 			width: 38px;
 			height: 38px;
+			display: flex;
 			align-items: center;
 			justify-content: center;
 			margin-bottom: 11px;
-			border-radius: 8px;
+			border-radius: 5px;
 			background: #7138c866;
 			color: white;
 		}
@@ -1730,37 +1843,16 @@
 
 		.question-box h4
 		{
-			margin-bottom: 7px;
 			font-size: 14px;
+			margin-bottom: 7px;
 		}
 
 		.question-box p
 		{
-			margin-bottom: 13px;
 			color: #d0ccdc;
 			font-size: 10px;
 			line-height: 1.7;
-		}
-
-		.question-button
-		{
-			display: inline-flex;
-			height: 32px;
-			align-items: center;
-			gap: 6px;
-			padding: 0 13px;
-			border-radius: 6px;
-			background: white;
-			color: #252a82;
-			font-size: 10px;
-			font-weight: 600;
-			transition: transform 0.25s ease, box-shadow 0.25s ease;
-		}
-
-		.question-button:hover
-		{
-			transform: translateY(-2px);
-			box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+			margin-bottom: 13px;
 		}
 
 		.footer-bottom
@@ -1772,8 +1864,8 @@
 
 		.developer
 		{
-			display: flex;
 			min-height: 70px;
+			display: flex;
 			align-items: center;
 			gap: 12px;
 			padding: 17px 0;
@@ -1782,15 +1874,14 @@
 
 		.developer-icon
 		{
+			width: 45px;
+			height: 45px;
 			display: flex;
-			width: 36px;
-			height: 36px;
 			align-items: center;
 			justify-content: center;
-			border: 1px solid #ffffff30;
-			border-radius: 8px;
-			background: #ffffff10;
-			color: #c58cff;
+			border: 1px solid #ffffff55;
+			border-radius: 5px;
+			color: #d0ccdc;
 		}
 
 		.developer-icon svg
@@ -1830,10 +1921,6 @@
 			color: #aaa7b8;
 			font-size: 9px;
 		}
-
-		/* ------------------------------------------------------------------
-		   BACK TO TOP + REVEAL
-		------------------------------------------------------------------ */
 
 		.back-to-top
 		{
@@ -2029,138 +2116,6 @@
 			}
 		}
 
-		.toast-container
-		{
-			position: fixed;
-			top: 96px;
-			right: 24px;
-			z-index: 2000;
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-			width: min(340px, calc(100vw - 48px));
-			pointer-events: none;
-		}
-
-		.toast
-		{
-			display: flex;
-			align-items: flex-start;
-			gap: 10px;
-			padding: 12px 14px;
-			border: 1px solid var(--border);
-			border-left: 3px solid var(--purple);
-			border-radius: 6px;
-			background: var(--surface);
-			box-shadow: 0 10px 28px var(--shadow);
-			opacity: 0;
-			pointer-events: auto;
-			transform: translateX(24px);
-			transition: opacity 0.25s ease, transform 0.25s ease;
-		}
-
-		.toast--visible
-		{
-			opacity: 1;
-			transform: translateX(0);
-		}
-
-		.toast--leaving
-		{
-			opacity: 0;
-			transform: translateX(24px);
-		}
-
-		.toast--success
-		{
-			border-left-color: var(--green);
-		}
-
-		.toast--error
-		{
-			border-left-color: var(--red);
-		}
-
-		.toast--info
-		{
-			border-left-color: var(--purple);
-		}
-
-		.toast-icon
-		{
-			display: flex;
-			width: 26px;
-			height: 26px;
-			min-width: 26px;
-			align-items: center;
-			justify-content: center;
-			border-radius: 50%;
-			background: var(--purple-light);
-			color: var(--purple);
-		}
-
-		.toast--success .toast-icon
-		{
-			background: var(--green-soft);
-			color: var(--green);
-		}
-
-		.toast--error .toast-icon
-		{
-			background: var(--red-soft);
-			color: var(--red);
-		}
-
-		.toast-icon svg
-		{
-			width: 14px;
-			height: 14px;
-			fill: currentColor;
-		}
-
-		.toast-body
-		{
-			flex: 1;
-			min-width: 0;
-		}
-
-		.toast-message
-		{
-			margin: 2px 0 0;
-			color: var(--text);
-			font-size: 12px;
-			line-height: 1.6;
-			overflow-wrap: anywhere;
-		}
-
-		.toast-close
-		{
-			display: inline-flex;
-			width: 20px;
-			height: 20px;
-			align-items: center;
-			justify-content: center;
-			border: none;
-			border-radius: 4px;
-			background: transparent;
-			color: var(--text-muted);
-			cursor: pointer;
-			transition: 0.2s ease;
-		}
-
-		.toast-close:hover
-		{
-			background: var(--surface-soft);
-			color: var(--text);
-		}
-
-		.toast-close svg
-		{
-			width: 10px;
-			height: 10px;
-			fill: currentColor;
-		}
-
 		@media (max-width: 1120px)
 		{
 			.nav-profile-text
@@ -2192,7 +2147,11 @@
 				width: calc(100% - 40px);
 			}
 
-
+			.announcements-grid,
+			.events-grid
+			{
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
 
 			.footer-content
 			{
@@ -2211,76 +2170,6 @@
 				width: 70px;
 				height: 70px;
 			}
-
-			.faq-layout
-			{
-				grid-template-columns: minmax(0, 1fr);
-			}
-
-			.faq-categories
-			{
-				position: static;
-				padding: 16px;
-			}
-
-			.category-list
-			{
-				flex-direction: row;
-				flex-wrap: nowrap;
-				overflow-x: auto;
-				padding-bottom: 4px;
-			}
-
-			.category-button
-			{
-				flex: 0 0 auto;
-			}
-		}
-
-		@media (max-width: 760px)
-		{
-			.nav-links
-			{
-				position: absolute;
-				top: calc(100% - 1px);
-				right: 20px;
-				left: 20px;
-				display: none;
-				align-items: stretch;
-				gap: 0;
-				padding: 7px;
-				border: 1px solid #ffffff25;
-				border-radius: 5px;
-				background: rgba(8, 5, 29, 0.97);
-				box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
-				font-size: 12px;
-			}
-
-			.navbar.menu-open .nav-links
-			{
-				display: grid;
-			}
-
-			.nav-links a
-			{
-				padding: 11px 10px;
-				border-radius: 4px;
-			}
-
-			.nav-links a:hover
-			{
-				background: #ffffff10;
-			}
-
-			.nav-links a::after
-			{
-				display: none;
-			}
-
-			.menu-button
-			{
-				display: flex;
-			}
 		}
 
 		@media (max-width: 600px)
@@ -2288,12 +2177,6 @@
 			.navbar
 			{
 				padding: 0 20px;
-			}
-
-			.nav-links
-			{
-				right: 12px;
-				left: 12px;
 			}
 
 			.nav-buttons
@@ -2392,17 +2275,17 @@
 				font-size: 26px;
 			}
 
-			.faq-search-row
+			.search-field
 			{
-				flex-direction: column;
+				width: auto;
+				flex: 1 1 200px;
 			}
 
-			.search-button
+			.announcements-grid,
+			.events-grid
 			{
-				width: 100%;
+				grid-template-columns: minmax(0, 1fr);
 			}
-
-
 
 			.footer-content
 			{
@@ -2446,14 +2329,6 @@
 			{
 				height: 64px;
 			}
-
-			.toast-container
-			{
-				top: 84px;
-				right: 16px;
-				left: 16px;
-				width: auto;
-			}
 		}
 
 		@media (prefers-reduced-motion: reduce)
@@ -2468,222 +2343,924 @@
 				animation: none;
 			}
 
-			.faq-item,
-			.faq-answer-wrap,
-			.faq-question,
+			.announcement-card,
+			.event-card,
 			.inquiry-section,
 			.inquiry-section .mission-icon,
 			.hero-image,
 			.state-card,
 			.state-icon,
 			.state-button,
-			.toast,
 			.reveal
 			{
 				transition: none;
 			}
 		}
+
+
+
+			:root
+			{
+					--amber: #a4670f;
+					--amber-soft: #fbf1dd;
+			}
 	
-		/* Header shared with studenthome.html */
-		html { scroll-padding-top: 78px; }
-		.navbar { position: fixed; z-index: 1000; top: 0; left: 0; display: flex; width: 100%; height: 88px; align-items: center; justify-content: space-between; padding: 0 36px; background: linear-gradient(180deg, rgba(24, 8, 58, .92), rgba(24, 8, 58, .55) 70%, transparent); color: #fff; transition: height .35s ease, background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease; }
-		.navbar.scrolled { height: 72px; background: rgba(20, 7, 51, .88); box-shadow: 0 8px 30px rgba(0, 0, 0, .22); backdrop-filter: blur(14px); }
-		.navbar .logo { display: flex; align-items: center; gap: 2px; font-size: 18px; font-weight: 600; white-space: nowrap; }
-		.navbar .logo img { width: 90px; height: 90px; flex-shrink: 0; object-fit: contain; transition: transform .3s ease; }
-		.navbar .logo:hover img { transform: rotate(-4deg) scale(1.04); }
-		.navbar .brand-name { display: flex; align-items: center; margin-left: -3px; letter-spacing: -.4px; }
-		.navbar .brand-edu { color: #fff; }
-		.navbar .brand-bridge { color: #b77aff; }
-		.nav-links { display: flex; align-items: center; gap: 28px; font-size: 13px; }
-		.nav-links a { position: relative; color: #ffffffdd; transition: color .2s ease; }
-		.nav-links a::after { position: absolute; right: 50%; bottom: -7px; left: 50%; width: auto; height: 2px; border-radius: 10px; background: #b77aff; content: ""; transform: none; transition: left .25s ease, right .25s ease; }
-		.nav-links a:hover, .nav-links a:focus-visible, .nav-links .active { color: #c58cff; }
-		.nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links .active::after { right: 0; left: 0; width: auto; transform: none; }
-		.nav-actions { display: flex; align-items: center; gap: 10px; }
-		.theme-button, .menu-button { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 1px solid #ffffff55; border-radius: 5px; background: #ffffff12; color: #fff; transition: .25s ease; }
-		.theme-button:hover, .menu-button:hover { transform: translateY(-2px); border-color: #ffffff88; background: #ffffff20; }
-		.theme-button svg, .menu-button svg { width: 15px; height: 15px; fill: currentColor; }
-		.nav-bell { display: flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 1px solid #ffffff55; border-radius: 5px; background: #ffffff12; color: #fff; transition: .25s ease; }
-		.nav-bell:hover, .nav-bell:focus-visible { transform: translateY(-2px); border-color: #a970ff; background: var(--purple); }
-		.nav-bell:active { transform: scale(.88); }
-		.nav-bell svg { width: 15px; height: 15px; fill: currentColor; }
-		.nav-login { display: inline-flex; height: 34px; align-items: center; justify-content: center; gap: 7px; padding: 0 18px; border: 1px solid transparent; border-radius: 5px; background: linear-gradient(135deg, #8b5cf6, #6d3fe0); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .3px; box-shadow: 0 6px 16px rgba(109, 63, 224, .35); transition: transform .25s ease, box-shadow .25s ease, filter .25s ease; }
-		.nav-login:hover, .nav-login:focus-visible { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 10px 22px rgba(109, 63, 224, .45); }
-		.nav-login:active { transform: scale(.96); }
-		.nav-login svg { width: 14px; height: 14px; fill: currentColor; }
-		.menu-button { display: none; }
-		@media (max-width: 900px) { .navbar { padding: 0 25px; } .nav-links { gap: 14px; font-size: 11px; } .navbar .logo img { width: 70px; height: 70px; } }
-		@media (max-width: 760px) {
-			.nav-links { position: absolute; top: calc(100% - 1px); right: 20px; left: 20px; display: none; align-items: stretch; gap: 0; padding: 7px; border: 1px solid #ffffff25; border-radius: 10px; background: rgba(20, 7, 51, .97); box-shadow: 0 12px 28px rgba(0, 0, 0, .22); font-size: 12px; }
-			.navbar.menu-open .nav-links { display: grid; }
-			.nav-links a { padding: 11px 10px; border-radius: 6px; }
-			.nav-links a:hover { background: #ffffff10; }
-			.nav-links a::after { display: none; }
-			.menu-button { display: inline-flex; }
-		}
-		@media (max-width: 600px) { html { scroll-padding-top: 64px; } .navbar { height: 88px; padding: 0 20px; } .navbar.scrolled { height: 64px; } .navbar .logo { font-size: 16px; } .navbar .logo img { width: 72px; height: 72px; } .nav-links { top: calc(100% - 1px); right: 12px; left: 12px; } .nav-login span { display: none; } .nav-login { width: 34px; padding: 0; } }
+			body.dark-mode
+			{
+					--amber: #f2b45f;
+					--amber-soft: #33280f;
+			}
 	
-		.footer-logo
-		{
-			display: flex;
-			align-items: center;
-			gap: 2px;
-		}
-
-		.footer-logo .brand-name
-		{
-			display: flex;
-			align-items: center;
-			margin-left: -3px;
-			color: #ffffff;
-			font-size: 20px;
-			font-weight: 600;
-			letter-spacing: -0.4px;
-			white-space: nowrap;
-		}
-
-		.footer-logo .brand-edu
-		{
-			color: #ffffff;
-		}
-
-		.footer-logo .brand-bridge
-		{
-			color: #c7a4ff;
-		}
+			.admin-grid
+			{
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+					gap: 18px;
+			}
 	
-		@media (max-width: 980px)
-		{
-			.footer-content
+			.stat-card
 			{
-				grid-template-columns: 1fr 1fr;
-				gap: 34px;
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					padding: 20px;
+					box-shadow: 0 12px 30px var(--shadow);
 			}
-		}
-
-		@media (max-width: 900px)
-		{
-			.footer-logo img
-			{
-				width: 70px;
-				height: 70px;
-			}
-		}
-
-		@media (max-width: 760px)
-		{
-			footer
-			{
-				padding: 42px 24px 16px;
-			}
-
-			.footer-content
-			{
-				grid-template-columns: 1fr;
-				gap: 28px;
-			}
-
-			.footer-logo img
-			{
-				width: 65px;
-				height: 65px;
-			}
-
-			.developer
-			{
-				flex-wrap: wrap;
-				align-items: flex-start;
-			}
-
-			.quote
-			{
-				width: 100%;
-				margin-left: 48px;
-				text-align: left;
-			}
-		}
 	
-		/* Compact FAQ search toolbar, with categories opened on demand. */
-		.faq-layout { position: relative; grid-template-columns: minmax(0,1fr); }
-		.faq-main { min-width: 0; }
-		.faq-categories { position: absolute; z-index: 20; top: 62px; right: 0; width: min(330px,100%); padding: 18px; border-radius: 7px; box-shadow: 0 18px 40px rgba(25,12,54,.18); }
-		.faq-categories[hidden] { display: none; }
-		.category-list { max-height: min(58vh,420px); overflow-y: auto; }
-		.faq-search-row { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 8px; align-items: center; margin-bottom: 13px; padding: 10px; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); box-shadow: 0 5px 18px var(--shadow); }
-		.search-field { height: 40px; padding: 0 12px; }
-		.search-field svg { color: var(--purple); }
-		.search-field input { font-size: 12px; }
-		.search-button { height: 38px; padding: 0 14px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--purple); font-size: 11px; }
-		.search-button svg { width: 14px; height: 14px; }
-		.search-button:hover { border-color: var(--purple); background: var(--purple-light); box-shadow: none; }
-		.faq-filter-button { display: inline-flex; height: 38px; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--text-soft); font-size: 11px; font-weight: 500; transition: border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease; }
-		.faq-filter-button svg { width: 14px; height: 14px; fill: currentColor; }
-		.faq-filter-button:hover,.faq-filter-button[aria-expanded="true"] { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
-		.faq-filter-button:active { transform: scale(.96); }
-		.faq-filter-button:focus-visible { outline: 0; box-shadow: 0 0 0 3px var(--purple-light); }
-		@media (max-width: 600px) { .faq-search-row { grid-template-columns: minmax(0,1fr) auto; } .search-field { grid-column: 1 / -1; } .search-button,.faq-filter-button { width: 100%; } .faq-categories { top: 104px; width: 100%; } }
-			.profile-menu-wrap { position: relative; display: inline-flex; }
-		.nav-profile-button { display: inline-flex; min-width: 0; height: 36px; align-items: center; justify-content: center; gap: 8px; padding: 0 4px; border: 0; border-radius: 0; background: transparent; color: #fff; font: 600 12px Poppins, Arial, sans-serif; cursor: pointer; box-shadow: none; transition: transform .25s ease, filter .25s ease; }
-		.nav-profile-button:hover, .nav-profile-button[aria-expanded="true"] { transform: translateY(-1px); filter: brightness(1.12); box-shadow: none; }
-		.nav-profile-button:focus-visible { outline: 0; filter: drop-shadow(0 0 4px rgba(199,164,255,.9)); }
-		.profile-avatar { display: grid; width: 25px; height: 25px; flex: 0 0 25px; place-items: center; border-radius: 50%; background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.58); }
-		.profile-avatar svg { width: 14px; height: 14px; fill: #fff; }
-		.profile-label { max-width: clamp(48px, 10vw, 120px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-		.profile-chevron { width: 15px; height: 15px; flex: 0 0 15px; fill: currentColor; transition: transform .22s ease; }
-		.profile-user-icon { width: 15px; height: 15px; fill: currentColor; }
-		.profile-chevron { width: 14px; height: 14px; fill: currentColor; transition: transform .2s ease; }
-		.nav-profile-button[aria-expanded="true"] .profile-chevron { transform: rotate(180deg); }
-		.profile-menu { position: absolute; z-index: 1100; top: calc(100% + 10px); right: 0; width: 196px; padding: 7px; border: 1px solid var(--border, #e1e1e1); border-radius: 8px; background: var(--surface, #fff); color: var(--text, #17152d); box-shadow: 0 14px 34px rgba(15,8,35,.2); animation: profileMenuIn .18s ease-out; }
-		.profile-menu[hidden] { display: none; }
-		@keyframes profileMenuIn { from { opacity: 0; transform: translateY(-5px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-		.profile-menu-link { display: flex; width: 100%; min-height: 39px; align-items: center; gap: 10px; padding: 0 10px; border: 0; border-radius: 5px; background: transparent; color: inherit; font: 500 12px Poppins, Arial, sans-serif; text-align: left; text-decoration: none; cursor: pointer; transition: background .2s ease, color .2s ease; }
-		.profile-menu-link:hover, .profile-menu-link:focus-visible { background: var(--purple-light, #eee5ff); color: var(--purple, #7138c8); outline: 0; }
-		.profile-menu-link svg { width: 15px; height: 15px; flex: 0 0 15px; fill: currentColor; }
-		.profile-logout { border-top: 1px solid var(--border, #e1e1e1); border-radius: 0 0 5px 5px; margin-top: 5px; padding-top: 5px; }
-		@media (max-width: 600px) { .nav-profile-button { min-width: 0; height: 36px; gap: 6px; padding: 0 2px; } .profile-avatar { width: 23px; height: 23px; flex-basis: 23px; } .profile-label { max-width: 72px; } .profile-menu { right: -24px; } }
+			.stat-card .stat-label
+			{
+					display: block;
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 0.6px;
+					text-transform: uppercase;
+					color: var(--text-muted);
+					margin-bottom: 8px;
+			}
+	
+			.stat-card .stat-value
+			{
+					font-size: 30px;
+					font-weight: 700;
+					color: var(--purple);
+			}
+	
+			.stat-card .stat-hint
+			{
+					display: block;
+					font-size: 11.5px;
+					color: var(--text-muted);
+					margin-top: 6px;
+			}
+	
+			.panel
+			{
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					padding: 24px;
+					box-shadow: 0 12px 30px var(--shadow);
+			}
+	
+			.panel + .panel
+			{
+					margin-top: 20px;
+			}
+	
+			.panel-title
+			{
+					font-size: 16px;
+					font-weight: 600;
+					color: var(--text);
+					margin-bottom: 6px;
+			}
+	
+			.panel-subtitle
+			{
+					font-size: 13px;
+					color: var(--text-soft);
+					line-height: 1.6;
+					margin-bottom: 18px;
+			}
+	
+			.badge
+			{
+					display: inline-flex;
+					align-items: center;
+					gap: 6px;
+					padding: 4px 11px;
+					border-radius: 999px;
+					font-size: 11px;
+					font-weight: 600;
+					white-space: nowrap;
+			}
+	
+			.badge-purple
+			{
+					background: var(--purple-light);
+					color: var(--purple);
+			}
+	
+			.badge-green
+			{
+					background: var(--green-soft);
+					color: var(--green);
+			}
+	
+			.badge-amber
+			{
+					background: var(--amber-soft);
+					color: var(--amber);
+			}
+	
+			.badge-red
+			{
+					background: var(--red-soft);
+					color: var(--red);
+			}
+	
+			.badge-gray
+			{
+					background: var(--surface-soft);
+					color: var(--text-muted);
+					border: 1px solid var(--border);
+			}
+	
+			.table-wrap
+			{
+					overflow-x: auto;
+			}
+	
+			.data-table
+			{
+					width: 100%;
+					border-collapse: collapse;
+					font-size: 13px;
+					min-width: 640px;
+			}
+	
+			.data-table th,
+			.data-table td
+			{
+					text-align: left;
+					padding: 13px 12px;
+					border-bottom: 1px solid var(--border);
+					color: var(--text-soft);
+					vertical-align: top;
+			}
+	
+			.data-table th
+			{
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 0.6px;
+					text-transform: uppercase;
+					color: var(--text);
+			}
+	
+			.data-table tbody tr:last-child td
+			{
+					border-bottom: 0;
+			}
+	
+			.data-table select
+			{
+					padding: 8px 10px;
+					border-radius: 8px;
+					border: 1px solid var(--border);
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 12.5px;
+			}
+	
+			.data-table details summary
+			{
+					cursor: pointer;
+					font-size: 12.5px;
+					font-weight: 600;
+					color: var(--purple);
+			}
+	
+			.data-table details p
+			{
+					margin-top: 8px;
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.status-cell select
+			{
+					display: block;
+					margin-top: 8px;
+			}
+	
+			.btn
+			{
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					gap: 8px;
+					padding: 11px 18px;
+					border-radius: 10px;
+					border: 1px solid transparent;
+					font-family: inherit;
+					font-size: 13px;
+					font-weight: 600;
+					cursor: pointer;
+					text-decoration: none;
+					transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+			}
+	
+			.btn:hover
+			{
+					transform: translateY(-1px);
+			}
+	
+			.btn-primary
+			{
+					background: var(--purple);
+					color: #ffffff;
+					box-shadow: 0 10px 22px rgba(113, 56, 200, 0.28);
+			}
+	
+			.btn-primary:hover
+			{
+					background: #5f2eb3;
+			}
+	
+			.btn-secondary
+			{
+					background: transparent;
+					color: var(--purple);
+					border-color: var(--purple);
+			}
+	
+			.btn-ghost
+			{
+					background: var(--surface-soft);
+					color: var(--text-soft);
+					border-color: var(--border);
+			}
+	
+			.btn-ghost:hover
+			{
+					color: var(--text);
+			}
+	
+			.btn-danger
+			{
+					background: var(--red-soft);
+					color: var(--red);
+			}
+	
+			.btn-small
+			{
+					padding: 7px 12px;
+					font-size: 12px;
+					border-radius: 8px;
+			}
+	
+			.btn:disabled
+			{
+					opacity: 0.55;
+					cursor: not-allowed;
+					transform: none;
+			}
+	
+			.field
+			{
+					display: flex;
+					flex-direction: column;
+					gap: 7px;
+					margin-bottom: 18px;
+			}
+	
+			.field label
+			{
+					font-size: 13px;
+					font-weight: 600;
+					color: var(--text);
+			}
+	
+			.field input,
+			.field select,
+			.field textarea
+			{
+					padding: 11px 14px;
+					border: 1px solid var(--border);
+					border-radius: 10px;
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 13.5px;
+			}
+	
+			.field textarea
+			{
+					min-height: 140px;
+					resize: vertical;
+			}
+	
+			.field input::placeholder,
+			.field textarea::placeholder
+			{
+					color: var(--text-muted);
+			}
+	
+			.form-actions
+			{
+					display: flex;
+					gap: 12px;
+					flex-wrap: wrap;
+					align-items: center;
+			}
+	
+			.note
+			{
+					margin-top: 20px;
+					padding: 15px 18px;
+					border: 1px solid var(--border);
+					border-left: 3px solid var(--purple);
+					border-radius: 12px;
+					background: var(--surface-soft);
+					font-size: 12.5px;
+					line-height: 1.65;
+					color: var(--text-soft);
+			}
+	
+			.note strong
+			{
+					color: var(--text);
+			}
+	
+			.empty-state
+			{
+					padding: 34px 18px;
+					text-align: center;
+					font-size: 13.5px;
+					color: var(--text-muted);
+			}
+	
+			.quick-grid
+			{
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+					gap: 18px;
+			}
+	
+			.quick-card
+			{
+					display: flex;
+					flex-direction: column;
+					gap: 9px;
+					padding: 22px;
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					text-decoration: none;
+					box-shadow: 0 12px 30px var(--shadow);
+					transition: transform 0.18s ease, border-color 0.18s ease;
+			}
+	
+			.quick-card:hover,
+			.quick-card:focus-visible
+			{
+					transform: translateY(-3px);
+					border-color: var(--purple);
+			}
+	
+			.quick-card h3
+			{
+					font-size: 15.5px;
+					color: var(--text);
+			}
+	
+			.quick-card p
+			{
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.list-row
+			{
+					display: flex;
+					justify-content: space-between;
+					align-items: flex-start;
+					gap: 16px;
+					padding: 17px 0;
+					border-bottom: 1px solid var(--border);
+			}
+	
+			.list-row:last-child
+			{
+					border-bottom: 0;
+					padding-bottom: 0;
+			}
+	
+			.list-row:first-child
+			{
+					padding-top: 0;
+			}
+	
+			.list-row-body h3
+			{
+					font-size: 14.5px;
+					color: var(--text);
+					margin-bottom: 5px;
+					display: flex;
+					align-items: center;
+					gap: 9px;
+					flex-wrap: wrap;
+			}
+	
+			.list-row-body p
+			{
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.row-actions
+			{
+					display: flex;
+					gap: 8px;
+					flex-shrink: 0;
+					flex-wrap: wrap;
+			}
+	
+			.edit-input
+			{
+					flex: 1 1 200px;
+					padding: 9px 12px;
+					border: 1px solid var(--border);
+					border-radius: 8px;
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 13px;
+			}
+	
+			.edit-controls
+			{
+					display: flex;
+					gap: 8px;
+					flex-wrap: wrap;
+					width: 100%;
+					margin-top: 10px;
+			}
+	
+			.timeline
+			{
+					list-style: none;
+			}
+
+			.timeline-toolbar
+			{
+					display: flex;
+					justify-content: flex-end;
+					margin-bottom: 16px;
+			}
+	
+			.timeline li
+			{
+					position: relative;
+					padding: 0 0 22px 26px;
+					margin-left: 6px;
+					border-left: 2px solid var(--border);
+			}
+	
+			.timeline li:last-child
+			{
+					border-left-color: transparent;
+					padding-bottom: 0;
+			}
+	
+			.timeline li::before
+			{
+					content: "";
+					position: absolute;
+					left: -8px;
+					top: 2px;
+					width: 14px;
+					height: 14px;
+					border-radius: 50%;
+					background: var(--purple);
+					border: 3px solid var(--surface);
+			}
+	
+			.timeline .timeline-time
+			{
+					display: block;
+					font-size: 11.5px;
+					color: var(--text-muted);
+					margin-bottom: 4px;
+			}
+	
+			.timeline .timeline-what
+			{
+					font-size: 13.5px;
+					color: var(--text);
+			}
+	
+			.timeline .timeline-what span
+			{
+					color: var(--text-soft);
+			}
+	
+			.bar-row
+			{
+					display: grid;
+					grid-template-columns: 120px 1fr 44px;
+					align-items: center;
+					gap: 14px;
+					margin-bottom: 14px;
+					font-size: 13px;
+					color: var(--text-soft);
+			}
+	
+			.bar-row:last-child
+			{
+					margin-bottom: 0;
+			}
+	
+			.bar-track
+			{
+					height: 12px;
+					border-radius: 999px;
+					background: var(--surface-soft);
+					border: 1px solid var(--border);
+					overflow: hidden;
+			}
+	
+			.bar-fill
+			{
+					height: 100%;
+					border-radius: 999px;
+					background: var(--purple);
+			}
+	
+			.bar-fill.is-green
+			{
+					background: var(--green);
+			}
+	
+			.bar-fill.is-amber
+			{
+					background: var(--amber);
+			}
+	
+			.bar-value
+			{
+					text-align: right;
+					font-weight: 600;
+					color: var(--text);
+			}
+	
+			.profile-hero
+			{
+					display: flex;
+					align-items: center;
+					gap: 24px;
+					flex-wrap: wrap;
+			}
+	
+			.profile-hero img
+			{
+					width: 96px;
+					height: 96px;
+					border-radius: 50%;
+					object-fit: cover;
+					border: 3px solid var(--purple-light);
+			}
+	
+			.profile-hero h2
+			{
+					font-size: 22px;
+					color: var(--text);
+					margin-bottom: 9px;
+			}
+	
+			.kv-list
+			{
+					display: grid;
+					grid-template-columns: minmax(150px, auto) 1fr;
+					gap: 13px 20px;
+					font-size: 13.5px;
+					margin-top: 22px;
+			}
+	
+			.kv-list dt
+			{
+					color: var(--text-muted);
+			}
+	
+			.kv-list dd
+			{
+					margin: 0;
+					color: var(--text);
+					font-weight: 500;
+			}
+	
+			.kv-list + .form-actions
+			{
+					margin-top: 24px;
+			}
+	
+			.switch-row
+			{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					gap: 16px;
+					flex-wrap: wrap;
+					padding: 16px 0;
+					border-bottom: 1px solid var(--border);
+			}
+	
+			.switch-row:last-child
+			{
+					border-bottom: 0;
+					padding-bottom: 0;
+			}
+	
+			.switch-row:first-child
+			{
+					padding-top: 0;
+			}
+	
+			.switch-row h3
+			{
+					font-size: 14.5px;
+					color: var(--text);
+					margin-bottom: 4px;
+			}
+	
+			.switch-row p
+			{
+					font-size: 12.5px;
+					color: var(--text-soft);
+					line-height: 1.55;
+			}
+	
+			.toast
+			{
+					position: fixed;
+					left: 50%;
+					bottom: 26px;
+					transform: translateX(-50%);
+					z-index: 3000;
+					max-width: min(520px, calc(100% - 32px));
+					padding: 13px 20px;
+					border-radius: 12px;
+					background: rgb(8, 5, 29);
+					color: #ffffff;
+					font-size: 13px;
+					line-height: 1.5;
+					text-align: center;
+					box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+					border: 1px solid #ffffff1f;
+			}
+	
+			.toast[hidden]
+			{
+					display: none;
+			}
+	
+			@media (max-width: 700px)
+			{
+					.list-row
+					{
+								flex-direction: column;
+								}
+	
+								.kv-list
+								{
+										grid-template-columns: 1fr;
+										gap: 4px 0;
+								}
+	
+								.kv-list dd
+								{
+										margin-bottom: 10px;
+								}
+	
+								.bar-row
+								{
+										grid-template-columns: 92px 1fr 40px;
+										gap: 10px;
+								}
+			}
+	
+			@media (prefers-reduced-motion: reduce)
+			{
+					.btn,
+					.quick-card
+					{
+								transition: none;
+								}
+	
+								.btn:hover,
+								.quick-card:hover,
+								.quick-card:focus-visible
+								{
+										transform: none;
+								}
+			}
+
+
+			.admin-grid + .panel
+			{
+					margin-top: 20px;
+			}
+
+			.chip-row
+			{
+					display: flex;
+					flex-wrap: wrap;
+					gap: 8px;
+					margin-top: 16px;
+			}
+
+			.search-chip
+			{
+					padding: 7px 13px;
+					border-radius: 999px;
+					border: 1px solid var(--border);
+					background: var(--surface-soft);
+					color: var(--text-soft);
+					font-size: 12px;
+					cursor: pointer;
+					font-family: inherit;
+			}
+
+			.search-chip:hover
+			{
+					border-color: var(--purple);
+					color: var(--purple);
+			}
+
+			.search-summary
+			{
+					margin-top: 22px;
+					font-size: 13.5px;
+					color: var(--text-soft);
+			}
+
+			.result-item
+			{
+					padding: 16px 0;
+					border-bottom: 1px solid var(--border);
+			}
+
+			.result-item:last-child
+			{
+					border-bottom: 0;
+			}
+
+			.result-head
+			{
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					flex-wrap: wrap;
+					margin-bottom: 7px;
+			}
+
+			.result-question
+			{
+					font-size: 14.5px;
+					font-weight: 600;
+					color: var(--text);
+			}
+
+			.result-answer
+			{
+					font-size: 13px;
+					line-height: 1.65;
+					color: var(--text-soft);
+			}
+
+			.result-answer a
+			{
+					color: var(--purple);
+			}
+
+			.matched-row
+			{
+					margin-top: 8px;
+					font-size: 11.5px;
+					color: var(--text-muted);
+			}
+
+			.matched-row span
+			{
+					display: inline-block;
+					background: var(--purple-light);
+					color: var(--purple);
+					border-radius: 999px;
+					padding: 2px 9px;
+					margin-right: 5px;
+					margin-top: 4px;
+			}
+
 	</style>
+	<link rel="stylesheet" href="student-shell.css">
+	<script defer src="student-nav.js"></script>
 </head>
 <body>
 	<div class="cursor-gradient">
 	</div>
 
+	<nav class="navbar">
 
-	<nav class="navbar" aria-label="Main navigation">
-		<a href="studenthome.html" class="logo">
-			<img src="edlogo.png" alt="EduBridge bridge mark">
-			<span class="brand-name"><span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span></span>
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
+
+			<span class="brand-name">
+				<span class="brand-edu">
+					Edu
+				</span>
+				<span class="brand-bridge">
+					Bridge
+				</span>
+			</span>
 		</a>
+
 		<div class="nav-links" id="navLinks">
-			<a href="studenthome.html">Home</a>
-			<a href="studentannouncements.html">Announcements</a>
-			<a href="studentsmartfaq.html" class="active" aria-current="page">FAQs</a>
-			<a href="studentinquiries.html">My Inquiries</a>
-			<a href="about.html">About EduBridge</a>
-			<a href="contact.html">Contact</a>
-		</div>
-		<div class="nav-actions">
-			<button class="theme-button" id="themeButton" type="button" aria-label="Toggle theme">
-				<svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"></path></svg>
-			</button>
-			<a class="nav-bell" href="studentannouncements.html" aria-label="Notifications">
-				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z"></path></svg>
+
+			<a href="landingpage.html">
+				Home
 			</a>
-			<div class="profile-menu-wrap">
-	<button class="nav-profile-button" id="profileMenuButton" type="button" aria-label="Open account menu" aria-expanded="false" aria-controls="profileMenu">
-		<span class="profile-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-5.1 0-8 2.55-8 5.3V21h16v-1.7c0-2.75-2.9-5.3-8-5.3Z"></path></svg></span>
-		<span class="profile-label">Account</span>
-		<svg class="profile-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-	</button>
-	<div class="profile-menu" id="profileMenu" hidden>
-		<a href="accountsettings.html" class="profile-menu-link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-5.33 0-8 2.67-8 5v3h16v-3c0-2.33-2.67-5-8-5z"></path></svg>Account Settings</a>
-		<button class="profile-menu-link profile-logout" id="logoutButton" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17v-3H3v-4h7V7l5 5-5 5zm9-14H5a2 2 0 0 0-2 2v3h2V5h14v14H5v-3H3v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"></path></svg>Logout</button>
-	</div>
-</div>
-			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
-				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
-			</button>
+
+			<a href="about.html">
+				About EduBridge
+			</a>
+
+			<a href="student-announcements.html">
+				Announcements
+			</a>
+
+			<a href="student-faq.html">
+				FAQs
+			</a>
+
+			<a href="student-myinquiries.html">
+				Inquiries
+			</a>
+
+			<a href="contact.html">
+				Contact
+			</a>
+
 		</div>
+
+		<div class="nav-buttons">
+
+			<button class="theme-button" id="themeButton" type="button" aria-label="Toggle theme">
+				<svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z">
+					</path>
+				</svg>
+			</button>
+
+			<a class="nav-bell" href="student-notifications.html" aria-label="Notifications">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
+					</path>
+				</svg>
+			</a>
+
+			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="accountMenu" aria-expanded="false">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
+					</path>
+				</svg>
+			</button>
+
+			<button class="nav-profile" type="button" aria-label="Open profile menu" aria-haspopup="true" aria-controls="studentProfileMenu" aria-expanded="false">
+				<img src="student-avatar.svg" alt="Student profile">
+
+				<span class="nav-profile-text">
+					<strong>
+						Student
+					</strong>
+
+					<small>
+						Student Account
+					</small>
+				</span>
+			</button>
+
+		</div>
+
+		<div class="account-menu" id="accountMenu" role="menu" aria-label="Account menu">
+		</div>
+
 	</nav>
+
 
 	<section class="hero">
 
@@ -2716,331 +3293,145 @@
 		<div class="hero-content">
 
 			<div class="hero-label">
-				QUICK ANSWERS
+				STUDENT PORTAL
 			</div>
 
 			<h1>
-				Smart
-				<span>
-					FAQ Search
-				</span>
+				Smart Search
 			</h1>
 
 			<p>
-				Find answers to common questions in our knowledge base.
+				Find the right answer instantly from the FAQ knowledge base.
 			</p>
-
-			<div class="hero-actions">
-				<a class="question-button" href="#faqSection">
-					Browse Questions
-				</a>
-
-				<a class="login-button" href="studentinquiries.html">
-					Submit an Inquiry
-				</a>
-			</div>
 
 		</div>
 
 	</section>
 
 
-	<main>
+		<main>
 
-		<section class="content-section reveal" id="faqSection" aria-labelledby="faqHeading">
+		<section class="content-section reveal">
 
 			<div class="section-heading">
 
 				<div class="section-label">
-					FAQ LIST
+					SMART SEARCH
 				</div>
 
-				<h2 id="faqHeading">
-					Common Student Questions
+				<h2>
+					What can we help you find?
 				</h2>
 
 				<p>
-					Search through the questions students ask most often.
+					Type a question and get instant matches from the FAQ knowledge base.
 				</p>
 
 			</div>
 
-			<div class="faq-layout">
+			<div class="panel">
 
-				<nav class="faq-categories" id="faqCategories" aria-label="FAQ categories" hidden>
+				<form id="searchForm" novalidate>
 
-					<h2 class="categories-title">
-						Browse Categories
-					</h2>
-
-					<div class="category-list" id="categoryList">
-
-						<button class="category-button is-active" type="button" data-category="all" aria-pressed="true">
-
-							<span>
-								All FAQs
-							</span>
-
-							<span class="category-count">
-								14
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="General" aria-pressed="false">
-
-							<span>
-								General
-							</span>
-
-							<span class="category-count">
-								5
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="Enrollment" aria-pressed="false">
-
-							<span>
-								Enrollment
-							</span>
-
-							<span class="category-count">
-								2
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="Tuition &amp; Payments" aria-pressed="false">
-
-							<span>
-								Tuition &amp; Payments
-							</span>
-
-							<span class="category-count">
-								1
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="Academic Requirements" aria-pressed="false">
-
-							<span>
-								Academic Requirements
-							</span>
-
-							<span class="category-count">
-								1
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="Scholarships &amp; Financial Aid" aria-pressed="false">
-
-							<span>
-								Scholarships &amp; Financial Aid
-							</span>
-
-							<span class="category-count">
-								1
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="Campus Life" aria-pressed="false">
-
-							<span>
-								Campus Life
-							</span>
-
-							<span class="category-count">
-								2
-							</span>
-
-						</button>
-
-						<button class="category-button" type="button" data-category="Account &amp; Access" aria-pressed="false">
-
-							<span>
-								Account &amp; Access
-							</span>
-
-							<span class="category-count">
-								2
-							</span>
-
-						</button>
-
-					</div>
-
-				</nav>
-
-				<div class="faq-main">
-
-					<form class="faq-search-row" id="faqSearchForm" role="search" aria-label="FAQ search">
-
-						<div class="search-field">
-
-							<svg viewBox="0 0 24 24" aria-hidden="true">
-								<path d="M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z">
-								</path>
-							</svg>
-
-							<input id="faqSearch" type="search" placeholder="Search FAQs" autocomplete="off" aria-label="Search questions">
-
-						</div>
-
-						<button class="search-button" type="submit">
-
-							<svg viewBox="0 0 24 24" aria-hidden="true">
-								<path d="M10 2a8 8 0 1 0 4.9 14.3l5.4 5.4 1.4-1.4-5.4-5.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12z">
-								</path>
-							</svg>
-
-							Search
-
-						</button>
-						<button class="faq-filter-button" id="faqFilterButton" type="button" aria-controls="faqCategories" aria-expanded="false">
-							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18l-7 8v5l-4 3v-8L3 5z"></path></svg>
-							Filter
-						</button>
-
-					</form>
-
-					<div class="popular-searches" id="popularSearches" role="group" aria-label="Popular searches">
-
-						<span class="popular-label">
-							Popular:
-						</span>
-
-						<button class="search-chip" type="button" data-query="enrollment">
-							Enrollment
-						</button>
-
-						<button class="search-chip" type="button" data-query="tuition">
-							Tuition Payment
-						</button>
-
-						<button class="search-chip" type="button" data-query="requirements">
-							Requirements
-						</button>
-
-						<button class="search-chip" type="button" data-query="scholarship">
-							Scholarships
-						</button>
-
-						<button class="search-chip" type="button" data-query="id">
-							ID Validation
-						</button>
-
-						<button class="search-chip" type="button" data-query="good moral">
-							Good Moral
-						</button>
-
-					</div>
-
-					<div class="faq-toolbar">
-
-						<div class="faq-count" id="faqCount">
-							14 questions
-						</div>
-
-						<label class="sort-field">
-							Sort by
-
-							<select id="sortSelect">
-								<option value="relevant">
-									Most Relevant
-								</option>
-								<option value="az">
-									A-Z
-								</option>
-							</select>
-
+					<div class="field">
+						<label for="searchInput">
+							Your question
 						</label>
 
+						<input type="search" id="searchInput" placeholder="e.g. How do I enroll for the 2nd semester?" required>
 					</div>
 
-					<div class="faq-list" id="faqList">
+					<div class="form-actions">
+						<button class="btn btn-primary" id="searchButton" type="submit">
+							Search
+						</button>
+
+						<button class="btn btn-ghost" id="clearSearch" type="button">
+							Clear
+						</button>
 					</div>
 
-					<div class="faq-states" id="faqStates">
+				</form>
 
-						<div class="state-card">
+				<div class="chip-row" id="suggestionChips">
 
-							<span class="state-icon" aria-hidden="true">
-								<svg viewBox="0 0 24 24">
-									<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.2 3.1.8-1.3-4.5-2.6z">
-									</path>
-								</svg>
-							</span>
+					<button class="search-chip" type="button" data-query="enrollment">
+						enrollment
+					</button>
 
-							<h3 class="state-title">
-								Loading FAQs
-							</h3>
+					<button class="search-chip" type="button" data-query="scholarship">
+						scholarship
+					</button>
 
-							<p class="state-text">
-								Please wait while we prepare the questions.
-							</p>
+					<button class="search-chip" type="button" data-query="tuition fees">
+						tuition fees
+					</button>
 
-						</div>
+					<button class="search-chip" type="button" data-query="library">
+						library
+					</button>
 
+					<button class="search-chip" type="button" data-query="password">
+						password
+					</button>
+
+					<button class="search-chip" type="button" data-query="final exams">
+						final exams
+					</button>
+
+				</div>
+
+				<div class="search-summary" id="searchSummary" hidden></div>
+
+				<div id="searchResults" class="result-list" hidden></div>
+
+				<div class="empty-state" id="searchIdle">
+					Start typing to search the FAQ knowledge base.
+				</div>
+
+				<div class="empty-state" id="searchNoMatch" hidden>
+
+					No matching FAQs for that question.
+
+					<div class="state-actions">
+						<a class="btn btn-secondary btn-small" href="student-submitinquiry.html">
+							Submit an Inquiry
+						</a>
 					</div>
 
-					<nav class="faq-pagination" id="faqPagination" aria-label="FAQ pages" hidden>
-					</nav>
+				</div>
+
+				<div class="empty-state" id="searchError" hidden>
+
+					Search could not be completed. Please try again.
+
+					<div class="state-actions">
+						<button class="btn btn-secondary btn-small" id="searchRetry" type="button">
+							Retry
+						</button>
+					</div>
 
 				</div>
 
 			</div>
 
 		</section>
-
-
-		<section class="inquiry-section reveal" aria-labelledby="faqInquiryHeading">
-
-			<div class="inquiry-item">
-
-				<div class="mission-icon">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2v2zm2.1-7.3c-.7.7-1.4 1.1-1.8 1.6-.2.3-.3.6-.3 1.2h-2c0-1.1.2-1.7.7-2.3.4-.5 1-.9 1.6-1.5.5-.5.8-.9.8-1.5 0-.9-.7-1.5-1.7-1.5S10.5 8.5 10.5 9.5h-2c0-2.1 1.6-3.6 3.9-3.6 2.4 0 4 1.5 4 3.6 0 1.1-.4 1.8-1.3 2.7z">
-						</path>
-					</svg>
-				</div>
-
-				<div>
-
-					<h3 id="faqInquiryHeading">
-						Still can't find what you need?
-					</h3>
-
-					<p>
-						Submit an inquiry and our staff will be happy to help you.
-					</p>
-
-				</div>
-
-			</div>
-
-			<a class="inquiry-button" href="studentinquiries.html">
-				Submit an Inquiry
-			</a>
-
-		</section>
-
 	</main>
 
+
 	<footer>
+
 		<div class="footer-content">
+
 			<div>
-				<a href="studenthome.html" class="logo footer-logo">
-					<img src="edlogo.png" alt="EduBridge bridge mark" />
+
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
 							Edu
 						</span>
-
 						<span class="brand-bridge">
 							Bridge
 						</span>
@@ -3048,9 +3439,8 @@
 				</a>
 
 				<p class="footer-description">
-					EduBridge is your central hub for school announcements,
-					events, and inquiries &mdash; designed to help every student
-					stay connected and informed.
+					A smart inquiry and FAQ system for school announcements
+					and information.
 				</p>
 
 				<h4>
@@ -3058,116 +3448,118 @@
 				</h4>
 
 				<div class="social-icons">
-					<a href="https://www.facebook.com/" target="_blank" rel="noopener" class="social-icon" aria-label="EduBridge on Facebook">
+
+					<a href="https://www.facebook.com/" target="_blank" class="social-icon" aria-label="EduBridge on Facebook">
 						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M14 8h3V4h-3c-3.3 0-5 1.7-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z" />
+							<path d="M14 8h3V4h-3c-3.3 0-5 1.7-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z">
+							</path>
 						</svg>
 					</a>
 
-					<a href="https://www.instagram.com/" target="_blank" rel="noopener" class="social-icon" aria-label="EduBridge on Instagram">
+					<a href="https://www.instagram.com/" target="_blank" class="social-icon" aria-label="EduBridge on Instagram">
 						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm11 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+							<path d="M7 2h10c2.8 0 5 2.2 5 5v10c0 2.8-2.2 5-5 5H7c-2.8 0-5-2.2-5-5V7c0-2.8 2.2-5 5-5zm0 2C5.3 4 4 5.3 4 7v10c0 1.7 1.3 3 3 3h10c1.7 0 3-1.3 3-3V7c0-1.7-1.3-3-3-3H7zm5 3.5A4.5 4.5 0 1 1 12 16a4.5 4.5 0 0 1 0-9zm0 2A2.5 2.5 0 1 0 12 14a2.5 2.5 0 0 0 0-4.5zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+							</path>
+						</svg>
+					</a>
+
+					<a href="https://x.com/" target="_blank" class="social-icon" aria-label="EduBridge on X">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.2 2H21l-6.1 7 7.2 13H16.5l-4.3-7.7L5.5 22H2.7l6.5-7.5L2.3 2h5.7l3.9 7L18.2 2zm-1 17.7h1.6L7 4.2H5.3l11.9 15.5z">
+							</path>
 						</svg>
 					</a>
 
 					<a href="mailto:edubridge@gmail.com" class="social-icon" aria-label="Email EduBridge">
 						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+							<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z">
+							</path>
 						</svg>
 					</a>
+
 				</div>
+
 			</div>
 
+
 			<div>
+
 				<h4>
 					Quick Links
 				</h4>
 
 				<ul class="footer-links">
-					<li>
-						<a href="studenthome.html">
-							Home
 
-							<svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m9 18 6-6-6-6" />
-							</svg>
+					<li>
+						<a href="landingpage.html">
+							Home
 						</a>
 					</li>
 
 					<li>
 						<a href="about.html">
 							About EduBridge
-
-							<svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m9 18 6-6-6-6" />
-							</svg>
 						</a>
 					</li>
 
 					<li>
-						<a href="studentannouncements.html">
+						<a href="student-announcements.html">
 							Announcements
-
-							<svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m9 18 6-6-6-6" />
-							</svg>
 						</a>
 					</li>
 
 					<li>
-						<a href="studentsmartfaq.html">
+						<a href="student-faq.html">
 							FAQs
-
-							<svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m9 18 6-6-6-6" />
-							</svg>
 						</a>
 					</li>
 
 					<li>
-						<a href="studentinquiries.html">
-							My Inquiries
-
-							<svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m9 18 6-6-6-6" />
-							</svg>
+						<a href="student-myinquiries.html">
+							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="contact.html">
+						<a href="student-contactadmin.html">
 							Contact
-
-							<svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m9 18 6-6-6-6" />
-							</svg>
 						</a>
 					</li>
+
 				</ul>
+
 			</div>
 
+
 			<div>
+
 				<h4>
 					Contacts
 				</h4>
 
 				<div class="contact">
 					<span class="contact-icon">
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z" />
-						</svg>
+						✉
 					</span>
 
-					<span>
-						School address not provided.
-					</span>
+					<a href="mailto:edubridge@gmail.com">
+						edubridge@gmail.com
+					</a>
 				</div>
 
 				<div class="contact">
 					<span class="contact-icon">
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .57 3.6 1 1 0 0 1-.25 1z" />
-						</svg>
+						✉
+					</span>
+
+					<a href="mailto:edubridge@escr.edu.ph">
+						edubridge@escr.edu.ph
+					</a>
+				</div>
+
+				<div class="contact">
+					<span class="contact-icon">
+						☎
 					</span>
 
 					<a href="tel:+639123456789">
@@ -3175,21 +3567,13 @@
 					</a>
 				</div>
 
-				<div class="contact">
-					<span class="contact-icon">
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
-						</svg>
-					</span>
-
-					<a href="mailto:edubridge@gmail.com">
-						edubridge@gmail.com
-					</a>
-				</div>
 			</div>
 
+
 			<div>
+
 				<div class="question-box">
+
 					<div class="question-icon">
 						?
 					</div>
@@ -3203,38 +3587,47 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="studentinquiries.html">
-						Get Started &rarr;
+					<a class="question-button" href="student-myinquiries.html">
+						Get Started →
 					</a>
+
 				</div>
+
 			</div>
+
 		</div>
 
+
 		<div class="footer-bottom">
+
 			<div class="developer">
+
 				<div class="developer-icon">
-					&#10022;
+					✦
 				</div>
 
 				<p>
 					Developed with passion by
-					<br />
+					<br>
 					<strong>
 						Lyza, Kaye, Briana &amp; Rhealyn
 					</strong>
-					<br />
+					<br>
 					BSIT 3rd Year Students
 				</p>
 
 				<div class="quote">
 					"Your bridge to school information"
 				</div>
+
 			</div>
 
 			<div class="copyright">
-				&copy; 2026 EduBridge. All Rights Reserved.
+				© 2026 EduBridge. All Rights Reserved.
 			</div>
+
 		</div>
+
 	</footer>
 
 
@@ -3248,6 +3641,10 @@
 	</button>
 
 
+	<div class="toast" id="pageToast" hidden></div>
+
+	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
 	<script>
 		try
 		{
@@ -3258,7 +3655,6 @@
 			const hero = document.querySelector(".hero");
 			const heroImage = document.querySelector(".hero-image");
 			const navbar = document.querySelector(".navbar");
-			const menuButton = document.getElementById("menuButton");
 			const backToTop = document.getElementById("backToTop");
 
 			function updateThemeIcon()
@@ -3339,44 +3735,15 @@
 			});
 
 
-			menuButton.addEventListener("click", function()
+			function applyNavProfile()
 			{
-				const isOpen = navbar.classList.toggle("menu-open");
-
-				menuButton.setAttribute("aria-expanded", String(isOpen));
-				menuButton.setAttribute(
-					"aria-label",
-					isOpen ? "Close navigation menu" : "Open navigation menu"
-				);
-			});
-
-			function closeMenu()
-			{
-				navbar.classList.remove("menu-open");
-				menuButton.setAttribute("aria-expanded", "false");
-				menuButton.setAttribute("aria-label", "Open navigation menu");
+				const profile = document.querySelector(".nav-profile");
+				profile.querySelector("img").src = "student-avatar.svg";
+				profile.querySelector(".nav-profile-text strong").textContent = "Student";
+				profile.querySelector(".nav-profile-text small").textContent = "Student";
 			}
 
-			document.querySelectorAll(".nav-links a").forEach(function(link)
-			{
-				link.addEventListener("click", closeMenu);
-			});
-
-			document.addEventListener("keydown", function(event)
-			{
-				if (event.key === "Escape")
-				{
-					closeMenu();
-				}
-			});
-
-			document.addEventListener("click", function(event)
-			{
-				if (!navbar.contains(event.target))
-				{
-					closeMenu();
-				}
-			});
+			applyNavProfile();
 
 			function updateNavbar()
 			{
@@ -3846,958 +4213,339 @@
 
 			});
 
-			const faqs = [];
 
-
-			const toastContainer = document.createElement("div");
-			toastContainer.className = "toast-container";
-			document.body.append(toastContainer);
-
-			const toastDurations =
+			function showToast(message)
 			{
-				success: 2000,
-				info: 2000,
-				error: 3000
-			};
-
-			const toastIcons =
-			{
-				success:
-					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.1 14.9-4.2-4.2 1.4-1.4 2.8 2.8 6.6-6.6 1.4 1.4-8 8z"></path></svg>',
-				error:
-					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 12.9-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"></path></svg>',
-				info:
-					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>'
-			};
-
-			function showToast(message, type)
-			{
-
-				const kind = toastIcons[type] ? type : "info";
-
-				while (toastContainer.children.length >= 3)
+				const toast = document.getElementById("pageToast");
+				toast.textContent = message;
+				toast.hidden = false;
+				window.clearTimeout(showToast.timer);
+				showToast.timer = window.setTimeout(function()
 				{
-					toastContainer.firstElementChild.remove();
+					toast.hidden = true;
+				}, 3200);
+			}
+
+			function formatDate(value)
+			{
+				const parts = String(value || "").split(/[- :]/);
+
+				if (parts.length < 5)
+				{
+					return String(value || "");
 				}
 
+				const date = new Date(
+					Number(parts[0]),
+					Number(parts[1]) - 1,
+					Number(parts[2]),
+					Number(parts[3]),
+					Number(parts[4])
+				);
 
-				const toast = document.createElement("div");
-				toast.className = "toast toast--" + kind;
-				toast.setAttribute("role", kind === "error" ? "alert" : "status");
-
-
-				const icon = document.createElement("span");
-				icon.className = "toast-icon";
-				icon.setAttribute("aria-hidden", "true");
-				icon.innerHTML = toastIcons[kind];
-
-
-				const body = document.createElement("div");
-				body.className = "toast-body";
-
-				const text = document.createElement("p");
-				text.className = "toast-message";
-				text.textContent = message;
-
-				body.append(text);
-
-
-				const closeButton = document.createElement("button");
-				closeButton.className = "toast-close";
-				closeButton.type = "button";
-				closeButton.setAttribute("aria-label", "Dismiss notification");
-				closeButton.innerHTML =
-					'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"></path></svg>';
-
-
-				toast.append(icon, body, closeButton);
-				toastContainer.append(toast);
-
-
-				let dismissTimer = null;
-
-				function dismissToast()
+				if (isNaN(date.getTime()))
 				{
+					return String(value);
+				}
 
-					if (dismissTimer === null)
+				const day = date.toLocaleDateString(undefined,
+				{
+					month: "long",
+					day: "numeric",
+					year: "numeric"
+				});
+
+				const time = date.toLocaleTimeString(undefined,
+				{
+					hour: "numeric",
+					minute: "2-digit"
+				});
+
+				return day + " · " + time;
+			}
+
+
+			function answerSegments(raw)
+			{
+				const segments = [];
+				const pattern = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+				let lastIndex = 0;
+				let match;
+
+				while ((match = pattern.exec(raw)) !== null)
+				{
+					if (match.index > lastIndex)
 					{
-						return;
+						segments.push({ text: raw.slice(lastIndex, match.index) });
 					}
 
-					window.clearTimeout(dismissTimer);
-					dismissTimer = null;
-
-					toast.classList.add("toast--leaving");
-
-					window.setTimeout(function()
-					{
-						toast.remove();
-					}, 250);
-
+					segments.push({ href: match[2], text: match[1] });
+					lastIndex = pattern.lastIndex;
 				}
 
-				closeButton.addEventListener("click", dismissToast);
-
-				window.requestAnimationFrame(function()
+				if (lastIndex < raw.length)
 				{
-					toast.classList.add("toast--visible");
-				});
-
-				dismissTimer = window.setTimeout(dismissToast, toastDurations[kind]);
-
-			}
-
-			const faqList = document.getElementById("faqList");
-			const faqStates = document.getElementById("faqStates");
-			const faqCount = document.getElementById("faqCount");
-			const faqSearch = document.getElementById("faqSearch");
-			const faqSearchForm = document.getElementById("faqSearchForm");
-			const popularSearches = document.getElementById("popularSearches");
-			const categoryList = document.getElementById("categoryList");
-			const faqCategories = document.getElementById("faqCategories");
-			const faqFilterButton = document.getElementById("faqFilterButton");
-			const sortSelect = document.getElementById("sortSelect");
-			const faqPagination = document.getElementById("faqPagination");
-
-			const pageSize = 6;
-
-			let activeQuery = "";
-			let activeCategory = "all";
-			let activeSort = "relevant";
-			let currentPage = 1;
-
-			let storedFeedback = {};
-
-			try
-			{
-				storedFeedback =
-					JSON.parse(localStorage.getItem("edubridge-faq-feedback")) || {};
-			}
-			catch (error)
-			{
-				storedFeedback = {};
-			}
-
-
-			const cardIcons =
-			{
-				empty: "M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z",
-				error: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm3.5-9.2-2.8 2.8 2.8 2.8-1.4 1.4-2.8-2.8-2.8 2.8-1.4-1.4 2.8-2.8-2.8-2.8 1.4-1.4 2.8 2.8 2.8-2.8 1.4 1.4z"
-			};
-
-
-			function createCard(modifier, title, text, buttonLabel, onButton)
-			{
-
-				const card =
-					document.createElement("div");
-
-				card.className =
-					"state-card state-card--" + modifier;
-
-
-				const icon =
-					document.createElement("span");
-
-				icon.className = "state-icon";
-				icon.setAttribute("aria-hidden", "true");
-
-
-				const svg =
-					document.createElementNS("http://www.w3.org/2000/svg", "svg");
-
-				svg.setAttribute("viewBox", "0 0 24 24");
-
-
-				const path =
-					document.createElementNS("http://www.w3.org/2000/svg", "path");
-
-				path.setAttribute("d", cardIcons[modifier]);
-
-				svg.append(path);
-				icon.append(svg);
-
-
-				const heading =
-					document.createElement("h3");
-
-				heading.className = "state-title";
-				heading.textContent = title;
-
-
-				const description =
-					document.createElement("p");
-
-				description.className = "state-text";
-				description.textContent = text;
-
-				card.append(icon, heading, description);
-
-
-				if (buttonLabel && onButton)
-				{
-
-					const button =
-						document.createElement("button");
-
-					button.className = "state-button";
-					button.type = "button";
-					button.textContent = buttonLabel;
-
-					button.addEventListener("click", onButton);
-
-					card.append(button);
-
+					segments.push({ text: raw.slice(lastIndex) });
 				}
 
-				return card;
-
+				return segments.length > 0 ? segments : [{ text: "" }];
 			}
 
-
-			function getHaystack(faq)
+			function createResultItem(item)
 			{
+				const wrap = document.createElement("div");
+				wrap.className = "result-item";
 
-				const parts =
-					[faq.question, faq.category, faq.keywords.join(" ")];
+				const head = document.createElement("div");
+				head.className = "result-head";
 
-				faq.answer.forEach(function(segment)
+				const badge = document.createElement("span");
+				badge.className = "badge badge-purple";
+				badge.textContent = item.category || "General";
+
+				const question = document.createElement("span");
+				question.className = "result-question";
+				question.textContent = item.question;
+
+				head.append(badge, question);
+				wrap.append(head);
+
+
+				const answer = document.createElement("p");
+				answer.className = "result-answer";
+
+				answerSegments(String(item.answer || "")).forEach(function(segment)
 				{
-					parts.push(segment.text);
-				});
-
-				return parts.join(" ").toLowerCase();
-
-			}
-
-
-			function getScore(faq, query)
-			{
-
-				let score = 0;
-
-				if (faq.question.toLowerCase().includes(query))
-				{
-					score += 10;
-				}
-
-				if (faq.keywords.some(function(keyword)
-				{
-					return keyword.toLowerCase().includes(query);
-				}))
-				{
-					score += 5;
-				}
-
-				return score;
-
-			}
-
-
-			function getResults()
-			{
-
-				const query =
-					activeQuery.trim().toLowerCase();
-
-				let results =
-					faqs.filter(function(faq)
-					{
-
-						const inCategory =
-							activeCategory === "all" ||
-							faq.category === activeCategory;
-
-						if (!inCategory)
-						{
-							return false;
-						}
-
-						if (!query)
-						{
-							return true;
-						}
-
-						return getHaystack(faq).includes(query);
-
-					});
-
-
-				if (activeSort === "az")
-				{
-
-					results = results.slice().sort(function(a, b)
-					{
-						return a.question.localeCompare(b.question);
-					});
-
-				}
-				else if (query)
-				{
-
-					results = results.slice().sort(function(a, b)
-					{
-						return getScore(b, query) - getScore(a, query);
-					});
-
-				}
-
-				return results;
-
-			}
-
-
-			const feedbackIcons =
-			{
-				yes: "M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z",
-				no: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-			};
-
-
-			function createFeedback(faqId)
-			{
-
-				const box =
-					document.createElement("div");
-
-				box.className = "faq-feedback";
-
-
-				const label =
-					document.createElement("span");
-
-				label.className = "feedback-label";
-				label.textContent = "Was this answer helpful?";
-
-				box.append(label);
-
-
-				const buttons =
-					{};
-
-
-				[
-					{ vote: "yes", text: "Yes", aria: "Yes, this answer was helpful" },
-					{ vote: "no", text: "No", aria: "No, this answer was not helpful" }
-				].forEach(function(config)
-				{
-
-					const button =
-						document.createElement("button");
-
-					button.className = "feedback-button";
-					button.type = "button";
-					button.setAttribute("aria-label", config.aria);
-					button.setAttribute("aria-pressed", "false");
-
-
-					const svg =
-						document.createElementNS("http://www.w3.org/2000/svg", "svg");
-
-					svg.setAttribute("viewBox", "0 0 24 24");
-					svg.setAttribute("aria-hidden", "true");
-
-
-					const path =
-						document.createElementNS("http://www.w3.org/2000/svg", "path");
-
-					path.setAttribute("d", feedbackIcons[config.vote]);
-
-					svg.append(path);
-
-
-					const text =
-						document.createElement("span");
-
-					text.textContent = config.text;
-
-					button.append(svg, text);
-
-
-					button.addEventListener("click", function()
-					{
-
-						const previousVote = storedFeedback[faqId];
-
-						storedFeedback[faqId] = config.vote;
-
-						try
-						{
-							localStorage.setItem(
-								"edubridge-faq-feedback",
-								JSON.stringify(storedFeedback)
-							);
-						}
-						catch (error)
-						{
-							storedFeedback[faqId] = previousVote;
-							showToast("Failed to save your feedback. Please try again.", "error");
-							return;
-						}
-
-						buttons.yes.classList.remove("is-selected");
-						buttons.no.classList.remove("is-selected");
-						buttons.yes.setAttribute("aria-pressed", "false");
-						buttons.no.setAttribute("aria-pressed", "false");
-
-						button.classList.add("is-selected");
-						button.setAttribute("aria-pressed", "true");
-
-						thanks.hidden = false;
-
-						showToast("Thanks for your feedback!", "success");
-
-					});
-
-
-					buttons[config.vote] = button;
-
-					box.append(button);
-
-				});
-
-
-				const thanks =
-					document.createElement("p");
-
-				thanks.className = "feedback-thanks";
-				thanks.setAttribute("aria-live", "polite");
-				thanks.textContent = "Thanks for your feedback!";
-				thanks.hidden = !storedFeedback[faqId];
-
-				box.append(thanks);
-
-
-				if (storedFeedback[faqId])
-				{
-
-					const selected =
-						buttons[storedFeedback[faqId]];
-
-					selected.classList.add("is-selected");
-					selected.setAttribute("aria-pressed", "true");
-
-				}
-
-				return box;
-
-			}
-
-
-			function createFaqItem(faq, index)
-			{
-
-				const item =
-					document.createElement("article");
-
-				item.className = "faq-item";
-
-
-				const heading =
-					document.createElement("h3");
-
-
-				const button =
-					document.createElement("button");
-
-				button.className = "faq-question";
-				button.type = "button";
-				button.id = "faq-question-" + index;
-
-				button.setAttribute("aria-expanded", "false");
-				button.setAttribute("aria-controls", "faq-answer-" + index);
-
-
-				const label =
-					document.createElement("span");
-
-				label.textContent = faq.question;
-
-
-				const toggle =
-					document.createElement("span");
-
-				toggle.className = "faq-toggle";
-				toggle.setAttribute("aria-hidden", "true");
-
-				button.append(label, toggle);
-				heading.append(button);
-
-
-				const wrap =
-					document.createElement("div");
-
-				wrap.className = "faq-answer-wrap";
-				wrap.id = "faq-answer-" + index;
-
-				wrap.setAttribute("role", "region");
-				wrap.setAttribute("aria-labelledby", button.id);
-
-
-				const inner =
-					document.createElement("div");
-
-				inner.className = "faq-answer-inner";
-
-
-				const answer =
-					document.createElement("div");
-
-				answer.className = "faq-answer";
-
-
-				const paragraph =
-					document.createElement("p");
-
-				faq.answer.forEach(function(segment)
-				{
-
 					if (segment.href)
 					{
-
-						const link =
-							document.createElement("a");
-
+						const link = document.createElement("a");
 						link.href = segment.href;
 						link.textContent = segment.text;
-
-						paragraph.append(link);
-
+						answer.append(link);
 					}
 					else
 					{
-
-						paragraph.append(
-							document.createTextNode(segment.text)
-						);
-
+						answer.append(document.createTextNode(segment.text));
 					}
-
 				});
 
-
-				const feedback =
-					createFeedback(faq.id);
-
-				answer.append(paragraph, feedback);
-				inner.append(answer);
-				wrap.append(inner);
-				item.append(heading, wrap);
+				wrap.append(answer);
 
 
-				button.addEventListener("click", function()
+				if (item.matched && item.matched.length > 0)
 				{
+					const matched = document.createElement("div");
+					matched.className = "matched-row";
+					matched.append(document.createTextNode("Matched: "));
 
-					const open =
-						item.classList.toggle("open");
+					item.matched.forEach(function(token)
+					{
+						const chip = document.createElement("span");
+						chip.textContent = token;
+						matched.append(chip);
+					});
 
-					button.setAttribute(
-						"aria-expanded",
-						open ? "true" : "false"
-					);
+					wrap.append(matched);
+				}
 
-				});
-
-				return item;
-
+				return wrap;
 			}
 
+			const searchForm = document.getElementById("searchForm");
+			const searchInput = document.getElementById("searchInput");
+			const searchButton = document.getElementById("searchButton");
+			const clearButton = document.getElementById("clearSearch");
+			const searchSummary = document.getElementById("searchSummary");
+			const searchResults = document.getElementById("searchResults");
+			const searchIdle = document.getElementById("searchIdle");
+			const searchNoMatch = document.getElementById("searchNoMatch");
+			const searchError = document.getElementById("searchError");
 
-			function renderPagination(totalPages)
+			let lastQuery = "";
+
+			function showIdle()
 			{
+				searchIdle.hidden = false;
+				searchNoMatch.hidden = true;
+				searchError.hidden = true;
+				searchResults.hidden = true;
+				searchSummary.hidden = true;
+				searchResults.replaceChildren();
+			}
 
-				faqPagination.replaceChildren();
+			function runSearch(query)
+			{
+				const q = String(query || "").trim();
 
-
-				if (totalPages <= 1)
+				if (q.length < 2)
 				{
-					faqPagination.hidden = true;
+					showToast("Please enter at least 2 characters to search.");
 					return;
 				}
 
-				faqPagination.hidden = false;
+				lastQuery = q;
+				searchButton.disabled = true;
+				searchIdle.hidden = true;
+				searchNoMatch.hidden = true;
+				searchError.hidden = true;
+				searchResults.hidden = true;
+				searchSummary.hidden = false;
+				searchSummary.textContent = "Searching...";
 
-
-				const previous =
-					document.createElement("button");
-
-				previous.className = "page-button";
-				previous.type = "button";
-				previous.textContent = "Prev";
-
-				previous.disabled = currentPage === 1;
-
-				previous.addEventListener("click", function()
-				{
-
-					currentPage -= 1;
-
-					renderFaqs();
-
-				});
-
-				faqPagination.append(previous);
-
-
-				for (let page = 1; page <= totalPages; page += 1)
-				{
-
-					const number =
-						document.createElement("button");
-
-					number.className = "page-button";
-					number.type = "button";
-					number.textContent = String(page);
-
-					number.setAttribute("aria-label", "Page " + page);
-
-					if (page === currentPage)
+				EduAPI.get("/backend/api/search.php?q=" + encodeURIComponent(q))
+					.then(function(data)
 					{
-						number.classList.add("is-current");
-						number.setAttribute("aria-current", "page");
-					}
+						const matches = data.matches || [];
+						const suggestions = data.suggestions || [];
+						const items = matches.length > 0 ? matches : suggestions;
 
-					number.addEventListener("click", function()
-					{
-
-						currentPage = page;
-
-						renderFaqs();
-
-					});
-
-					faqPagination.append(number);
-
-				}
-
-
-				const next =
-					document.createElement("button");
-
-				next.className = "page-button";
-				next.type = "button";
-				next.textContent = "Next";
-
-				next.disabled = currentPage === totalPages;
-
-				next.addEventListener("click", function()
-				{
-
-					currentPage += 1;
-
-					renderFaqs();
-
-				});
-
-				faqPagination.append(next);
-
-			}
-
-
-			function renderFaqs()
-			{
-
-				try
-				{
-
-					if (faqs.length === 0)
-					{
-
-						faqList.replaceChildren();
-						faqList.hidden = true;
-
-						faqPagination.hidden = true;
-						faqCount.textContent = "0 questions";
-
-						faqStates.hidden = false;
-						faqStates.replaceChildren(
-							createCard(
-								"empty",
-								"No Questions Yet",
-								"There are no FAQ records available right now. Please check back later.",
-								"Submit an Inquiry",
-								function()
-								{
-									window.location.href = "studentinquiries.html";
-								}
-							)
-						);
-
-						return;
-
-					}
-
-
-					const results =
-						getResults();
-
-					const totalPages =
-						Math.max(1, Math.ceil(results.length / pageSize));
-
-					currentPage =
-						Math.min(currentPage, totalPages);
-
-
-					faqCount.textContent =
-						results.length === 1
-							? "1 question"
-							: results.length + " questions";
-
-
-					if (results.length === 0)
-					{
-
-						faqList.replaceChildren();
-						faqList.hidden = true;
-
-						faqPagination.hidden = true;
-
-						faqStates.hidden = false;
-						faqStates.replaceChildren(
-							createCard(
-								"empty",
-								"No Matching Questions",
-								"Try a different keyword or category, or clear the search to browse every question.",
-								"Clear Search",
-								clearSearch
-							)
-						);
-
-						return;
-
-					}
-
-
-					faqStates.replaceChildren();
-					faqStates.hidden = true;
-
-					faqList.hidden = false;
-					faqList.replaceChildren();
-
-
-					const start =
-						(currentPage - 1) * pageSize;
-
-					results
-						.slice(start, start + pageSize)
-						.forEach(function(faq, offset)
+						if (matches.length > 0)
 						{
-							faqList.append(
-								createFaqItem(faq, start + offset)
-							);
+							searchNoMatch.hidden = true;
+							searchSummary.textContent =
+								matches.length + (matches.length === 1 ? " FAQ matched" : " FAQs matched") +
+								" for \"" + q + "\"";
+						}
+						else
+						{
+							searchNoMatch.hidden = false;
+							searchSummary.textContent =
+								"No exact match for \"" + q + "\" — you might also find these helpful:";
+						}
+
+						if (items.length === 0)
+						{
+							searchResults.replaceChildren();
+							searchResults.hidden = true;
+							return;
+						}
+
+						searchResults.replaceChildren();
+						searchResults.hidden = false;
+
+						items.forEach(function(item)
+						{
+							searchResults.append(createResultItem(item));
 						});
-
-
-					renderPagination(totalPages);
-
-				}
-				catch (error)
-				{
-
-					faqList.replaceChildren();
-					faqList.hidden = true;
-
-					faqPagination.hidden = true;
-
-					faqStates.hidden = false;
-					faqStates.replaceChildren(
-						createCard(
-							"error",
-							"Unable to Load Data",
-							"We can't load the FAQ list right now. Please refresh the page.",
-							"Refresh Page",
-							function()
-							{
-								window.location.reload();
-							}
-						)
-					);
-
-				}
-
+					})
+					.catch(function(error)
+					{
+						searchIdle.hidden = true;
+						searchSummary.hidden = true;
+						searchResults.hidden = true;
+						searchNoMatch.hidden = true;
+						searchError.hidden = false;
+						showToast(error.message || "Search could not be completed.");
+					})
+					.then(function()
+					{
+						searchButton.disabled = false;
+					});
 			}
 
-
-			function updateCategories()
+			searchForm.addEventListener("submit", function(event)
 			{
-
-				const buttons =
-					categoryList.querySelectorAll(".category-button");
-
-				buttons.forEach(function(button)
-				{
-
-					const category =
-						button.dataset.category;
-
-					const count =
-						category === "all"
-							? faqs.length
-							: faqs.filter(function(faq)
-							{
-								return faq.category === category;
-							}).length;
-
-					button.querySelector(".category-count").textContent =
-						String(count);
-
-
-					const active =
-						category === activeCategory;
-
-					button.classList.toggle("is-active", active);
-
-					button.setAttribute(
-						"aria-pressed",
-						active ? "true" : "false"
-					);
-
-				});
-
-			}
-
-
-			function clearSearch()
-			{
-
-				faqSearch.value = "";
-
-				activeQuery = "";
-				activeCategory = "all";
-				faqCategories.hidden = true;
-				faqFilterButton.setAttribute("aria-expanded", "false");
-				currentPage = 1;
-
-				updateCategories();
-				renderFaqs();
-
-				faqSearch.focus();
-
-			}
-
-
-			faqFilterButton.addEventListener("click", function()
-			{
-				faqCategories.hidden = !faqCategories.hidden;
-				faqFilterButton.setAttribute("aria-expanded", String(!faqCategories.hidden));
-			});
-
-			faqSearchForm.addEventListener("submit", function(event)
-			{
-
 				event.preventDefault();
-
-				activeQuery = faqSearch.value.trim();
-				currentPage = 1;
-
-				renderFaqs();
-
+				runSearch(searchInput.value);
 			});
 
-
-			popularSearches.addEventListener("click", function(event)
+			clearButton.addEventListener("click", function()
 			{
+				searchInput.value = "";
+				lastQuery = "";
+				showIdle();
+			});
 
-				const chip =
-					event.target.closest(".search-chip");
+			document.getElementById("searchRetry").addEventListener("click", function()
+			{
+				if (lastQuery)
+				{
+					runSearch(lastQuery);
+				}
+			});
+
+			document.getElementById("suggestionChips").addEventListener("click", function(event)
+			{
+				const chip = event.target.closest(".search-chip");
 
 				if (!chip)
 				{
 					return;
 				}
 
-				faqSearch.value = chip.dataset.query;
-
-				activeQuery = chip.dataset.query.trim();
-				currentPage = 1;
-
-				renderFaqs();
-
+				searchInput.value = chip.dataset.query;
+				runSearch(chip.dataset.query);
 			});
 
-
-			categoryList.addEventListener("click", function(event)
+			function initPage(user)
 			{
+				showIdle();
 
-				const button =
-					event.target.closest(".category-button");
+				const initial = new URLSearchParams(window.location.search).get("q");
 
-				if (!button)
+				if (initial)
 				{
-					return;
+					searchInput.value = initial;
+					runSearch(initial);
 				}
+			}
 
-				activeCategory = button.dataset.category;
-				faqCategories.hidden = true;
-				faqFilterButton.setAttribute("aria-expanded", "false");
-				currentPage = 1;
+			EduAPI.me()
+				.then(function(data)
+				{
+					if (!data.user)
+					{
+						window.location.href = "/login.html";
+						return null;
+					}
 
-				updateCategories();
-				renderFaqs();
+					if (data.user.role === "admin")
+					{
+						window.location.href = "/admin-dashboard.html";
+						return null;
+					}
 
-			});
+					const navProfile = document.querySelector(".nav-profile");
+					const navName = navProfile ? navProfile.querySelector(".nav-profile-text strong") : null;
+					const navRole = navProfile ? navProfile.querySelector(".nav-profile-text small") : null;
+
+					if (navName && data.user.name)
+					{
+						navName.textContent = data.user.name;
+					}
+
+					if (navRole)
+					{
+						navRole.textContent = data.user.role === "teacher" ? "Teacher" : "Student";
+					}
+
+					if (navProfile)
+					{
+						navProfile.setAttribute("href", "student-profile.html");
+					}
+
+					return initPage(data.user);
+				})
+				.catch(function(error)
+				{
+					if (error && error.status === 401)
+					{
+						window.location.href = "/login.html";
+						return;
+					}
+
+					showToast(error.message || "The page could not be loaded.");
+				});
 
 
-			sortSelect.addEventListener("change", function()
-			{
-
-				activeSort = sortSelect.value;
-				currentPage = 1;
-
-				renderFaqs();
-
-			});
-
-
-			updateCategories();
-			renderFaqs();
 		}
 		catch (error)
 		{
 			document.body.classList.remove("js");
 		}
 	</script>
-<script>
-(function () {
-	const trigger = document.getElementById("profileMenuButton");
-	const menu = document.getElementById("profileMenu");
-	const logout = document.getElementById("logoutButton");
-	if (!trigger || !menu) return;
-	const nameLabel = trigger.querySelector('.profile-label');
-	try { const savedProfile = JSON.parse(localStorage.getItem('edubridge-profile') || '{}'); const savedName = typeof savedProfile.fullName === 'string' ? savedProfile.fullName.trim() : ''; if (savedName && nameLabel) nameLabel.textContent = savedName; } catch (_) {}
-	function closeMenu() { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); trigger.setAttribute("aria-label", "Open account menu"); }
-	trigger.addEventListener("click", function () {
-		const open = menu.hidden;
-		menu.hidden = !open;
-		trigger.setAttribute("aria-expanded", String(open) );
-		trigger.setAttribute("aria-label", open ? "Close account menu" : "Open account menu");
-	});
-	document.addEventListener("click", function (event) {
-		if (!event.target.closest(".profile-menu-wrap")) closeMenu();
-	});
-	document.addEventListener("keydown", function (event) {
-		if (event.key === "Escape") { closeMenu(); trigger.focus(); }
-	});
-	if (logout) logout.addEventListener("click", function () {
-		if (!window.confirm("Are you sure you want to log out?")) return;
-		sessionStorage.removeItem("edubridge-session");
-		sessionStorage.removeItem("edubridge-auth");
-		localStorage.removeItem("edubridge-session");
-		localStorage.removeItem("edubridge-auth");
-		window.location.href = "about.html";
-	});
-})();
-</script>
+
 </body>
-</html>
-
-
-
-
-
-
-
-
 
 
 
