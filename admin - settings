@@ -2,7 +2,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Respond to Inquiry | EduBridge</title>
+	<title>Settings | EduBridge</title>
 	<style>
 		*
 		{
@@ -26,7 +26,7 @@
 			--green: #1f9d63;
 			--green-soft: #e7f6ee;
 			--red: #d64550;
-		 	--red-soft: #fdeced;
+			--red-soft: #fdeced;
 			--shadow: rgba(40, 24, 75, 0.08);
 			--mission-text: #eee8f6;
 		}
@@ -588,8 +588,8 @@
 
 		.hero
 		{
-			min-height: 400px;
-			padding: 112px 36px 56px;
+			min-height: 470px;
+			padding: 130px 36px 70px;
 			display: flex;
 			align-items: center;
 			position: relative;
@@ -809,7 +809,7 @@
 			max-width: 1180px;
 			margin-left: auto;
 			margin-right: auto;
-			padding: 24px 0 45px;
+			padding: 45px 0;
 		}
 
 		.announcements-section
@@ -820,7 +820,7 @@
 		.section-heading
 		{
 			text-align: center;
-			margin-bottom: 24px;
+			margin-bottom: 30px;
 		}
 
 		.section-label
@@ -847,23 +847,6 @@
 			color: var(--text-muted);
 			font-size: 13px;
 			line-height: 1.7;
-		}
-
-		.response-workspace-heading
-		{
-			margin-bottom: 14px;
-			text-align: left;
-		}
-
-		.response-workspace-heading h2
-		{
-			margin-bottom: 5px;
-		}
-
-		.response-workspace-heading p
-		{
-			max-width: 660px;
-			margin: 0;
 		}
 
 		.toolbar
@@ -2496,10 +2479,6 @@
 			.inquiry-section,
 			.inquiry-section .mission-icon,
 			.hero-image,
-			.editor-shell,
-			.confirm-overlay,
-			.attach-button,
-			.response-back-link,
 			.state-card,
 			.state-icon,
 			.state-button,
@@ -2528,6 +2507,41 @@
 					display: grid;
 					grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 					gap: 18px;
+			}
+	
+			.stat-card
+			{
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					padding: 20px;
+					box-shadow: 0 12px 30px var(--shadow);
+			}
+	
+			.stat-card .stat-label
+			{
+					display: block;
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 0.6px;
+					text-transform: uppercase;
+					color: var(--text-muted);
+					margin-bottom: 8px;
+			}
+	
+			.stat-card .stat-value
+			{
+					font-size: 30px;
+					font-weight: 700;
+					color: var(--purple);
+			}
+	
+			.stat-card .stat-hint
+			{
+					display: block;
+					font-size: 11.5px;
+					color: var(--text-muted);
+					margin-top: 6px;
 			}
 	
 			.panel
@@ -2606,6 +2620,71 @@
 			.table-wrap
 			{
 					overflow-x: auto;
+			}
+	
+			.data-table
+			{
+					width: 100%;
+					border-collapse: collapse;
+					font-size: 13px;
+					min-width: 640px;
+			}
+	
+			.data-table th,
+			.data-table td
+			{
+					text-align: left;
+					padding: 13px 12px;
+					border-bottom: 1px solid var(--border);
+					color: var(--text-soft);
+					vertical-align: top;
+			}
+	
+			.data-table th
+			{
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 0.6px;
+					text-transform: uppercase;
+					color: var(--text);
+			}
+	
+			.data-table tbody tr:last-child td
+			{
+					border-bottom: 0;
+			}
+	
+			.data-table select
+			{
+					padding: 8px 10px;
+					border-radius: 8px;
+					border: 1px solid var(--border);
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 12.5px;
+			}
+	
+			.data-table details summary
+			{
+					cursor: pointer;
+					font-size: 12.5px;
+					font-weight: 600;
+					color: var(--purple);
+			}
+	
+			.data-table details p
+			{
+					margin-top: 8px;
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.status-cell select
+			{
+					display: block;
+					margin-top: 8px;
 			}
 	
 			.btn
@@ -3074,992 +3153,271 @@
 					display: none;
 			}
 
-			.response-back-link
-			{
-				display: inline-flex;
-				align-items: center;
-				gap: 7px;
-				height: 36px;
-				padding: 0 15px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: var(--surface);
-				color: var(--purple);
-				font-size: 12px;
-				font-weight: 600;
-				text-decoration: none;
-				margin-bottom: 18px;
-				transition: 0.2s ease;
-			}
-
-			.response-back-link svg
-			{
-				width: 14px;
-				height: 14px;
-				fill: currentColor;
-			}
-
-			.response-back-link:hover
-			{
-				border-color: var(--purple);
-				background: var(--purple-light);
-				color: var(--purple);
-				transform: translateY(-1px);
-			}
-
-			.detail-status
-			{
-				display: inline-flex;
-				align-items: center;
-			}
-
-			#responseWorkflow
-			{
-					display: grid;
-					grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-					gap: 18px;
-					align-items: start;
-			}
-
-			.response-panel
-			{
-					min-width: 0;
-					padding: 22px;
-					border-radius: 14px;
-			}
-
-			#responseWorkflow .panel + .panel
-			{
-					margin-top: 0;
-			}
-
-			.response-panel-title
-			{
-					margin: 0 0 14px;
-					color: var(--text);
-					font-size: 15px;
-					font-weight: 600;
-			}
-
-			.response-panel-heading
+			.settings-nav
 			{
 					display: flex;
-					align-items: center;
-					justify-content: space-between;
 					flex-wrap: wrap;
-					gap: 12px;
-					margin-bottom: 14px;
+					gap: 10px;
+					margin-bottom: 20px;
 			}
 
-			.response-panel-heading .response-panel-title
+			.settings-tab
 			{
-					margin: 0;
-			}
-
-			.response-count
-			{
-					margin: 6px 0 0;
-					color: var(--text-muted);
-					font-size: 11px;
-			}
-
-			.response-recipient
-			{
-					display: inline-flex;
-					align-items: center;
-					max-width: 100%;
-					margin: -3px 0 15px;
-					padding: 6px 10px;
+					padding: 10px 18px;
 					border: 1px solid var(--border);
-					border-radius: 7px;
-					background: var(--surface-soft);
+					border-radius: 999px;
+					background: var(--surface);
 					color: var(--text-soft);
-					font-size: 12px;
-					overflow-wrap: anywhere;
-			}
-
-			.response-draft-note
-			{
-					margin: 6px 0 0;
-					color: var(--purple);
-					font-size: 11px;
+					font-family: inherit;
+					font-size: 13px;
 					font-weight: 600;
+					cursor: pointer;
+					transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 			}
 
-			.inquiry-identity
+			.settings-tab:hover
 			{
-				display: flex;
-				align-items: center;
-				gap: 13px;
-				padding: 13px 15px;
-				margin-bottom: 16px;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				background: var(--surface-soft);
-			}
-
-			.inquiry-avatar
-			{
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 42px;
-				height: 42px;
-				flex-shrink: 0;
-				border-radius: 50%;
-				background: linear-gradient(135deg, #7138c8, #a06be0);
-				color: #ffffff;
-				font-size: 14px;
-				font-weight: 700;
-			}
-
-			.inquiry-identity-copy
-			{
-				min-width: 0;
-			}
-
-			.inquiry-identity-label
-			{
-				margin: 0 0 3px;
-				color: var(--text-muted);
-				font-size: 10px;
-				font-weight: 600;
-				letter-spacing: 0.8px;
-				text-transform: uppercase;
-			}
-
-			.inquiry-identity-name
-			{
-				margin: 0;
-				color: var(--text);
-				font-size: 15px;
-				font-weight: 600;
-				word-break: break-word;
-			}
-
-			.inquiry-icon
-			{
-				display: inline-flex;
-				width: 13px;
-				height: 13px;
-				margin-right: 6px;
-				color: var(--purple);
-				vertical-align: -2px;
-			}
-
-			.inquiry-icon svg
-			{
-				width: 100%;
-				height: 100%;
-				fill: currentColor;
-			}
-
-			.mg-detail-label.inquiry-label
-			{
-				display: inline-flex;
-				align-items: center;
-			}
-
-			.inquiry-field--emphasis .mg-detail-value
-			{
-				font-size: 14px;
-				font-weight: 600;
-				color: var(--text);
-			}
-
-			.inquiry-field--message
-			{
-				padding: 13px 15px;
-				border-left: 3px solid var(--purple);
-				border-radius: 0 10px 10px 0;
-				background: var(--surface-soft);
-			}
-
-			.inquiry-field--message .mg-detail-value
-			{
-				color: var(--text-soft);
-				line-height: 1.75;
-				white-space: pre-wrap;
-				word-break: break-word;
-			}
-
-			.response-editor-label
-			{
-				display: block;
-				margin: 0 0 6px;
-				color: var(--text);
-				font-size: 12px;
-				font-weight: 600;
-			}
-
-			.editor-shell
-			{
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				background: var(--surface-soft);
-				transition: 0.2s ease;
-			}
-
-			.editor-shell:focus-within
-			{
-				border-color: var(--purple);
-				box-shadow: 0 0 0 3px var(--purple-light);
-			}
-
-			.editor-shell.is-invalid
-			{
-				border-color: var(--red);
-			}
-
-			.editor-shell textarea
-			{
-				width: 100%;
-				min-height: 210px;
-				max-height: 360px;
-				padding: 14px 15px;
-				border: none;
-				border-radius: 10px;
-				background: transparent;
-				color: var(--text);
-				font-family: inherit;
-				font-size: 13px;
-				line-height: 1.7;
-				outline: none;
-				resize: vertical;
-			}
-
-			.editor-shell textarea:focus
-			{
-				border-color: transparent;
-				box-shadow: none;
-			}
-
-			.editor-shell textarea::placeholder
-			{
-				color: var(--text-muted);
-			}
-
-			.response-guide
-			{
-				margin: 8px 0 0;
-				color: var(--text-muted);
-				font-size: 11px;
-				line-height: 1.6;
-			}
-
-			.confirm-overlay
-			{
-				position: fixed;
-				inset: 0;
-				z-index: 2000;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				padding: 20px;
-				background: rgba(8, 6, 24, 0.55);
-			}
-
-			.confirm-dialog
-			{
-				width: 100%;
-				max-width: 380px;
-				padding: 22px;
-				border: 1px solid var(--border);
-				border-radius: 14px;
-				background: var(--surface);
-				box-shadow: 0 24px 60px rgba(10, 5, 35, 0.35);
-			}
-
-			.confirm-title
-			{
-				margin: 0 0 8px;
-				color: var(--text);
-				font-size: 16px;
-				font-weight: 600;
-			}
-
-			.confirm-text
-			{
-				margin: 0;
-				color: var(--text-soft);
-				font-size: 12.5px;
-				line-height: 1.7;
-			}
-
-			.confirm-dialog .modal-actions
-			{
-				margin-top: 18px;
-			}
-
-			.history-section
-			{
-				margin-top: 18px;
-				padding-top: 16px;
-				border-top: 1px solid var(--border);
-			}
-
-			.history-title
-			{
-				margin: 0 0 12px;
-				color: var(--text);
-				font-size: 12px;
-				font-weight: 600;
-				letter-spacing: 0.6px;
-				text-transform: uppercase;
-			}
-
-			.history-list
-			{
-				display: grid;
-				gap: 10px;
-			}
-
-			.history-item
-			{
-				padding: 12px 14px;
-				border: 1px solid var(--border);
-				border-left: 3px solid var(--purple);
-				border-radius: 10px;
-				background: var(--surface-soft);
-			}
-
-			.history-head
-			{
-				display: flex;
-				flex-wrap: wrap;
-				align-items: center;
-				gap: 8px;
-				margin-bottom: 8px;
-			}
-
-			.history-chip
-			{
-				display: inline-flex;
-				align-items: center;
-				padding: 2px 9px;
-				border-radius: 999px;
-				background: var(--purple-light);
-				color: var(--purple);
-				font-size: 9.5px;
-				font-weight: 700;
-				letter-spacing: 0.6px;
-				text-transform: uppercase;
-			}
-
-			.history-meta
-			{
-				color: var(--text-muted);
-				font-size: 10.5px;
-			}
-
-			.history-text
-			{
-				margin: 0;
-				color: var(--text-soft);
-				font-size: 12px;
-				line-height: 1.7;
-				white-space: pre-wrap;
-				word-break: break-word;
-			}
-
-			.history-files
-			{
-				display: flex;
-				flex-wrap: wrap;
-				gap: 10px;
-				margin: 8px 0 0;
-				padding: 0;
-				list-style: none;
-			}
-
-			.history-file
-			{
-				color: var(--purple);
-				font-size: 11px;
-				font-weight: 600;
-				text-decoration: none;
-			}
-
-			.history-file:hover
-			{
-				text-decoration: underline;
-			}
-
-			.response-attach
-			{
-				margin: 12px 0 0;
-			}
-
-			.attach-button
-			{
-				display: inline-flex;
-				align-items: center;
-				gap: 7px;
-				height: 36px;
-				padding: 0 14px;
-				border: 1px solid var(--border);
-				border-radius: 7px;
-				background: var(--surface);
-				color: var(--purple);
-				font-size: 11px;
-				font-weight: 600;
-				cursor: pointer;
-				transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-			}
-
-			.attach-button:hover
-			{
-				border-color: var(--purple);
-				background: var(--purple-light);
-				transform: translateY(-1px);
-			}
-
-			.attach-button svg
-			{
-				width: 13px;
-				height: 13px;
-				fill: currentColor;
-			}
-
-			.attach-hint
-			{
-				margin: 0;
-				color: var(--text-muted);
-				font-size: 10px;
-				line-height: 1.5;
-			}
-
-			.attach-meta
-			{
-				display: flex;
-				align-items: baseline;
-				justify-content: space-between;
-				flex-wrap: wrap;
-				gap: 3px 12px;
-				margin-top: 6px;
-			}
-
-			.attach-total
-			{
-				color: var(--text-soft);
-				font-size: 10px;
-				font-weight: 600;
-			}
-
-			.attach-list
-			{
-				display: grid;
-				gap: 6px;
-				margin: 10px 0 0;
-				padding: 0;
-				list-style: none;
-			}
-
-			.attach-item
-			{
-				display: flex;
-				flex-wrap: wrap;
-				align-items: center;
-				gap: 10px;
-				padding: 8px 12px;
-				border: 1px solid var(--border);
-				border-radius: 8px;
-				background: var(--surface-soft);
-			}
-
-			.attach-name
-			{
-				color: var(--purple);
-				font-size: 11.5px;
-				font-weight: 600;
-				text-decoration: none;
-				word-break: break-all;
-			}
-
-			.attach-name:hover
-			{
-				text-decoration: underline;
-			}
-
-			.attach-size
-			{
-				color: var(--text-muted);
-				font-size: 10px;
-			}
-
-			.attach-remove
-			{
-				margin-left: auto;
-				padding: 0;
-				border: none;
-				background: none;
-				color: var(--red);
-				font-family: inherit;
-				font-size: 10.5px;
-				font-weight: 600;
-				cursor: pointer;
-			}
-
-			.attach-remove:hover
-			{
-				text-decoration: underline;
-			}
-
-			#responseEditorPanel .modal-actions
-			{
-				gap: 8px;
-				margin-top: 16px;
-			}
-
-			#responseEditorPanel .cancel-button,
-			#responseEditorPanel .modal-save
-			{
-				min-height: 38px;
-				padding-right: 14px;
-				padding-left: 14px;
-				border-radius: 7px;
-			}
-
-			#responseEditorPanel .modal-save
-			{
-				background: linear-gradient(135deg, #7138c8, #8b50d7);
-				box-shadow: 0 5px 14px rgba(89, 42, 155, 0.2);
-			}
-
-			#responseEditorPanel .modal-save:hover
-			{
-				background: linear-gradient(135deg, #642fb5, #7d43c9);
-			}
-
-			@media (max-width: 900px)
-			{
-				#responseWorkflow
-				{
-					grid-template-columns: minmax(0, 1fr);
-				}
-			}
-
-			@media (max-width: 600px)
-			{
-				.response-workspace-heading
-				{
-					margin-bottom: 12px;
-				}
-
-				.response-workspace-heading h2
-				{
-					font-size: 26px;
-				}
-
-				.response-panel
-				{
-					padding: 18px;
-				}
-
-				.editor-shell textarea
-				{
-					min-height: 190px;
-				}
-
-				#responseEditorPanel .modal-actions
-				{
-					display: grid;
-					grid-template-columns: repeat(2, minmax(0, 1fr));
-				}
-
-				#responseEditorPanel #responseSend
-				{
-					grid-column: 1 / -1;
-					grid-row: 1;
-				}
-
-				#responseEditorPanel .cancel-button,
-				#responseEditorPanel .modal-save
-				{
-					width: 100%;
-				}
-			}
-
-			.receipt-files
-			{
-				display: flex;
-				flex-wrap: wrap;
-				align-items: center;
-				gap: 10px;
-				margin-top: 14px;
-				padding: 12px 15px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				background: var(--surface-soft);
-			}
-
-			.receipt-file
-			{
-				color: var(--purple);
-				font-size: 11.5px;
-				font-weight: 600;
-				text-decoration: none;
-			}
-
-			.receipt-file:hover
-			{
-				text-decoration: underline;
-			}
-
-			.receipt-head
-			{
-					display: flex;
-					align-items: center;
-					gap: 14px;
-					margin-bottom: 18px;
-					padding-bottom: 16px;
-					border-bottom: 1px solid var(--border);
-			}
-
-			.receipt-icon
-			{
-					display: flex;
-					width: 46px;
-					height: 46px;
-					flex-shrink: 0;
-					align-items: center;
-					justify-content: center;
-					border-radius: 50%;
 					background: var(--purple-light);
 					color: var(--purple);
 			}
 
-			.receipt-icon svg
+			.settings-tab[aria-selected="true"]
 			{
-					width: 22px;
-					height: 22px;
-					fill: none;
-					stroke: currentColor;
-					stroke-width: 2.5;
-					stroke-linecap: round;
-					stroke-linejoin: round;
-			}
-
-			.receipt-title
-			{
-					margin: 0;
-					color: var(--text);
-					font-size: 17px;
-					font-weight: 700;
-			}
-
-			.receipt-subtitle
-			{
-					margin: 4px 0 0;
-					color: var(--text-muted);
-					font-size: 12px;
-			}
-
-			.receipt-response
-			{
-					margin-top: 16px;
-					padding: 14px;
-					border: 1px solid var(--border);
-					border-radius: 6px;
-					background: var(--surface-soft);
-			}
-
-			.receipt-response .mg-detail-label
-			{
-					display: block;
-					margin-bottom: 7px;
-					color: var(--text-muted);
-					font-size: 11px;
-					font-weight: 600;
-					letter-spacing: 0.4px;
-					text-transform: uppercase;
-			}
-
-			.receipt-response p
-			{
-					margin: 0;
-					color: var(--text-soft);
-					font-size: 13px;
-					line-height: 1.7;
-					white-space: pre-wrap;
-			}
-
-			@media print
-			{
-					.navbar,
-					.hero,
-					footer,
-					.toast,
-					.response-back-link,
-					.receipt-actions
-					{
-							display: none !important;
-					}
-
-					body
-					{
-							background: #fff !important;
-					}
-
-					.content-section
-					{
-							padding: 0;
-							max-width: none;
-					}
-
-					#responseReceipt
-					{
-							border: none;
-							box-shadow: none;
-							padding: 0;
-					}
-			}
-
-			.form-group
-			{
-					margin-bottom: 15px;
-			}
-
-			.form-group label
-			{
-					display: block;
-					color: var(--text);
-					font-size: 11px;
-					font-weight: 600;
-					margin-bottom: 7px;
-			}
-
-			.form-group input,
-			.form-group select,
-			.form-group textarea
-			{
-					width: 100%;
-					border: 1px solid var(--border);
-					border-radius: 5px;
-					background: var(--surface-soft);
-					color: var(--text);
-					font-family: inherit;
-					font-size: 12px;
-					outline: none;
-					transition: 0.2s ease;
-			}
-
-			.form-group input,
-			.form-group select
-			{
-					height: 40px;
-					padding: 0 12px;
-			}
-
-			.form-group textarea
-			{
-					min-height: 220px;
-					padding: 10px 12px;
-					line-height: 1.6;
-					resize: vertical;
-			}
-
-			.form-group input::placeholder,
-			.form-group textarea::placeholder
-			{
-					color: var(--text-muted);
-			}
-
-			.form-group input:focus,
-			.form-group select:focus,
-			.form-group textarea:focus
-			{
+					background: var(--purple);
 					border-color: var(--purple);
-					box-shadow: 0 0 0 3px var(--purple-light);
+					color: #ffffff;
+					box-shadow: 0 10px 22px rgba(113, 56, 200, 0.28);
 			}
 
-			.form-group input.is-invalid,
-			.form-group textarea.is-invalid
+			.settings-panels
 			{
-					border-color: var(--red);
-					box-shadow: 0 0 0 3px var(--red-soft);
+					display: grid;
+					gap: 20px;
 			}
 
-			.field-error
+			.settings-panels .panel
 			{
-					margin: 5px 0 0;
-					color: var(--red);
-					font-size: 11px;
-					line-height: 1.4;
+					margin-top: 0;
 			}
 
-			.field-error:empty
+			.panel-subheading
 			{
-					display: none;
+					margin-top: 26px;
+					padding-top: 20px;
+					border-top: 1px solid var(--border);
+					font-size: 11.5px;
+					font-weight: 700;
+					letter-spacing: 0.14em;
+					text-transform: uppercase;
+					color: var(--text-muted);
 			}
 
-			.modal-actions
+			.pref-group-label
+			{
+					margin-top: 24px;
+					font-size: 11.5px;
+					font-weight: 700;
+					letter-spacing: 0.14em;
+					text-transform: uppercase;
+					color: var(--text-muted);
+			}
+
+			.theme-options
 			{
 					display: flex;
 					flex-wrap: wrap;
-					justify-content: flex-end;
 					gap: 10px;
-					margin-top: 18px;
 			}
 
-			.modal-actions .cancel-button,
-			.modal-actions .modal-save,
-			.modal-actions .btn
+			.theme-options .btn[aria-pressed="true"]
 			{
-					height: 36px;
-					font-size: 11.5px;
-			}
-
-			.cancel-button
-			{
-					height: 40px;
-					display: inline-flex;
-					align-items: center;
-					justify-content: center;
-					padding: 0 18px;
-					border: 1px solid var(--border);
-					border-radius: 5px;
-					background: var(--surface-soft);
-					color: var(--text-soft);
-					font-family: inherit;
-					font-size: 12px;
-					font-weight: 600;
-					cursor: pointer;
-					transition: 0.2s ease;
-			}
-
-			.cancel-button:hover
-			{
+					background: var(--purple);
 					border-color: var(--purple);
-					color: var(--purple);
+					color: #ffffff;
+					box-shadow: 0 10px 22px rgba(113, 56, 200, 0.28);
 			}
 
-			.modal-save
+			.hint-text
 			{
-					display: inline-flex;
+					margin-top: 12px;
+					font-size: 12.5px;
+					color: var(--text-soft);
+					line-height: 1.6;
+			}
+
+			.two-cols
+			{
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+					gap: 14px;
+			}
+
+			.cover-preview
+			{
+					position: relative;
+					height: 170px;
+					border-radius: 12px;
+					overflow: hidden;
+					border: 1px solid var(--border);
+					background:
+							radial-gradient(circle at 22% 28%, rgba(113, 56, 200, 0.4), transparent 55%),
+							radial-gradient(circle at 78% 72%, rgba(233, 79, 142, 0.28), transparent 55%),
+							#0d0a26;
+					margin-bottom: 20px;
+			}
+
+			.cover-preview img
+			{
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					display: block;
+			}
+
+			.display-preview
+			{
+					display: flex;
 					align-items: center;
-					justify-content: center;
-					text-decoration: none;
-					padding: 0 16px;
-					border: none;
-					border-radius: 5px;
-					background: #7138c8;
-					color: white;
-					font-family: inherit;
+					gap: 14px;
+					padding: 14px 16px;
+					border: 1px solid var(--border);
+					border-radius: 12px;
+					background: var(--surface-soft);
+					margin-bottom: 20px;
+			}
+
+			.display-preview img
+			{
+					width: 46px;
+					height: 46px;
+					border-radius: 50%;
+					object-fit: cover;
+					border: 2px solid var(--purple-light);
+			}
+
+			.display-preview small
+			{
+					display: block;
 					font-size: 11.5px;
-					font-weight: 600;
+					color: var(--text-muted);
+					margin-bottom: 2px;
+			}
+
+			.display-preview strong
+			{
+					font-size: 15px;
+					color: var(--text);
+			}
+
+			.avatar-row
+			{
+					display: flex;
+					align-items: center;
+					gap: 16px;
+					flex-wrap: wrap;
+			}
+
+			.avatar-preview
+			{
+					width: 72px;
+					height: 72px;
+					border-radius: 50%;
+					object-fit: cover;
+					border: 3px solid var(--purple-light);
+					background: var(--surface-soft);
+					flex-shrink: 0;
+			}
+
+			.upload-row
+			{
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					flex-wrap: wrap;
+			}
+
+			.char-counter
+			{
+					font-size: 12px;
+					color: var(--text-muted);
+					text-align: right;
+			}
+
+			#bioInput
+			{
+					min-height: 96px;
+			}
+
+			.pref-toggle
+			{
+					position: relative;
+					width: 44px;
+					height: 24px;
+					flex-shrink: 0;
+			}
+
+			.pref-toggle input
+			{
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					margin: 0;
+					opacity: 0;
 					cursor: pointer;
-					transition: 0.25s ease;
+					z-index: 1;
 			}
 
-			.modal-save:hover
+			.toggle-track
 			{
-					background: #5f2fb0;
-					transform: translateY(-2px);
+					position: absolute;
+					inset: 0;
+					border-radius: 999px;
+					background: var(--surface-soft);
+					border: 1px solid var(--border);
+					pointer-events: none;
+					transition: background 0.15s ease, border-color 0.15s ease;
 			}
 
-			.modal-save--danger
+			.toggle-track::after
 			{
-					background: var(--red);
+					content: "";
+					position: absolute;
+					top: 2px;
+					left: 2px;
+					width: 18px;
+					height: 18px;
+					border-radius: 50%;
+					background: var(--text-muted);
+					transition: transform 0.15s ease, background 0.15s ease;
 			}
 
-			.modal-save--danger:hover
+			.pref-toggle input:checked + .toggle-track
 			{
-					background: #b93944;
+					background: var(--purple);
+					border-color: var(--purple);
 			}
 
-			.modal-close:focus-visible,
-			.cancel-button:focus-visible,
-			.modal-save:focus-visible
+			.pref-toggle input:checked + .toggle-track::after
 			{
-					outline: 2px solid var(--purple);
+					transform: translateX(20px);
+					background: #ffffff;
+			}
+
+			.pref-toggle input:focus-visible + .toggle-track
+			{
+					outline: 2px solid #a970ff;
 					outline-offset: 2px;
 			}
 
-			.modal-save:active
+			.readonly-note
 			{
-				transform: translateY(0) scale(0.97);
-			}
-
-			.modal-save[disabled]
-			{
-				opacity: 0.6;
-				cursor: not-allowed;
-				transform: none;
-			}
-
-			.mg-detail-grid
-			{
-					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-					gap: 12px 18px;
-					margin-bottom: 16px;
-			}
-
-			.mg-detail-field
-			{
-					display: flex;
-					flex-direction: column;
-					gap: 4px;
-			}
-
-			.mg-detail-field--wide
-			{
-					grid-column: 1 / -1;
-			}
-
-			.mg-detail-label
-			{
-					font-size: 10.5px;
-					font-weight: 700;
-					letter-spacing: 0.08em;
-					text-transform: uppercase;
-					color: var(--text-muted);
-			}
-
-			.mg-detail-value
-			{
-					color: var(--text);
+					margin-top: 18px;
 					font-size: 12.5px;
-					line-height: 1.6;
-					white-space: pre-wrap;
-			}
-
-			.mg-response-heading
-			{
-					margin: 18px 0 8px;
-					color: var(--text);
-					font-size: 13px;
-					font-weight: 600;
-			}
-
-			.mg-conversation-meta
-			{
-					display: flex;
-					justify-content: space-between;
-					gap: 10px;
-					margin-bottom: 4px;
-					font-size: 11px;
 					color: var(--text-muted);
-			}
-
-			.mg-conversation-author
-			{
-					color: var(--purple);
-					font-weight: 600;
-			}
-
-			.mg-empty-note
-			{
-					border: 1px dashed var(--border);
-					border-radius: 6px;
-					padding: 12px 14px;
-					margin-bottom: 14px;
-					color: var(--text-muted);
-					font-size: 12.5px;
 					line-height: 1.6;
 			}
-
+	
 			@media (max-width: 700px)
 			{
 					.list-row
@@ -4083,27 +3441,35 @@
 										grid-template-columns: 92px 1fr 40px;
 										gap: 10px;
 								}
+	
+								.cover-preview
+								{
+										height: 130px;
+								}
 			}
 	
 			@media (prefers-reduced-motion: reduce)
 			{
 					.btn,
 					.quick-card,
-					.modal-save
+					.settings-tab,
+					.toggle-track,
+					.pref-toggle .toggle-track::after
 					{
 								transition: none;
 								}
-
+	
 								.btn:hover,
 								.quick-card:hover,
 								.quick-card:focus-visible,
-								.modal-save:hover
+								.settings-tab:hover
 								{
 										transform: none;
 								}
 			}
 
 	</style>
+			<link rel="stylesheet" href="profile-settings-theme.css">
 </head>
 <body>
 	<div class="cursor-gradient">
@@ -4142,7 +3508,7 @@
 				FAQs
 			</a>
 
-			<a href="admin-inquirymanagement.html">
+			<a href="inquiries.html">
 				Inquiries
 			</a>
 
@@ -4228,15 +3594,15 @@
 		<div class="hero-content">
 
 			<div class="hero-label">
-				STUDENT SUPPORT
+				ADMIN SETTINGS
 			</div>
 
 			<h1>
-				Respond to Inquiry
+				Settings
 			</h1>
 
 			<p>
-				Review the student's concern and prepare a helpful response.
+				Manage administrative preferences and EduBridge configuration.
 			</p>
 
 		</div>
@@ -4246,233 +3612,512 @@
 
 	<main>
 
-		<section class="content-section">
+		<section class="content-section reveal">
 
-			<div class="section-heading response-workspace-heading">
+			<div class="section-heading">
 
 				<div class="section-label">
-					RESPONSE WORKSPACE
+					PREFERENCES
 				</div>
 
 				<h2>
-					Respond to Inquiry
+					Your Settings
 				</h2>
 
 				<p>
-					Review the student's concern and prepare a clear, helpful response.
+					Choose a category to manage your admin profile, appearance, notifications, and announcement defaults.
 				</p>
 
 			</div>
 
-			<a class="response-back-link" href="admin-inquirymanagement.html">
-				<svg viewBox="0 0 24 24" aria-hidden="true">
-					<path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z">
-					</path>
-				</svg>
+			<div class="settings-nav" role="tablist" aria-label="Settings categories">
 
-				Back to Inquiries
-			</a>
+				<button class="settings-tab" type="button" role="tab" id="tab-profile" aria-selected="true" aria-controls="panel-profile" data-panel="profile">
+					Admin Profile
+				</button>
 
-			<div class="state-card" id="roleBlockedState" role="status" hidden>
+				<button class="settings-tab" type="button" role="tab" id="tab-appearance" aria-selected="false" tabindex="-1" aria-controls="panel-appearance" data-panel="appearance">
+					Appearance
+				</button>
 
-				<h3 class="state-title">
-					Admin workflow
-				</h3>
+				<button class="settings-tab" type="button" role="tab" id="tab-notifications" aria-selected="false" tabindex="-1" aria-controls="panel-notifications" data-panel="notifications">
+					Admin Notifications
+				</button>
 
-				<p class="state-text">
-					This page is used by the admin team to respond to student inquiries.
-				</p>
+				<button class="settings-tab" type="button" role="tab" id="tab-defaults" aria-selected="false" tabindex="-1" aria-controls="panel-defaults" data-panel="defaults">
+					Announcement Defaults
+				</button>
 
-				<button class="state-button" type="button" id="blockedBackButton">
-					Back to Inquiries
+				<button class="settings-tab" type="button" role="tab" id="tab-account" aria-selected="false" tabindex="-1" aria-controls="panel-account" data-panel="account">
+					Account &amp; Access Information
+				</button>
+
+				<button class="settings-tab" type="button" role="tab" id="tab-system" aria-selected="false" tabindex="-1" aria-controls="panel-system" data-panel="system">
+					System Information
 				</button>
 
 			</div>
 
-			<div class="state-card" id="invalidInquiryState" role="status" hidden>
+			<div class="settings-panels">
 
-				<h3 class="state-title">
-					Inquiry not available
-				</h3>
+				<section class="panel settings-panel" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" tabindex="0">
 
-				<p class="state-text">
-					This inquiry could not be loaded. It may no longer be available, or the link may be incomplete.
-				</p>
-
-				<button class="state-button" type="button" id="invalidBackButton">
-					Back to Inquiries
-				</button>
-
-			</div>
-
-			<div id="responseWorkflow" hidden>
-
-				<div class="panel response-panel inquiry-panel" id="inquiryDetailsPanel">
-
-					<div class="response-panel-heading">
-
-						<h4 class="response-panel-title">
-							Student Inquiry Details
-						</h4>
-
-						<span class="detail-status" id="heroStatus" hidden>
-						</span>
-
+					<div class="panel-title">
+						Admin Profile
 					</div>
 
-					<div class="inquiry-identity" id="inquiryIdentity" hidden>
-
-						<div class="inquiry-avatar" id="inquiryAvatar">
-						</div>
-
-						<div class="inquiry-identity-copy">
-
-							<p class="inquiry-identity-label">
-							Student
-							</p>
-
-							<p class="inquiry-identity-name" id="inquiryStudentName">
-							</p>
-
-						</div>
-
+					<div class="panel-subtitle">
+						Manage your profile details. Official account information remains protected by your school records.
 					</div>
 
-					<div class="mg-detail-grid" id="inquiryDetailGrid">
-					</div>
-
-					<div class="history-section" id="historySection" hidden>
-
-						<h5 class="history-title">
-							Response History
-						</h5>
-
-						<div class="history-list" id="historyList">
-						</div>
-
-					</div>
-
-					<p class="mg-empty-note" id="closedNotice" hidden>
-						This inquiry is not awaiting a response.
-					</p>
-
-				</div>
-
-				<div class="panel response-panel" id="responseEditorPanel">
-
-					<h4 class="response-panel-title">
-						Your Response
-					</h4>
-
-					<p class="response-recipient" id="responseRecipient" hidden>
-					</p>
-
-					<form id="responseForm" novalidate>
-
-						<div class="form-group">
-
-							<label class="response-editor-label" for="responseText">
-								Message
-							</label>
-
-							<div class="editor-shell">
-
-								<textarea id="responseText" placeholder="Write a clear and helpful response to the student's inquiry..."></textarea>
-
+					<div class="admin-profile-layout">
+						<aside class="admin-profile-overview" aria-labelledby="profileOverviewHeading">
+							<h2 id="profileOverviewHeading">Profile Overview</h2>
+							<img class="admin-profile-overview-avatar" src="resume.jpg" alt="Profile picture" id="displayAvatar">
+							<h3 id="profileOverviewName">Lyza Camille Pancipane</h3>
+							<span class="admin-profile-role" id="profileOverviewRole">Administrator</span>
+							<p class="admin-profile-summary" id="profileOverviewBio">Your profile summary will appear here.</p>
+							<div class="admin-profile-display-name">
+								<span>Navbar display name</span>
+								<strong id="displayName">Lyza Camille Pancipane</strong>
 							</div>
+						</aside>
 
-							<p class="response-guide">
-								Be clear, respectful, and specific. Include any relevant instructions or next steps.
-							</p>
-
-							<div class="response-attach" id="responseAttach">
-
-								<label class="attach-button" for="responseFiles">
-
-									<svg viewBox="0 0 24 24" aria-hidden="true">
-										<path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"></path>
-									</svg>
-
-									Add files
-								</label>
-
-								<input type="file" id="responseFiles" accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg" multiple hidden>
-
-								<div class="attach-meta">
-									<p class="attach-hint">PDF, DOC/DOCX, TXT, PNG or JPG. Up to 1.5 MB each; 3 MB total.</p>
-									<p class="attach-total" id="responseAttachmentTotal" aria-live="polite">0 KB of 3 MB used</p>
+						<div class="admin-profile-details">
+							<section class="admin-profile-section" aria-labelledby="personalInfoHeading">
+								<h2 id="personalInfoHeading">Personal Information</h2>
+								<div class="profile-settings-grid">
+									<div class="field">
+										<label for="officialNameInput">Official name</label>
+										<input type="text" id="officialNameInput" value="Lyza Camille Pancipane" readonly>
+									</div>
+									<div class="field">
+										<label for="officialEmailInput">Email</label>
+										<input type="email" id="officialEmailInput" value="" readonly>
+									</div>
+									<div class="field">
+										<label for="nicknameInput">Nickname</label>
+										<input type="text" id="nicknameInput" maxlength="30" autocomplete="off" placeholder="Optional display name">
+									</div>
+									<div class="field full-width">
+										<label for="bioInput">Bio</label>
+										<textarea id="bioInput" maxlength="160" placeholder="A short introduction shown with your personalized profile"></textarea>
+										<div class="char-counter" id="bioCounter" aria-live="polite">0 / 160 characters</div>
+									</div>
 								</div>
+								<p class="admin-profile-note">Official name and email are read-only. Your nickname does not replace your official name.</p>
+							</section>
 
-								<ul class="attach-list" id="responseFileList" hidden>
-								</ul>
+							<section class="admin-profile-section" aria-labelledby="profilePictureHeading">
+								<h2 id="profilePictureHeading">Profile Picture</h2>
+								<div class="admin-profile-picture-row">
+									<img class="avatar-preview" src="resume.jpg" alt="Profile picture preview" id="avatarPreview">
+									<div>
+										<p>Choose a JPG or PNG image, up to 2 MB.</p>
+										<div class="upload-row">
+											<button class="btn btn-secondary" type="button" id="avatarUploadBtn">Upload / Change Picture</button>
+											<button class="btn btn-ghost" type="button" id="avatarRemoveBtn" hidden>Remove Picture</button>
+										</div>
+									</div>
+								</div>
+								<input type="file" id="avatarInput" accept=".jpg,.jpeg,.png" hidden>
+								<div class="admin-profile-cover">
+									<div class="cover-preview" hidden><img id="coverImage" alt="Custom cover photo preview" hidden></div>
+									<div>
+										<strong>Cover photo</strong>
+										<p>Optional JPG or PNG image, up to 2 MB.</p>
+										<div class="upload-row">
+											<button class="btn btn-secondary" type="button" id="coverUploadBtn">Upload / Change Cover</button>
+											<button class="btn btn-ghost" type="button" id="coverRemoveBtn" hidden>Remove Cover</button>
+										</div>
+									</div>
+								</div>
+								<input type="file" id="coverInput" accept=".jpg,.jpeg,.png" hidden>
+							</section>
 
+							<section class="admin-profile-section" aria-labelledby="accountInfoHeading">
+								<h2 id="accountInfoHeading">Account Information</h2>
+								<dl class="kv-list admin-profile-account-list">
+									<dt>Account ID</dt>
+									<dd id="profileAccountId">—</dd>
+									<dt>Official name</dt>
+									<dd id="profileOfficialName">Lyza Camille Pancipane</dd>
+									<dt>Email</dt>
+									<dd id="profileSchoolEmail">Not available</dd>
+									<dt>Role</dt>
+									<dd id="profileOfficialRole">Administrator</dd>
+									<dt>Account status</dt>
+									<dd id="profileAccountStatus">Loading…</dd>
+								</dl>
+							</section>
+
+							<div class="form-actions admin-profile-actions">
+								<button class="btn btn-primary" type="button" id="savePersonalization" disabled>Save Changes</button>
+								<button class="btn btn-secondary" type="button" id="cancelPersonalization" disabled>Cancel</button>
 							</div>
-
-							<p class="response-count" id="responseCount">
-								0 words / 0 characters
-							</p>
-
-							<p class="response-draft-note" id="draftNote" hidden>
-								A saved draft was restored for this inquiry.
-							</p>
-
-							<p class="field-error" id="responseError" hidden>
-							</p>
-
 						</div>
-
-						<div class="modal-actions">
-
-							<button class="cancel-button" type="button" id="responseCancel">
-								Cancel
-							</button>
-
-							<button class="cancel-button" type="button" id="responseDraft">
-								Save as Draft
-							</button>
-
-							<button class="modal-save" type="submit" id="responseSend">
-								Send Response
-							</button>
-
-						</div>
-
-					</form>
-
-				</div>
-
-			</div>
-
-			<div class="panel response-panel receipt-panel" id="responseReceipt" hidden>
-			</div>
-
-			<div class="toast" id="pageToast" role="status" aria-live="polite" hidden></div>
-
-			<div class="confirm-overlay" id="confirmOverlay" hidden>
-
-				<div class="confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmText">
-
-					<h4 class="confirm-title" id="confirmTitle">
-					</h4>
-
-					<p class="confirm-text" id="confirmText">
-					</p>
-
-					<div class="modal-actions">
-
-						<button class="cancel-button" type="button" id="confirmCancel">
-							Cancel
-						</button>
-
-						<button class="modal-save" type="button" id="confirmOk">
-							Confirm
-						</button>
-
 					</div>
 
-				</div>
+				</section>
+
+				<section class="panel settings-panel" id="panel-appearance" role="tabpanel" aria-labelledby="tab-appearance" tabindex="0" hidden>
+
+					<div class="panel-title">
+						Appearance
+					</div>
+
+					<div class="panel-subtitle">
+						Choose how EduBridge looks on this device.
+					</div>
+
+					<div class="field">
+						<label>
+							Theme
+						</label>
+						<div class="theme-options" role="group" aria-label="Theme">
+							<button class="btn btn-secondary" type="button" id="themeLight" aria-pressed="false">
+								Light
+							</button>
+							<button class="btn btn-secondary" type="button" id="themeDark" aria-pressed="false">
+								Dark
+							</button>
+							<button class="btn btn-secondary" type="button" id="themeSystem" aria-pressed="false">
+								System
+							</button>
+						</div>
+						<div class="hint-text">
+							System follows your device's light or dark setting. The theme button in the top navigation switches between light and dark.
+						</div>
+					</div>
+
+				</section>
+
+				<section class="panel settings-panel" id="panel-notifications" role="tabpanel" aria-labelledby="tab-notifications" tabindex="0" hidden>
+
+					<div class="panel-title">
+						Admin Notifications
+					</div>
+
+					<div class="panel-subtitle">
+						Choose which administrative updates matter to you.
+					</div>
+
+					<div class="pref-group-label">
+						Student inquiries
+					</div>
+
+					<div class="switch-row">
+						<div>
+							<h3>
+								New student inquiries
+							</h3>
+							<p>
+								When a student submits a new inquiry.
+							</p>
+						</div>
+						<label class="pref-toggle">
+							<input type="checkbox" id="notifInquiries" checked aria-label="New student inquiries">
+							<span class="toggle-track" aria-hidden="true">
+							</span>
+						</label>
+					</div>
+
+					<div class="switch-row">
+						<div>
+							<h3>
+								Inquiry status updates
+							</h3>
+							<p>
+								When the status of an inquiry changes or is updated.
+							</p>
+						</div>
+						<label class="pref-toggle">
+							<input type="checkbox" id="notifStatus" checked aria-label="Inquiry status updates">
+							<span class="toggle-track" aria-hidden="true">
+							</span>
+						</label>
+					</div>
+
+					<div class="switch-row">
+						<div>
+							<h3>
+								Replies and follow-ups
+							</h3>
+							<p>
+								When someone replies to an inquiry or adds follow-up activity.
+							</p>
+						</div>
+						<label class="pref-toggle">
+							<input type="checkbox" id="notifReplies" checked aria-label="Replies and follow-ups">
+							<span class="toggle-track" aria-hidden="true">
+							</span>
+						</label>
+					</div>
+
+					<div class="pref-group-label">
+						Announcements and system
+					</div>
+
+					<div class="switch-row">
+						<div>
+							<h3>
+								New announcements
+							</h3>
+							<p>
+								When new announcements are posted or updated.
+							</p>
+						</div>
+						<label class="pref-toggle">
+							<input type="checkbox" id="notifAnnouncements" checked aria-label="New announcements">
+							<span class="toggle-track" aria-hidden="true">
+							</span>
+						</label>
+					</div>
+
+					<div class="switch-row">
+						<div>
+							<h3>
+								Important system notices
+							</h3>
+							<p>
+								Important system and administrative notices.
+							</p>
+						</div>
+						<label class="pref-toggle">
+							<input type="checkbox" id="notifNotices" checked aria-label="Important system notices">
+							<span class="toggle-track" aria-hidden="true">
+							</span>
+						</label>
+					</div>
+
+				</section>
+
+				<section class="panel settings-panel" id="panel-defaults" role="tabpanel" aria-labelledby="tab-defaults" tabindex="0" hidden>
+
+					<div class="panel-title">
+						Announcement Defaults
+					</div>
+
+					<div class="panel-subtitle">
+						Preselect the usual options on the Create Announcement page. Every announcement can still be changed before publishing.
+					</div>
+
+					<div class="field">
+						<label for="defaultVisibility">
+							Default visibility
+						</label>
+						<select id="defaultVisibility">
+							<option value="Public">
+								Public (visible to all users)
+							</option>
+							<option value="Private">
+								Private (visible to staff only)
+							</option>
+						</select>
+					</div>
+
+					<div class="field">
+						<label for="defaultAudience">
+							Default target audience
+						</label>
+						<select id="defaultAudience">
+							<option value="all">
+								All Students
+							</option>
+							<option value="year">
+								Selected Year Level
+							</option>
+							<option value="program">
+								Selected Program / Section
+							</option>
+						</select>
+					</div>
+
+					<div class="field" id="defaultYearField" hidden>
+						<label for="defaultYear">
+							Default year level
+						</label>
+						<select id="defaultYear">
+							<option value="">
+								Select year level
+							</option>
+							<option value="1st Year">
+								1st Year
+							</option>
+							<option value="2nd Year">
+								2nd Year
+							</option>
+							<option value="3rd Year">
+								3rd Year
+							</option>
+							<option value="4th Year">
+								4th Year
+							</option>
+						</select>
+					</div>
+
+					<div class="field" id="defaultProgramField" hidden>
+						<label for="defaultProgram">
+							Default program / section
+						</label>
+						<input type="text" id="defaultProgram" maxlength="40" autocomplete="off" placeholder="e.g. BSIT 3-A">
+					</div>
+
+					<div class="field">
+						<label for="defaultTiming">
+							Scheduling preference
+						</label>
+						<select id="defaultTiming">
+							<option value="immediate">
+								Publish immediately
+							</option>
+							<option value="scheduled">
+								Pre-fill the schedule
+							</option>
+						</select>
+					</div>
+
+					<div class="field" id="defaultScheduleField" hidden>
+						<label>
+							Default schedule
+						</label>
+						<div class="two-cols">
+							<div>
+								<label for="defaultDate">
+									Date
+								</label>
+								<input type="date" id="defaultDate">
+							</div>
+							<div>
+								<label for="defaultTime">
+									Time
+								</label>
+								<input type="time" id="defaultTime">
+							</div>
+						</div>
+					</div>
+
+					<p class="hint-text">
+						Defaults fill in the matching fields when Create Announcement opens. Anything you pick there stays for that announcement.
+					</p>
+
+					<div class="form-actions">
+						<button class="btn btn-primary" type="button" id="saveDefaults">
+							Save Defaults
+						</button>
+					</div>
+
+				</section>
+
+				<section class="panel settings-panel" id="panel-account" role="tabpanel" aria-labelledby="tab-account" tabindex="0" hidden>
+
+					<div class="panel-title">
+						Account &amp; Access Information
+					</div>
+
+					<div class="panel-subtitle">
+						Your official account details, shown for reference only. These cannot be edited from Settings.
+					</div>
+
+					<dl class="kv-list">
+						<dt>
+							Official full name
+						</dt>
+						<dd id="accountName">
+							Lyza Camille Pancipane
+						</dd>
+
+						<dt>
+							Role
+						</dt>
+						<dd id="accountRole">
+							Administrator
+						</dd>
+
+						<dt>
+							Student / employee ID
+						</dt>
+						<dd id="accountStudentId">
+							Not issued
+						</dd>
+
+						<dt>
+							School email
+						</dt>
+						<dd id="accountSchoolEmail">
+							Not available
+						</dd>
+
+						<dt>
+							Session
+						</dt>
+						<dd>
+							Active session
+						</dd>
+					</dl>
+
+					<p class="readonly-note">
+						Official details are maintained by the school administrator, and there are no password change or password reset options here. For help with account access, use the Contact Admin request form.
+					</p>
+
+					<div class="form-actions">
+						<a class="btn btn-secondary" href="contactadmin.html">
+							Contact Admin
+						</a>
+						<a class="btn btn-ghost" href="admin-profile.html">
+							Open Profile
+						</a>
+					</div>
+
+				</section>
+
+				<section class="panel settings-panel" id="panel-system" role="tabpanel" aria-labelledby="tab-system" tabindex="0" hidden>
+
+					<div class="panel-title">
+						System Information
+					</div>
+
+					<div class="panel-subtitle">
+						Information about this EduBridge application.
+					</div>
+
+					<dl class="kv-list">
+						<dt>
+							Application
+						</dt>
+						<dd>
+							EduBridge
+						</dd>
+
+						<dt>
+							Purpose
+						</dt>
+						<dd>
+							A school hub for announcements, FAQs, and student-teacher inquiries.
+						</dd>
+
+						<dt>
+							Help and support
+						</dt>
+						<dd>
+							Reach the administrator through the Contact page or the Contact Admin request form.
+						</dd>
+
+					</dl>
+
+					<div class="form-actions">
+						<a class="btn btn-secondary" href="contact.html">
+							Contact Page
+						</a>
+						<a class="btn btn-ghost" href="reportproblem.html">
+							Report a Problem
+						</a>
+					</div>
+
+				</section>
 
 			</div>
+
 
 		</section>
 	</main>
@@ -4574,7 +4219,7 @@
 					</li>
 
 					<li>
-						<a href="admin-inquirymanagement.html">
+						<a href="inquiries.html">
 							Inquiries
 						</a>
 					</li>
@@ -4646,7 +4291,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="admin-inquirymanagement.html">
+					<a class="question-button" href="inquiries.html">
 						Get Started →
 					</a>
 
@@ -4699,6 +4344,9 @@
 
 	</button>
 
+
+	<div class="toast" id="pageToast" hidden>
+	</div>
 
 	<script src="profile-sync.js"></script>
 	<script src="edubridge-api.js"></script>
@@ -4984,27 +4632,14 @@
 					return;
 				}
 
-				const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
 				const img = profile.querySelector("img");
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
-
-				if (role === "student" || role === "teacher")
-				{
-					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
-					img.alt = "Junior Slickback";
-					name.textContent = "Junior Slickback";
-					roleText.textContent = "Student";
-					profile.setAttribute("href", "inquiries.html");
-				}
-				else
-				{
-					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
-					img.alt = "Lyza Camille Pancipane";
-					name.textContent = "Lyza Camille Pancipane";
-					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "admin-profile.html");
-				}
+				img.src = img.dataset.profileDefaultSrc || "resume.jpg";
+				img.alt = "Profile picture";
+				name.textContent = "";
+				roleText.textContent = "Administrator";
+				profile.setAttribute("href", "admin-profile.html");
 			}
 
 			buildAccountMenu();
@@ -5478,1099 +5113,593 @@
 
 			});
 
-			const toastElement = document.getElementById("pageToast");
-			let toastTimer = null;
-		
-			function showToast(message)
+			const themeLight = document.getElementById("themeLight");
+			const themeDark = document.getElementById("themeDark");
+			const themeSystem = document.getElementById("themeSystem");
+			const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+
+			let themeMode = localStorage.getItem("edubridge-theme-mode");
+
+			if (themeMode !== "light" && themeMode !== "dark" && themeMode !== "system")
 			{
-					toastElement.textContent = message;
-					toastElement.hidden = false;
-		
-					if (toastTimer)
-					{
-								clearTimeout(toastTimer);
-					}
-		
-					toastTimer = setTimeout(function()
-					{
-								toastElement.hidden = true;
-					}, 4200);
-			}		
-			const statusTone =
-			{
-					"Pending": "badge badge-amber",
-					"In Progress": "badge badge-purple",
-					"Resolved": "badge badge-green"
-			};
-
-			const responseWorkflow = document.getElementById("responseWorkflow");
-			const inquiryDetailGrid = document.getElementById("inquiryDetailGrid");
-			const closedNotice = document.getElementById("closedNotice");
-			const responseForm = document.getElementById("responseForm");
-			const responseText = document.getElementById("responseText");
-			const responseCount = document.getElementById("responseCount");
-			const responseError = document.getElementById("responseError");
-			const responseCancel = document.getElementById("responseCancel");
-			const responseDraft = document.getElementById("responseDraft");
-			const responseRecipient = document.getElementById("responseRecipient");
-			const draftNote = document.getElementById("draftNote");
-			const heroStatus = document.getElementById("heroStatus");
-			const inquiryIdentity = document.getElementById("inquiryIdentity");
-			const inquiryAvatar = document.getElementById("inquiryAvatar");
-			const inquiryStudentName = document.getElementById("inquiryStudentName");
-			const responseSend = document.getElementById("responseSend");
-			const responseShell = responseText.parentElement;
-			const confirmOverlay = document.getElementById("confirmOverlay");
-			const confirmTitle = document.getElementById("confirmTitle");
-			const confirmText = document.getElementById("confirmText");
-			const confirmCancel = document.getElementById("confirmCancel");
-			const confirmOk = document.getElementById("confirmOk");
-			const responseFiles = document.getElementById("responseFiles");
-			const responseFileList = document.getElementById("responseFileList");
-			const responseAttachmentTotal = document.getElementById("responseAttachmentTotal");
-			const historySection = document.getElementById("historySection");
-			const historyList = document.getElementById("historyList");
-			const responseEditorPanel = document.getElementById("responseEditorPanel");
-			const responseReceipt = document.getElementById("responseReceipt");
-			const invalidInquiryState = document.getElementById("invalidInquiryState");
-			const roleBlockedState = document.getElementById("roleBlockedState");
-			const invalidBackButton = document.getElementById("invalidBackButton");
-			const blockedBackButton = document.getElementById("blockedBackButton");
-
-			let activeInquiry = null;
-
-			const responderDisplayName = "Lyza Camille Pancipane";
-
-			function buildElement(tagName, className, text)
-			{
-
-					const element = document.createElement(tagName);
-
-					if (className)
-					{
-							element.className = className;
-					}
-
-					if (text !== undefined && text !== null)
-					{
-							element.textContent = text;
-					}
-
-					return element;
-
+				themeMode = "light";
 			}
 
-			function formatInquiryDate(value)
+			function resolveThemeMode()
 			{
+				if (themeMode === "system")
+				{
+					return themeMedia.matches ? "dark" : "light";
+				}
 
-					if (!value)
-					{
-							return "Date not available";
-					}
-
-					const parsed = new Date(value);
-
-					if (Number.isNaN(parsed.getTime()))
-					{
-							return "Date not available";
-					}
-
-					return parsed.toLocaleString("en-US",
-					{
-							month: "long",
-							day: "numeric",
-							year: "numeric",
-							hour: "numeric",
-							minute: "2-digit"
-					});
-
+				return themeMode;
 			}
 
-			function formatInquiryDay(value)
+			function applyThemeMode()
 			{
+				const resolved = resolveThemeMode();
 
-					if (!value)
-					{
-							return "—";
-					}
+				document.body.classList.toggle("dark-mode", resolved === "dark");
 
-					const parsed = new Date(value);
+				localStorage.setItem("edubridge-theme", resolved);
 
-					if (Number.isNaN(parsed.getTime()))
-					{
-							return "—";
-					}
+				themeLight.setAttribute("aria-pressed", themeMode === "light" ? "true" : "false");
+				themeDark.setAttribute("aria-pressed", themeMode === "dark" ? "true" : "false");
+				themeSystem.setAttribute("aria-pressed", themeMode === "system" ? "true" : "false");
 
-					return parsed.toLocaleDateString("en-US",
-					{
-							month: "long",
-							day: "numeric",
-							year: "numeric"
-					});
-
+				updateThemeIcon();
 			}
 
-			function adaptInquiryRecord(record)
+			function setThemeMode(next)
 			{
-					const entry = Object.assign({}, record);
+				themeMode = next;
 
-					const items = [];
+				try
+				{
+					localStorage.setItem("edubridge-theme-mode", themeMode);
+				}
+				catch (error)
+				{
+					showSettingsToast("This browser could not store that preference.");
+				}
 
-					(Array.isArray(record.history) ? record.history : []).forEach(function(item)
-					{
-							const transition = item.oldStatus && item.newStatus && item.oldStatus !== item.newStatus
-									? " (" + item.oldStatus + " \u2192 " + item.newStatus + ")"
-									: "";
-
-							items.push(
-							{
-									text: (item.note || "Status updated") + transition,
-									date: item.date,
-									by: item.by || "System",
-									chip: "Status update"
-							});
-					});
-
-					if (Array.isArray(record.responses))
-					{
-						record.responses.forEach(function(item)
-						{
-							items.push({
-								text: item.text,
-								date: item.date,
-								by: item.by || (item.role === "student" ? record.student : "EduBridge Team"),
-								chip: item.role === "student"
-									? "Student message"
-									: (item.role === "teacher" ? "Teacher reply" : "Admin reply"),
-								attachments: item.attachments || []
-							});
-						});
-					}
-					else
-					{
-						(Array.isArray(record.followUps) ? record.followUps : []).forEach(function(item)
-						{
-							items.push({
-								text: item.text,
-								date: item.date,
-								by: record.student || "Student",
-								chip: "Student message"
-							});
-						});
-
-						if (record.response && record.response.text)
-						{
-							items.push({
-								text: record.response.text,
-								date: record.response.date,
-								by: record.response.by,
-								chip: "Admin reply",
-								attachments: record.response.attachments || []
-							});
-						}
-					}
-
-					items.sort(function(a, b)
-					{
-							return String(a.date || "").localeCompare(String(b.date || ""));
-					});
-
-					entry.history = items;
-
-					return entry;
+				applyThemeMode();
 			}
 
-			const iconPaths =
+			themeLight.addEventListener("click", function()
 			{
-					inquiry: "M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z",
-					category: "M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z",
-					calendar: "M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z",
-					subject: "M5 4v3h5.5v12h3V7H19V4z",
-					message: "M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z",
-					attachment: "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
-			};
-
-			function createInquiryField(iconPath, label, value, wide, extraClass)
-			{
-
-					const field = buildElement("div", "mg-detail-field" + (wide ? " mg-detail-field--wide" : "") + (extraClass ? " " + extraClass : ""));
-
-					const labelRow = buildElement("span", "mg-detail-label inquiry-label");
-					const icon = document.createElement("span");
-					icon.className = "inquiry-icon";
-					icon.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"" + iconPath + "\"></path></svg>";
-					labelRow.append(icon, document.createTextNode(label));
-
-					field.append(labelRow);
-					field.append(buildElement("span", "mg-detail-value", value));
-
-					return field;
-
-			}
-
-			function renderHeroStatus(status)
-			{
-
-					heroStatus.replaceChildren(createStatusBadge(status));
-					heroStatus.hidden = false;
-
-			}
-
-			let currentFiles = [];
-			let pendingAttachmentBytes = 0;
-			let baselineSnapshot = "";
-
-			function responseSnapshot()
-			{
-
-					return JSON.stringify([
-						responseText.value.trim(),
-						pendingAttachmentBytes,
-						currentFiles.map(function(file)
-						{
-							return file.name + "|" + file.size;
-						})
-					]);
-
-			}
-
-			function isResponseDirty()
-			{
-
-					const hasContent = responseText.value.trim().length > 0 || currentFiles.length > 0;
-
-					return hasContent && responseSnapshot() !== baselineSnapshot;
-
-			}
-
-			window.addEventListener("beforeunload", function(event)
-			{
-
-					if (isResponseDirty())
-					{
-							event.preventDefault();
-							event.returnValue = "";
-					}
-
+				setThemeMode("light");
 			});
 
-			let confirmProceed = null;
-			let confirmReturnFocus = null;
-
-			function openConfirm(options)
+			themeDark.addEventListener("click", function()
 			{
+				setThemeMode("dark");
+			});
 
-					confirmTitle.textContent = options.title;
-					confirmText.textContent = options.text;
-					confirmOk.textContent = options.confirmLabel;
-					confirmCancel.textContent = options.cancelLabel;
-					confirmProceed = options.onConfirm;
-					confirmReturnFocus = document.activeElement;
-					confirmOverlay.hidden = false;
-					confirmCancel.focus();
-
-			}
-
-			function closeConfirm()
+			themeSystem.addEventListener("click", function()
 			{
+				setThemeMode("system");
+			});
 
-					confirmOverlay.hidden = true;
-					confirmProceed = null;
-
-					if (confirmReturnFocus && typeof confirmReturnFocus.focus === "function")
+			if (typeof themeMedia.addEventListener === "function")
+			{
+				themeMedia.addEventListener("change", function()
+				{
+					if (themeMode === "system")
 					{
-							confirmReturnFocus.focus();
+						applyThemeMode();
 					}
-					confirmReturnFocus = null;
-
+				});
 			}
 
-			function createStatusBadge(status)
+			themeButton.addEventListener("click", function()
 			{
-					return buildElement("span", statusTone[status] || "badge badge-gray", status);
+				setTimeout(function()
+				{
+					setThemeMode(document.body.classList.contains("dark-mode") ? "dark" : "light");
+				}, 150);
+			});
+
+			applyThemeMode();
+
+			const settingsTabs = Array.from(document.querySelectorAll(".settings-tab"));
+			const settingsPanels = Array.from(document.querySelectorAll(".settings-panel"));
+			const officialName = "Lyza Camille Pancipane";
+			const officialRole = "Administrator";
+			const defaultAvatar = "resume.jpg";
+			const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+
+			function activateSettingsPanel(name)
+			{
+				settingsTabs.forEach(function(tab)
+				{
+					const isActive = tab.dataset.panel === name;
+
+					tab.setAttribute("aria-selected", isActive ? "true" : "false");
+					tab.tabIndex = isActive ? 0 : -1;
+				});
+
+				settingsPanels.forEach(function(panel)
+				{
+					panel.hidden = panel.id !== "panel-" + name;
+				});
 			}
 
-			function getReceiptReference(inquiryId)
+			settingsTabs.forEach(function(tab, index)
 			{
+				tab.addEventListener("click", function()
+				{
+					activateSettingsPanel(tab.dataset.panel);
+				});
 
-					return "RSP-" + String(inquiryId).replace(/^#?INQ-/, "");
+				tab.addEventListener("keydown", function(event)
+				{
+					let next = index;
 
-			}
-
-			const draftStorageKey = "edubridge-response-drafts";
-
-			function readDraftMap()
-			{
-					try
+					if (event.key === "ArrowRight")
 					{
-							const raw = localStorage.getItem(draftStorageKey);
-							const parsed = raw ? JSON.parse(raw) : "{}";
-
-							if (parsed && typeof parsed === "object" && !Array.isArray(parsed))
-							{
-									return parsed;
-							}
+						next = (index + 1) % settingsTabs.length;
 					}
-					catch (error)
+					else if (event.key === "ArrowLeft")
 					{
+						next = (index - 1 + settingsTabs.length) % settingsTabs.length;
 					}
-
-					return {};
-			}
-
-			function getStoredDraft(inquiryId)
-			{
-					const drafts = readDraftMap();
-					const raw = drafts[inquiryId];
-
-					if (!raw)
+					else if (event.key === "Home")
 					{
-						return { text: "", files: [], by: "", savedAt: "" };
+						next = 0;
 					}
-
-					if (typeof raw === "string")
+					else if (event.key === "End")
 					{
-						return { text: raw, files: [], by: "", savedAt: "" };
-					}
-
-					return {
-						text: String(raw.text || ""),
-						files: Array.isArray(raw.files) ? raw.files : [],
-						by: String(raw.by || ""),
-						savedAt: String(raw.savedAt || "")
-					};
-			}
-
-			function storeDraft(inquiryId, payload)
-			{
-					const drafts = readDraftMap();
-					const hasText = Boolean(payload && payload.text && payload.text.trim());
-					const hasFiles = Boolean(payload && Array.isArray(payload.files) && payload.files.length);
-
-					if (hasText || hasFiles)
-					{
-						drafts[inquiryId] = {
-							text: payload.text || "",
-							files: payload.files || [],
-							by: payload.by || responderDisplayName,
-							savedAt: new Date().toISOString()
-						};
+						next = settingsTabs.length - 1;
 					}
 					else
-					{
-						delete drafts[inquiryId];
-					}
-
-					if (Object.keys(drafts).length)
-					{
-						localStorage.setItem(draftStorageKey, JSON.stringify(drafts));
-					}
-					else
-					{
-						localStorage.removeItem(draftStorageKey);
-					}
-			}
-
-			function formatFileSize(bytes)
-			{
-					if (bytes === 0)
-					{
-						return "0 KB";
-					}
-
-					if (bytes >= 1048576)
-					{
-						return (bytes / 1048576).toFixed(1) + " MB";
-					}
-
-					return Math.max(1, Math.round(bytes / 1024)) + " KB";
-
-			}
-
-			function renderFileList()
-			{
-
-					responseFileList.replaceChildren();
-
-					currentFiles.forEach(function(file, index)
-					{
-
-						const item = buildElement("li", "attach-item");
-
-						const link = buildElement("a", "attach-name", file.name);
-						link.href = file.data;
-						link.target = "_blank";
-						link.rel = "noopener";
-
-						const size = buildElement("span", "attach-size", formatFileSize(file.size));
-
-						const removeButton = buildElement("button", "attach-remove", "Remove");
-						removeButton.type = "button";
-						removeButton.addEventListener("click", function()
-						{
-							currentFiles.splice(index, 1);
-							renderFileList();
-						});
-
-						item.append(link, size, removeButton);
-						responseFileList.append(item);
-
-					});
-
-					responseFileList.hidden = currentFiles.length === 0;
-					const totalBytes = currentFiles.reduce(function(sum, file)
-					{
-						return sum + file.size;
-					}, pendingAttachmentBytes);
-					responseAttachmentTotal.textContent = formatFileSize(totalBytes) + " of 3 MB used";
-
-			}
-
-			function isSupportedResponseFile(file)
-			{
-					const extension = file.name.split(".").pop().toLowerCase();
-					const supportedExtensions = ["pdf", "doc", "docx", "txt", "png", "jpg", "jpeg"];
-
-					return supportedExtensions.indexOf(extension) !== -1;
-			}
-
-			function readFileAsAttachment(file)
-			{
-
-					const reader = new FileReader();
-
-					reader.onload = function()
-					{
-						pendingAttachmentBytes -= file.size;
-
-						currentFiles.push(
-						{
-							name: file.name,
-							type: file.type || "",
-							size: file.size,
-							data: String(reader.result)
-						});
-						renderFileList();
-
-					};
-
-					reader.onerror = function()
-					{
-						pendingAttachmentBytes -= file.size;
-						renderFileList();
-						showToast(file.name + " could not be read and was not added.");
-					};
-
-					reader.readAsDataURL(file);
-
-			}
-
-			function addFiles(fileList)
-			{
-
-					const incoming = Array.prototype.slice.call(fileList || []);
-
-					if (!incoming.length)
 					{
 						return;
 					}
-
-					let projectedTotal = currentFiles.reduce(function(sum, file)
-					{
-						return sum + file.size;
-					}, pendingAttachmentBytes);
-
-					incoming.forEach(function(file)
-					{
-
-						if (!isSupportedResponseFile(file))
-						{
-							showToast(file.name + " is not a supported file type and was not added.");
-							return;
-						}
-
-						if (file.size > 1572864)
-						{
-							showToast(file.name + " is larger than 1.5 MB and was not added.");
-							return;
-						}
-
-						if (projectedTotal + file.size > 3145728)
-						{
-							showToast("Attachments must stay under 3 MB in total.");
-							return;
-						}
-
-						projectedTotal += file.size;
-						pendingAttachmentBytes += file.size;
-						readFileAsAttachment(file);
-
-					});
-
-					renderFileList();
-
-			}
-
-			responseFiles.addEventListener("change", function()
-			{
-
-					addFiles(responseFiles.files);
-					responseFiles.value = "";
-
-			});
-
-			function setCharacterCount()
-			{
-					const trimmed = responseText.value.trim();
-					const characters = trimmed.length;
-					const words = trimmed ? trimmed.split(/\s+/).length : 0;
-
-					responseCount.textContent = words + (words === 1 ? " word" : " words") + " / " + characters + " characters";
-			}
-
-			function showResponseError(message)
-			{
-					responseError.hidden = false;
-					responseError.textContent = message;
-					responseText.classList.add("is-invalid");
-					responseShell.classList.add("is-invalid");
-			}
-
-			function hideResponseError()
-			{
-					responseError.hidden = true;
-					responseError.textContent = "";
-					responseText.classList.remove("is-invalid");
-					responseShell.classList.remove("is-invalid");
-			}
-
-			function showInvalidInquiryState()
-			{
-					responseWorkflow.hidden = true;
-					responseReceipt.hidden = true;
-					invalidInquiryState.hidden = false;
-			}
-
-			function renderInquiryDetails(entry)
-			{
-
-					inquiryDetailGrid.replaceChildren();
-
-					const studentName = (entry.student || "").trim();
-
-					if (studentName)
-					{
-						inquiryAvatar.textContent = studentName.split(/\s+/).map(function(part)
-						{
-							return part.charAt(0);
-						}).join("").slice(0, 2).toUpperCase();
-						inquiryStudentName.textContent = studentName;
-						inquiryIdentity.hidden = false;
-					}
-					else
-					{
-						inquiryIdentity.hidden = true;
-					}
-
-
-					inquiryDetailGrid.append(createInquiryField(iconPaths.inquiry, "Inquiry ID", entry.id));
-					inquiryDetailGrid.append(createInquiryField(iconPaths.inquiry, "Student", entry.student || "Not available"));
-					inquiryDetailGrid.append(createInquiryField(iconPaths.inquiry, "Student ID", entry.studentNumber || "Not provided"));
-					inquiryDetailGrid.append(createInquiryField(iconPaths.inquiry, "Student Email", entry.studentEmail || "Not provided"));
-					inquiryDetailGrid.append(createInquiryField(iconPaths.category, "Category", entry.category || "General"));
-					inquiryDetailGrid.append(createInquiryField(iconPaths.calendar, "Date Submitted", formatInquiryDate(entry.createdAt)));
-
-
-					inquiryDetailGrid.append(createInquiryField(iconPaths.subject, "Subject", entry.subject || "—", true, "inquiry-field--emphasis"));
-					inquiryDetailGrid.append(createInquiryField(iconPaths.message, "Full Inquiry Message", entry.message || "—", true, "inquiry-field--message"));
-
-
-					if (entry.attachment && entry.attachment.data)
-					{
-
-							const attachmentField = buildElement("div", "mg-detail-field mg-detail-field--wide");
-							attachmentField.append(buildElement("span", "mg-detail-label", "Attachment"));
-
-							const attachmentRow = buildElement("div", "mg-conversation-meta");
-							attachmentRow.append(buildElement("span", null, entry.attachment.name || "Attachment"));
-
-							const attachmentLink = buildElement("a", "mg-conversation-author", "Open Attachment");
-							attachmentLink.href = entry.attachment.data;
-							attachmentLink.target = "_blank";
-							attachmentLink.rel = "noopener";
-							attachmentLink.setAttribute("download", entry.attachment.name || "attachment");
-							attachmentRow.append(attachmentLink);
-
-							attachmentField.append(attachmentRow);
-							inquiryDetailGrid.append(attachmentField);
-
-					}
-					else if (entry.attachment)
-					{
-							inquiryDetailGrid.append(createInquiryField(iconPaths.attachment, "Attachment",
-									"The attachment could not be loaded.", true));
-					}
-
-
-							renderHistory(entry);
-
-			}
-
-			function loadInquiryForResponse()
-			{
-
-					const params = new URLSearchParams(window.location.search);
-					const inquiryId = (params.get("id") || "").trim();
-
-					if (!inquiryId)
-					{
-							showInvalidInquiryState();
-							return;
-					}
-
-
-					EduAPI.get("/backend/api/inquiries.php?action=get&id=" + encodeURIComponent(inquiryId))
-							.then(function(data)
-							{
-									const entry = adaptInquiryRecord(data.record);
-
-									activeInquiry = entry;
-									renderInquiryDetails(entry);
-									renderHeroStatus(entry.status);
-
-									if (entry.student)
-									{
-											responseRecipient.textContent = "To: " + entry.student;
-											responseRecipient.hidden = false;
-									}
-									else
-									{
-											responseRecipient.hidden = true;
-									}
-
-									const isResolved = entry.status === "Resolved";
-									const hasResponse = Boolean(entry.response && entry.response.text);
-
-									responseWorkflow.hidden = false;
-									responseEditorPanel.hidden = isResolved;
-									closedNotice.hidden = !isResolved;
-									responseReceipt.hidden = true;
-									invalidInquiryState.hidden = true;
-									hideResponseError();
-
-									if (!isResolved)
-									{
-										const storedDraft = getStoredDraft(entry.id);
-										responseText.value = storedDraft.text;
-										currentFiles = storedDraft.files.slice();
-										renderFileList();
-										setCharacterCount();
-										draftNote.hidden = !storedDraft.text && !storedDraft.files.length;
-										draftNote.textContent = "A saved draft was restored for this inquiry.";
-										baselineSnapshot = responseSnapshot();
-									}
-									if (isResolved && hasResponse)
-									{
-										renderReceipt(entry);
-									}
-							})
-							.catch(function(error)
-							{
-									if (error && error.status === 403)
-									{
-											responseWorkflow.hidden = true;
-											roleBlockedState.hidden = false;
-											return;
-									}
-
-									showInvalidInquiryState();
-							});
-
-			}
-
-			function createDetailField(label, value, wide)
-			{
-
-					const field = buildElement("div", "mg-detail-field" + (wide ? " mg-detail-field--wide" : ""));
-
-					field.append(buildElement("span", "mg-detail-label", label));
-					field.append(buildElement("span", "mg-detail-value", value));
-
-					return field;
-
-			}
-
-			function renderHistory(entry)
-			{
-
-					historyList.replaceChildren();
-
-					let items = [];
-
-					if (Array.isArray(entry.history) && entry.history.length)
-					{
-						items = entry.history;
-					}
-					else if (entry.response && entry.response.text)
-					{
-						items = [entry.response];
-					}
-
-					if (!items.length)
-					{
-						historySection.hidden = true;
-						return;
-					}
-
-					items.forEach(function(item)
-					{
-
-						const card = buildElement("div", "history-item");
-
-						const head = buildElement("div", "history-head");
-						head.append(buildElement("span", "history-chip", item.chip || "Admin reply"));
-
-						const meta = [formatInquiryDate(item.date)];
-
-						if (item.by)
-						{
-							meta.push(item.by);
-						}
-
-						head.append(buildElement("span", "history-meta", meta.join(" \u00b7 ")));
-						card.append(head);
-
-						card.append(buildElement("p", "history-text", item.text || ""));
-
-						if (Array.isArray(item.attachments) && item.attachments.length)
-						{
-							const files = buildElement("ul", "history-files");
-
-							item.attachments.forEach(function(file)
-							{
-								const li = document.createElement("li");
-								const link = buildElement("a", "history-file", file.name);
-								link.href = file.data;
-								link.target = "_blank";
-								link.rel = "noopener";
-								li.append(link);
-								files.append(li);
-							});
-
-							card.append(files);
-						}
-
-						historyList.append(card);
-
-					});
-
-					historySection.hidden = false;
-
-			}
-
-			function renderReceipt(entry)
-			{
-
-					responseReceipt.replaceChildren();
-
-
-					const head = buildElement("div", "receipt-head");
-
-					const icon = document.createElement("div");
-					icon.className = "receipt-icon";
-					icon.innerHTML =
-							"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4.5 12.5 10 18 19.5 6.5\"></path></svg>";
-
-					const headText = buildElement("div", null);
-					headText.append(buildElement("h4", "receipt-title", "Response Receipt"));
-					headText.append(buildElement("p", "receipt-subtitle",
-							"Generated from the response saved for inquiry " + entry.id + "."));
-
-					head.append(icon, headText);
-					responseReceipt.append(head);
-
-
-					const detailGrid = buildElement("div", "mg-detail-grid");
-
-					detailGrid.append(createDetailField("Receipt Reference",
-							entry.response.receipt || getReceiptReference(entry.id)));
-					detailGrid.append(createDetailField("Inquiry ID", entry.id));
-					detailGrid.append(createDetailField("Recipient", entry.student || "Not available"));
-					detailGrid.append(createDetailField("Date and Time", formatInquiryDate(entry.response.date)));
-					detailGrid.append(createDetailField("Responded By", entry.response.by || "Not available"));
-					detailGrid.append(createDetailField("Original Inquiry", entry.subject || "—", true));
-
-
-					const statusField = buildElement("div", "mg-detail-field");
-					statusField.append(buildElement("span", "mg-detail-label", "Final Inquiry Status"));
-					statusField.append(createStatusBadge(entry.status));
-					detailGrid.append(statusField);
-
-					responseReceipt.append(detailGrid);
-
-
-					const responseBlock = buildElement("div", "receipt-response");
-					responseBlock.append(buildElement("span", "mg-detail-label", "Submitted Response"));
-					responseBlock.append(buildElement("p", null, entry.response.text));
-					responseReceipt.append(responseBlock);
-
-					if (Array.isArray(entry.response.attachments) && entry.response.attachments.length)
-					{
-
-							const filesBlock = buildElement("div", "receipt-files");
-							filesBlock.append(buildElement("span", "mg-detail-label", "Attachments"));
-
-							entry.response.attachments.forEach(function(file)
-							{
-								const link = buildElement("a", "receipt-file", file.name);
-								link.href = file.data;
-								link.target = "_blank";
-								link.rel = "noopener";
-								filesBlock.append(link);
-							});
-
-							responseReceipt.append(filesBlock);
-
-					}
-
-
-					const actions = buildElement("div", "modal-actions receipt-actions");
-
-					const printButton = buildElement("button", "cancel-button", "Print Receipt");
-					printButton.type = "button";
-					printButton.addEventListener("click", function()
-					{
-							window.print();
-					});
-
-					const backButton = buildElement("a", "modal-save", "Back to Inquiries");
-					backButton.href = "admin-inquirymanagement.html";
-
-					actions.append(printButton, backButton);
-					responseReceipt.append(actions);
-
-					responseWorkflow.hidden = false;
-					invalidInquiryState.hidden = true;
-					responseReceipt.hidden = false;
-
-			}
-
-			function submitResponse(entry)
-			{
-					const text = responseText.value.trim();
-
-					responseSend.disabled = true;
-
-					EduAPI.post("/backend/api/inquiries.php?action=respond",
-					{
-							id: entry.id,
-							response: text,
-							attachments: currentFiles.slice()
-					}).then(function()
-					{
-							responseSend.disabled = false;
-							storeDraft(entry.id, null);
-							draftNote.hidden = true;
-							currentFiles = [];
-							renderFileList();
-							baselineSnapshot = responseSnapshot();
-
-							showToast("Response submitted successfully.");
-
-							return loadInquiryForResponse();
-					}).catch(function(error)
-					{
-							responseSend.disabled = false;
-							showToast(error.message || "The response could not be submitted.");
-					});
-			}
-
-
-			responseForm.addEventListener("submit", function(event)
-			{
 
 					event.preventDefault();
+					settingsTabs[next].focus();
+					activateSettingsPanel(settingsTabs[next].dataset.panel);
+				});
+			});
 
-					if (responseSend.disabled || !confirmOverlay.hidden)
+			const pageToast = document.getElementById("pageToast");
+			let pageToastTimer = null;
+
+			function showSettingsToast(message)
+			{
+				pageToast.textContent = message;
+				pageToast.hidden = false;
+
+				clearTimeout(pageToastTimer);
+
+				pageToastTimer = setTimeout(function()
+				{
+					pageToast.hidden = true;
+				}, 4200);
+			}
+
+			document.getElementById("accountName").textContent = officialName;
+			document.getElementById("accountRole").textContent = officialRole;
+			document.getElementById("profileOfficialName").textContent = officialName;
+			document.getElementById("profileOfficialRole").textContent = officialRole;
+
+			const displayAvatar = document.getElementById("displayAvatar");
+			const avatarPreview = document.getElementById("avatarPreview");
+
+			displayAvatar.src = defaultAvatar;
+			displayAvatar.alt = officialName;
+			avatarPreview.src = defaultAvatar;
+			avatarPreview.alt = officialName;
+
+			const notifToggles = Array.from(document.querySelectorAll(".pref-toggle input"));
+
+			function loadNotifPreferences()
+			{
+				try
+				{
+					return JSON.parse(localStorage.getItem("edubridge-notifications")) || {};
+				}
+				catch (error)
+				{
+					return {};
+				}
+			}
+
+			const savedNotif = loadNotifPreferences();
+
+			notifToggles.forEach(function(toggle)
+			{
+				if (typeof savedNotif[toggle.id] === "boolean")
+				{
+					toggle.checked = savedNotif[toggle.id];
+				}
+
+				toggle.addEventListener("change", function()
+				{
+					const prefs = {};
+
+					notifToggles.forEach(function(item)
 					{
-						return;
-					}
-
-					if (pendingAttachmentBytes > 0)
-					{
-						showToast("Wait for the selected attachments to finish loading before sending.");
-						return;
-					}
-
-					const text = responseText.value.trim();
-
-					if (text.length < 5)
-					{
-							showResponseError("Please enter a response with at least 5 characters.");
-							showToast("Please enter a response with at least 5 characters.");
-							return;
-					}
-
-					hideResponseError();
-
-
-					if (!activeInquiry)
-					{
-							showInvalidInquiryState();
-							return;
-					}
-
-
-					const entry = activeInquiry;
-
-					if (!entry)
-					{
-							showInvalidInquiryState();
-							return;
-					}
-
-					if (entry.status === "Resolved")
-					{
-							showToast("Reopen the inquiry before sending another response.");
-							loadInquiryForResponse();
-							return;
-					}
-
-
-					openConfirm(
-					{
-							title: "Send this response?",
-							text: "Send this response to " + (entry.student || "this student") + " for inquiry " + entry.id + "? The inquiry will be marked as In Progress.",
-							confirmLabel: "Send Response",
-							cancelLabel: "Cancel",
-							onConfirm: function()
-							{
-									submitResponse(entry);
-							}
+						prefs[item.id] = item.checked;
 					});
-					return;
-
-			});
-
-			responseText.addEventListener("input", function()
-			{
-					hideResponseError();
-					draftNote.hidden = true;
-					setCharacterCount();
-			});
-
-			responseCancel.addEventListener("click", function()
-			{
-					if (isResponseDirty())
-					{
-						openConfirm(
-						{
-							title: "Leave without sending?",
-							text: "Your response has not been sent. Save it as a draft, or leave and discard the unsent text.",
-							confirmLabel: "Leave",
-							cancelLabel: "Keep Editing",
-							onConfirm: function()
-							{
-								window.location.href = "admin-inquirymanagement.html";
-							}
-						});
-						return;
-					}
-
-					window.location.href = "admin-inquirymanagement.html";
-			});
-
-			confirmCancel.addEventListener("click", closeConfirm);
-
-			confirmOk.addEventListener("click", function()
-			{
-					const action = confirmProceed;
-					closeConfirm();
-
-					if (typeof action === "function")
-					{
-						action();
-					}
-			});
-
-			confirmOverlay.addEventListener("click", function(event)
-			{
-					if (event.target === confirmOverlay)
-					{
-						closeConfirm();
-					}
-			});
-
-			document.addEventListener("keydown", function(event)
-			{
-					if (event.key === "Escape" && !confirmOverlay.hidden)
-					{
-						closeConfirm();
-					}
-			});
-
-			responseDraft.addEventListener("click", function()
-			{
-					const text = responseText.value.trim();
-
-					if (pendingAttachmentBytes > 0)
-					{
-						showToast("Wait for the selected attachments to finish loading before saving this draft.");
-						return;
-					}
-
-					if (!text && !currentFiles.length)
-					{
-						showToast("Write a response or add an attachment before saving a draft.");
-						return;
-					}
-
-					if (!activeInquiry)
-					{
-							showInvalidInquiryState();
-							return;
-					}
 
 					try
 					{
-							storeDraft(activeInquiry.id, { text: text, files: currentFiles.slice(), by: responderDisplayName });
+						localStorage.setItem("edubridge-notifications", JSON.stringify(prefs));
 					}
 					catch (error)
 					{
-							showToast("This browser could not save that draft.");
-							return;
+						showSettingsToast("This browser could not store the notification preferences.");
 					}
-
-					draftNote.hidden = false;
-					draftNote.textContent = "Draft saved at " + formatInquiryDate(new Date().toISOString()) + ".";
-					baselineSnapshot = responseSnapshot();
-					showToast("Draft saved. The inquiry is still pending.");
+				});
 			});
 
-			invalidBackButton.addEventListener("click", function()
+			const defaultVisibility = document.getElementById("defaultVisibility");
+			const defaultAudience = document.getElementById("defaultAudience");
+			const defaultYearField = document.getElementById("defaultYearField");
+			const defaultYear = document.getElementById("defaultYear");
+			const defaultProgramField = document.getElementById("defaultProgramField");
+			const defaultProgram = document.getElementById("defaultProgram");
+			const defaultTiming = document.getElementById("defaultTiming");
+			const defaultScheduleField = document.getElementById("defaultScheduleField");
+			const defaultDate = document.getElementById("defaultDate");
+			const defaultTime = document.getElementById("defaultTime");
+			const saveDefaults = document.getElementById("saveDefaults");
+
+			function updateDefaultsFields()
 			{
-					window.location.href = "admin-inquirymanagement.html";
+				defaultYearField.hidden = defaultAudience.value !== "year";
+				defaultProgramField.hidden = defaultAudience.value !== "program";
+				defaultScheduleField.hidden = defaultTiming.value !== "scheduled";
+			}
+
+			function loadAnnouncementDefaults()
+			{
+				try
+				{
+					return JSON.parse(localStorage.getItem("edubridge-announce-defaults")) || {};
+				}
+				catch (error)
+				{
+					return {};
+				}
+			}
+
+			const savedDefaults = loadAnnouncementDefaults();
+
+			if (savedDefaults.visibility === "Public" || savedDefaults.visibility === "Private")
+			{
+				defaultVisibility.value = savedDefaults.visibility;
+			}
+
+			if (savedDefaults.audience === "all" || savedDefaults.audience === "year" || savedDefaults.audience === "program")
+			{
+				defaultAudience.value = savedDefaults.audience;
+			}
+
+			if (typeof savedDefaults.year === "string")
+			{
+				defaultYear.value = savedDefaults.year;
+			}
+
+			if (typeof savedDefaults.program === "string")
+			{
+				defaultProgram.value = savedDefaults.program.slice(0, 40);
+			}
+
+			if (savedDefaults.timing === "scheduled")
+			{
+				defaultTiming.value = "scheduled";
+			}
+
+			defaultDate.value = typeof savedDefaults.date === "string" ? savedDefaults.date : "";
+			defaultTime.value = typeof savedDefaults.time === "string" ? savedDefaults.time : "";
+			defaultDate.min = new Date().toISOString().slice(0, 10);
+
+			updateDefaultsFields();
+
+			defaultAudience.addEventListener("change", updateDefaultsFields);
+			defaultTiming.addEventListener("change", updateDefaultsFields);
+
+			saveDefaults.addEventListener("click", function()
+			{
+				const payload =
+				{
+					visibility: defaultVisibility.value,
+					audience: defaultAudience.value,
+					year: defaultYear.value,
+					program: defaultProgram.value.trim().slice(0, 40),
+					timing: defaultTiming.value,
+					date: defaultTiming.value === "scheduled" ? defaultDate.value : "",
+					time: defaultTiming.value === "scheduled" ? defaultTime.value : ""
+				};
+
+				try
+				{
+					localStorage.setItem("edubridge-announce-defaults", JSON.stringify(payload));
+				}
+				catch (error)
+				{
+					showSettingsToast("This browser could not store the announcement defaults.");
+					return;
+				}
+
+				showSettingsToast("Defaults saved.");
 			});
 
-			blockedBackButton.addEventListener("click", function()
+			const nicknameInput = document.getElementById("nicknameInput");
+			const bioInput = document.getElementById("bioInput");
+			const bioCounter = document.getElementById("bioCounter");
+			const displayName = document.getElementById("displayName");
+			const profileOverviewName = document.getElementById("profileOverviewName");
+			const profileOverviewRole = document.getElementById("profileOverviewRole");
+			const profileOverviewBio = document.getElementById("profileOverviewBio");
+			const officialNameInput = document.getElementById("officialNameInput");
+			const officialEmailInput = document.getElementById("officialEmailInput");
+			const avatarInput = document.getElementById("avatarInput");
+			const avatarUploadBtn = document.getElementById("avatarUploadBtn");
+			const avatarRemoveBtn = document.getElementById("avatarRemoveBtn");
+			const coverImage = document.getElementById("coverImage");
+			const coverPreview = document.querySelector(".admin-profile-cover .cover-preview");
+			const coverInput = document.getElementById("coverInput");
+			const coverUploadBtn = document.getElementById("coverUploadBtn");
+			const coverRemoveBtn = document.getElementById("coverRemoveBtn");
+			const savePersonalization = document.getElementById("savePersonalization");
+			const cancelPersonalization = document.getElementById("cancelPersonalization");
+
+			let pendingAvatar = null;
+			let pendingCover = null;
+			let savedProfile = null;
+
+			function renderNickname(value)
 			{
-					window.location.href = "admin-inquirymanagement.html";
+				const trimmed = value.trim();
+
+				displayName.textContent = trimmed || officialName;
+			}
+
+			function renderAvatar(value)
+			{
+				const src = value || defaultAvatar;
+
+				avatarPreview.src = src;
+				displayAvatar.src = src;
+				avatarRemoveBtn.hidden = !value;
+			}
+
+			function renderCover(value)
+			{
+				coverPreview.hidden = !value;
+				coverImage.hidden = !value;
+
+				if (value)
+				{
+					coverImage.src = value;
+				}
+				else
+				{
+					coverImage.removeAttribute("src");
+				}
+
+				coverRemoveBtn.hidden = !value;
+			}
+
+			function renderBioCounter()
+			{
+				bioCounter.textContent = bioInput.value.length + " / 160 characters";
+			}
+
+			function renderProfileDetails(profile)
+			{
+				const name = profile.name || officialName;
+				const roleLabels =
+				{
+					student: "Student",
+					teacher: "Teacher",
+					admin: "Administrator"
+				};
+				const roleLabel = roleLabels[profile.role] || officialRole;
+				const nickname = profile.nickname || "";
+				const bio = profile.bio || "";
+
+				savedProfile = {
+					id: profile.id,
+					name: name,
+					email: profile.email || "",
+					role: profile.role || "admin",
+					status: profile.status || "",
+					nickname: nickname,
+					bio: bio,
+					avatar: profile.avatar || "",
+					cover: profile.cover || ""
+				};
+				nicknameInput.value = nickname;
+				bioInput.value = bio;
+				officialNameInput.value = name;
+				officialEmailInput.value = profile.email || "";
+				profileOverviewName.textContent = name;
+				profileOverviewRole.textContent = roleLabel;
+				profileOverviewBio.textContent = bio || "Add a short bio to introduce yourself.";
+				document.getElementById("accountName").textContent = name;
+				document.getElementById("accountRole").textContent = roleLabel;
+				document.getElementById("profileAccountId").textContent = profile.id || "—";
+				document.getElementById("profileOfficialName").textContent = name;
+				document.getElementById("profileSchoolEmail").textContent = profile.email || "Not available";
+				document.getElementById("profileOfficialRole").textContent = roleLabel;
+				document.getElementById("profileAccountStatus").textContent = profile.status || "Not available";
+				document.getElementById("accountStudentId").textContent = profile.studentId || "Not issued";
+				document.getElementById("accountSchoolEmail").textContent = profile.email || "Not available";
+				renderNickname(nickname);
+				renderBioCounter();
+				renderAvatar(savedProfile.avatar);
+				renderCover(savedProfile.cover);
+				displayAvatar.alt = name;
+				avatarPreview.alt = name;
+				savePersonalization.disabled = false;
+				cancelPersonalization.disabled = false;
+			}
+
+			nicknameInput.addEventListener("input", function()
+			{
+				renderNickname(nicknameInput.value);
 			});
 
-			EduAPI.me().then(function(data)
+			bioInput.addEventListener("input", renderBioCounter);
+
+			function readImageFile(input, onLoaded)
 			{
-					if (data.user && data.user.role === "admin")
+				const file = input.files && input.files[0];
+
+				if (!file)
+				{
+					return;
+				}
+
+				if (file.type !== "image/jpeg" && file.type !== "image/png")
+				{
+					showSettingsToast("Only JPG and PNG images are supported.");
+					input.value = "";
+					return;
+				}
+
+				if (file.size > MAX_IMAGE_BYTES)
+				{
+					showSettingsToast("That image is too large. The maximum size is 2MB.");
+					input.value = "";
+					return;
+				}
+
+				const reader = new FileReader();
+
+				reader.onload = function()
+				{
+					onLoaded(reader.result);
+				};
+
+				reader.readAsDataURL(file);
+			}
+
+			avatarUploadBtn.addEventListener("click", function()
+			{
+				avatarInput.click();
+			});
+
+			avatarInput.addEventListener("change", function()
+			{
+				readImageFile(avatarInput, function(dataUrl)
+				{
+					pendingAvatar = dataUrl;
+					renderAvatar(dataUrl);
+				});
+			});
+
+			avatarRemoveBtn.addEventListener("click", function()
+			{
+				pendingAvatar = "";
+				renderAvatar("");
+			});
+
+			coverUploadBtn.addEventListener("click", function()
+			{
+				coverInput.click();
+			});
+
+			coverInput.addEventListener("change", function()
+			{
+				readImageFile(coverInput, function(dataUrl)
+				{
+					pendingCover = dataUrl;
+					renderCover(dataUrl);
+				});
+			});
+
+			coverRemoveBtn.addEventListener("click", function()
+			{
+				pendingCover = "";
+				renderCover("");
+			});
+
+			savePersonalization.addEventListener("click", function()
+			{
+				const nickname = nicknameInput.value.trim().slice(0, 30);
+				const bio = bioInput.value.slice(0, 160);
+				const payload =
+				{
+					nickname: nickname,
+					bio: bio
+				};
+				if (pendingAvatar !== null)
+				{
+					payload.avatar = pendingAvatar;
+				}
+				if (pendingCover !== null)
+				{
+					payload.cover = pendingCover;
+				}
+
+				savePersonalization.disabled = true;
+				cancelPersonalization.disabled = true;
+				savePersonalization.textContent = "Saving...";
+
+				EduAPI.post("/backend/api/profile.php?action=save", payload)
+					.then(function(result)
 					{
-							loadInquiryForResponse();
-					}
-					else
+						const profile = result.user;
+						if (!profile)
+						{
+							throw new Error("The saved profile could not be reloaded.");
+						}
+						renderProfileDetails(profile);
+						if (window.EduBridgeProfile)
+						{
+							window.EduBridgeProfile.applyProfile(profile);
+						}
+						pendingAvatar = null;
+						pendingCover = null;
+						showSettingsToast("Profile changes saved.");
+					})
+					.catch(function(error)
 					{
-							roleBlockedState.hidden = false;
-					}
-			}).catch(function()
-			{
-					roleBlockedState.hidden = false;
+						showSettingsToast(error.message || "Profile changes could not be saved.", "error");
+					})
+					.finally(function()
+					{
+						savePersonalization.disabled = !savedProfile;
+						cancelPersonalization.disabled = !savedProfile;
+						savePersonalization.textContent = "Save Changes";
+					});
 			});
+
+			cancelPersonalization.addEventListener("click", function()
+			{
+				if (!savedProfile)
+				{
+					return;
+				}
+
+				pendingAvatar = null;
+				pendingCover = null;
+				avatarInput.value = "";
+				coverInput.value = "";
+				renderProfileDetails(savedProfile);
+				showSettingsToast("Unsaved changes discarded.");
+			});
+
+			EduAPI.get("/backend/api/profile.php?action=get")
+				.then(function(data)
+				{
+					const user = data.user || {};
+					if (window.EduBridgeProfile)
+					{
+						window.EduBridgeProfile.applyProfile(user);
+					}
+					renderProfileDetails(user);
+				})
+				.catch(function(error)
+				{
+					showSettingsToast(error.message || "Profile information could not be loaded.");
+				});
 
 		}
 		catch (error)
