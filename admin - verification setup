@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f5f7fb">
+	<title>Set Up Admin Verification Key | EduBridge</title>
+	<script src="edubridge-api.js"></script>
+	<style>
+		:root { font-family: Inter, "Segoe UI", Arial, sans-serif; color: #17233c; background: #f5f7fb; }
+		* { box-sizing: border-box; }
+		body { display: grid; min-height: 100vh; margin: 0; place-items: center; padding: 1.25rem; background: #f5f7fb; }
+		main { width: min(620px, 100%); padding: clamp(1.25rem, 5vw, 2.5rem); border: 1px solid #e4e9f2; border-radius: 1.1rem; background: #fff; box-shadow: 0 16px 48px #1e376318; }
+		.brand { margin: 0 0 1.5rem; color: #18376b; font-size: 1.1rem; font-weight: 800; }
+		.eyebrow { margin: 0 0 .45rem; color: #315fd3; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+		h1 { margin: 0; font-size: clamp(1.6rem, 5vw, 2.2rem); }
+		.intro { color: #64728a; line-height: 1.6; }
+		.warning { padding: .9rem 1rem; border-left: 4px solid #cb8925; border-radius: .45rem; background: #fff7e8; color: #684715; line-height: 1.5; }
+		.key { display: block; width: 100%; margin: 1rem 0; padding: 1rem; border: 1px dashed #91a6d9; border-radius: .65rem; background: #f4f7ff; color: #18376b; font-family: Consolas, monospace; font-size: clamp(1.2rem, 5vw, 1.8rem); font-weight: 800; letter-spacing: .08em; text-align: center; user-select: all; }
+		.actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+		button, .button { display: inline-flex; align-items: center; justify-content: center; min-height: 2.8rem; padding: .7rem 1rem; border: 0; border-radius: .6rem; background: #315fd3; color: white; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+		button.secondary { background: #e9eef8; color: #263d6c; }
+		button:disabled { cursor: wait; opacity: .65; }
+		.status { min-height: 1.5rem; color: #38536f; }
+		.error { color: #a02b2b; }
+		[hidden] { display: none !important; }
+		@media (prefers-color-scheme: dark) {
+			:root { color-scheme: dark; color: #e5ecfb; background: #111827; }
+			body { background: #111827; }
+			main { background: #182235; border-color: #2a3851; }
+			.brand { color: #a9bcff; }
+			.intro { color: #aab7ce; }
+			.warning { background: #3b2e19; color: #f5d89d; }
+			.key { background: #202d44; color: #c2d0ff; border-color: #546da7; }
+			button.secondary { background: #2a3851; color: #e5ecfb; }
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<p class="brand">EduBridge</p>
+		<p class="eyebrow">Administrator security</p>
+		<h1>Set up your individual verification key</h1>
+		<p class="intro">This key is separate from your sign-in password and is required when you create another administrator account.</p>
+		<div id="setupPanel">
+			<p class="warning">The key is shown only once. Copy it and store it somewhere private. EduBridge stores only a secure hash and cannot display the key again.</p>
+			<div class="actions">
+				<button id="generateButton" type="button">Generate my key</button>
+			</div>
+		</div>
+		<section id="keyPanel" hidden aria-labelledby="keyTitle">
+			<h2 id="keyTitle">Your new verification key</h2>
+			<output id="keyOutput" class="key" aria-live="polite"></output>
+			<div class="actions">
+				<button id="copyButton" type="button">Copy key</button>
+							<label style="display:flex;align-items:center;gap:.65rem;margin:.5rem 0">
+								<input id="savedConfirmation" type="checkbox">
+								I saved this key in a secure place
+							</label>
+							<button id="confirmSavedButton" type="button" disabled>Hide key and continue</button>
+							<a class="button" id="continueDashboard" href="admin-dashboard.html" hidden>Continue to dashboard</a>
+			</div>
+		</section>
+		<p id="status" class="status" role="status" aria-live="polite"></p>
+		<p id="error" class="status error" role="alert"></p>
+	</main>
+	<script>
+		(function ()
+		{
+			"use strict";
+			const status = document.getElementById("status");
+			const errorBox = document.getElementById("error");
+			const generateButton = document.getElementById("generateButton");
+			const keyOutput = document.getElementById("keyOutput");
+			generateButton.disabled = true;
+
+			EduAPI.me().then(function (data)
+			{
+				if (!data.user)
+				{
+					window.location.replace("/login.html");
+					return null;
+				}
+				if (data.user.role !== "admin")
+				{
+					window.location.replace(data.user.role === "teacher" ? "/teacher-dashboard.html" : "/student-dashboard.html");
+					return null;
+				}
+				return EduAPI.get("/backend/api/users.php?action=verification_status").then(function (result)
+				{
+					if (result.configured)
+					{
+						window.location.replace("/admin-dashboard.html");
+						return;
+					}
+					generateButton.disabled = false;
+				});
+			}).catch(function (error)
+			{
+				errorBox.textContent = error.message || "The setup status could not be checked.";
+				if (error.status === 401)
+				{
+					window.location.replace("/login.html");
+				}
+			});
+
+			generateButton.addEventListener("click", function ()
+			{
+				errorBox.textContent = "";
+				status.textContent = "Generating a secure key…";
+				generateButton.disabled = true;
+				EduAPI.post("/backend/api/users.php?action=setup_verification_key", {}).then(function (result)
+				{
+					keyOutput.textContent = result.key;
+					document.getElementById("setupPanel").hidden = true;
+					document.getElementById("keyPanel").hidden = false;
+					status.textContent = "Save this key now. It cannot be retrieved after you leave this page.";
+				}).catch(function (error)
+				{
+					errorBox.textContent = error.message || "The key could not be generated.";
+					status.textContent = "";
+					generateButton.disabled = false;
+				});
+			});
+
+			document.getElementById("copyButton").addEventListener("click", function ()
+			{
+				const value = keyOutput.textContent;
+				if (!value)
+				{
+					errorBox.textContent = "There is no key available to copy.";
+					return;
+				}
+				if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function")
+				{
+					errorBox.textContent = "Clipboard access is unavailable. Select the key above and copy it manually.";
+					return;
+				}
+				navigator.clipboard.writeText(value).then(function ()
+				{
+					status.textContent = "Key copied. Store it somewhere private before continuing.";
+					errorBox.textContent = "";
+				}).catch(function ()
+				{
+					errorBox.textContent = "Copy was blocked by the browser. Select the key above and copy it manually.";
+				});
+			});
+
+			const savedConfirmation = document.getElementById("savedConfirmation");
+			const confirmSavedButton = document.getElementById("confirmSavedButton");
+			const continueDashboard = document.getElementById("continueDashboard");
+
+			savedConfirmation.addEventListener("change", function ()
+			{
+				confirmSavedButton.disabled = !savedConfirmation.checked;
+			});
+
+			confirmSavedButton.addEventListener("click", function ()
+			{
+				if (!savedConfirmation.checked)
+				{
+					return;
+				}
+				keyOutput.textContent = "";
+				keyOutput.hidden = true;
+				savedConfirmation.disabled = true;
+				confirmSavedButton.hidden = true;
+				continueDashboard.hidden = false;
+				status.textContent = "The verification key is now hidden. Store it privately; EduBridge cannot display it again.";
+			});
+		})();
+	</script>
+</body>
+</html>
