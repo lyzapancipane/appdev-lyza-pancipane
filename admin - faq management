@@ -4051,8 +4051,8 @@
 
 	<nav class="navbar">
 
-		<a href="admindashboard.html" class="logo">
-			<img src="edubridgelogo.png" alt="EduBridge">
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -4066,27 +4066,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="admindashboard.html">
+			<a href="landingpage.html">
 				Home
 			</a>
 
-			<a href="adminabout.html">
+			<a href="about.html">
 				About EduBridge
 			</a>
 
-			<a href="adminannouncements.html">
+			<a href="announcements.html">
 				Announcements
 			</a>
 
-			<a href="adminfaq.html">
+			<a href="faq.html">
 				FAQs
 			</a>
 
-			<a href="admininquiries.html">
+			<a href="inquiries.html">
 				Inquiries
 			</a>
 
-			<a href="admincontact.html">
+			<a href="contact.html">
 				Contact
 			</a>
 
@@ -4101,7 +4101,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
+			<a class="nav-bell" href="admin-notifications.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -4115,12 +4115,12 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="adminprofile.html">
-				<img src="resume.jpg" alt="Resume Dizon">
+			<a class="nav-profile" href="admin-profile.html">
+				<img src="resume.jpg" alt="Lyza Camille Pancipane">
 
 				<span class="nav-profile-text">
 					<strong>
-						Resume Dizon
+						Lyza Camille Pancipane
 					</strong>
 
 					<small>
@@ -4298,7 +4298,7 @@
 				Reset
 			</button>
 	
-			<a class="toolbar-button toolbar-link" href="admincategories.html" title="Open the Categories page">
+			<a class="toolbar-button toolbar-link" href="admin-categories.html" title="Open the Categories page">
 				Categories
 			</a>
 	
@@ -4509,8 +4509,8 @@
 
 			<div>
 
-				<a href="admindashboard.html" class="logo footer-logo">
-					<img src="edubridgelogo.png" alt="EduBridge">
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -4575,37 +4575,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="admindashboard.html">
+						<a href="landingpage.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="adminabout.html">
+						<a href="about.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="adminannouncements.html">
+						<a href="announcements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="adminfaq.html">
+						<a href="faq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="admininquiries.html">
+						<a href="inquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="admincontact.html">
+						<a href="contact.html">
 							Contact
 						</a>
 					</li>
@@ -4671,7 +4671,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="admininquiries.html">
+					<a class="question-button" href="inquiries.html">
 						Get Started →
 					</a>
 
@@ -4726,6 +4726,7 @@
 
 
 	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
 	<script>
 		try
 		{
@@ -4897,7 +4898,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "bothlogout.html";
+				window.location.href = "logout.html";
 			}
 
 			function buildAccountMenu()
@@ -4906,35 +4907,35 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "adminannouncements.html" },
-					{ label: "Create Announcement", href: "admincreateannounce.html" },
-					{ label: "Categories", href: "admincategories.html" }
+					{ label: "All Announcements", href: "announcements.html" },
+					{ label: "Create Announcement", href: "admin-createannounce.html" },
+					{ label: "Categories", href: "admin-categories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
-					items.push({ label: "User Management", href: "adminusermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
-					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+					items.push({ label: "User Management", href: "admin-usermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admin-dashboard.html" });
+					items.push({ label: "Activity Logs", href: "admin-activitylogs.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "adminprofile.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Profile", href: "admin-profile.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -5013,29 +5014,21 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (role === "student")
+				if (role === "student" || role === "teacher")
 				{
-					if (img) img.src = "junior.jpg";
-					if (img) img.alt = "Student";
-					if (name) name.textContent = "Student";
-					if (roleText) roleText.textContent = "Student";
-					profile.setAttribute("href", "admininquiries.html");
-				}
-				else if (role === "teacher")
-				{
-					if (img) img.src = "junior.jpg";
-					if (img) img.alt = "Teacher";
-					if (name) name.textContent = "Teacher";
-					if (roleText) roleText.textContent = "Teacher";
-					profile.setAttribute("href", "admininquiries.html");
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+					img.alt = "Junior Slickback";
+					name.textContent = "Junior Slickback";
+					roleText.textContent = "Student";
+					profile.setAttribute("href", "inquiries.html");
 				}
 				else
 				{
 					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
-					img.alt = "Resume Dizon";
-					name.textContent = "Resume Dizon";
+					img.alt = "Lyza Camille Pancipane";
+					name.textContent = "Lyza Camille Pancipane";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "adminprofile.html");
+					profile.setAttribute("href", "admin-profile.html");
 				}
 			}
 
@@ -5563,196 +5556,42 @@ const faqTableBody = document.getElementById("faqTableBody");
 	
 			const faqCategories = ["Enrollment", "Academics", "Events", "General"];
 	
-			const faqsStorageKey = "edubridge-faqs";
-			const faqDraftsStorageKey = "edubridge-faq-drafts";
+			let faqs = [];
+			let editingFaqId = null;
+			let deletingFaqId = null;
 
-			const faqSeedRecords = [
-				{
-					id: "FAQ-001",
-					question: "How do I submit an inquiry?",
-					answer: "Open the Inquiries page in the main navigation and use the inquiry form to send your question to the admin team.",
-					category: "General",
-					status: "published",
-					updated: "Oct 10, 2026"
-				},
-				{
-					id: "FAQ-002",
-					question: "Where can I see school announcements?",
-					answer: "Visit the Announcements page from the main navigation to browse the latest updates.",
-					category: "General",
-					status: "published",
-					updated: "Oct 10, 2026"
-				},
-				{
-					id: "FAQ-003",
-					question: "How do I create my student account?",
-					answer: "Use the Request Account page to submit your details, then wait for admin approval before signing in.",
-					category: "Enrollment",
-					status: "published",
-					updated: "Oct 8, 2026"
-				},
-				{
-					id: "FAQ-004",
-					question: "What do I need to prepare for enrollment?",
-					answer: "Prepare your previous report card and a parent or guardian's contact details for the enrollment form.",
-					category: "Enrollment",
-					status: "unpublished",
-					updated: "Oct 7, 2026"
-				},
-				{
-					id: "FAQ-005",
-					question: "How are grades reported to students?",
-					answer: "Grades are posted by teachers in class announcements and shared through official school notices.",
-					category: "Academics",
-					status: "published",
-					updated: "Oct 5, 2026"
-				},
-				{
-					id: "FAQ-006",
-					question: "Where can I view upcoming school events?",
-					answer: "Upcoming events are listed on the Announcements page under the Events category.",
-					category: "Events",
-					status: "published",
-					updated: "Oct 4, 2026"
-				},
-				{
-					id: "FAQ-007",
-					question: "How do I reset my password?",
-					answer: "Use the Request Password page and follow the instructions sent to your registered email address.",
-					category: "General",
-					status: "unpublished",
-					updated: "Oct 2, 2026"
-				},
-				{
-					id: "FAQ-008",
-					question: "Who do I contact for account access issues?",
-					answer: "Send an inquiry from the Inquiries page and choose Account Concerns so the admin team can assist you.",
-					category: "General",
-					status: "published",
-					updated: "Sep 30, 2026"
-				}
-			];
+			function decorateFaq(record)
+			{
+				record.ref = "FAQ-" + String(record.id).padStart(3, "0");
+				return record;
+			}
 
 			function loadFaqRecords()
 			{
-				let saved = null;
-
-				try
-				{
-					saved = JSON.parse(localStorage.getItem(faqsStorageKey) || "null");
-				}
-				catch (error)
-				{
-					saved = null;
-				}
-
-				if (!Array.isArray(saved))
-				{
-					return faqSeedRecords.map(function(faq)
+				return EduAPI.get("/backend/api/faqs.php?action=list")
+					.then(function(data)
 					{
-						return Object.assign({}, faq);
+						faqs = (Array.isArray(data.faqs) ? data.faqs : []).map(decorateFaq);
+
+						(Array.isArray(data.categories) ? data.categories : []).forEach(function(category)
+						{
+							if (faqCategories.indexOf(category) === -1)
+							{
+								faqCategories.push(category);
+							}
+						});
+
+						fillCategoryOptions(categoryFilter, true);
+						renderFaqs();
+
+						return faqs;
+					})
+					.catch(function(error)
+					{
+						showToast(error.message || "FAQ records could not be loaded.");
+						return faqs;
 					});
-				}
-
-				return saved;
 			}
-
-			function persistFaqRecords()
-			{
-				try
-				{
-					localStorage.setItem(faqsStorageKey, JSON.stringify(faqs));
-				}
-				catch (error)
-				{
-					showToast("This browser could not save the FAQ list.");
-				}
-			}
-
-			function importFaqDrafts()
-			{
-				let drafts = [];
-
-				try
-				{
-					const saved = JSON.parse(localStorage.getItem(faqDraftsStorageKey) || "[]");
-
-					if (Array.isArray(saved))
-					{
-						drafts = saved;
-					}
-				}
-				catch (error)
-				{
-					return;
-				}
-
-				if (drafts.length === 0)
-				{
-					return;
-				}
-
-				let imported = 0;
-
-				drafts.forEach(function(draft)
-				{
-					if (!draft || !draft.question || !draft.answer)
-					{
-						return;
-					}
-
-					const alreadyAdded = faqs.some(function(faq)
-					{
-						return Boolean(faq.fromInquiry) && faq.fromInquiry === draft.fromInquiry;
-					});
-
-					if (alreadyAdded)
-					{
-						return;
-					}
-
-					faqs.push(
-					{
-						id: "FAQ-" + String(faqCounter).padStart(3, "0"),
-						question: String(draft.question),
-						answer: String(draft.answer),
-						category: faqCategories.indexOf(draft.category) !== -1 ? draft.category : "General",
-						status: "unpublished",
-						updated: "Just now",
-						fromInquiry: draft.fromInquiry || null
-					});
-
-					faqCounter++;
-					imported++;
-				});
-
-				try
-				{
-					localStorage.setItem(faqDraftsStorageKey, "[]");
-				}
-				catch (error)
-				{
-					return;
-				}
-
-				if (imported > 0)
-				{
-					persistFaqRecords();
-					showToast(imported === 1 ? "1 inquiry response imported as an FAQ draft." :
-						String(imported) + " inquiry responses imported as FAQ drafts.");
-				}
-			}
-
-			let faqs = loadFaqRecords();
-
-			let faqCounter = faqs.reduce(function(max, faq)
-			{
-				const value = parseInt(faq.id.slice(4), 10) || 0;
-				return value > max ? value : max;
-			}, 0) + 1;
-
-			let editingFaqId = null;
-			let deletingFaqId = null;
 	
 			function fillCategoryOptions(select, includeAll)
 			{
@@ -5819,7 +5658,7 @@ const faqTableBody = document.getElementById("faqTableBody");
 	
 					const idCell = document.createElement("td");
 					idCell.className = "faq-id";
-					idCell.textContent = faq.id;
+					idCell.textContent = faq.ref || faq.id;
 					row.appendChild(idCell);
 	
 					const questionCell = document.createElement("td");
@@ -5964,41 +5803,23 @@ const faqTableBody = document.getElementById("faqTableBody");
 					return;
 				}
 	
-				if (editingFaqId)
+				EduAPI.post("/backend/api/faqs.php?action=save",
 				{
-					const target = faqs.find(function(faq)
-					{
-						return faq.id === editingFaqId;
-					});
-	
-					if (target)
-					{
-						target.question = question;
-						target.answer = answer;
-						target.category = category;
-						target.status = status;
-						target.updated = "Just now";
-					}
-	
-					showToast("FAQ updated.");
-				}
-				else
+					id: editingFaqId || 0,
+					question: question,
+					answer: answer,
+					category: category,
+					status: status
+				}).then(function()
 				{
-					faqs.push({
-						id: "FAQ-" + String(faqCounter).padStart(3, "0"),
-						question: question,
-						answer: answer,
-						category: category,
-						status: status,
-						updated: "Just now"
-					});
-					faqCounter++;
-					showToast("FAQ added.");
-				}
-	
-	persistFaqRecords();
-				closeFaqModal();
-				renderFaqs();
+					showToast(editingFaqId ? "FAQ updated." : "FAQ added.");
+					closeFaqModal();
+
+					return loadFaqRecords();
+				}).catch(function(error)
+				{
+					showToast(error.message || "The FAQ could not be saved.");
+				});
 			});
 	
 			faqTableBody.addEventListener("click", function(event)
@@ -6014,7 +5835,7 @@ const faqTableBody = document.getElementById("faqTableBody");
 				const faqId = row ? row.dataset.faqId : null;
 				const faq = faqs.find(function(entry)
 				{
-					return entry.id === faqId;
+					return String(entry.id) === String(faqId);
 				});
 	
 				if (!faq)
@@ -6026,13 +5847,20 @@ const faqTableBody = document.getElementById("faqTableBody");
 				{
 					openFaqModal(faq);
 				}
-				else if (button.dataset.action === "toggle")
+								else if (button.dataset.action === "toggle")
 				{
-					faq.status = faq.status === "published" ? "unpublished" : "published";
-					faq.updated = "Just now";
-					persistFaqRecords();
-					renderFaqs();
-					showToast(faq.status === "published" ? "FAQ published." : "FAQ unpublished.");
+					EduAPI.post("/backend/api/faqs.php?action=toggle",
+					{
+						id: faq.id
+					}).then(function(result)
+					{
+						faq.status = result.status;
+						renderFaqs();
+						showToast(result.status === "published" ? "FAQ published." : "FAQ unpublished.");
+					}).catch(function(error)
+					{
+						showToast(error.message || "The FAQ could not be updated.");
+					});
 				}
 				else if (button.dataset.action === "delete")
 				{
@@ -6049,17 +5877,23 @@ const faqTableBody = document.getElementById("faqTableBody");
 				deletingFaqId = null;
 			}
 	
-			deleteModalConfirm.addEventListener("click", function()
+						deleteModalConfirm.addEventListener("click", function()
 			{
-				faqs = faqs.filter(function(faq)
+				const targetId = deletingFaqId;
+
+				EduAPI.post("/backend/api/faqs.php?action=delete",
 				{
-					return faq.id !== deletingFaqId;
+					id: targetId
+				}).then(function()
+				{
+					closeDeleteModal();
+					showToast("FAQ deleted.");
+
+					return loadFaqRecords();
+				}).catch(function(error)
+				{
+					showToast(error.message || "The FAQ could not be deleted.");
 				});
-				persistFaqRecords();
-	
-				closeDeleteModal();
-				renderFaqs();
-				showToast("FAQ deleted.");
 			});
 	
 			filterButton.addEventListener("click", renderFaqs);
@@ -6144,9 +5978,9 @@ const faqTableBody = document.getElementById("faqTableBody");
 				categoryError.textContent = "";
 			});
 	
-			fillCategoryOptions(categoryFilter, true);
-			importFaqDrafts();
+						fillCategoryOptions(categoryFilter, true);
 			renderFaqs();
+			loadFaqRecords();
 
 		}
 		catch (error)
