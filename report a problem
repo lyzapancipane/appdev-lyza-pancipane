@@ -3267,16 +3267,12 @@
 			</button>
 
 			<a class="nav-profile" href="profile.html">
-				<img src="resume.jpg" alt="Resume Dizon">
+				<img src="student-avatar.svg" alt="Profile">
 
 				<span class="nav-profile-text">
-					<strong>
-						Resume Dizon
-					</strong>
+					<strong>Loading profile...</strong>
 
-					<small>
-						Administrator
-					</small>
+					<small></small>
 				</span>
 			</a>
 
@@ -3631,6 +3627,7 @@
 
 
 	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
 	<script>
 		try
 		{
@@ -3812,34 +3809,34 @@
 
 				const announcementChildren = [
 					{ label: "All Announcements", href: "announcements.html" },
-					{ label: "Create Announcement", href: "createannounce.html" },
-					{ label: "Categories", href: "categories.html" }
+					{ label: "Create Announcement", href: "admin-createannounce.html" },
+					{ label: "Categories", href: "admin-categories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Inquiries Management", href: "inquirymanagement.html" });
-					items.push({ label: "User Management", href: "usermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "dashboard.html" });
-					items.push({ label: "Activity Logs", href: "activitylogs.html" });
-					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+					items.push({ label: "User Management", href: "admin-usermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admin-dashboard.html" });
+					items.push({ label: "Activity Logs", href: "admin-activitylogs.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "faqmanagement.html" });
-					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "profile.html" });
-					items.push({ label: "Settings", href: "settings.html" });
+					items.push({ label: "Profile", href: "admin-profile.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -3904,40 +3901,7 @@
 				});
 			}
 
-			function applyNavProfile()
-			{
-				const profile = document.querySelector(".nav-profile");
-
-				if (!profile)
-				{
-					return;
-				}
-
-				const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
-				const img = profile.querySelector("img");
-				const name = profile.querySelector(".nav-profile-text strong");
-				const roleText = profile.querySelector(".nav-profile-text small");
-
-				if (role === "student" || role === "teacher")
-				{
-					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
-					img.alt = "Junior Slickback";
-					name.textContent = "Junior Slickback";
-					roleText.textContent = "Student";
-					profile.setAttribute("href", "inquiries.html");
-				}
-				else
-				{
-					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
-					img.alt = "Resume Dizon";
-					name.textContent = "Resume Dizon";
-					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "profile.html");
-				}
-			}
-
 			buildAccountMenu();
-			applyNavProfile();
 
 			function updateNavbar()
 			{
@@ -4445,8 +4409,34 @@
 								return;
 					}
 		
-					event.target.reset();
-					showToast("Your report has been submitted.");
+					const pageInput = document.getElementById("reportPage").value.trim();
+					const areaSelect = document.getElementById("reportArea");
+					const areaLabel = areaSelect.options[areaSelect.selectedIndex].text;
+
+					const messageParts = ["Area: " + areaLabel];
+
+					if (pageInput)
+					{
+						messageParts.push("Page: " + pageInput);
+					}
+
+					messageParts.push(description);
+
+					EduAPI.post("/backend/api/contact.php?action=submit",
+					{
+						type: "problem",
+						subject: subject,
+						message: messageParts.join("\n\n")
+					})
+						.then(function(data)
+						{
+							event.target.reset();
+							showToast(data.message || "Your report has been submitted.");
+						})
+						.catch(function(error)
+						{
+							showToast(error.message || "Your report could not be submitted. Please try again.");
+						});
 			});
 
 		}
