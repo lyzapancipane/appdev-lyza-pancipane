@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>
-		Announcement Details | EduBridge
-	</title>
+	<title>Contact Management | EduBridge</title>
 	<style>
 		*
 		{
@@ -431,7 +428,8 @@
 			gap: 10px;
 		}
 
-		.theme-button
+		.theme-button,
+		.login-button
 		{
 			height: 34px;
 			border: 1px solid #ffffff55;
@@ -487,6 +485,27 @@
 			width: 15px;
 			height: 15px;
 			fill: currentColor;
+		}
+
+		.login-button
+		{
+			display: inline-flex;
+			padding: 0 15px;
+			align-items: center;
+			justify-content: center;
+			font-size: 12px;
+		}
+
+		.login-button:hover
+		{
+			background: #7138c8;
+			border-color: #a970ff;
+			transform: translateY(-2px);
+		}
+
+		.login-button:active
+		{
+			transform: scale(0.96);
 		}
 
 		.nav-profile
@@ -749,46 +768,39 @@
 			line-height: 1.8;
 		}
 
-		.back-link
+		.hero-actions
+		{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 10px;
+			margin-top: 24px;
+		}
+
+		.question-button
 		{
 			display: inline-flex;
+			height: 32px;
 			align-items: center;
-			gap: 7px;
-			margin-bottom: 4px;
-			color: var(--purple);
-			font-size: 12px;
-			font-weight: 600;
-			transition: 0.25s ease;
+			justify-content: center;
+			padding: 0 14px;
+			border: none;
+			border-radius: 5px;
+			background: #7138c8;
+			color: white;
+			font-size: 10px;
+			transition: 0.2s ease;
 		}
 
-		.back-link svg
+		.question-button:hover
 		{
-			width: 15px;
-			height: 15px;
-			fill: currentColor;
-			transition: 0.25s ease;
+			background: #8c50df;
+			transform: translateY(-1px);
 		}
 
-		.back-link:hover
+		.question-button:active
 		{
-			text-decoration: underline;
-		}
-
-		.back-link:hover svg
-		{
-			transform: translateX(-2px);
-		}
-
-		.back-link:active
-		{
-			transform: scale(0.96);
-		}
-
-		.back-link:focus-visible
-		{
-			outline: none;
-			border-radius: 4px;
-			box-shadow: 0 0 0 3px var(--purple-light);
+			transform: scale(0.95);
 		}
 
 		.content-section
@@ -800,39 +812,354 @@
 			padding: 45px 0;
 		}
 
-		.detail-section
+		.announcements-section
 		{
-			padding-top: 35px;
+			scroll-margin-top: 100px;
 		}
 
-		.detail-card
+		.section-heading
+		{
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		.section-label
+		{
+			color: var(--purple);
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			margin-bottom: 6px;
+		}
+
+		.section-heading h2
+		{
+			font-size: 32px;
+			font-weight: 600;
+			color: var(--text);
+			margin-bottom: 10px;
+		}
+
+		.section-heading p
+		{
+			max-width: 650px;
+			margin: 0 auto;
+			color: var(--text-muted);
+			font-size: 13px;
+			line-height: 1.7;
+		}
+
+		.toolbar
 		{
 			display: flex;
-			flex-direction: column;
-			gap: 22px;
-			padding: 40px;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			gap: 9px;
+			margin-bottom: 28px;
+		}
+
+		.search-field
+		{
+			display: flex;
+			width: clamp(220px, 30vw, 320px);
+			height: 34px;
+			align-items: center;
+			gap: 8px;
+			padding: 0 10px;
 			border: 1px solid var(--border);
-			border-radius: 6px;
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text-muted);
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.search-field:focus-within
+		{
+			border-color: var(--purple);
+			box-shadow: 0 0 0 3px var(--purple-light);
+		}
+
+		.search-field svg
+		{
+			width: 15px;
+			height: 15px;
+			flex: 0 0 15px;
+			fill: currentColor;
+		}
+
+		.search-field input
+		{
+			width: 100%;
+			min-width: 0;
+			border: 0;
+			outline: 0;
+			background: transparent;
+			color: var(--text);
+			font-size: 12px;
+		}
+
+		.search-field input::placeholder
+		{
+			color: var(--text-muted);
+		}
+
+		.filter-wrap
+		{
+			position: relative;
+		}
+
+		.filter-button
+		{
+			display: inline-flex;
+			min-width: 84px;
+			height: 34px;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			padding: 0 12px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text);
+			font-size: 12px;
+			transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+		}
+
+		.filter-button svg
+		{
+			width: 15px;
+			height: 15px;
+			fill: currentColor;
+			color: var(--purple);
+		}
+
+		.filter-button:hover,
+		.filter-button[aria-expanded="true"]
+		{
+			border-color: #c5a4ef;
+			background: var(--purple-light);
+		}
+
+		.filter-panel
+		{
+			position: absolute;
+			z-index: 25;
+			top: calc(100% + 8px);
+			right: 0;
+			width: 230px;
+			padding: 14px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			box-shadow: 0 14px 35px rgba(20, 13, 44, 0.15);
+		}
+
+		.filter-panel h3
+		{
+			margin: 0 0 12px;
+			color: var(--text);
+			font-size: 13px;
+			font-weight: 600;
+		}
+
+		.filter-panel label
+		{
+			display: block;
+			margin-bottom: 5px;
+			color: var(--text-soft);
+			font-size: 11px;
+		}
+
+		.filter-panel select
+		{
+			width: 100%;
+			height: 34px;
+			margin-bottom: 12px;
+			padding: 0 9px;
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			background: var(--surface);
+			color: var(--text);
+			font-size: 11px;
+		}
+
+		.filter-actions
+		{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.clear-filter,
+		.apply-filter
+		{
+			min-height: 30px;
+			padding: 0 11px;
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			background: var(--surface);
+			color: var(--text-soft);
+			font-size: 11px;
+			transition: 0.2s ease;
+		}
+
+		.apply-filter
+		{
+			border-color: var(--purple);
+			background: var(--purple);
+			color: #ffffff;
+		}
+
+		.clear-filter:hover,
+		.apply-filter:hover
+		{
+			transform: translateY(-1px);
+		}
+
+		.clear-filter:hover
+		{
+			border-color: var(--purple);
+			color: var(--purple);
+		}
+
+		.apply-filter:hover
+		{
+			background: #8c50df;
+		}
+
+		.chips-heading
+		{
+			margin-bottom: 12px;
+			color: var(--text-muted);
+			font-size: 11px;
+			font-weight: 600;
+			letter-spacing: 1px;
+			text-align: center;
+			text-transform: uppercase;
+		}
+
+		.chips
+		{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 8px;
+			margin-bottom: 26px;
+		}
+
+		.chip
+		{
+			display: inline-flex;
+			height: 34px;
+			align-items: center;
+			padding: 0 13px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
+			background: var(--surface);
+			color: var(--text-soft);
+			font-size: 11px;
+			transition: 0.2s ease;
+		}
+
+		.chip:hover
+		{
+			transform: translateY(-1px);
+			border-color: #c5a4ef;
+			background: var(--purple-light);
+			color: var(--purple);
+		}
+
+		.chip.active
+		{
+			border-color: var(--purple);
+			background: var(--purple);
+			color: #ffffff;
+		}
+
+		.chip.active:hover
+		{
+			border-color: #8c50df;
+			background: #8c50df;
+			color: #ffffff;
+		}
+
+		.results-row
+		{
+			display: flex;
+			min-height: 22px;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+
+		.results-summary
+		{
+			color: var(--text-muted);
+			font-size: 11px;
+		}
+
+		.results-clear
+		{
+			border: 0;
+			background: transparent;
+			color: var(--purple);
+			font-size: 11px;
+			transition: 0.2s;
+		}
+
+		.results-clear:hover
+		{
+			color: #8c50df;
+			transform: translateX(2px);
+		}
+
+		.announcements-grid
+		{
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 18px;
+		}
+
+		.announcement-card
+		{
+			display: flex;
+			min-height: 185px;
+			flex-direction: column;
+			gap: 9px;
+			padding: 22px;
+			border: 1px solid var(--border);
+			border-radius: 5px;
 			background: var(--surface);
 			box-shadow: 0 5px 20px var(--shadow);
 			transition: 0.3s ease;
 		}
 
-		.detail-heading
+		.announcement-card:hover,
+		.announcement-card:focus-visible
+		{
+			transform: translateY(-5px);
+			border-color: #a970ff;
+			box-shadow:
+				0 15px 35px var(--shadow),
+				0 0 22px rgba(113, 56, 200, 0.08);
+		}
+
+		.card-top
 		{
 			display: flex;
 			align-items: center;
-			gap: 16px;
-			padding-bottom: 20px;
-			border-bottom: 1px solid var(--border);
+			gap: 12px;
 		}
 
 		.announcement-icon
 		{
 			display: flex;
-			width: 70px;
-			height: 70px;
-			min-width: 70px;
+			width: 45px;
+			height: 45px;
+			min-width: 45px;
 			align-items: center;
 			justify-content: center;
 			border-radius: 5px;
@@ -843,14 +1170,14 @@
 
 		.announcement-icon svg
 		{
-			width: 36px;
-			height: 36px;
+			width: 22px;
+			height: 22px;
 			fill: currentColor;
 		}
 
-		.detail-card:hover .announcement-icon
+		.announcement-card:hover .announcement-icon
 		{
-			transform: rotate(-5deg) scale(1.05);
+			transform: rotate(-5deg) scale(1.08);
 		}
 
 		.announcement-icon[data-tone="purple"]
@@ -913,95 +1240,70 @@
 			color: #c5c3df;
 		}
 
-		.detail-meta
+		.card-category
 		{
-			display: flex;
-			align-items: center;
-			gap: 7px;
-			margin-bottom: 6px;
 			color: var(--purple);
 			font-size: 10px;
 			font-weight: 600;
 			letter-spacing: 0.6px;
+			line-height: 1.5;
 			text-transform: uppercase;
 		}
 
-		.category-dot
+		.announcement-card h3
 		{
-			width: 7px;
-			height: 7px;
-			flex: 0 0 7px;
-			border-radius: 50%;
-			background: currentColor;
-		}
-
-		.detail-title
-		{
-			color: var(--text);
-			font-size: 28px;
+			color: var(--purple);
+			font-size: 16px;
 			font-weight: 600;
-			line-height: 1.35;
+			line-height: 1.4;
 		}
 
-		.detail-date-row
+		.announcement-card > p
+		{
+			flex: 1;
+			color: var(--text-soft);
+			font-size: 13px;
+			line-height: 1.7;
+		}
+
+		.card-footer
 		{
 			display: flex;
-			flex-wrap: wrap;
 			align-items: center;
-			gap: 16px;
-			padding: 17px 0;
-			border-bottom: 1px solid var(--border);
+			justify-content: space-between;
+			gap: 10px;
+		}
+
+		.card-meta
+		{
 			color: var(--text-muted);
-			font-size: 12px;
+			font-size: 11px;
+			line-height: 1.6;
 		}
 
-		.detail-date-row time
+		.card-link
 		{
 			display: inline-flex;
 			align-items: center;
-			gap: 6px;
-		}
-
-		.detail-date-row time svg
-		{
-			width: 14px;
-			height: 14px;
-			fill: currentColor;
+			gap: 5px;
 			color: var(--purple);
-		}
-
-		.detail-date-row span
-		{
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-		}
-
-		.detail-date-row span svg
-		{
-			width: 14px;
-			height: 14px;
-			fill: currentColor;
-			color: var(--purple);
-		}
-
-		.detail-body
-		{
-			color: var(--text-soft);
-			font-size: 14px;
-			line-height: 1.9;
-			overflow-wrap: anywhere;
-		}
-
-		.detail-body p + p
-		{
-			margin-top: 16px;
-		}
-
-		.detail-greeting
-		{
-			color: var(--text);
+			font-size: 11px;
 			font-weight: 600;
+			white-space: nowrap;
+			transition: 0.2s;
+		}
+
+		.card-link svg
+		{
+			width: 14px;
+			height: 14px;
+			fill: currentColor;
+			transition: 0.2s;
+		}
+
+		.announcement-card:hover .card-link svg
+		{
+			transform: translateX(3px);
 		}
 
 		.state-card
@@ -1063,6 +1365,17 @@
 			line-height: 1.7;
 		}
 
+		.state-card--success .state-icon
+		{
+			background: var(--green-soft);
+			color: var(--green);
+		}
+
+		.state-card--success .state-title
+		{
+			color: var(--green);
+		}
+
 		.state-card--error .state-icon
 		{
 			background: var(--red-soft);
@@ -1072,333 +1385,6 @@
 		.state-card--error .state-title
 		{
 			color: var(--red);
-		}
-
-		.detail-layout
-		{
-			display: grid;
-			grid-template-columns: minmax(0, 1fr) 310px;
-			gap: 30px;
-			align-items: start;
-		}
-
-		.detail-aside
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-			position: sticky;
-			top: 100px;
-		}
-
-		.detail-aside[hidden]
-		{
-			display: none;
-		}
-
-		.info-panel
-		{
-			padding: 22px;
-			border: 1px solid var(--border);
-			border-radius: 6px;
-			background: var(--surface);
-			box-shadow: 0 5px 20px var(--shadow);
-		}
-
-		.info-heading
-		{
-			margin-bottom: 14px;
-			color: var(--text);
-			font-size: 12px;
-			font-weight: 600;
-			letter-spacing: 0.8px;
-		}
-
-		.info-rows
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-		}
-
-		.info-row
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 3px;
-		}
-
-		.info-row + .info-row
-		{
-			padding-top: 12px;
-			border-top: 1px solid var(--border);
-		}
-
-		.info-label
-		{
-			color: var(--text-muted);
-			font-size: 11px;
-			font-weight: 500;
-		}
-
-		.info-value
-		{
-			color: var(--text);
-			font-size: 13px;
-			font-weight: 600;
-			overflow-wrap: anywhere;
-		}
-
-		.info-value--muted
-		{
-			color: var(--text-muted);
-			font-weight: 500;
-		}
-
-		.status-badge
-		{
-			display: inline-flex;
-			align-self: flex-start;
-			align-items: center;
-			gap: 6px;
-			padding: 4px 10px;
-			border-radius: 999px;
-			background: var(--green-soft);
-			color: var(--green);
-			font-size: 11px;
-			font-weight: 600;
-		}
-
-		.status-badge::before
-		{
-			content: "";
-			width: 6px;
-			height: 6px;
-			border-radius: 50%;
-			background: currentColor;
-		}
-
-		.detail-period
-		{
-			display: inline-flex;
-			align-self: flex-start;
-			align-items: center;
-			gap: 8px;
-			padding: 8px 14px;
-			border: 1px solid var(--border);
-			border-radius: 6px;
-			background: var(--surface-soft);
-			color: var(--text-soft);
-			font-size: 12px;
-			font-weight: 600;
-		}
-
-		.detail-period span svg
-		{
-			width: 15px;
-			height: 15px;
-			fill: var(--purple);
-		}
-
-		.procedures
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-		}
-
-		.procedures h3
-		{
-			color: var(--text);
-			font-size: 16px;
-			font-weight: 600;
-		}
-
-		.procedures-list
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-			padding-left: 22px;
-			color: var(--text-soft);
-			font-size: 14px;
-			line-height: 1.9;
-		}
-
-		.procedures-list li
-		{
-			padding-left: 6px;
-		}
-
-		.procedures-list a
-		{
-			color: var(--purple);
-			font-weight: 600;
-			overflow-wrap: anywhere;
-		}
-
-		.procedures-list a:hover
-		{
-			text-decoration: underline;
-		}
-
-		.procedures-emphasis
-		{
-			color: var(--text);
-			font-weight: 700;
-		}
-
-		.content-block
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-		}
-
-		.content-block h3
-		{
-			color: var(--text);
-			font-size: 16px;
-			font-weight: 600;
-		}
-
-		.content-block p
-		{
-			color: var(--text-soft);
-			font-size: 14px;
-			line-height: 1.9;
-			overflow-wrap: anywhere;
-		}
-
-		.content-list
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-			padding-left: 22px;
-			color: var(--text-soft);
-			font-size: 14px;
-			line-height: 1.9;
-		}
-
-		.content-list li
-		{
-			padding-left: 6px;
-		}
-
-		.content-list a
-		{
-			color: var(--purple);
-			font-weight: 600;
-			overflow-wrap: anywhere;
-		}
-
-		.content-list a:hover
-		{
-			text-decoration: underline;
-		}
-
-		.content-emphasis
-		{
-			color: var(--text);
-			font-weight: 700;
-		}
-
-		.content-placeholder
-		{
-			color: var(--text-muted);
-			font-style: italic;
-		}
-
-		.attachments-section
-		{
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-			padding-top: 22px;
-			border-top: 1px solid var(--border);
-		}
-
-		.attachments-heading
-		{
-			color: var(--text-muted);
-			font-size: 11px;
-			font-weight: 600;
-			letter-spacing: 0.8px;
-		}
-
-		.attachments-grid
-		{
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-			gap: 12px;
-		}
-
-		.attachment-thumb
-		{
-			padding: 0;
-			border: 1px solid var(--border);
-			border-radius: 6px;
-			background: var(--surface-soft);
-			overflow: hidden;
-			cursor: pointer;
-			transition: 0.25s ease;
-		}
-
-		.attachment-thumb:hover
-		{
-			border-color: var(--purple);
-			transform: translateY(-2px);
-		}
-
-		.attachment-thumb:focus-visible
-		{
-			outline: none;
-			border-radius: 6px;
-			box-shadow: 0 0 0 3px var(--purple-light);
-		}
-
-		.attachment-thumb img
-		{
-			display: block;
-			width: 100%;
-			height: 180px;
-			object-fit: cover;
-		}
-
-		.attachment-name
-		{
-			display: block;
-			padding: 8px 10px;
-			color: var(--text-soft);
-			font-size: 11px;
-			font-weight: 600;
-		}
-
-		.lightbox
-		{
-			position: fixed;
-			inset: 0;
-			z-index: 200;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 30px;
-			background: rgba(8, 5, 29, 0.85);
-			cursor: zoom-out;
-		}
-
-		.lightbox[hidden]
-		{
-			display: none;
-		}
-
-		.lightbox img
-		{
-			max-width: min(1000px, 92vw);
-			max-height: 86vh;
-			border-radius: 6px;
-			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 		}
 
 		.state-button
@@ -1440,36 +1426,18 @@
 			box-shadow: 0 0 0 3px var(--purple-light);
 		}
 
-		.section-heading
+		.state-button[disabled]
 		{
-			text-align: center;
-			margin-bottom: 30px;
+			opacity: 0.55;
+			cursor: not-allowed;
 		}
 
-		.section-label
+		.state-button[disabled]:hover
 		{
-			color: var(--purple);
-			font-size: 12px;
-			font-weight: 600;
-			letter-spacing: 1px;
-			margin-bottom: 6px;
-		}
-
-		.section-heading h2
-		{
-			font-size: 32px;
-			font-weight: 600;
-			color: var(--text);
-			margin-bottom: 10px;
-		}
-
-		.section-heading p
-		{
-			max-width: 650px;
-			margin: 0 auto;
-			color: var(--text-muted);
-			font-size: 13px;
-			line-height: 1.7;
+			background: #7138c8;
+			border-color: #7138c8;
+			transform: none;
+			box-shadow: none;
 		}
 
 		.events-section
@@ -1603,7 +1571,7 @@
 			height: 1px;
 		}
 
-		body.dark-mode .detail-card,
+		body.dark-mode .announcement-card,
 		body.dark-mode .event-card
 		{
 			background:
@@ -2011,32 +1979,6 @@
 			margin-bottom: 13px;
 		}
 
-		.question-button
-		{
-			display: inline-flex;
-			height: 32px;
-			align-items: center;
-			justify-content: center;
-			padding: 0 14px;
-			border: none;
-			border-radius: 5px;
-			background: #7138c8;
-			color: white;
-			font-size: 10px;
-			transition: 0.2s ease;
-		}
-
-		.question-button:hover
-		{
-			background: #8c50df;
-			transform: translateY(-1px);
-		}
-
-		.question-button:active
-		{
-			transform: scale(0.95);
-		}
-
 		.footer-bottom
 		{
 			width: 100%;
@@ -2329,6 +2271,7 @@
 				width: calc(100% - 40px);
 			}
 
+			.announcements-grid,
 			.events-grid
 			{
 				grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2350,16 +2293,6 @@
 			{
 				width: 70px;
 				height: 70px;
-			}
-
-			.detail-layout
-			{
-				grid-template-columns: minmax(0, 1fr);
-			}
-
-			.detail-aside
-			{
-				position: static;
 			}
 		}
 
@@ -2473,31 +2406,13 @@
 				font-size: 26px;
 			}
 
-			.detail-card
+			.search-field
 			{
-				padding: 20px;
+				width: auto;
+				flex: 1 1 200px;
 			}
 
-			.detail-aside
-			{
-				gap: 16px;
-			}
-
-			.info-panel
-			{
-				padding: 18px;
-			}
-
-			.detail-heading
-			{
-				align-items: flex-start;
-			}
-
-			.detail-title
-			{
-				font-size: 22px;
-			}
-
+			.announcements-grid,
 			.events-grid
 			{
 				grid-template-columns: minmax(0, 1fr);
@@ -2559,8 +2474,7 @@
 				animation: none;
 			}
 
-			.detail-card,
-			.attachment-thumb,
+			.announcement-card,
 			.event-card,
 			.inquiry-section,
 			.inquiry-section .mission-icon,
@@ -2573,6 +2487,744 @@
 				transition: none;
 			}
 		}
+
+
+
+			:root
+			{
+					--amber: #a4670f;
+					--amber-soft: #fbf1dd;
+			}
+	
+			body.dark-mode
+			{
+					--amber: #f2b45f;
+					--amber-soft: #33280f;
+			}
+	
+			.admin-grid
+			{
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+					gap: 18px;
+			}
+	
+			.stat-card
+			{
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					padding: 20px;
+					box-shadow: 0 12px 30px var(--shadow);
+			}
+	
+			.stat-card .stat-label
+			{
+					display: block;
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 0.6px;
+					text-transform: uppercase;
+					color: var(--text-muted);
+					margin-bottom: 8px;
+			}
+	
+			.stat-card .stat-value
+			{
+					font-size: 30px;
+					font-weight: 700;
+					color: var(--purple);
+			}
+	
+			.stat-card .stat-hint
+			{
+					display: block;
+					font-size: 11.5px;
+					color: var(--text-muted);
+					margin-top: 6px;
+			}
+	
+			.panel
+			{
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					padding: 24px;
+					box-shadow: 0 12px 30px var(--shadow);
+			}
+	
+			.panel + .panel
+			{
+					margin-top: 20px;
+			}
+	
+			.panel-title
+			{
+					font-size: 16px;
+					font-weight: 600;
+					color: var(--text);
+					margin-bottom: 6px;
+			}
+	
+			.panel-subtitle
+			{
+					font-size: 13px;
+					color: var(--text-soft);
+					line-height: 1.6;
+					margin-bottom: 18px;
+			}
+	
+			.badge
+			{
+					display: inline-flex;
+					align-items: center;
+					gap: 6px;
+					padding: 4px 11px;
+					border-radius: 999px;
+					font-size: 11px;
+					font-weight: 600;
+					white-space: nowrap;
+			}
+	
+			.badge-purple
+			{
+					background: var(--purple-light);
+					color: var(--purple);
+			}
+	
+			.badge-green
+			{
+					background: var(--green-soft);
+					color: var(--green);
+			}
+	
+			.badge-amber
+			{
+					background: var(--amber-soft);
+					color: var(--amber);
+			}
+	
+			.badge-red
+			{
+					background: var(--red-soft);
+					color: var(--red);
+			}
+	
+			.badge-gray
+			{
+					background: var(--surface-soft);
+					color: var(--text-muted);
+					border: 1px solid var(--border);
+			}
+	
+			.table-wrap
+			{
+					overflow-x: auto;
+			}
+	
+			.data-table
+			{
+					width: 100%;
+					border-collapse: collapse;
+					font-size: 13px;
+					min-width: 640px;
+			}
+	
+			.data-table th,
+			.data-table td
+			{
+					text-align: left;
+					padding: 13px 12px;
+					border-bottom: 1px solid var(--border);
+					color: var(--text-soft);
+					vertical-align: top;
+			}
+	
+			.data-table th
+			{
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 0.6px;
+					text-transform: uppercase;
+					color: var(--text);
+			}
+	
+			.data-table tbody tr:last-child td
+			{
+					border-bottom: 0;
+			}
+	
+			.data-table select
+			{
+					padding: 8px 10px;
+					border-radius: 8px;
+					border: 1px solid var(--border);
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 12.5px;
+			}
+	
+			.data-table details summary
+			{
+					cursor: pointer;
+					font-size: 12.5px;
+					font-weight: 600;
+					color: var(--purple);
+			}
+	
+			.data-table details p
+			{
+					margin-top: 8px;
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.status-cell select
+			{
+					display: block;
+					margin-top: 8px;
+			}
+	
+			.btn
+			{
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					gap: 8px;
+					padding: 11px 18px;
+					border-radius: 10px;
+					border: 1px solid transparent;
+					font-family: inherit;
+					font-size: 13px;
+					font-weight: 600;
+					cursor: pointer;
+					text-decoration: none;
+					transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+			}
+	
+			.btn:hover
+			{
+					transform: translateY(-1px);
+			}
+	
+			.btn-primary
+			{
+					background: var(--purple);
+					color: #ffffff;
+					box-shadow: 0 10px 22px rgba(113, 56, 200, 0.28);
+			}
+	
+			.btn-primary:hover
+			{
+					background: #5f2eb3;
+			}
+	
+			.btn-secondary
+			{
+					background: transparent;
+					color: var(--purple);
+					border-color: var(--purple);
+			}
+	
+			.btn-ghost
+			{
+					background: var(--surface-soft);
+					color: var(--text-soft);
+					border-color: var(--border);
+			}
+	
+			.btn-ghost:hover
+			{
+					color: var(--text);
+			}
+	
+			.btn-danger
+			{
+					background: var(--red-soft);
+					color: var(--red);
+			}
+	
+			.btn-small
+			{
+					padding: 7px 12px;
+					font-size: 12px;
+					border-radius: 8px;
+			}
+	
+			.btn:disabled
+			{
+					opacity: 0.55;
+					cursor: not-allowed;
+					transform: none;
+			}
+	
+			.field
+			{
+					display: flex;
+					flex-direction: column;
+					gap: 7px;
+					margin-bottom: 18px;
+			}
+	
+			.field label
+			{
+					font-size: 13px;
+					font-weight: 600;
+					color: var(--text);
+			}
+	
+			.field input,
+			.field select,
+			.field textarea
+			{
+					padding: 11px 14px;
+					border: 1px solid var(--border);
+					border-radius: 10px;
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 13.5px;
+			}
+	
+			.field textarea
+			{
+					min-height: 140px;
+					resize: vertical;
+			}
+	
+			.field input::placeholder,
+			.field textarea::placeholder
+			{
+					color: var(--text-muted);
+			}
+	
+			.form-actions
+			{
+					display: flex;
+					gap: 12px;
+					flex-wrap: wrap;
+					align-items: center;
+			}
+	
+			.note
+			{
+					margin-top: 20px;
+					padding: 15px 18px;
+					border: 1px solid var(--border);
+					border-left: 3px solid var(--purple);
+					border-radius: 12px;
+					background: var(--surface-soft);
+					font-size: 12.5px;
+					line-height: 1.65;
+					color: var(--text-soft);
+			}
+	
+			.note strong
+			{
+					color: var(--text);
+			}
+	
+			.empty-state
+			{
+					padding: 34px 18px;
+					text-align: center;
+					font-size: 13.5px;
+					color: var(--text-muted);
+			}
+	
+			.quick-grid
+			{
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+					gap: 18px;
+			}
+	
+			.quick-card
+			{
+					display: flex;
+					flex-direction: column;
+					gap: 9px;
+					padding: 22px;
+					background: var(--surface);
+					border: 1px solid var(--border);
+					border-radius: 16px;
+					text-decoration: none;
+					box-shadow: 0 12px 30px var(--shadow);
+					transition: transform 0.18s ease, border-color 0.18s ease;
+			}
+	
+			.quick-card:hover,
+			.quick-card:focus-visible
+			{
+					transform: translateY(-3px);
+					border-color: var(--purple);
+			}
+	
+			.quick-card h3
+			{
+					font-size: 15.5px;
+					color: var(--text);
+			}
+	
+			.quick-card p
+			{
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.list-row
+			{
+					display: flex;
+					justify-content: space-between;
+					align-items: flex-start;
+					gap: 16px;
+					padding: 17px 0;
+					border-bottom: 1px solid var(--border);
+			}
+	
+			.list-row:last-child
+			{
+					border-bottom: 0;
+					padding-bottom: 0;
+			}
+	
+			.list-row:first-child
+			{
+					padding-top: 0;
+			}
+	
+			.list-row-body h3
+			{
+					font-size: 14.5px;
+					color: var(--text);
+					margin-bottom: 5px;
+					display: flex;
+					align-items: center;
+					gap: 9px;
+					flex-wrap: wrap;
+			}
+	
+			.list-row-body p
+			{
+					font-size: 12.5px;
+					line-height: 1.6;
+					color: var(--text-soft);
+			}
+	
+			.row-actions
+			{
+					display: flex;
+					gap: 8px;
+					flex-shrink: 0;
+					flex-wrap: wrap;
+			}
+	
+			.edit-input
+			{
+					flex: 1 1 200px;
+					padding: 9px 12px;
+					border: 1px solid var(--border);
+					border-radius: 8px;
+					background: var(--surface-soft);
+					color: var(--text);
+					font-family: inherit;
+					font-size: 13px;
+			}
+	
+			.edit-controls
+			{
+					display: flex;
+					gap: 8px;
+					flex-wrap: wrap;
+					width: 100%;
+					margin-top: 10px;
+			}
+	
+			.timeline
+			{
+					list-style: none;
+			}
+
+			.timeline-toolbar
+			{
+					display: flex;
+					justify-content: flex-end;
+					margin-bottom: 16px;
+			}
+	
+			.timeline li
+			{
+					position: relative;
+					padding: 0 0 22px 26px;
+					margin-left: 6px;
+					border-left: 2px solid var(--border);
+			}
+	
+			.timeline li:last-child
+			{
+					border-left-color: transparent;
+					padding-bottom: 0;
+			}
+	
+			.timeline li::before
+			{
+					content: "";
+					position: absolute;
+					left: -8px;
+					top: 2px;
+					width: 14px;
+					height: 14px;
+					border-radius: 50%;
+					background: var(--purple);
+					border: 3px solid var(--surface);
+			}
+	
+			.timeline .timeline-time
+			{
+					display: block;
+					font-size: 11.5px;
+					color: var(--text-muted);
+					margin-bottom: 4px;
+			}
+	
+			.timeline .timeline-what
+			{
+					font-size: 13.5px;
+					color: var(--text);
+			}
+	
+			.timeline .timeline-what span
+			{
+					color: var(--text-soft);
+			}
+	
+			.bar-row
+			{
+					display: grid;
+					grid-template-columns: 120px 1fr 44px;
+					align-items: center;
+					gap: 14px;
+					margin-bottom: 14px;
+					font-size: 13px;
+					color: var(--text-soft);
+			}
+	
+			.bar-row:last-child
+			{
+					margin-bottom: 0;
+			}
+	
+			.bar-track
+			{
+					height: 12px;
+					border-radius: 999px;
+					background: var(--surface-soft);
+					border: 1px solid var(--border);
+					overflow: hidden;
+			}
+	
+			.bar-fill
+			{
+					height: 100%;
+					border-radius: 999px;
+					background: var(--purple);
+			}
+	
+			.bar-fill.is-green
+			{
+					background: var(--green);
+			}
+	
+			.bar-fill.is-amber
+			{
+					background: var(--amber);
+			}
+	
+			.bar-value
+			{
+					text-align: right;
+					font-weight: 600;
+					color: var(--text);
+			}
+	
+			.profile-hero
+			{
+					display: flex;
+					align-items: center;
+					gap: 24px;
+					flex-wrap: wrap;
+			}
+	
+			.profile-hero img
+			{
+					width: 96px;
+					height: 96px;
+					border-radius: 50%;
+					object-fit: cover;
+					border: 3px solid var(--purple-light);
+			}
+	
+			.profile-hero h2
+			{
+					font-size: 22px;
+					color: var(--text);
+					margin-bottom: 9px;
+			}
+	
+			.kv-list
+			{
+					display: grid;
+					grid-template-columns: minmax(150px, auto) 1fr;
+					gap: 13px 20px;
+					font-size: 13.5px;
+					margin-top: 22px;
+			}
+	
+			.kv-list dt
+			{
+					color: var(--text-muted);
+			}
+	
+			.kv-list dd
+			{
+					margin: 0;
+					color: var(--text);
+					font-weight: 500;
+			}
+	
+			.kv-list + .form-actions
+			{
+					margin-top: 24px;
+			}
+	
+			.switch-row
+			{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					gap: 16px;
+					flex-wrap: wrap;
+					padding: 16px 0;
+					border-bottom: 1px solid var(--border);
+			}
+	
+			.switch-row:last-child
+			{
+					border-bottom: 0;
+					padding-bottom: 0;
+			}
+	
+			.switch-row:first-child
+			{
+					padding-top: 0;
+			}
+	
+			.switch-row h3
+			{
+					font-size: 14.5px;
+					color: var(--text);
+					margin-bottom: 4px;
+			}
+	
+			.switch-row p
+			{
+					font-size: 12.5px;
+					color: var(--text-soft);
+					line-height: 1.55;
+			}
+	
+			.toast
+			{
+					position: fixed;
+					left: 50%;
+					bottom: 26px;
+					transform: translateX(-50%);
+					z-index: 3000;
+					max-width: min(520px, calc(100% - 32px));
+					padding: 13px 20px;
+					border-radius: 12px;
+					background: rgb(8, 5, 29);
+					color: #ffffff;
+					font-size: 13px;
+					line-height: 1.5;
+					text-align: center;
+					box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+					border: 1px solid #ffffff1f;
+			}
+	
+			.toast[hidden]
+			{
+					display: none;
+			}
+	
+			@media (max-width: 700px)
+			{
+					.list-row
+					{
+								flex-direction: column;
+								}
+	
+								.kv-list
+								{
+										grid-template-columns: 1fr;
+										gap: 4px 0;
+								}
+	
+								.kv-list dd
+								{
+										margin-bottom: 10px;
+								}
+	
+								.bar-row
+								{
+										grid-template-columns: 92px 1fr 40px;
+										gap: 10px;
+								}
+			}
+	
+			@media (prefers-reduced-motion: reduce)
+			{
+					.btn,
+					.quick-card
+					{
+								transition: none;
+								}
+	
+								.btn:hover,
+								.quick-card:hover,
+								.quick-card:focus-visible
+								{
+										transform: none;
+								}
+			}
+
+
+			.timeline-toolbar
+			{
+					gap: 10px;
+					flex-wrap: wrap;
+			}
+
+			.admin-grid + .panel
+			{
+					margin-top: 20px;
+			}
+
+			.message-meta
+			{
+					font-size: 11.5px;
+					color: var(--text-muted);
+					margin-top: 3px;
+			}
+
+			.state-actions
+			{
+					margin-top: 14px;
+			}
+
 	</style>
 </head>
 <body>
@@ -2581,8 +3233,8 @@
 
 	<nav class="navbar">
 
-		<a href="admindashboard.html" class="logo">
-			<img src="edubridgelogo.png" alt="EduBridge">
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -2596,27 +3248,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="admindashboard.html">
+			<a href="landingpage.html">
 				Home
 			</a>
 
-			<a href="adminabout.html">
+			<a href="about.html">
 				About EduBridge
 			</a>
 
-			<a href="adminannouncements.html" class="active" aria-current="page">
+			<a href="announcements.html">
 				Announcements
 			</a>
 
-			<a href="adminfaq.html">
+			<a href="faq.html">
 				FAQs
 			</a>
 
-			<a href="admininquiries.html">
+			<a href="inquiries.html">
 				Inquiries
 			</a>
 
-			<a href="admincontact.html">
+			<a href="contact.html">
 				Contact
 			</a>
 
@@ -2631,7 +3283,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
+			<a class="nav-bell" href="admin-notifications.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -2645,12 +3297,12 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="adminprofile.html">
-				<img src="resume.jpg" alt="Resume Dizon">
+			<a class="nav-profile" href="admin-profile.html">
+				<img src="resume.jpg" alt="Lyza Camille Pancipane">
 
 				<span class="nav-profile-text">
 					<strong>
-						Resume Dizon
+						Lyza Camille Pancipane
 					</strong>
 
 					<small>
@@ -2698,19 +3350,15 @@
 		<div class="hero-content">
 
 			<div class="hero-label">
-				ANNOUNCEMENT DETAILS
+				ADMIN TOOLS
 			</div>
 
 			<h1>
-				Announcement
-				<span>
-					Details
-				</span>
+				Contact Management
 			</h1>
 
 			<p>
-				Read the full announcement, dates, and information
-				from the EduBridge school community.
+				Messages sent through Contact, problem reports, and account requests.
 			</p>
 
 		</div>
@@ -2718,132 +3366,219 @@
 	</section>
 
 
-	<main>
+		<main>
 
-		<section class="content-section detail-section reveal" aria-label="Announcement details">
-
-			<a class="back-link" id="backButton" href="adminannouncements.html">
-
-				<svg viewBox="0 0 24 24" aria-hidden="true">
-					<path d="M15 18.6 8.4 12 15 5.4 16.4 6.8 11.2 12l5.2 5.2L15 18.6z">
-					</path>
-				</svg>
-
-				Back to Announcements
-
-			</a>
-
-			<div class="detail-layout">
-
-				<article class="detail-card" id="announcementDetails" aria-live="polite">
-
-					<div class="state-card">
-
-						<span class="state-icon" aria-hidden="true">
-							<svg viewBox="0 0 24 24">
-								<path d="M3 9h4l12-5v16L7 15H3V9zm4 2v2.7l10 4.2V6.8L7 11z">
-								</path>
-							</svg>
-						</span>
-
-						<h3 class="state-title">
-							Loading Announcement
-						</h3>
-
-						<p class="state-text">
-							Please wait while the announcement details load.
-						</p>
-
-					</div>
-
-				</article>
-
-				<aside class="detail-aside" id="announcementInfo" aria-label="Announcement information">
-
-					<section class="info-panel" aria-labelledby="infoHeading">
-
-						<h2 class="info-heading" id="infoHeading">
-							ANNOUNCEMENT INFORMATION
-						</h2>
-
-						<div class="info-rows" id="infoRows">
-						</div>
-
-					</section>
-
-					<section class="info-panel" aria-labelledby="audienceHeading">
-
-						<h2 class="info-heading" id="audienceHeading">
-							AUDIENCE &amp; VISIBILITY
-						</h2>
-
-						<div class="info-rows" id="audienceRows">
-						</div>
-
-					</section>
-
-				</aside>
-
-			</div>
-
-		</section>
-
-
-		<section class="content-section events-section reveal" id="upcomingEvents" aria-labelledby="eventsHeading">
+		<section class="content-section reveal">
 
 			<div class="section-heading">
 
 				<div class="section-label">
-					MARK YOUR CALENDAR
+					CONTACT MESSAGES
 				</div>
 
-				<h2 id="eventsHeading">
-					Upcoming Events
+				<h2>
+					Message Inbox
 				</h2>
 
 				<p>
-					Don't miss these important dates and school activities.
+					Newest messages first.
 				</p>
 
 			</div>
 
-			<div class="events-grid" id="eventsList">
+
+			<div class="admin-grid">
+
+				<div class="stat-card">
+					<span class="stat-label">
+						New
+					</span>
+
+					<span class="stat-value" id="statNew">
+						0
+					</span>
+
+					<span class="stat-hint">
+						Waiting for review
+					</span>
+				</div>
+
+				<div class="stat-card">
+					<span class="stat-label">
+						Read
+					</span>
+
+					<span class="stat-value" id="statRead">
+						0
+					</span>
+
+					<span class="stat-hint">
+						Reviewed by an administrator
+					</span>
+				</div>
+
+				<div class="stat-card">
+					<span class="stat-label">
+						Resolved
+					</span>
+
+					<span class="stat-value" id="statResolved">
+						0
+					</span>
+
+					<span class="stat-hint">
+						Closed messages
+					</span>
+				</div>
+
+				<div class="stat-card">
+					<span class="stat-label">
+						Total
+					</span>
+
+					<span class="stat-value" id="statTotal">
+						0
+					</span>
+
+					<span class="stat-hint">
+						All received messages
+					</span>
+				</div>
+
+			</div>
+
+			<div class="panel">
+
+				<div class="timeline-toolbar">
+
+					<div class="search-field">
+
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+							</path>
+						</svg>
+
+						<input type="search" id="contactSearch" placeholder="Search messages..." aria-label="Search messages">
+					</div>
+
+					<div class="filter-wrap">
+
+						<button class="filter-button" id="filterButton" type="button" aria-expanded="false" aria-controls="filterPanel">
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M3 4h18l-7 8v6l-4 2v-8L3 4zm4.2 2L12 11.5 16.8 6H7.2z">
+								</path>
+							</svg>
+							Filter
+						</button>
+
+						<div class="filter-panel" id="filterPanel" hidden>
+
+							<h3>
+								Filter messages
+							</h3>
+
+							<label for="typeFilter">
+								Message type
+							</label>
+
+							<select id="typeFilter">
+
+								<option value="all">
+									All messages
+								</option>
+
+								<option value="general">
+									General messages
+								</option>
+
+								<option value="account">
+									Account requests
+								</option>
+
+								<option value="password">
+									Password assistance
+								</option>
+
+								<option value="problem">
+									Problem reports
+								</option>
+							</select>
+
+							<div class="filter-actions">
+
+								<button class="clear-filter" id="clearFilter" type="button">
+									Clear filters
+								</button>
+
+								<button class="apply-filter" id="applyFilter" type="button">
+									Done
+								</button>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="table-wrap" id="tableWrap" hidden>
+
+					<table class="data-table">
+
+						<thead>
+							<tr>
+								<th>
+									From
+								</th>
+
+								<th>
+									Type
+								</th>
+
+								<th>
+									Message
+								</th>
+
+								<th>
+									Status
+								</th>
+
+								<th>
+									Received
+								</th>
+
+								<th>
+									Actions
+								</th>
+							</tr>
+						</thead>
+
+						<tbody id="messageRows">
+						</tbody>
+
+					</table>
+
+				</div>
+
+				<div class="empty-state" id="emptyState">
+					Loading messages...
+				</div>
+
+				<div class="empty-state" id="errorState" hidden>
+
+					Unable to load messages. Please try again.
+
+					<div class="state-actions">
+						<button class="btn btn-secondary btn-small" id="refreshButton" type="button">
+							Refresh
+						</button>
+					</div>
+
+				</div>
+
 			</div>
 
 		</section>
-
-
-		<section class="inquiry-section reveal" aria-labelledby="inquiryHeading">
-
-			<div class="inquiry-item">
-
-				<div class="mission-icon">
-					<svg viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2v2zm2.1-7.3c-.7.7-1.4 1.1-1.8 1.6-.2.3-.3.6-.3 1.2h-2c0-1.1.2-1.7.7-2.3.4-.5 1-.9 1.6-1.5.5-.5.8-.9.8-1.5 0-.9-.7-1.5-1.7-1.5S10.5 8.5 10.5 9.5h-2c0-2.1 1.6-3.6 3.9-3.6 2.4 0 4 1.5 4 3.6 0 1.1-.4 1.8-1.3 2.7z">
-						</path>
-					</svg>
-				</div>
-
-				<div>
-
-					<h3 id="inquiryHeading">
-						Have a question?
-					</h3>
-
-					<p>
-						Submit an inquiry and we'll get back to you.
-					</p>
-
-				</div>
-
-			</div>
-
-			<a class="inquiry-button" href="admininquiries.html">
-				Go to Inquiries
-			</a>
-
-		</section>
-
 	</main>
 
 
@@ -2853,8 +3588,8 @@
 
 			<div>
 
-				<a href="admindashboard.html" class="logo footer-logo">
-					<img src="edubridgelogo.png" alt="EduBridge">
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -2919,37 +3654,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="admindashboard.html">
+						<a href="landingpage.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="adminabout.html">
+						<a href="about.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="adminannouncements.html">
+						<a href="announcements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="adminfaq.html">
+						<a href="faq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="admininquiries.html">
+						<a href="inquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="admincontact.html">
+						<a href="contact.html">
 							Contact
 						</a>
 					</li>
@@ -3015,7 +3750,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="admininquiries.html">
+					<a class="question-button" href="inquiries.html">
 						Get Started →
 					</a>
 
@@ -3068,14 +3803,11 @@
 
 	</button>
 
-	<div class="lightbox" id="imageLightbox" hidden>
 
-		<img id="lightboxImage" src="" alt="">
-
-	</div>
-
+	<div class="toast" id="pageToast" hidden></div>
 
 	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
 	<script>
 		try
 		{
@@ -3247,7 +3979,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "bothlogout.html";
+				window.location.href = "logout.html";
 			}
 
 			function buildAccountMenu()
@@ -3256,35 +3988,36 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "adminannouncements.html" },
-					{ label: "Create Announcement", href: "admincreateannounce.html" },
-					{ label: "Categories", href: "admincategories.html" }
+					{ label: "All Announcements", href: "announcements.html" },
+					{ label: "Create Announcement", href: "admin-createannounce.html" },
+					{ label: "Categories", href: "admin-categories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
-					items.push({ label: "User Management", href: "adminusermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
-					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+					items.push({ label: "User Management", href: "admin-usermanagement.html" });
+					items.push({ label: "Contact Management", href: "admin-contactmanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admin-dashboard.html" });
+					items.push({ label: "Activity Logs", href: "admin-activitylogs.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "adminprofile.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Profile", href: "admin-profile.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -3363,29 +4096,21 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (role === "student")
+				if (role === "student" || role === "teacher")
 				{
-					if (img) img.src = "junior.jpg";
-					if (img) img.alt = "Student";
-					if (name) name.textContent = "Student";
-					if (roleText) roleText.textContent = "Student";
-					profile.setAttribute("href", "admininquiries.html");
-				}
-				else if (role === "teacher")
-				{
-					if (img) img.src = "junior.jpg";
-					if (img) img.alt = "Teacher";
-					if (name) name.textContent = "Teacher";
-					if (roleText) roleText.textContent = "Teacher";
-					profile.setAttribute("href", "admininquiries.html");
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+					img.alt = "Junior Slickback";
+					name.textContent = "Junior Slickback";
+					roleText.textContent = "Student";
+					profile.setAttribute("href", "inquiries.html");
 				}
 				else
 				{
 					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
-					img.alt = "Resume Dizon";
-					name.textContent = "Resume Dizon";
+					img.alt = "Lyza Camille Pancipane";
+					name.textContent = "Lyza Camille Pancipane";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "adminprofile.html");
+					profile.setAttribute("href", "admin-profile.html");
 				}
 			}
 
@@ -3860,1157 +4585,388 @@
 
 			});
 
+			const messageRows = document.getElementById("messageRows");
+			const tableWrap = document.getElementById("tableWrap");
+			const emptyState = document.getElementById("emptyState");
+			const errorState = document.getElementById("errorState");
+			const contactSearch = document.getElementById("contactSearch");
+			const filterButton = document.getElementById("filterButton");
+			const filterPanel = document.getElementById("filterPanel");
+			const typeFilter = document.getElementById("typeFilter");
+			const clearFilter = document.getElementById("clearFilter");
+			const applyFilter = document.getElementById("applyFilter");
 
-			const announcements = [
-				{
-					id: "enrollment-second-semester",
-					category: "Enrollment",
-					title: "Enrollment for 2nd Semester S.Y 2026\u20132027 is Now Open !!!",
-					description: "We are pleased to announce that enrollment for the 2nd semester of School Year 2026\u20132027 is now officially open. All interested students are encouraged to complete their enrollment within the given period.",
-					greeting: "Dear Students,",
-					enrollmentPeriod: "December 9, 2026 \u2013 December 14, 2026",
-					proceduresHeading: "Enrollment Procedures",
-					procedures: [
-						{
-							text: "Register online using the following link:",
-							link: "https://forms.gle/dkdGS4vB3nQ2fmAq8"
-						},
-						{
-							text: "Wait for the assessment of fees. (Assessment of fees will be sent to your MS Teams account after online registration.)"
-						},
-						{
-							text: "Pay online using ESCR official online payment channels. (Your enrollment adviser will check and verify your payment.)"
-						},
-						{
-							text: "BRING YOUR EVALUATION FORM AND GO TO SCHOOL FOR THE NEXT ENROLLMENT PROCEDURES.",
-							emphasis: true
-						},
-						{
-							text: "Show your evaluation form to the assigned enrollment adviser at school. (If you lost your evaluation form, you need to request and pay for another copy of the updated evaluation form.)"
-						},
-						{
-							text: "The assigned enrollment adviser will write your grades (for 1st Semester) on the space provided."
-						},
-						{
-							text: "Go to the Registrar Office and wait for the release of Certificate of Registration."
-						}
-					],
-					status: "Published",
-					scheduledDate: null,
-					publishedOn: "December 8, 2026, 9:21 AM",
-					lastUpdated: "December 8, 2026, 9:21 AM",
-					author: "Resume Dizon",
-					authorRole: "Administrator",
-					visibility: "Public",
-					visibilityNote: "Visible to all Users",
-					targetAudience: "All Students",
-					date: "December 8, 2026",
-					dateTime: "2026-12-08T09:21",
-					time: "9:21 AM",
-					icon: "megaphone",
-					tone: "purple",
-					groups: ["general", "enrollment"]
-				},
-				{
-					id: "final-examinations",
-					category: "Academics",
-					title: "Schedule of Final Examinations",
-					description: "The schedule for the Final Examinations is now available. Students are advised to check their exam dates and times and prepare accordingly.",
-					body: "The schedule for the Final Examinations is now available. Students are advised to check their assigned examination dates and times and to prepare for each subject ahead of the examination period.\n\nReview the schedule carefully and take note of the days and times you need to complete each examination.",
-					sections: [
-						{
-							heading: "Examination Schedule",
-							paragraphs: [
-								"The official examination schedule lists the assigned examination dates and times for every student.",
-								{
-									text: "[To be confirmed by the school administration: where students can view or download the official examination schedule.]",
-									placeholder: true
-								}
-							]
-						},
-						{
-							heading: "Reminders",
-							items: [
-								{
-									text: "Check the official schedule and take note of your assigned examination dates and times."
-								},
-								{
-									text: "Prepare for each of your subjects ahead of the examination period."
-								},
-								{
-									text: "Monitor official school announcements for any changes to the examination schedule."
-								}
-							]
-						}
-					],
-					status: "Published",
-					scheduledDate: null,
-					visibility: "Public",
-					visibilityNote: "Visible to all Users",
-					targetAudience: "All Students",
-					date: "November 29, 2026",
-					dateTime: "2026-11-29T23:11",
-					time: "11:11 PM",
-					icon: "calendar",
-					tone: "blue",
-					groups: ["academic"]
-				},
-				{
-					id: "library-reopening",
-					category: "Campus",
-					title: "Library Reopening Announcement",
-					description: "The library renovation is now complete. The library is officially open and ready to welcome students. Please observe the library rules and operating hours.",
-					body: "The library renovation is now complete, and the library is officially open once again. We are happy to welcome students back to a refreshed library space for studying, research, and school work.\n\nStudents may visit the library during its operating hours to use its facilities and services.",
-					sections: [
-						{
-							heading: "Library Reminders",
-							items: [
-								{
-									text: "Observe the library's operating hours when planning your visit."
-								},
-								{
-									text: "Follow the library rules and policies at all times while using the library."
-								},
-								{
-									text: "[To be confirmed by the school administration: updated library operating hours and library rules.]",
-									placeholder: true
-								}
-							]
-						}
-					],
-					status: "Published",
-					scheduledDate: null,
-					visibility: "Public",
-					visibilityNote: "Visible to all Users",
-					targetAudience: "All Students",
-					date: "August 15, 2026",
-					dateTime: "2026-08-15T14:15",
-					time: "2:15 PM",
-					icon: "books",
-					tone: "lavender",
-					groups: ["campus"]
-				},
-				{
-					id: "sports-fest-2026",
-					category: "Events",
-					title: "Sports Fest 2026",
-					description: "Get ready for our upcoming Sports Fest! Students are invited to join the activities, support their teams, and enjoy a fun-filled celebration with the school community.",
-					body: "Get ready for our upcoming Sports Fest! Students are invited to join the activities, support their teams, and enjoy a fun-filled celebration with the school community.\n\nThis is a chance for students to show their school spirit, bond with classmates and friends, and take part in a memorable school activity.",
-					period: "November 30, 2026 \u00b7 7:31 AM",
-					sections: [
-						{
-							heading: "Event Details",
-							items: [
-								{
-									text: "Date: November 30, 2026"
-								},
-								{
-									text: "Time: 7:31 AM"
-								},
-								{
-									text: "Participants: All students are invited to join."
-								},
-								{
-									text: "[To be confirmed by the school administration: event venue, list of activities, and participation or registration instructions.]",
-									placeholder: true
-								}
-							]
-						},
-						{
-							heading: "Reminders",
-							items: [
-								{
-									text: "Join the activities and show your support for your teams."
-								},
-								{
-									text: "Come ready to enjoy the celebration with the school community."
-								}
-							]
-						}
-					],
-					status: "Published",
-					scheduledDate: null,
-					visibility: "Public",
-					visibilityNote: "Visible to all Users",
-					targetAudience: "All Students",
-					date: "November 30, 2026",
-					dateTime: "2026-11-30T07:31",
-					time: "7:31 AM",
-					icon: "party",
-					tone: "sky",
-					groups: ["campus"]
-				},
-				{
-					id: "teams-password-reset",
-					category: "General Announcement",
-					title: "Microsoft Teams Account Password Reset",
-					description: "Having trouble accessing your Microsoft Teams account? For password resets or account recovery, please message Sir CJ for assistance.",
-					body: "Having trouble accessing your Microsoft Teams account? If you have forgotten your password or can no longer open your account, assistance is available.\n\nMicrosoft Teams is used for important school communications, so try to regain access to your account as soon as possible.",
-					proceduresHeading: "Account Recovery Steps",
-					procedures: [
-						{
-							text: "Message Sir CJ directly for password reset or account recovery assistance."
-						},
-						{
-							text: "Clearly describe the problem with your account, such as a forgotten password or an account you can no longer open."
-						},
-						{
-							text: "Follow the instructions provided by Sir CJ to regain access to your account."
-						}
-					],
-					sections: [
-						{
-							heading: "Reminders",
-							items: [
-								{
-									text: "For password resets or account recovery, message Sir CJ for assistance."
-								},
-								{
-									text: "Keep your account details private and never share your password with others."
-								},
-								{
-									text: "[To be confirmed by the school administration: the official contact channel for messaging Sir CJ, such as a Facebook page, email address, or mobile number.]",
-									placeholder: true
-								}
-							]
-						}
-					],
-					status: "Published",
-					scheduledDate: null,
-					visibility: "Public",
-					visibilityNote: "Visible to all Users",
-					targetAudience: "All Students",
-					date: "August 5, 2026",
-					dateTime: "2026-08-05T09:23",
-					time: "9:23 AM",
-					icon: "tools",
-					tone: "gray",
-					groups: ["general", "account"]
-				}
-			];
+			let messageRecords = [];
+			let activeFilter = "all";
+			let activeQuery = "";
 
-			const upcomingEvents = [
-				{
-					id: "sports-fest-2026",
-					title: "Sports Fest 2026",
-					date: "November 30, 2026",
-					day: "30",
-					month: "NOV",
-					time: "7:31 AM"
-				},
-				{
-					id: "library-reopening",
-					title: "Library Reopening",
-					date: "August 15, 2026",
-					day: "15",
-					month: "AUG",
-					time: "2:15 PM"
-				},
-				{
-					id: "teams-password-reset",
-					title: "Account Password Reset",
-					date: "August 5, 2026",
-					day: "05",
-					month: "AUG",
-					time: "9:23 AM"
-				}
-			];
-
-			const icons = {
-				megaphone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h4l12-5v16L7 15H3V9zm4 2v2.7l10 4.2V6.8L7 11zm-3 2h1v-2H4v2zm7 2.4 2-.4 1.4 4.3-2 .6L11 15.4zM21 9v6l2-3-2-3z"></path></svg>',
-				calendar: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 15H5V9h14zm-11-8h3v3H8z"></path></svg>',
-				books: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13a2 2 0 0 1 2 2v15H6a3 3 0 0 1-3-3V5a2 2 0 0 1 1-2zm2 15h11V5H6v13zm-1 2h14v2H5a4 4 0 0 1-4-4h2a2 2 0 0 0 2 2zm3-12h7v2H8zm0 4h7v2H8z"></path></svg>',
-				party: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 22 13.6-4.1L6.1 8.4 2 22zm4.8-11.4 4.6 4.6-6.7 2 2.1-6.6zm12-7.8 1.4 1.4-2.3 2.3-1.4-1.4 2.3-2.3zM20 9h2v2h-2V9zM15 2h2v2h-2V2zm5 11h2v2h-2v-2zm-6-7 1.4 1.4-2.3 2.3-1.4-1.4L14 6zm7-4 1.4 1.4-2.3 2.3-1.4-1.4L21 1z"></path></svg>',
-				tools: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 19.6 13.4 11a6.5 6.5 0 0 0-8.2-8.2l3.6 3.6-2.4 2.4-3.6-3.6A6.5 6.5 0 0 0 11 13.4l8.6 8.6a1.7 1.7 0 0 0 2.4-2.4zM4 20.6 15.6 9l-1.4-1.4L2.6 19.2A1 1 0 0 0 4 20.6z"></path></svg>'
-			};
-
-			const detailsContainer =
-				document.getElementById("announcementDetails");
-
-			const eventsList =
-				document.getElementById("eventsList");
-
-			const backButton =
-				document.getElementById("backButton");
-
-			const announcementInfo =
-				document.getElementById("announcementInfo");
-
-			const infoRows =
-				document.getElementById("infoRows");
-
-			const audienceRows =
-				document.getElementById("audienceRows");
-
-			const imageLightbox =
-				document.getElementById("imageLightbox");
-
-			const lightboxImage =
-				document.getElementById("lightboxImage");
-
-
-			backButton.addEventListener("click", function(event)
+			function showToast(message)
 			{
-
-				let canGoBack = false;
-
-				try
+				const toast = document.getElementById("pageToast");
+				toast.textContent = message;
+				toast.hidden = false;
+				window.clearTimeout(showToast.timer);
+				showToast.timer = window.setTimeout(function()
 				{
-					canGoBack =
-						Boolean(document.referrer) &&
-						new URL(document.referrer).origin ===
-							window.location.origin &&
-						window.history.length > 1;
-				}
-				catch (error)
-				{
-					canGoBack = false;
-				}
-
-				if (canGoBack)
-				{
-					event.preventDefault();
-					window.history.back();
-				}
-
-			});
-
-
-			function trackAnnouncementViews(announcementId)
-			{
-
-				let views = {};
-
-				try
-				{
-					views =
-						JSON.parse(
-							localStorage.getItem("edubridge-announcement-views")
-						) || {};
-				}
-				catch (error)
-				{
-					views = {};
-				}
-
-				views[announcementId] =
-					(Number(views[announcementId]) || 0) + 1;
-
-				try
-				{
-					localStorage.setItem(
-						"edubridge-announcement-views",
-						JSON.stringify(views)
-					);
-				}
-				catch (error)
-				{
-				}
-
-				return views[announcementId];
-
+					toast.hidden = true;
+				}, 3200);
 			}
 
-
-			function createInfoRow(label, value, style)
+			function formatMessageDate(value)
 			{
+				const parts = String(value || "").split(/[- :]/);
 
-				const row =
-					document.createElement("div");
-
-				row.className = "info-row";
-
-
-				const labelElement =
-					document.createElement("span");
-
-				labelElement.className = "info-label";
-				labelElement.textContent = label;
-
-
-				const valueElement =
-					document.createElement("span");
-
-				valueElement.className =
-					"info-value" + (style ? " info-value--" + style : "");
-
-				valueElement.textContent = value;
-
-				row.append(labelElement, valueElement);
-
-				return row;
-
-			}
-
-
-			function createStatusRow(label, value)
-			{
-
-				const row =
-					document.createElement("div");
-
-				row.className = "info-row";
-
-
-				const labelElement =
-					document.createElement("span");
-
-				labelElement.className = "info-label";
-				labelElement.textContent = label;
-
-
-				const badge =
-					document.createElement("span");
-
-				badge.className = "status-badge";
-				badge.textContent = value;
-
-				row.append(labelElement, badge);
-
-				return row;
-
-			}
-
-
-			function openLightbox(source, alt)
-			{
-
-				lightboxImage.src = source;
-				lightboxImage.alt = alt;
-
-				imageLightbox.hidden = false;
-
-			}
-
-
-			function closeLightbox()
-			{
-
-				imageLightbox.hidden = true;
-				lightboxImage.src = "";
-				lightboxImage.alt = "";
-
-			}
-
-
-			imageLightbox.addEventListener("click", closeLightbox);
-
-
-			document.addEventListener("keydown", function(event)
-			{
-
-				if (event.key === "Escape" && !imageLightbox.hidden)
+				if (parts.length < 5)
 				{
-					closeLightbox();
+					return String(value || "");
 				}
 
-			});
+				const date = new Date(
+					Number(parts[0]),
+					Number(parts[1]) - 1,
+					Number(parts[2]),
+					Number(parts[3]),
+					Number(parts[4])
+				);
 
-
-			function createErrorState(heading, message, buttonLabel)
-			{
-				const card =
-					document.createElement("div");
-
-				card.className =
-					"state-card state-card--error";
-
-				card.setAttribute("role", "alert");
-
-				const iconWrap =
-					document.createElement("span");
-
-				iconWrap.className = "state-icon";
-				iconWrap.setAttribute("aria-hidden", "true");
-
-				iconWrap.innerHTML =
-					'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 12.9-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"></path></svg>';
-
-				const title =
-					document.createElement("h3");
-
-				title.className = "state-title";
-				title.textContent = heading;
-
-				const text =
-					document.createElement("p");
-
-				text.className = "state-text";
-				text.textContent = message;
-
-				const button =
-					document.createElement("button");
-
-				button.className = "state-button";
-				button.type = "button";
-				button.textContent = buttonLabel;
-
-				button.addEventListener("click", function()
+				if (isNaN(date.getTime()))
 				{
-					window.location.reload();
+					return String(value);
+				}
+
+				const day = date.toLocaleDateString(undefined,
+				{
+					month: "long",
+					day: "numeric",
+					year: "numeric"
 				});
 
-				card.append(iconWrap, title, text, button);
+				const time = date.toLocaleTimeString(undefined,
+				{
+					hour: "numeric",
+					minute: "2-digit"
+				});
 
-				return card;
+				return day + " \u00b7 " + time;
 			}
 
-
-			function renderAnnouncementDetails()
+			function typeLabel(type)
 			{
+				const labels =
+				{
+					general: "General",
+					account: "Account Request",
+					password: "Password Help",
+					problem: "Problem Report"
+				};
 
-				const params =
-					new URLSearchParams(window.location.search);
+				return labels[type] || "General";
+			}
 
-				const announcementId =
-					params.get("id") || "";
+			function recount()
+			{
+				const counts = { new: 0, read: 0, resolved: 0 };
 
-				const announcement =
-					announcements.find(function(item)
+				messageRecords.forEach(function(record)
+				{
+					if (Object.prototype.hasOwnProperty.call(counts, record.status))
 					{
-						return item.id === announcementId;
-					});
+						counts[record.status] += 1;
+					}
+				});
 
+				return counts;
+			}
 
-				if (!announcement)
+			function renderStats()
+			{
+				const counts = recount();
+
+				document.getElementById("statNew").textContent = String(counts.new);
+				document.getElementById("statRead").textContent = String(counts.read);
+				document.getElementById("statResolved").textContent = String(counts.resolved);
+				document.getElementById("statTotal").textContent =
+					String(counts.new + counts.read + counts.resolved);
+			}
+
+			function getFilteredMessages()
+			{
+				const query = activeQuery.toLowerCase();
+
+				return messageRecords.filter(function(record)
 				{
-
-					announcementInfo.hidden = true;
-
-					detailsContainer.innerHTML = "";
-
-					detailsContainer.append(
-						createErrorState(
-							"Unable to Load Data",
-							"We can't load the data right now. " +
-							"Please refresh the page.",
-							"Refresh Page"
-						)
-					);
-
-					return;
-
-				}
-
-
-				document.title =
-					announcement.title + " | EduBridge";
-
-				announcementInfo.hidden = false;
-
-				detailsContainer.replaceChildren();
-
-
-				const heading =
-					document.createElement("div");
-
-				heading.className = "detail-heading";
-
-				const icon =
-					document.createElement("span");
-
-				icon.className = "announcement-icon";
-				icon.dataset.tone = announcement.tone;
-				icon.innerHTML = icons[announcement.icon];
-
-				const titleBlock =
-					document.createElement("div");
-
-				const meta =
-					document.createElement("div");
-
-				meta.className = "detail-meta";
-
-				const dot =
-					document.createElement("span");
-
-				dot.className = "category-dot";
-
-				const category =
-					document.createElement("span");
-
-				category.textContent = announcement.category;
-
-				meta.append(dot, category);
-
-				const title =
-					document.createElement("h2");
-
-				title.className = "detail-title";
-				title.textContent = announcement.title;
-
-				titleBlock.append(meta, title);
-				heading.append(icon, titleBlock);
-
-
-				const dateRow =
-					document.createElement("div");
-
-				dateRow.className = "detail-date-row";
-
-				const published =
-					document.createElement("time");
-
-				published.dateTime = announcement.dateTime;
-				published.innerHTML =
-					'<svg viewBox="0 0 24 24" aria-hidden="true">' +
-					'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6 4.3 2.5-1 1.7-5.3-3.1V6h2v6.6z"></path>' +
-					'</svg>';
-
-				if (announcement.publishedOn)
-				{
-
-					published.append(
-						document.createTextNode(
-							"Published " + announcement.publishedOn
-						)
-					);
-
-				}
-				else
-				{
-
-					published.append(
-						document.createTextNode(
-							"Published " + announcement.date
-						)
-					);
-
-				}
-
-				dateRow.append(published);
-
-				if (!announcement.publishedOn)
-				{
-
-					const time = document.createElement("span");
-					time.innerHTML =
-						'<svg viewBox="0 0 24 24" aria-hidden="true">' +
-						'<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6 4.3 2.5-1 1.7-5.3-3.1V6h2v6.6z"></path>' +
-						'</svg>';
-					time.append(
-						document.createTextNode(announcement.time)
-					);
-
-					dateRow.append(time);
-
-				}
-
-
-				const body =
-					document.createElement("div");
-
-				body.className = "detail-body";
-
-				if (announcement.greeting)
-				{
-
-					const greeting =
-						document.createElement("p");
-
-					greeting.className = "detail-greeting";
-					greeting.textContent = announcement.greeting;
-
-					body.append(greeting);
-
-				}
-
-				const introText =
-					announcement.body || announcement.description;
-
-				introText
-					.split(/\n+/)
-					.forEach(function(text)
+					if (activeFilter !== "all" && record.type !== activeFilter)
 					{
-						const trimmed = text.trim();
+						return false;
+					}
 
-						if (!trimmed)
-						{
-							return;
-						}
-
-						const paragraph =
-							document.createElement("p");
-
-						paragraph.textContent = trimmed;
-
-						body.append(paragraph);
-					});
-
-
-				let periodRow = null;
-
-				const periodText =
-					announcement.period || announcement.enrollmentPeriod;
-
-				if (periodText)
-				{
-
-					periodRow =
-						document.createElement("p");
-
-					periodRow.className = "detail-period";
-
-
-					const calendarIcon =
-						document.createElement("span");
-
-					calendarIcon.setAttribute("aria-hidden", "true");
-					calendarIcon.innerHTML =
-						'<svg viewBox="0 0 24 24">' +
-						'<path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 15H5V9h14z"></path>' +
-						'</svg>';
-
-					periodRow.append(
-						calendarIcon,
-						document.createTextNode(periodText)
-					);
-
-				}
-
-
-				let proceduresBlock = null;
-
-				if (announcement.procedures && announcement.procedures.length)
-				{
-
-					proceduresBlock =
-						document.createElement("div");
-
-					proceduresBlock.className = "procedures";
-
-
-					const proceduresTitle =
-						document.createElement("h3");
-
-					proceduresTitle.textContent =
-						announcement.proceduresHeading || "Procedures";
-
-
-					const proceduresList =
-						document.createElement("ol");
-
-					proceduresList.className = "procedures-list";
-
-					announcement.procedures.forEach(function(step)
+					if (!query)
 					{
+						return true;
+					}
 
-						const item =
-							document.createElement("li");
-
-						if (step.emphasis)
+					return [record.subject, record.name, record.email, record.message]
+						.some(function(field)
 						{
-							item.className = "procedures-emphasis";
-						}
-
-						item.append(
-							document.createTextNode(step.text)
-						);
-
-						if (step.link)
-						{
-
-							item.append(
-								document.createElement("br")
-							);
-
-
-							const link =
-								document.createElement("a");
-
-							link.href = step.link;
-							link.target = "_blank";
-							link.rel = "noopener noreferrer";
-							link.textContent = step.link;
-
-							item.append(link);
-
-						}
-
-						proceduresList.append(item);
-
-					});
-
-					proceduresBlock.append(proceduresTitle, proceduresList);
-
-				}
-
-
-				let sectionBlocks = [];
-
-				if (announcement.sections && announcement.sections.length)
-				{
-
-					announcement.sections.forEach(function(sectionData)
-					{
-
-						const block =
-							document.createElement("div");
-
-						block.className = "content-block";
-
-
-						const blockTitle =
-							document.createElement("h3");
-
-						blockTitle.textContent = sectionData.heading || "";
-
-						block.append(blockTitle);
-
-
-						(sectionData.paragraphs || []).forEach(function(paragraphData)
-						{
-
-							const paragraph =
-								document.createElement("p");
-
-							if (typeof paragraphData === "string")
-							{
-
-								paragraph.textContent = paragraphData;
-
-							}
-							else
-							{
-
-								paragraph.textContent = paragraphData.text;
-
-								if (paragraphData.placeholder)
-								{
-									paragraph.className = "content-placeholder";
-								}
-
-							}
-
-							block.append(paragraph);
-
+							return String(field || "").toLowerCase().indexOf(query) !== -1;
 						});
+				});
+			}
+
+			function createMessageRow(record)
+			{
+				const row = document.createElement("tr");
+
+				const fromCell = document.createElement("td");
+
+				const senderName = document.createElement("div");
+				senderName.textContent = record.name || "Guest";
+
+				const senderEmail = document.createElement("div");
+				senderEmail.className = "message-meta";
+				senderEmail.textContent = record.email || "No email provided";
+
+				fromCell.append(senderName, senderEmail);
 
 
-						if (sectionData.items && sectionData.items.length)
+				const typeCell = document.createElement("td");
+				typeCell.textContent = typeLabel(record.type);
+
+
+				const messageCell = document.createElement("td");
+
+				const details = document.createElement("details");
+
+				const summary = document.createElement("summary");
+				summary.textContent = record.subject;
+
+				const body = document.createElement("p");
+				body.textContent = record.message;
+
+				details.append(summary, body);
+				messageCell.append(details);
+
+
+				const statusCell = document.createElement("td");
+				statusCell.className = "status-cell";
+
+				const select = document.createElement("select");
+				select.setAttribute("aria-label", "Status for " + record.subject);
+
+				["new", "read", "resolved"].forEach(function(status)
+				{
+					const option = document.createElement("option");
+					option.value = status;
+					option.textContent = status === "new"
+						? "New"
+						: (status === "read" ? "Read" : "Resolved");
+					select.append(option);
+				});
+
+				select.value = record.status;
+
+				select.addEventListener("change", function()
+				{
+					const next = select.value;
+
+					EduAPI.post("/backend/api/contact.php?action=status",
+					{
+						id: record.id,
+						status: next
+					})
+						.then(function(data)
 						{
+							record.status = data.status;
+							renderStats();
+							showToast("Message marked as " + data.status + ".");
+						})
+						.catch(function(error)
+						{
+							select.value = record.status;
+							showToast(error.message || "The status could not be updated.");
+						});
+				});
 
-							const list =
-								document.createElement(
-									sectionData.ordered ? "ol" : "ul"
-								);
+				statusCell.append(select);
 
-							list.className = "content-list";
 
-							sectionData.items.forEach(function(itemData)
+				const dateCell = document.createElement("td");
+				dateCell.textContent = formatMessageDate(record.date);
+
+
+				const actionsCell = document.createElement("td");
+
+				const deleteButton = document.createElement("button");
+				deleteButton.className = "btn btn-danger btn-small";
+				deleteButton.type = "button";
+				deleteButton.textContent = "Delete";
+
+				deleteButton.addEventListener("click", function()
+				{
+					if (!window.confirm("Delete this message from " + (record.name || "Guest") + "?"))
+					{
+						return;
+					}
+
+					EduAPI.post("/backend/api/contact.php?action=delete",
+					{
+						id: record.id
+					})
+						.then(function()
+						{
+							messageRecords = messageRecords.filter(function(item)
 							{
-
-								const listItem =
-									document.createElement("li");
-
-								if (itemData.emphasis)
-								{
-									listItem.classList.add("content-emphasis");
-								}
-
-								if (itemData.placeholder)
-								{
-									listItem.classList.add("content-placeholder");
-								}
-
-								listItem.append(
-									document.createTextNode(itemData.text)
-								);
-
-								if (itemData.link)
-								{
-
-									listItem.append(
-										document.createElement("br")
-									);
-
-
-									const link =
-										document.createElement("a");
-
-									link.href = itemData.link;
-									link.target = "_blank";
-									link.rel = "noopener noreferrer";
-									link.textContent = itemData.link;
-
-									listItem.append(link);
-
-								}
-
-								list.append(listItem);
-
+								return item.id !== record.id;
 							});
 
-							block.append(list);
-
-						}
-
-						sectionBlocks.push(block);
-
-					});
-
-				}
-
-
-				let attachmentsBlock = null;
-
-				if (announcement.attachments && announcement.attachments.length)
-				{
-
-					attachmentsBlock =
-						document.createElement("section");
-
-					attachmentsBlock.className = "attachments-section";
-
-
-					const attachmentsTitle =
-						document.createElement("h3");
-
-					attachmentsTitle.className = "attachments-heading";
-					attachmentsTitle.textContent = "ATTACHMENTS / IMAGES";
-
-
-					const attachmentsGrid =
-						document.createElement("div");
-
-					attachmentsGrid.className = "attachments-grid";
-
-					announcement.attachments.forEach(function(attachment)
-					{
-
-						const thumb =
-							document.createElement("button");
-
-						thumb.className = "attachment-thumb";
-						thumb.type = "button";
-
-						thumb.setAttribute(
-							"aria-label",
-							"View " + attachment.name + " at full size"
-						);
-
-
-						const image =
-							document.createElement("img");
-
-						image.src = attachment.src;
-						image.alt = attachment.name;
-						image.loading = "lazy";
-
-
-						const name =
-							document.createElement("span");
-
-						name.className = "attachment-name";
-						name.textContent = attachment.name;
-
-						thumb.append(image, name);
-
-						thumb.addEventListener("click", function()
+							renderStats();
+							renderMessages();
+							showToast("Message deleted.");
+						})
+						.catch(function(error)
 						{
-							openLightbox(attachment.src, attachment.name);
+							showToast(error.message || "The message could not be deleted.");
 						});
+				});
 
-						attachmentsGrid.append(thumb);
+				actionsCell.append(deleteButton);
 
+				row.append(fromCell, typeCell, messageCell, statusCell, dateCell, actionsCell);
+
+				return row;
+			}
+
+			function renderMessages()
+			{
+				const filtered = getFilteredMessages();
+
+				messageRows.innerHTML = "";
+
+				if (filtered.length === 0)
+				{
+					tableWrap.hidden = true;
+					emptyState.hidden = false;
+					emptyState.textContent = messageRecords.length === 0
+						? "No contact messages yet."
+						: "No messages match your search or filter.";
+					return;
+				}
+
+				emptyState.hidden = true;
+				tableWrap.hidden = false;
+
+				filtered.forEach(function(record)
+				{
+					messageRows.append(createMessageRow(record));
+				});
+			}
+
+			function loadMessages()
+			{
+				return EduAPI.get("/backend/api/contact.php?action=list")
+					.then(function(data)
+					{
+						messageRecords = Array.isArray(data.messages) ? data.messages : [];
+						errorState.hidden = true;
+						renderStats();
+						renderMessages();
+					})
+					.catch(function(error)
+					{
+						tableWrap.hidden = true;
+						emptyState.hidden = true;
+						errorState.hidden = false;
+						showToast(error.message || "Messages could not be loaded.");
 					});
+			}
 
-					attachmentsBlock.append(attachmentsTitle, attachmentsGrid);
+			function closeFilterPanel()
+			{
+				filterPanel.hidden = true;
+				filterButton.setAttribute("aria-expanded", "false");
+			}
 
-				}
+			filterButton.addEventListener("click", function()
+			{
+				const expanded = filterButton.getAttribute("aria-expanded") === "true";
 
+				filterPanel.hidden = expanded;
+				filterButton.setAttribute("aria-expanded", String(!expanded));
+			});
 
-				detailsContainer.append(heading, dateRow);
-
-				if (periodRow)
+			document.addEventListener("click", function(event)
+			{
+				if (!filterPanel.hidden && !event.target.closest(".filter-wrap"))
 				{
-					detailsContainer.append(periodRow);
+					closeFilterPanel();
 				}
+			});
 
-				detailsContainer.append(body);
+			applyFilter.addEventListener("click", function()
+			{
+				activeFilter = typeFilter.value;
+				closeFilterPanel();
+				renderMessages();
+			});
 
-				if (proceduresBlock)
+			clearFilter.addEventListener("click", function()
+			{
+				typeFilter.value = "all";
+				activeFilter = "all";
+				renderMessages();
+			});
+
+			contactSearch.addEventListener("input", function()
+			{
+				activeQuery = contactSearch.value.trim();
+				renderMessages();
+			});
+
+			document.getElementById("refreshButton").addEventListener("click", function()
+			{
+				errorState.hidden = true;
+				emptyState.hidden = false;
+				emptyState.textContent = "Loading messages...";
+				loadMessages();
+			});
+
+			EduAPI.me()
+				.then(function(data)
 				{
-					detailsContainer.append(proceduresBlock);
-				}
+					if (!data.user)
+					{
+						window.location.href = "/login.html";
+						return null;
+					}
 
-				sectionBlocks.forEach(function(block)
+					if (data.user.role !== "admin")
+					{
+						window.location.href = data.user.role === "student"
+							? "/student-dashboard.html"
+							: "/inquiries.html";
+						return null;
+					}
+
+					const navName = document.querySelector(".nav-profile .nav-profile-text strong");
+					const navRole = document.querySelector(".nav-profile .nav-profile-text small");
+
+					if (navName && data.user.name)
+					{
+						navName.textContent = data.user.name;
+					}
+
+					if (navRole)
+					{
+						navRole.textContent = "Administrator";
+					}
+
+					return loadMessages();
+				})
+				.catch(function(error)
 				{
-					detailsContainer.append(block);
+					showToast(error.message);
 				});
 
-				if (attachmentsBlock)
-				{
-					detailsContainer.append(attachmentsBlock);
-				}
-
-
-				infoRows.replaceChildren();
-
-				if (announcement.status)
-				{
-					infoRows.append(
-						createStatusRow("Status", announcement.status)
-					);
-				}
-
-				if (announcement.scheduledDate !== undefined)
-				{
-					infoRows.append(
-						createInfoRow(
-							"Scheduled Date",
-							announcement.scheduledDate || "\u2014",
-							"muted"
-						)
-					);
-				}
-
-				infoRows.append(
-					createInfoRow(
-						"Published on",
-						announcement.publishedOn ||
-							announcement.date + ", " + announcement.time
-					)
-				);
-
-				if (announcement.lastUpdated)
-				{
-					infoRows.append(
-						createInfoRow("Last Updated", announcement.lastUpdated)
-					);
-				}
-
-				if (announcement.author)
-				{
-					infoRows.append(
-						createInfoRow("Published by", announcement.author)
-					);
-				}
-
-				if (announcement.authorRole)
-				{
-					infoRows.append(
-						createInfoRow("Role", announcement.authorRole)
-					);
-				}
-
-
-				audienceRows.replaceChildren();
-
-				if (announcement.visibility)
-				{
-					audienceRows.append(
-						createInfoRow("Visibility", announcement.visibility)
-					);
-				}
-
-				if (announcement.visibilityNote)
-				{
-					audienceRows.append(
-						createInfoRow(
-							"Visibility Description",
-							announcement.visibilityNote,
-							"muted"
-						)
-					);
-				}
-
-				if (announcement.targetAudience)
-				{
-					audienceRows.append(
-						createInfoRow("Target Audience", announcement.targetAudience)
-					);
-				}
-
-				audienceRows.append(
-					createInfoRow(
-						"Total Views",
-						trackAnnouncementViews(announcement.id).toLocaleString()
-					)
-				);
-
-			}
-
-
-			function createEventCard(eventItem)
-			{
-				const card = document.createElement("a");
-				card.className = "event-card";
-				card.href =
-					"adminannouncementdetails.html?id=" +
-					encodeURIComponent(eventItem.id);
-
-				const badge = document.createElement("span");
-				badge.className = "event-date-badge";
-
-				const day = document.createElement("strong");
-				day.textContent = eventItem.day;
-
-				const month = document.createElement("span");
-				month.textContent = eventItem.month;
-
-				badge.append(day, month);
-
-				const copy = document.createElement("span");
-				copy.className = "event-copy";
-
-				const title = document.createElement("strong");
-				title.textContent = eventItem.title;
-
-				const date = document.createElement("time");
-				date.textContent = eventItem.date;
-
-				const eventTime = document.createElement("span");
-				eventTime.className = "event-time";
-
-				const clock = document.createElement("span");
-				clock.className = "clock-icon";
-				clock.setAttribute("aria-hidden", "true");
-
-				eventTime.append(
-					clock,
-					document.createTextNode(eventItem.time)
-				);
-
-				copy.append(title, date, eventTime);
-				card.append(badge, copy);
-
-				return card;
-			}
-
-
-			function renderEvents()
-			{
-				eventsList.replaceChildren();
-
-				upcomingEvents.forEach(function(eventItem)
-				{
-					eventsList.append(
-						createEventCard(eventItem)
-					);
-				});
-			}
-
-
-			try
-			{
-				renderAnnouncementDetails();
-			}
-			catch (error)
-			{
-				detailsContainer.innerHTML = "";
-
-				detailsContainer.append(
-					createErrorState(
-						"Unable to Load Data",
-						"We can't load the data right now. " +
-						"Please refresh the page.",
-						"Refresh Page"
-					)
-				);
-			}
-
-			renderEvents();
 		}
 		catch (error)
 		{
@@ -5019,4 +4975,3 @@
 	</script>
 
 </body>
-</html>
