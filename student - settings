@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Student Settings | EduBridge</title>
+	<link rel="stylesheet" href="teacher-shell.css">
+	<link rel="stylesheet" href="student-shell.css">
+	<link rel="stylesheet" href="student-settings.css">
+	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
+	<script defer src="student-nav.js"></script>
+	<script defer src="teacher-shell.js"></script>
+	<script defer src="student-settings.js"></script>
+</head>
+<body class="student-standalone">
+	<div class="portal-cursor" aria-hidden="true"></div>
+	<nav class="navbar" aria-label="Student navigation">
+		<a class="logo" href="landingpage.html"><img src="Edubridge-Logo.png" alt="EduBridge"><span class="brand-name"><span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span></span></a>
+		<div class="nav-links" id="navLinks">
+			<a href="landingpage.html">Home</a>
+			<a href="about.html">About EduBridge</a>
+			<a href="student-announcements.html">Announcements</a>
+			<a href="student-faq.html">FAQs</a>
+			<a href="student-myinquiries.html">Inquiries</a>
+			<a href="contact.html">Contact</a>
+		</div>
+		<div class="nav-buttons">
+			<button class="theme-button" id="themeButton" type="button" aria-label="Toggle theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"></path></svg></button>
+			<a class="nav-bell" href="student-notifications.html" aria-label="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z"></path></svg></a>
+			<button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="accountMenu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg></button>
+			<button class="nav-profile" type="button" aria-label="Open profile menu" aria-haspopup="true" aria-controls="studentProfileMenu" aria-expanded="false"><img src="student-avatar.svg" alt="Student profile"><span class="nav-profile-text"><strong>Student</strong><small>Student</small></span></button>
+		</div>
+		<div class="account-menu" id="accountMenu" role="menu" aria-label="Student navigation"></div>
+	</nav>
+	<section class="portal-hero" aria-labelledby="pageTitle">
+		<div class="hero-image"></div><div class="hero-base"></div>
+		<div class="gradient-layer" aria-hidden="true"><div class="gradient gradient-purple"></div><div class="gradient gradient-blue"></div><div class="gradient gradient-pink"></div><div class="gradient gradient-violet"></div><div class="gradient gradient-orange"></div><div class="gradient gradient-cyan"></div><div class="gradient gradient-pink-small"></div></div>
+		<div class="hero-overlay"></div>
+		<div class="hero-content"><div class="hero-label">STUDENT PORTAL</div><h1 id="pageTitle">Personal <span>settings</span></h1><p>Manage your profile and display preferences.</p></div>
+	</section>
+	<main class="settings-main">
+		<section class="settings-card portal-reveal" aria-labelledby="profileTitle">
+			<h2 id="profileTitle">Profile personalization</h2>
+			<p>Your official school details are managed by your school. Personalize your display profile below.</p>
+			<form id="profileForm">
+				<div class="settings-grid">
+					<label>Nickname<input id="nicknameInput" maxlength="30" autocomplete="off"></label>
+					<label>Profile picture<input id="avatarInput" type="file" accept=".jpg,.jpeg,.png"></label>
+					<label class="full">Bio<textarea id="bioInput" maxlength="160"></textarea></label>
+					<label class="full">Cover image<input id="coverInput" type="file" accept=".jpg,.jpeg,.png"></label>
+				</div>
+				<p class="hint">JPG or PNG images, up to 2 MB each.</p>
+				<p id="profileStatus" class="status" role="status" aria-live="polite"></p>
+				<div class="settings-actions"><button type="submit" id="saveProfile" disabled>Save profile</button><button type="button" id="resetProfile" disabled>Remove personalization</button></div>
+			</form>
+		</section>
+		<section class="settings-card portal-reveal" aria-labelledby="appearanceTitle">
+			<h2 id="appearanceTitle">Appearance</h2><p>Choose how EduBridge looks in this browser.</p>
+			<div class="settings-actions" role="group" aria-label="Theme">
+				<button type="button" data-theme-mode="light" aria-pressed="false">Light</button>
+				<button type="button" data-theme-mode="dark" aria-pressed="false">Dark</button>
+				<button type="button" data-theme-mode="system" aria-pressed="false">System</button>
+			</div>
+			<p class="hint">System follows your device's light or dark setting.</p>
+		</section>
+		<section class="settings-card portal-reveal" aria-labelledby="accountTitle">
+			<h2 id="accountTitle">Official account details</h2>
+			<dl><dt>Name</dt><dd id="accountName">Loading...</dd><dt>Email</dt><dd id="accountEmail">Loading...</dd><dt>Student ID</dt><dd id="accountStudentId">Loading...</dd><dt>Role</dt><dd>Student</dd></dl>
+			<p><a href="student-profile.html">View profile</a> &middot; <a href="student-contactadmin.html">Contact admin</a></p>
+		</section>
+		<p id="loadStatus" class="status error" role="status" aria-live="polite"></p>
+	</main>
+</body>
+</html>
