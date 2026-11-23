@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -604,7 +603,7 @@
 			position: absolute;
 			inset: 0;
 			z-index: -10;
-			background-image: linear-gradient(135deg, rgba(41, 62, 82, 0.88), rgba(18, 24, 48, 0.92)), url("Edubridge-Hero-About.png");
+			background-image: url("Edubridge-Hero-About.png");
 			background-size: cover;
 			background-position: center;
 			opacity: 0.62;
@@ -810,7 +809,7 @@
 			max-width: 1180px;
 			margin-left: auto;
 			margin-right: auto;
-			padding: 45px 20px 60px;
+			padding: 45px 0;
 		}
 
 		.announcements-section
@@ -1694,7 +1693,7 @@
 			background:
 				radial-gradient(
 					circle at 12% 20%,
-					rgba(125, 65, 210, 0.😎,
+					rgba(125, 65, 210, 0.8),
 					transparent 30%
 				),
 				radial-gradient(
@@ -3159,12 +3158,6 @@
 					.list-row
 					{
 								flex-direction: column;
-								align-items: stretch;
-								}
-
-								.row-actions
-								{
-										justify-content: flex-start;
 								}
 	
 								.kv-list
@@ -3209,8 +3202,8 @@
 
 	<nav class="navbar">
 
-		<a href="admindashboard.html" class="logo">
-			<img src="edubridgelogo.png" alt="EduBridge">
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -3224,27 +3217,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="admindashboard.html">
+			<a href="landingpage.html">
 				Home
 			</a>
 
-			<a href="adminabout.html">
+			<a href="about.html">
 				About EduBridge
 			</a>
 
-			<a href="adminannouncements.html">
+			<a href="announcements.html">
 				Announcements
 			</a>
 
-			<a href="adminfaq.html">
+			<a href="faq.html">
 				FAQs
 			</a>
 
-			<a href="admininquiries.html">
+			<a href="inquiries.html">
 				Inquiries
 			</a>
 
-			<a href="admincontact.html">
+			<a href="contact.html">
 				Contact
 			</a>
 
@@ -3259,7 +3252,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
+			<a class="nav-bell" href="admin-notifications.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -3273,12 +3266,12 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="adminprofile.html">
-				<img src="edubridgelogo.png" alt="Profile">
+			<a class="nav-profile" href="admin-profile.html">
+				<img src="resume.jpg" alt="Lyza Camille Pancipane">
 
 				<span class="nav-profile-text">
 					<strong>
-						Resume Dizon
+						Lyza Camille Pancipane
 					</strong>
 
 					<small>
@@ -3326,7 +3319,7 @@
 		<div class="hero-content">
 
 			<div class="hero-label">
-				ADMIN
+				ANNOUNCEMENTS
 			</div>
 
 			<h1>
@@ -3391,67 +3384,7 @@
 				<div class="panel-subtitle">
 					Add, rename, or remove categories as needed.
 				</div>
-				<div id="categoryList">
-					<div class="list-row">
-						<div class="list-row-body">
-							<h3>
-								Enrollment
-							</h3>
-						</div>
-						<div class="row-actions">
-							<button class="btn btn-secondary btn-small" type="button" data-rename>Rename</button>
-							<button class="btn btn-danger btn-small" type="button" data-remove>Remove</button>
-						</div>
-					</div>
-
-					<div class="list-row">
-						<div class="list-row-body">
-							<h3>
-								Academics
-							</h3>
-						</div>
-						<div class="row-actions">
-							<button class="btn btn-secondary btn-small" type="button" data-rename>Rename</button>
-							<button class="btn btn-danger btn-small" type="button" data-remove>Remove</button>
-						</div>
-					</div>
-
-					<div class="list-row">
-						<div class="list-row-body">
-							<h3>
-								Campus
-							</h3>
-						</div>
-						<div class="row-actions">
-							<button class="btn btn-secondary btn-small" type="button" data-rename>Rename</button>
-							<button class="btn btn-danger btn-small" type="button" data-remove>Remove</button>
-						</div>
-					</div>
-
-					<div class="list-row">
-						<div class="list-row-body">
-							<h3>
-								Events
-							</h3>
-						</div>
-						<div class="row-actions">
-							<button class="btn btn-secondary btn-small" type="button" data-rename>Rename</button>
-							<button class="btn btn-danger btn-small" type="button" data-remove>Remove</button>
-						</div>
-					</div>
-
-					<div class="list-row">
-						<div class="list-row-body">
-							<h3>
-								General
-							</h3>
-						</div>
-						<div class="row-actions">
-							<button class="btn btn-secondary btn-small" type="button" data-rename>Rename</button>
-							<button class="btn btn-danger btn-small" type="button" data-remove>Remove</button>
-						</div>
-					</div>
-				</div>
+				<div id="categoryList"></div>
 				<div class="empty-state" id="categoryEmpty" hidden>
 					No categories yet. Add one using the form above.
 				</div>
@@ -3470,8 +3403,8 @@
 
 			<div>
 
-				<a href="admindashboard.html" class="logo footer-logo">
-					<img src="edubridgelogo.png" alt="EduBridge">
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -3536,37 +3469,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="admindashboard.html">
+						<a href="landingpage.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="adminabout.html">
+						<a href="about.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="adminannouncements.html">
+						<a href="announcements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="adminfaq.html">
+						<a href="faq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="admininquiries.html">
+						<a href="inquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="admincontact.html">
+						<a href="contact.html">
 							Contact
 						</a>
 					</li>
@@ -3632,7 +3565,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="admininquiries.html">
+					<a class="question-button" href="inquiries.html">
 						Get Started →
 					</a>
 
@@ -3686,6 +3619,8 @@
 	</button>
 
 
+	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
 	<script>
 		try
 		{
@@ -3857,7 +3792,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "bothlogout.html";
+				window.location.href = "logout.html";
 			}
 
 			function buildAccountMenu()
@@ -3866,36 +3801,35 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "adminannouncements.html" },
-					{ label: "Create Announcement", href: "admincreateannounce.html" },
-					{ label: "Categories", href: "admincategories.html" }
+					{ label: "All Announcements", href: "announcements.html" },
+					{ label: "Create Announcement", href: "admin-createannounce.html" },
+					{ label: "Categories", href: "admin-categories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
-					items.push({ label: "User Management", href: "adminusermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
-					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+					items.push({ label: "User Management", href: "admin-usermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admin-dashboard.html" });
+					items.push({ label: "Activity Logs", href: "admin-activitylogs.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "adminprofile.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Profile", href: "admin-profile.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -3974,39 +3908,21 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (img && !img.dataset.fallbackBound)
+				if (role === "student" || role === "teacher")
 				{
-					img.dataset.fallbackBound = "true";
-					img.addEventListener("error", function()
-					{
-						this.onerror = null;
-						this.src = "edubridgelogo.png";
-					});
-				}
-
-				if (role === "student")
-				{
-					img.src = "junior.jpg";
-					img.alt = "Student";
-					name.textContent = "Student";
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+					img.alt = "Junior Slickback";
+					name.textContent = "Junior Slickback";
 					roleText.textContent = "Student";
-					profile.setAttribute("href", "admininquiries.html");
-				}
-				else if (role === "teacher")
-				{
-					img.src = "junior.jpg";
-					img.alt = "Teacher";
-					name.textContent = "Teacher";
-					roleText.textContent = "Teacher";
-					profile.setAttribute("href", "admininquiries.html");
+					profile.setAttribute("href", "inquiries.html");
 				}
 				else
 				{
-					img.src = "resume.jpg";
-					img.alt = "Administrator";
-					name.textContent = "Resume Dizon";
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
+					img.alt = "Lyza Camille Pancipane";
+					name.textContent = "Lyza Camille Pancipane";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "adminprofile.html");
+					profile.setAttribute("href", "admin-profile.html");
 				}
 			}
 
@@ -4060,42 +3976,39 @@
 			let pinkSmallY = 67;
 
 
-			if (hero && heroImage)
+			hero.addEventListener("mousemove", function(event)
 			{
-				hero.addEventListener("mousemove", function(event)
-				{
 
-					const rect = hero.getBoundingClientRect();
+				const rect = hero.getBoundingClientRect();
 
-					targetX =
-						((event.clientX - rect.left) / rect.width) * 100;
+				targetX =
+					((event.clientX - rect.left) / rect.width) * 100;
 
-					targetY =
-						((event.clientY - rect.top) / rect.height) * 100;
+				targetY =
+					((event.clientY - rect.top) / rect.height) * 100;
 
-					const moveX =
-						(event.clientX - rect.left) / rect.width - 0.5;
+				const moveX =
+					(event.clientX - rect.left) / rect.width - 0.5;
 
-					const moveY =
-						(event.clientY - rect.top) / rect.height - 0.5;
+				const moveY =
+					(event.clientY - rect.top) / rect.height - 0.5;
 
-					heroImage.style.transform =
-						"scale(1.04) translate(" + (moveX * -10) + "px, " + (moveY * -7) + "px)";
+				heroImage.style.transform =
+					`scale(1.04) translate(${moveX * -10}px, ${moveY * -7}px)`;
 
-				});
+			});
 
 
-				hero.addEventListener("mouseleave", function()
-				{
+			hero.addEventListener("mouseleave", function()
+			{
 
-					targetX = 50;
-					targetY = 50;
+				targetX = 50;
+				targetY = 50;
 
-					heroImage.style.transform =
-						"scale(1.04) translate(0, 0)";
+				heroImage.style.transform =
+					"scale(1.04) translate(0, 0)";
 
-				});
-			}
+			});
 
 
 			function animateGradient()
@@ -4444,14 +4357,11 @@
 				gradientY +=
 					(cursorMouseY - gradientY) * 0.12;
 
-				if (cursorGradient)
-				{
-					cursorGradient.style.left =
-						gradientX + "px";
+				cursorGradient.style.left =
+					gradientX + "px";
 
-					cursorGradient.style.top =
-						gradientY + "px";
-				}
+				cursorGradient.style.top =
+					gradientY + "px";
 
 				requestAnimationFrame(
 					moveCursorGradient
@@ -4459,10 +4369,7 @@
 
 			}
 
-			if (cursorGradient)
-			{
-				moveCursorGradient();
-			}
+			moveCursorGradient();
 
 
 			window.addEventListener("scroll", function()
@@ -4516,154 +4423,210 @@
 					categoryEmpty.hidden = categoryList.children.length > 0;
 			}
 		
-			function startRename(row)
+				function createCategoryRow(entry)
 			{
-					if (row.dataset.renaming === "true")
-					{
-								return;
-					}
-		
-					row.dataset.renaming = "true";
-		
-					const heading = row.querySelector("h3");
-					const originalName = heading.textContent.trim();
-		
-					const input = document.createElement("input");
-					input.type = "text";
-					input.className = "edit-input";
-					input.value = originalName;
-					input.setAttribute("aria-label", "Category name");
-		
-					const controls = document.createElement("div");
-					controls.className = "edit-controls";
-		
-					const saveButton = document.createElement("button");
-					saveButton.className = "btn btn-primary btn-small";
-					saveButton.type = "button";
-					saveButton.textContent = "Save";
-		
-					const cancelButton = document.createElement("button");
-					cancelButton.className = "btn btn-ghost btn-small";
-					cancelButton.type = "button";
-					cancelButton.textContent = "Cancel";
-		
-					heading.style.display = "none";
-		
-					controls.appendChild(input);
-					controls.appendChild(saveButton);
-					controls.appendChild(cancelButton);
-					row.querySelector(".list-row-body").appendChild(controls);
-		
-					input.focus();
-		
-					function endRename()
-					{
-								controls.remove();
-								heading.style.display = "";
-								row.dataset.renaming = "false";
-					}
-		
-					saveButton.addEventListener("click", function()
-					{
-								const value = input.value.trim();
-		
-								if (!value)
-								{
-										showToast("A category name is required.");
-										return;
-								}
-		
-								heading.textContent = value;
-								endRename();
-								showToast("Category renamed.");
-					});
-		
-					cancelButton.addEventListener("click", endRename);
-			}
-		
-			categoryList.addEventListener("click", function(event)
-			{
-					const row = event.target.closest(".list-row");
-		
-					if (!row)
-					{
-								return;
-					}
-		
-					if (event.target.closest("[data-remove]"))
-					{
-								row.remove();
-								updateCategoryEmptyState();
-								showToast("Category removed.");
-								return;
-					}
-		
-					if (event.target.closest("[data-rename]"))
-					{
-								startRename(row);
-					}
-			});
-		
-			document.getElementById("categoryForm").addEventListener("submit", function(event)
-			{
-					event.preventDefault();
-		
-					const name = document.getElementById("categoryName").value.trim();
-		
-					if (!name)
-					{
-								showToast("Please fill in the category name.");
-								return;
-					}
-		
 					const row = document.createElement("div");
 					row.className = "list-row";
-		
+					row.dataset.id = String(entry.id);
+
 					const body = document.createElement("div");
 					body.className = "list-row-body";
-		
+
 					const heading = document.createElement("h3");
-					heading.textContent = name;
-		
+					heading.textContent = entry.name;
+
 					body.appendChild(heading);
-		
+
 					const actions = document.createElement("div");
 					actions.className = "row-actions";
-		
+
 					const renameButton = document.createElement("button");
 					renameButton.className = "btn btn-secondary btn-small";
 					renameButton.type = "button";
 					renameButton.textContent = "Rename";
-		
+					renameButton.setAttribute("data-rename", "");
+
 					const removeButton = document.createElement("button");
 					removeButton.className = "btn btn-danger btn-small";
 					removeButton.type = "button";
 					removeButton.textContent = "Remove";
-		
+					removeButton.setAttribute("data-remove", "");
+
 					actions.appendChild(renameButton);
 					actions.appendChild(removeButton);
 					row.appendChild(body);
 					row.appendChild(actions);
-		
-					renameButton.addEventListener("click", function()
+
+					return row;
+			}
+
+			function startRename(row)
+			{
+					if (row.dataset.renaming === "true")
 					{
-								startRename(row);
-					});
-		
-					removeButton.addEventListener("click", function()
+							return;
+					}
+
+					row.dataset.renaming = "true";
+
+					const heading = row.querySelector("h3");
+					const originalName = heading.textContent;
+
+					const input = document.createElement("input");
+					input.type = "text";
+					input.value = originalName;
+					input.setAttribute("aria-label", "Category name");
+
+					const controls = document.createElement("div");
+					controls.className = "edit-controls";
+
+					const saveButton = document.createElement("button");
+					saveButton.className = "btn btn-primary btn-small";
+					saveButton.type = "button";
+					saveButton.textContent = "Save";
+
+					const cancelButton = document.createElement("button");
+					cancelButton.className = "btn btn-ghost btn-small";
+					cancelButton.type = "button";
+					cancelButton.textContent = "Cancel";
+
+					heading.style.display = "none";
+
+					controls.appendChild(input);
+					controls.appendChild(saveButton);
+					controls.appendChild(cancelButton);
+					row.querySelector(".list-row-body").appendChild(controls);
+
+					input.focus();
+
+					function endRename()
 					{
-								row.remove();
-								updateCategoryEmptyState();
-								showToast("Category removed.");
+							controls.remove();
+							heading.style.display = "";
+							row.dataset.renaming = "false";
+					}
+
+					saveButton.addEventListener("click", function()
+					{
+							const value = input.value.trim();
+
+							if (!value)
+							{
+									showToast("A category name is required.");
+									return;
+							}
+
+							if (value === originalName)
+							{
+									endRename();
+									return;
+							}
+
+							EduAPI.post("/backend/api/announcements.php?action=category_save",
+							{
+								id: Number(row.dataset.id),
+								name: value
+							})
+								.then(function(data)
+								{
+									heading.textContent = data.name;
+									endRename();
+									showToast("Category renamed.");
+								})
+								.catch(function(error)
+								{
+									showToast(error.message || "The category could not be renamed.");
+								});
 					});
-		
-					categoryList.appendChild(row);
-					event.target.reset();
-					updateCategoryEmptyState();
-					showToast("Category added.");
+
+					cancelButton.addEventListener("click", endRename);
+			}
+
+			function loadCategories()
+			{
+					EduAPI.get("/backend/api/announcements.php?action=categories")
+						.then(function(data)
+						{
+							categoryList.replaceChildren();
+
+							(data.categories || []).forEach(function(entry)
+							{
+								categoryList.appendChild(createCategoryRow(entry));
+							});
+
+							updateCategoryEmptyState();
+						})
+						.catch(function(error)
+						{
+							showToast(error.message || "Categories could not be loaded.");
+						});
+			}
+
+			categoryList.addEventListener("click", function(event)
+			{
+					const row = event.target.closest(".list-row");
+
+					if (!row)
+					{
+							return;
+					}
+
+					if (event.target.closest("[data-remove]"))
+					{
+							EduAPI.post("/backend/api/announcements.php?action=category_delete",
+							{
+								id: Number(row.dataset.id)
+							})
+								.then(function()
+								{
+									row.remove();
+									updateCategoryEmptyState();
+									showToast("Category removed.");
+								})
+								.catch(function(error)
+								{
+									showToast(error.message || "The category could not be removed.");
+								});
+							return;
+					}
+
+					if (event.target.closest("[data-rename]"))
+					{
+							startRename(row);
+					}
 			});
-		
-			updateCategoryEmptyState();
+
+			document.getElementById("categoryForm").addEventListener("submit", function(event)
+			{
+					event.preventDefault();
+
+					const name = document.getElementById("categoryName").value.trim();
+
+					if (!name)
+					{
+							showToast("Please fill in the category name.");
+							return;
+					}
+
+					EduAPI.post("/backend/api/announcements.php?action=category_save",
+					{
+						id: 0,
+						name: name
+					})
+						.then(function(data)
+						{
+							categoryList.appendChild(createCategoryRow(data));
+							event.target.reset();
+							updateCategoryEmptyState();
+							showToast("Category added.");
+						})
+						.catch(function(error)
+						{
+							showToast(error.message || "The category could not be added.");
+						});
+			});
+
+			loadCategories();
 
 		}
 		catch (error)
@@ -4673,4 +4636,3 @@
 	</script>
 
 </body>
-</html>
