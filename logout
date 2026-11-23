@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Signing out | EduBridge</title>
+	<script src="edubridge-api.js"></script>
+	<style>
+		:root { font-family: Poppins, Arial, sans-serif; color: #17152d; background: #f3f3f3; }
+		* { box-sizing: border-box; }
+		body { display: grid; min-height: 100vh; margin: 0; place-items: center; }
+		main { width: min(420px, calc(100% - 2rem)); padding: 2rem; border: 1px solid #e1e1e1; border-radius: 1rem; background: #fff; box-shadow: 0 12px 36px rgba(40,24,75,.12); text-align: center; }
+		.spinner { width: 32px; height: 32px; margin: 0 auto 1rem; border: 3px solid #eadcff; border-top-color: #7138c8; border-radius: 50%; animation: spin .8s linear infinite; }
+		p { color: #696774; }
+		.error { color: #b72e38; }
+		@keyframes spin { to { transform: rotate(360deg); } }
+		@media (prefers-color-scheme: dark) { :root { color-scheme: dark; color: #f7f3ff; background: #090817; } main { border-color: #2d2941; background: #131124; } p { color: #c4bfd2; } }
+	</style>
+</head>
+<body>
+	<main aria-live="polite">
+		<div class="spinner" id="spinner" aria-hidden="true"></div>
+		<h1 id="title">Signing out</h1>
+		<p id="message">Please wait while your EduBridge session is closed.</p>
+	</main>
+	<script>
+		(function ()
+		{
+			"use strict";
+			const spinner = document.getElementById("spinner");
+			const title = document.getElementById("title");
+			const message = document.getElementById("message");
+
+			EduAPI.post("/backend/api/auth_logout.php", {})
+				.then(function (data)
+				{
+					localStorage.removeItem("edubridge-role");
+					spinner.hidden = true;
+					title.textContent = "Signed out";
+					message.textContent = "Redirecting to login...";
+					window.location.replace(data.redirect || "/login.html");
+				})
+				.catch(function (error)
+				{
+					spinner.hidden = true;
+					title.textContent = "Sign-out could not finish";
+					message.className = "error";
+					message.textContent = error.message || "Your session could not be closed. Please try again.";
+				});
+		})();
+	</script>
+</body>
+</html>
