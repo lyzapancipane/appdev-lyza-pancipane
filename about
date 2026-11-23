@@ -217,16 +217,15 @@
         }
 
         .nav-links a::after {
-            content: "";
             position: absolute;
-            left: 50%;
+            right: 50%;
             bottom: -7px;
-            width: 0;
+            left: 50%;
             height: 2px;
             border-radius: 10px;
             background: #b77aff;
-            transform: translateX(-50%);
-            transition: width 0.25s ease;
+            content: "";
+            transition: left 0.25s ease, right 0.25s ease;
         }
 
         .nav-links a:hover,
@@ -235,8 +234,126 @@
         }
 
         .nav-links a:hover::after,
+        .nav-links a:focus-visible::after,
         .nav-links .active::after {
+            right: 0;
+            left: 0;
+        }
+
+        .account-menu {
+            position: absolute;
+            top: calc(100% - 1px);
+            right: 36px;
+            width: 264px;
+            display: none;
+            flex-direction: column;
+            gap: 2px;
+            padding: 8px;
+            border: 1px solid #ffffff25;
+            border-radius: 6px;
+            background: rgba(8, 5, 29, 0.97);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+            z-index: 1001;
+        }
+
+        .navbar.menu-open .account-menu {
+            display: flex;
+        }
+
+        .account-menu-label {
+            padding: 6px 10px;
+            color: #ffffff80;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .account-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             width: 100%;
+            padding: 10px;
+            border: 0;
+            border-radius: 4px;
+            background: none;
+            color: #ffffffdd;
+            font-family: inherit;
+            font-size: 13px;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .account-menu-item:hover,
+        .account-menu-item:focus-visible {
+            background: #ffffff10;
+            color: #c58cff;
+        }
+
+        .account-menu-item[aria-disabled="true"] {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .account-menu-item[aria-disabled="true"]:hover {
+            background: none;
+            color: #ffffffdd;
+        }
+
+        .account-menu-divider {
+            height: 1px;
+            margin: 4px 0;
+            background: #ffffff25;
+        }
+
+        .submenu-parent
+        {
+            justify-content: space-between;
+        }
+
+        .submenu-caret
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            transition: transform 0.2s ease;
+        }
+
+        .submenu-caret svg
+        {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .submenu-parent[aria-expanded="true"] .submenu-caret
+        {
+            transform: rotate(180deg);
+        }
+
+        .account-submenu
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin: 2px 0;
+            padding-left: 14px;
+            border-left: 1px solid #ffffff2d;
+        }
+
+        .account-submenu[hidden]
+        {
+            display: none;
+        }
+
+        .account-submenu .account-menu-item
+        {
+            padding: 8px 10px;
+            font-size: 12px;
         }
 
         .nav-buttons {
@@ -256,7 +373,7 @@
 
         .menu-button
         {
-            display: none;
+            display: inline-flex;
             width: 34px;
             height: 34px;
             align-items: center;
@@ -1459,60 +1576,15 @@
             }
         }
 
-        @media (max-width: 760px)
-        {
-            .nav-links
-            {
-                position: absolute;
-                top: calc(100% - 1px);
-                right: 20px;
-                left: 20px;
-                display: none;
-                align-items: stretch;
-                gap: 0;
-                padding: 7px;
-                border: 1px solid #ffffff25;
-                border-radius: 5px;
-                background: rgba(8, 5, 29, 0.97);
-                box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
-                font-size: 12px;
-            }
-
-            .navbar.menu-open .nav-links
-            {
-                display: grid;
-            }
-
-            .nav-links a
-            {
-                padding: 11px 10px;
-                border-radius: 4px;
-            }
-
-            .nav-links a:hover
-            {
-                background: #ffffff10;
-            }
-
-            .nav-links a::after
-            {
-                display: none;
-            }
-
-            .menu-button
-            {
-                display: flex;
-            }
-        }
-
         @media (max-width: 600px) {
             .navbar {
                 padding: 0 20px;
             }
 
-            .nav-links {
+            .account-menu {
                 right: 12px;
                 left: 12px;
+                width: auto;
             }
 
             .nav-buttons {
@@ -1657,8 +1729,8 @@
 
     <nav class="navbar">
 
-        <a href="admindashboard.html" class="logo">
-            <img src="edubridgelogo.png">
+        <a href="landingpage.html" class="logo">
+            <img src="Edubridge-Logo.png">
 
             <span class="brand-name">
                 <span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span>
@@ -1666,27 +1738,27 @@
         </a>
 
         <div class="nav-links" id="navLinks">
-            <a href="admindashboard.html">
+            <a href="landingpage.html">
                 Home
             </a>
 
-            <a href="adminabout.html" class="active">
+            <a href="about.html" class="active">
                 About EduBridge
             </a>
 
-            <a href="adminannouncements.html">
+            <a href="announcements.html">
                 Announcements
             </a>
 
-            <a href="adminfaq.html">
+            <a href="faq.html">
                 FAQs
             </a>
 
-            <a href="admininquiries.html">
-                Inquiries
+            <a href="inquiries.html">
+                My Inquiries
             </a>
 
-            <a href="admincontact.html">
+            <a href="contact.html">
                 Contact
             </a>
         </div>
@@ -1700,34 +1772,33 @@
                 </svg>
             </button>
 
-            <a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
+            <a class="nav-bell" href="announcements.html" aria-label="Notifications">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
                     </path>
                 </svg>
             </a>
 
-            <a class="nav-profile" href="adminprofile.html">
-                <img src="junior.jpg" alt="Junior Slickback">
-
-                <span class="nav-profile-text">
-                    <strong>
-                        Junior Slickback
-                    </strong>
-
-                    <small>
-                        Student
-                    </small>
-                </span>
-            </a>
-
-            <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+            <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation menu" aria-controls="accountMenu" aria-expanded="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z">
                     </path>
                 </svg>
             </button>
 
+            <a class="nav-profile" href="profile.html">
+                <img src="student-avatar.svg" alt="Profile">
+
+                <span class="nav-profile-text">
+                    <strong>Loading profile...</strong>
+
+                    <small></small>
+                </span>
+            </a>
+
+        </div>
+
+        <div class="account-menu" id="accountMenu" role="menu" aria-label="Account menu">
         </div>
 
     </nav>
@@ -2106,8 +2177,8 @@
 
             <div>
 
-                <a href="admindashboard.html" class="logo footer-logo" aria-label="EduBridge home">
-                    <img src="edubridgelogo.png">
+                <a href="landingpage.html" class="logo footer-logo" aria-label="EduBridge home">
+                    <img src="Edubridge-Logo.png">
 
                     <span class="brand-name">
                         <span class="brand-edu">Edu</span><span class="brand-bridge">Bridge</span>
@@ -2167,37 +2238,37 @@
                 <ul class="footer-links">
 
                     <li>
-                        <a href="admindashboard.html">
+                        <a href="landingpage.html">
                             Home
                         </a>
                     </li>
 
                     <li>
-                        <a href="adminabout.html">
+                        <a href="about.html">
                             About EduBridge
                         </a>
                     </li>
 
                     <li>
-                        <a href="adminannouncements.html">
+                        <a href="announcements.html">
                             Announcements
                         </a>
                     </li>
 
                     <li>
-                        <a href="adminfaq.html">
+                        <a href="faq.html">
                             FAQs
                         </a>
                     </li>
 
                     <li>
-                        <a href="admininquiries.html">
-                            Inquiries
+                        <a href="inquiries.html">
+                            My Inquiries
                         </a>
                     </li>
 
                     <li>
-                        <a href="admincontact.html">
+                        <a href="contact.html">
                             Contact
                         </a>
                     </li>
@@ -2263,7 +2334,7 @@
                         with your school community.
                     </p>
 
-                    <a class="question-button" href="admininquiries.html">
+                    <a class="question-button" href="inquiries.html">
                         Get Started →
                     </a>
 
@@ -2317,6 +2388,7 @@
     </button>
 
 
+    <script src="profile-sync.js"></script>
     <script>
         document.body.classList.add("js");
 
@@ -2437,6 +2509,150 @@
                 closeMenu();
             }
         });
+
+        
+        const accountMenu = document.getElementById("accountMenu");
+
+        function createMenuItem(item)
+        {
+        	let el;
+
+        	if (item.href)
+        	{
+        		el = document.createElement("a");
+        		el.setAttribute("href", item.href);
+        	}
+        	else
+        	{
+        		el = document.createElement("button");
+        		el.setAttribute("type", "button");
+        	}
+
+        	el.className = "account-menu-item";
+        	el.setAttribute("role", "menuitem");
+        	el.textContent = item.label;
+
+        	if (item.action === "logout")
+        	{
+        		el.addEventListener("click", function(event)
+        		{
+        			event.preventDefault();
+        			logOut();
+        		});
+        	}
+        	else if (item.href)
+        	{
+        		el.addEventListener("click", closeMenu);
+        	}
+
+        	return el;
+        }
+
+        function logOut()
+        {
+        	localStorage.removeItem("edubridge-role");
+        	window.location.href = "logout.html";
+        }
+
+        function buildAccountMenu()
+        {
+        	const role = (localStorage.getItem("edubridge-role") || "").toLowerCase();
+        	const items = [];
+
+        	const announcementChildren = [
+        		{ label: "All Announcements", href: "announcements.html" },
+        		{ label: "Create Announcement", href: "admin-createannounce.html" },
+        		{ label: "Categories", href: "admin-categories.html" }
+        	];
+
+        	if (role !== "teacher" && role !== "student")
+        	{
+        		items.push({ label: "Announcement Management", children: announcementChildren });
+        		items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+        		items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+        		items.push({ label: "User Management", href: "admin-usermanagement.html" });
+        		items.push({ label: "Dashboard Analytics", href: "admin-dashboard.html" });
+        		items.push({ label: "Activity Logs", href: "admin-activitylogs.html" });
+        		items.push({ label: "Report a Problem", href: "reportproblem.html" });
+        		items.push({ label: "Log Out", action: "logout" });
+        	}
+        	else if (role === "teacher")
+        	{
+        		items.push({ label: "Announcement Management", children: announcementChildren });
+        		items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+        		items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+        		items.push({ label: "Report a Problem", href: "reportproblem.html" });
+        		items.push({ label: "Log Out", action: "logout" });
+        	}
+        	else if (role === "student")
+        	{
+        		items.push({ label: "Profile", href: "admin-profile.html" });
+        		items.push({ label: "Settings", href: "admin-settings.html" });
+        		items.push({ label: "Log Out", action: "logout" });
+        	}
+
+        	accountMenu.innerHTML = "";
+
+        	const label = document.createElement("div");
+        	label.className = "account-menu-label";
+        	label.textContent = role === "teacher" ? "Teacher" : (role === "student" ? "Student" : "Administrator");
+        	accountMenu.appendChild(label);
+
+        	items.forEach(function(item)
+        	{
+        		if (item.action === "logout")
+        		{
+        			const divider = document.createElement("div");
+        			divider.className = "account-menu-divider";
+        			accountMenu.appendChild(divider);
+        		}
+
+        		if (item.children)
+        		{
+        			const toggle = document.createElement("button");
+        			toggle.className = "account-menu-item submenu-parent";
+        			toggle.type = "button";
+        			toggle.setAttribute("role", "menuitem");
+        			toggle.setAttribute("aria-expanded", "false");
+        			toggle.setAttribute("aria-controls", "announcementSubmenu");
+        			toggle.textContent = item.label;
+
+        			const caret = document.createElement("span");
+        			caret.className = "submenu-caret";
+        			caret.setAttribute("aria-hidden", "true");
+        			caret.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>';
+        			toggle.appendChild(caret);
+
+        			const submenu = document.createElement("div");
+        			submenu.className = "account-submenu";
+        			submenu.id = "announcementSubmenu";
+        			submenu.setAttribute("role", "group");
+        			submenu.setAttribute("aria-label", item.label);
+        			submenu.hidden = true;
+
+        			item.children.forEach(function(child)
+        			{
+        				submenu.appendChild(createMenuItem(child));
+        			});
+
+        			toggle.addEventListener("click", function()
+        			{
+        				const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+        				toggle.setAttribute("aria-expanded", String(!isExpanded));
+        				submenu.hidden = isExpanded;
+        			});
+
+        			accountMenu.appendChild(toggle);
+        			accountMenu.appendChild(submenu);
+        		}
+        		else
+        		{
+        			accountMenu.appendChild(createMenuItem(item));
+        		}
+        	});
+        }
+
+        buildAccountMenu();
 
         function updateNavbar() {
 
