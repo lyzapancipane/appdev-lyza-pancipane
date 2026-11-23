@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<head>
+    <title>Contact Your School Administrator | EduBridge</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        *
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root
+        {
+            --background: #f3f3f3;
+            --surface: #ffffff;
+            --surface-soft: #faf9fc;
+            --text: #17152d;
+            --text-soft: #696774;
+            --text-muted: #77737e;
+            --border: #e1e1e1;
+            --purple: #7138c8;
+            --purple-light: #eee5ff;
+            --purple-soft: #eadcff;
+            --green: #1f9d63;
+            --green-soft: #e7f6ee;
+            --red: #d64550;
+            --red-soft: #fdeced;
+            --shadow: rgba(40, 24, 75, 0.08);
+        }
+
+        body.dark-mode
+        {
+            --background: #090817;
+            --surface: #131124;
+            --surface-soft: #18162b;
+            --text: #f7f3ff;
+            --text-soft: #c4bfd2;
+            --text-muted: #9e99ae;
+            --border: #2d2941;
+            --purple: #a970ff;
+            --purple-light: #251b3b;
+            --purple-soft: #241934;
+            --green: #4cd08d;
+            --green-soft: #16301f;
+            --red: #ff7b85;
+            --red-soft: #331a1e;
+            --shadow: rgba(0, 0, 0, 0.35);
+        }
+
+        html
+        {
+            scroll-behavior: smooth;
+        }
+
+        body
+        {
+            font-family: Poppins, Arial, sans-serif;
+            color: var(--text);
+            background: var(--background);
+            overflow-x: hidden;
+            transition: background 0.45s ease, color 0.45s ease;
+        }
+
+        body.dark-mode
+        {
+            background:
+                radial-gradient(
+                    circle at 12% 10%,
+                    rgba(113, 56, 200, 0.12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 88% 45%,
+                    rgba(68, 72, 190, 0.08),
+                    transparent 30%
+                ),
+                #090817;
+        }
+
+        a
+        {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button
+        {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        body [hidden]
+        {
+            display: none;
+        }
+
+        body.theme-changing::before
+        {
+            content: "";
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            left: var(--theme-x);
+            top: var(--theme-y);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            background: var(--theme-circle);
+            z-index: 9999;
+            pointer-events: none;
+            animation: themeReveal 0.65s ease-out forwards;
+        }
+
+        @keyframes themeReveal
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0.35;
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) scale(100);
+                opacity: 0;
+            }
+        }
+
+        .cursor-gradient
+        {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(185, 120, 255, 0.16) 0%,
+                    rgba(86, 105, 255, 0.10) 28%,
+                    rgba(225, 80, 160, 0.06) 48%,
+                    transparent 72%
+                );
+            filter: blur(32px);
+            transition: opacity 0.35s ease;
+        }
+
+        body.cursor-ready .cursor-gradient
+        {
+            opacity: 1;
+        }
+
+        body.dark-mode .cursor-gradient
+        {
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(174, 112, 255, 0.23) 0%,
+                    rgba(88, 103, 255, 0.14) 30%,
+                    rgba(228, 78, 173, 0.08) 50%,
+                    transparent 73%
+                );
+        }
+
+        .theme-button
+        {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffff30;
+            border-radius: 5px;
+            background: #7138c8;
+            color: white;
+            box-shadow: 0 8px 25px rgba(55, 25, 100, 0.3);
+            transition: 0.25s ease;
+        }
+
+        .theme-button:hover
+        {
+            background: #8c50df;
+            border-color: #a970ff;
+            transform: translateY(-2px) rotate(8deg);
+        }
+
+        .theme-button:active
+        {
+            transform: scale(0.88);
+        }
+
+        .theme-button svg
+        {
+            width: 15px;
+            height: 15px;
+            fill: currentColor;
+        }
+
+        .hero
+        {
+            min-height: 470px;
+            padding: 90px 36px 70px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            background: #08051d;
+        }
+
+        .hero-image
+        {
+            position: absolute;
+            inset: 0;
+            z-index: -10;
+            background-image: url("Edubridge-Hero-About.png");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.62;
+            transform: scale(1.04);
+            transition: transform 0.25s ease-out;
+        }
+
+        .hero-base
+        {
+            position: absolute;
+            inset: 0;
+            z-index: -9;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(5, 5, 35, 0.7),
+                    rgba(14, 4, 40, 0.32),
+                    rgba(5, 5, 30, 0.65)
+                );
+        }
+
+        .gradient-layer
+        {
+            position: absolute;
+            inset: 0;
+            z-index: -8;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .gradient
+        {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(65px);
+            mix-blend-mode: screen;
+            opacity: 0.72;
+        }
+
+        .gradient-purple
+        {
+            width: 430px;
+            height: 430px;
+            background: #7138c8;
+            left: var(--purple-x, 4%);
+            top: var(--purple-y, 5%);
+            animation: purpleFloat 12s ease-in-out infinite alternate;
+        }
+
+        .gradient-blue
+        {
+            width: 390px;
+            height: 390px;
+            background: #315ee8;
+            left: var(--blue-x, 93%);
+            top: var(--blue-y, 8%);
+            animation: blueFloat 14s ease-in-out infinite alternate;
+        }
+
+        .gradient-pink
+        {
+            width: 360px;
+            height: 360px;
+            background: #d94f91;
+            left: var(--pink-x, 15%);
+            top: var(--pink-y, 57%);
+            animation: pinkFloat 13s ease-in-out infinite alternate;
+        }
+
+        .gradient-violet
+        {
+            width: 430px;
+            height: 430px;
+            background: #933cff;
+            left: var(--violet-x, 55%);
+            top: var(--violet-y, 38%);
+            animation: violetFloat 15s ease-in-out infinite alternate;
+        }
+
+        .gradient-orange
+        {
+            width: 400px;
+            height: 400px;
+            background: #e69a42;
+            left: var(--orange-x, 94%);
+            top: var(--orange-y, 88%);
+            animation: orangeFloat 11s ease-in-out infinite alternate;
+        }
+
+        .gradient-cyan
+        {
+            width: 340px;
+            height: 340px;
+            background: #387ee8;
+            left: var(--cyan-x, 5%);
+            top: var(--cyan-y, 93%);
+            animation: cyanFloat 16s ease-in-out infinite alternate;
+        }
+
+        .gradient-pink-small
+        {
+            width: 270px;
+            height: 270px;
+            background: #b73fbd;
+            left: var(--pink-small-x, 78%);
+            top: var(--pink-small-y, 67%);
+            animation: smallPinkFloat 12s ease-in-out infinite alternate;
+        }
+
+        .hero-overlay
+        {
+            position: absolute;
+            inset: 0;
+            z-index: -6;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(5, 5, 35, 0.58),
+                    rgba(10, 5, 35, 0.12),
+                    rgba(5, 5, 35, 0.52)
+                );
+        }
+
+        .hero-content
+        {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-label
+        {
+            color: #c18cff;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1
+        {
+            color: white;
+            font-size: 52px;
+            line-height: 1.1;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span
+        {
+            color: #b77aff;
+        }
+
+        .hero p
+        {
+            max-width: 650px;
+            color: #d5d1df;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .contact-section
+        {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 45px 0 55px;
+        }
+
+        .contact-top
+        {
+            display: grid;
+            grid-template-columns: 1.5fr 0.8fr;
+            gap: 18px;
+        }
+
+        .contact-card
+        {
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--surface);
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: 0.3s ease;
+        }
+
+        .contact-card:hover
+        {
+            transform: translateY(-5px);
+            border-color: #a970ff;
+            box-shadow:
+                0 15px 35px var(--shadow),
+                0 0 22px rgba(113, 56, 200, 0.08);
+        }
+
+        .contact-form-card
+        {
+            padding: 25px;
+        }
+
+        .contact-form-card h2
+        {
+            color: var(--text);
+            font-size: 21px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .contact-form-card > p
+        {
+            color: var(--text-soft);
+            font-size: 12px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .form-row
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group
+        {
+            margin-bottom: 15px;
+        }
+
+        .form-group label
+        {
+            display: block;
+            color: var(--text);
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select
+        {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--surface-soft);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 12px;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        .form-group input
+        {
+            height: 40px;
+            padding: 0 12px;
+        }
+
+        .form-group textarea
+        {
+            min-height: 125px;
+            padding: 11px 12px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder
+        {
+            color: var(--text-muted);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus
+        {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px var(--purple-light);
+        }
+
+        .form-group input.is-invalid,
+        .form-group textarea.is-invalid,
+        .form-group select.is-invalid
+        {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px var(--red-soft);
+        }
+
+        .field-error
+        {
+            margin: 5px 0 0;
+            color: var(--red);
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .field-error:empty
+        {
+            display: none;
+        }
+
+        .select-shell
+        {
+            position: relative;
+        }
+
+        .select-shell select
+        {
+            height: 40px;
+            padding: 0 34px 0 12px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .select-chevron
+        {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            width: 13px;
+            height: 13px;
+            fill: var(--text-muted);
+            pointer-events: none;
+            transform: translateY(-50%);
+        }
+
+        .form-note
+        {
+            margin: 0 0 15px;
+            padding: 11px 13px;
+            border-left: 3px solid var(--purple);
+            border-radius: 5px;
+            background: var(--purple-light);
+            color: var(--text-soft);
+            font-size: 11.5px;
+            line-height: 1.6;
+        }
+
+        .send-button
+        {
+            width: 100%;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            border-radius: 5px;
+            background: #7138c8;
+            color: white;
+            font-size: 11.5px;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        .send-button:hover
+        {
+            background: #5f2fb0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(113, 56, 200, 0.22);
+        }
+
+        .send-button:active
+        {
+            transform: scale(0.97);
+        }
+
+        .send-button svg
+        {
+            width: 15px;
+            height: 15px;
+            fill: currentColor;
+        }
+
+        .form-disclaimer
+        {
+            margin: 11px 0 0;
+            color: var(--text-muted);
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .access-card
+        {
+            padding: 25px;
+            align-self: start;
+        }
+
+        .access-icon
+        {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 13px;
+            border-radius: 5px;
+            background: var(--purple-light);
+            color: var(--purple);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .access-card h3
+        {
+            color: var(--purple);
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .access-list
+        {
+            padding-left: 18px;
+            color: var(--text-soft);
+            font-size: 13px;
+            line-height: 1.9;
+            margin-bottom: 14px;
+        }
+
+        .access-note
+        {
+            color: var(--text-muted);
+            font-size: 11px;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .access-link
+        {
+            display: inline-flex;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            padding: 0 14px;
+            border-radius: 5px;
+            background: #7138c8;
+            color: white;
+            font-size: 10.5px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .access-link:hover
+        {
+            background: #8c50df;
+            transform: translateY(-1px);
+        }
+
+        .access-link:active
+        {
+            transform: scale(0.95);
+        }
+
+        .send-button:focus-visible,
+        .access-link:focus-visible,
+        .theme-button:focus-visible,
+        .toast-close:focus-visible
+        {
+            outline: 2px solid var(--purple);
+            outline-offset: 2px;
+        }
+
+        .toast-container
+        {
+            position: fixed;
+            top: 96px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: min(340px, calc(100vw - 48px));
+            pointer-events: none;
+        }
+
+        .toast
+        {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--purple);
+            border-radius: 6px;
+            background: var(--surface);
+            box-shadow: 0 10px 28px var(--shadow);
+            opacity: 0;
+            pointer-events: auto;
+            transform: translateX(24px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .toast--visible
+        {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast--leaving
+        {
+            opacity: 0;
+            transform: translateX(24px);
+        }
+
+        .toast--success
+        {
+            border-left-color: var(--green);
+        }
+
+        .toast--error
+        {
+            border-left-color: var(--red);
+        }
+
+        .toast--info
+        {
+            border-left-color: var(--purple);
+        }
+
+        .toast-icon
+        {
+            display: flex;
+            width: 26px;
+            height: 26px;
+            min-width: 26px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        .toast--success .toast-icon
+        {
+            background: var(--green-soft);
+            color: var(--green);
+        }
+
+        .toast--error .toast-icon
+        {
+            background: var(--red-soft);
+            color: var(--red);
+        }
+
+        .toast-icon svg
+        {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .toast-body
+        {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .toast-message
+        {
+            margin: 2px 0 0;
+            color: var(--text);
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .toast-close
+        {
+            display: inline-flex;
+            width: 20px;
+            height: 20px;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 4px;
+            background: transparent;
+            color: var(--text-muted);
+            transition: 0.2s ease;
+        }
+
+        .toast-close:hover
+        {
+            background: var(--surface-soft);
+            color: var(--text);
+        }
+
+        .toast-close svg
+        {
+            width: 10px;
+            height: 10px;
+            fill: currentColor;
+        }
+
+        .back-to-top
+        {
+            position: fixed;
+            right: 28px;
+            bottom: 28px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffff30;
+            border-radius: 6px;
+            background: #7138c8;
+            color: white;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: 0.3s ease;
+            box-shadow: 0 8px 25px rgba(55, 25, 100, 0.3);
+        }
+
+        .back-to-top.show
+        {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover
+        {
+            background: #8c50df;
+            transform: translateY(-3px);
+        }
+
+        .back-to-top:active
+        {
+            transform: scale(0.9);
+        }
+
+        .back-to-top svg
+        {
+            width: 17px;
+            height: 17px;
+            fill: currentColor;
+        }
+
+        .reveal
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        body.js .reveal
+        {
+            opacity: 0;
+            transform: translateY(28px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        body.js .reveal.visible
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes purpleFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(-20px, -15px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(45px, 35px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(10px, 70px);
+            }
+        }
+
+        @keyframes blueFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(20px, 20px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(-55px, 35px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(-15px, -30px);
+            }
+        }
+
+        @keyframes pinkFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(15px, -20px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(-40px, 35px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(35px, 55px);
+            }
+        }
+
+        @keyframes violetFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(-25px, 20px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(55px, -35px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(-40px, 45px);
+            }
+        }
+
+        @keyframes orangeFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(-20px, -25px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(45px, -55px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(-35px, 35px);
+            }
+        }
+
+        @keyframes cyanFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(25px, 20px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(-45px, -30px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(35px, -55px);
+            }
+        }
+
+        @keyframes smallPinkFloat
+        {
+            0%
+            {
+                transform: translate(-50%, -50%) translate(-15px, 20px);
+            }
+
+            50%
+            {
+                transform: translate(-50%, -50%) translate(35px, -35px);
+            }
+
+            100%
+            {
+                transform: translate(-50%, -50%) translate(-30px, 45px);
+            }
+        }
+
+        @media (max-width: 1200px)
+        {
+            .contact-section
+            {
+                width: calc(100% - 60px);
+            }
+        }
+
+        @media (max-width: 900px)
+        {
+            .contact-top
+            {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px)
+        {
+            .hero
+            {
+                padding: 90px 25px 55px;
+            }
+
+            .hero h1
+            {
+                font-size: 38px;
+            }
+
+            .hero p
+            {
+                font-size: 13px;
+            }
+
+            .gradient
+            {
+                filter: blur(50px);
+            }
+
+            .gradient-purple
+            {
+                width: 330px;
+                height: 330px;
+            }
+
+            .gradient-blue
+            {
+                width: 300px;
+                height: 300px;
+            }
+
+            .gradient-pink
+            {
+                width: 280px;
+                height: 280px;
+            }
+
+            .gradient-violet
+            {
+                width: 330px;
+                height: 330px;
+            }
+
+            .gradient-orange
+            {
+                width: 300px;
+                height: 300px;
+            }
+
+            .gradient-cyan
+            {
+                width: 260px;
+                height: 260px;
+            }
+
+            .gradient-pink-small
+            {
+                width: 220px;
+                height: 220px;
+            }
+
+            .contact-section
+            {
+                width: calc(100% - 30px);
+            }
+
+            .form-row
+            {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .contact-form-card,
+            .access-card
+            {
+                padding: 20px;
+            }
+
+            .back-to-top
+            {
+                right: 18px;
+                bottom: 18px;
+            }
+
+            .cursor-gradient
+            {
+                width: 300px;
+                height: 300px;
+                filter: blur(24px);
+            }
+
+            .toast-container
+            {
+                top: 84px;
+                right: 16px;
+                left: 16px;
+                width: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce)
+        {
+            html
+            {
+                scroll-behavior: auto;
+            }
+
+            .gradient
+            {
+                animation: none;
+            }
+
+            .reveal,
+            .contact-card,
+            .hero-image,
+            .toast
+            {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-gradient">
+    </div>
+
+    <button class="theme-button" id="themeButton" type="button" aria-label="Toggle theme">
+
+        <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z">
+            </path>
+        </svg>
+    </button>
+
+    <section class="hero">
+
+        <div class="hero-image">
+        </div>
+
+        <div class="hero-base">
+        </div>
+
+        <div class="gradient-layer">
+
+            <div class="gradient gradient-purple">
+            </div>
+
+            <div class="gradient gradient-blue">
+            </div>
+
+            <div class="gradient gradient-pink">
+            </div>
+
+            <div class="gradient gradient-violet">
+            </div>
+
+            <div class="gradient gradient-orange">
+            </div>
+
+            <div class="gradient gradient-cyan">
+            </div>
+
+            <div class="gradient gradient-pink-small">
+            </div>
+        </div>
+
+        <div class="hero-overlay">
+        </div>
+
+        <div class="hero-content">
+
+            <div class="hero-label">
+                ACCOUNT ACCESS
+            </div>
+
+            <h1>
+                Contact Your School<br>
+                <span>Administrator</span>
+            </h1>
+
+            <p>
+                Need an EduBridge account or help accessing your account?
+                Send your request below so your school administrator can
+                assist you.
+            </p>
+        </div>
+    </section>
+
+
+    <main class="contact-section reveal">
+
+        <div class="contact-top">
+
+            <div class="contact-card contact-form-card">
+
+                <h2>
+                    Send Your Request
+                </h2>
+
+                <p>
+                    Choose a request type and provide your details below.
+                    All fields marked here are required unless the field
+                    is hidden for the selected request type.
+                </p>
+
+                <form id="adminRequestForm" novalidate>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="fullName">
+                                Full Name
+                            </label>
+
+                            <input type="text" id="fullName" placeholder="Enter your full name" autocomplete="name" aria-describedby="fullNameError" required>
+
+                            <p class="field-error" id="fullNameError"></p>
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="contactEmail">
+                                Contact Email
+                            </label>
+
+                            <input type="email" id="contactEmail" placeholder="Enter your email address" autocomplete="email" aria-describedby="contactEmailError" required>
+
+                            <p class="field-error" id="contactEmailError"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="studentIdGroup" hidden>
+
+                        <label for="studentId">
+                            Student ID
+                        </label>
+
+                        <input type="text" id="studentId" placeholder="Enter Student ID" autocomplete="off" aria-describedby="studentIdError" required>
+
+                        <p class="field-error" id="studentIdError"></p>
+                    </div>
+
+                    <div class="form-group" id="roleGroup" hidden>
+
+                        <label for="roleSelect">
+                            Role or User Category
+                        </label>
+
+                        <div class="select-shell">
+
+                            <select id="roleSelect" aria-describedby="roleError" required>
+
+                                <option value="" selected disabled>
+                                    Select a role
+                                </option>
+
+                                <option value="student">
+                                    Student
+                                </option>
+
+                                <option value="teacher">
+                                    Teacher
+                                </option>
+
+                                <option value="admin">
+                                    Admin
+                                </option>
+                            </select>
+
+                            <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 10l5 5 5-5z">
+                                </path>
+                            </svg>
+                        </div>
+
+                        <p class="field-error" id="roleError"></p>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="typeSelect">
+                            Request Type
+                        </label>
+
+                        <div class="select-shell">
+
+                            <select id="typeSelect">
+
+                                <option value="account">
+                                    Account Request
+                                </option>
+
+                                <option value="password">
+                                    Password Assistance
+                                </option>
+
+                                <option value="general" selected>
+                                    General Inquiry
+                                </option>
+                            </select>
+
+                            <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 10l5 5 5-5z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <p class="form-note" id="requestNote" hidden></p>
+
+                    <div class="form-group">
+
+                        <label for="message" id="messageLabel">
+                            Message
+                        </label>
+
+                        <textarea id="message" placeholder="Write your message here..." aria-describedby="messageError" required></textarea>
+
+                        <p class="field-error" id="messageError"></p>
+                    </div>
+
+                    <button type="submit" class="send-button">
+
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M2.5 3.8 22 12 2.5 20.2 5.2 13 15 12 5.2 11 2.5 3.8z">
+                            </path>
+                        </svg>
+
+                        Submit Request
+                    </button>
+
+                </form>
+            </div>
+
+            <aside class="contact-card access-card">
+
+                <div class="access-icon">
+                    ✦
+                </div>
+
+                <h3>
+                    Account &amp; Password Requests
+                </h3>
+
+                <ul class="access-list">
+
+                    <li>
+                        Accounts are created by an authorized administrator.
+                    </li>
+
+                    <li>
+                        Password requests are handled by authorized administrators.
+                    </li>
+
+                    <li>
+                        Public self-registration is not available.
+                    </li>
+                </ul>
+
+
+                <a class="access-link" href="login.html">
+                    Return to Login
+                </a>
+            </aside>
+        </div>
+    </main>
+
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
+
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5l-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z">
+            </path>
+        </svg>
+    </button>
+
+
+    <script src="edubridge-api.js"></script>
+    <script>
+        document.body.classList.add("js");
+
+        const toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container";
+        document.body.append(toastContainer);
+
+        const toastDurations =
+        {
+            success: 2000,
+            info: 2000,
+            error: 3000
+        };
+
+        const toastIcons =
+        {
+            success:
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.1 14.9-4.2-4.2 1.4-1.4 2.8 2.8 6.6-6.6 1.4 1.4-8 8z"></path></svg>',
+            error:
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.3 12.9-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"></path></svg>',
+            info:
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>'
+        };
+
+        function showToast(message, type)
+        {
+            const kind = toastIcons[type] ? type : "info";
+
+            while (toastContainer.children.length >= 3)
+            {
+                toastContainer.firstElementChild.remove();
+            }
+
+            const toast = document.createElement("div");
+            toast.className = "toast toast--" + kind;
+            toast.setAttribute("role", kind === "error" ? "alert" : "status");
+
+            const icon = document.createElement("span");
+            icon.className = "toast-icon";
+            icon.setAttribute("aria-hidden", "true");
+            icon.innerHTML = toastIcons[kind];
+
+            const body = document.createElement("div");
+            body.className = "toast-body";
+
+            const text = document.createElement("p");
+            text.className = "toast-message";
+            text.textContent = message;
+
+            body.append(text);
+
+            const closeButton = document.createElement("button");
+            closeButton.className = "toast-close";
+            closeButton.type = "button";
+            closeButton.setAttribute("aria-label", "Dismiss notification");
+            closeButton.innerHTML =
+                '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"></path></svg>';
+
+            toast.append(icon, body, closeButton);
+            toastContainer.append(toast);
+
+            let dismissTimer = null;
+
+            function dismissToast()
+            {
+                if (dismissTimer === null)
+                {
+                    return;
+                }
+
+                window.clearTimeout(dismissTimer);
+                dismissTimer = null;
+
+                toast.classList.add("toast--leaving");
+
+                window.setTimeout(function()
+                {
+                    toast.remove();
+                }, 250);
+            }
+
+            closeButton.addEventListener("click", dismissToast);
+
+            window.requestAnimationFrame(function()
+            {
+                toast.classList.add("toast--visible");
+            });
+
+            dismissTimer = window.setTimeout(dismissToast, toastDurations[kind]);
+        }
+
+        const themeButton = document.getElementById("themeButton");
+        const themeIcon = document.getElementById("themeIcon");
+        const backToTop = document.getElementById("backToTop");
+
+        function updateThemeIcon()
+        {
+            if (document.body.classList.contains("dark-mode"))
+            {
+                themeIcon.innerHTML =
+                    '<path d="M21 12.8A9 9 0 0 1 11.2 3 7 7 0 1 0 21 12.8z"></path>';
+            }
+            else
+            {
+                themeIcon.innerHTML =
+                    '<path d="M12 3V1m0 22v-2M4.22 4.22 2.81 2.81m18.38 18.38-1.41-1.41M3 12H1m22 0h-2M4.22 19.78l-1.41 1.41M21.19 2.81l-1.41 1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"></path>';
+            }
+        }
+
+        const savedTheme = localStorage.getItem("edubridge-theme");
+
+        if (savedTheme === "dark")
+        {
+            document.body.classList.add("dark-mode");
+        }
+
+        updateThemeIcon();
+
+        themeButton.addEventListener("click", function()
+        {
+            const rect = themeButton.getBoundingClientRect();
+
+            document.body.style.setProperty(
+                "--theme-x",
+                rect.left + rect.width / 2 + "px"
+            );
+
+            document.body.style.setProperty(
+                "--theme-y",
+                rect.top + rect.height / 2 + "px"
+            );
+
+            const isCurrentlyDark =
+                document.body.classList.contains("dark-mode");
+
+            document.body.style.setProperty(
+                "--theme-circle",
+                isCurrentlyDark ? "#f3f3f3" : "#090817"
+            );
+
+            document.body.classList.add("theme-changing");
+
+            setTimeout(function()
+            {
+                document.body.classList.toggle("dark-mode");
+
+                const isDark =
+                    document.body.classList.contains("dark-mode");
+
+                localStorage.setItem(
+                    "edubridge-theme",
+                    isDark ? "dark" : "light"
+                );
+
+                updateThemeIcon();
+            }, 100);
+
+            setTimeout(function()
+            {
+                document.body.classList.remove("theme-changing");
+            }, 750);
+        });
+
+        const hero = document.querySelector(".hero");
+        const heroImage = document.querySelector(".hero-image");
+
+        let targetX = 50;
+        let targetY = 50;
+        let cursorX = 50;
+        let cursorY = 50;
+
+        let purpleX = 4;
+        let purpleY = 5;
+        let blueX = 93;
+        let blueY = 8;
+        let pinkX = 15;
+        let pinkY = 57;
+        let violetX = 55;
+        let violetY = 38;
+        let orangeX = 94;
+        let orangeY = 88;
+        let cyanX = 5;
+        let cyanY = 93;
+        let pinkSmallX = 78;
+        let pinkSmallY = 67;
+
+        hero.addEventListener("mousemove", function(event)
+        {
+            const rect = hero.getBoundingClientRect();
+
+            targetX =
+                ((event.clientX - rect.left) / rect.width) * 100;
+
+            targetY =
+                ((event.clientY - rect.top) / rect.height) * 100;
+
+            const moveX =
+                (event.clientX - rect.left) / rect.width - 0.5;
+
+            const moveY =
+                (event.clientY - rect.top) / rect.height - 0.5;
+
+            heroImage.style.transform =
+                "scale(1.04) translate(" +
+                moveX * -10 + "px, " +
+                moveY * -7 + "px)";
+        });
+
+        hero.addEventListener("mouseleave", function()
+        {
+            targetX = 50;
+            targetY = 50;
+
+            heroImage.style.transform = "scale(1.04) translate(0, 0)";
+        });
+
+        function animateGradient()
+        {
+            cursorX += (targetX - cursorX) * 0.04;
+            cursorY += (targetY - cursorY) * 0.04;
+
+            const purpleTargetX = 4 + (cursorX - 50) * 0.35;
+            const purpleTargetY = 5 + (cursorY - 50) * 0.25;
+            const blueTargetX = 93 + (cursorX - 50) * 0.3;
+            const blueTargetY = 8 + (cursorY - 50) * 0.25;
+            const pinkTargetX = 15 + (cursorX - 50) * 0.5;
+            const pinkTargetY = 57 + (cursorY - 50) * 0.45;
+            const violetTargetX = 55 + (cursorX - 50) * 0.65;
+            const violetTargetY = 38 + (cursorY - 50) * 0.55;
+            const orangeTargetX = 94 + (cursorX - 50) * 0.3;
+            const orangeTargetY = 88 + (cursorY - 50) * 0.35;
+            const cyanTargetX = 5 + (cursorX - 50) * 0.28;
+            const cyanTargetY = 93 + (cursorY - 50) * 0.25;
+            const pinkSmallTargetX = 78 + (cursorX - 50) * 0.48;
+            const pinkSmallTargetY = 67 + (cursorY - 50) * 0.42;
+
+            purpleX += (purpleTargetX - purpleX) * 0.025;
+            purpleY += (purpleTargetY - purpleY) * 0.025;
+            blueX += (blueTargetX - blueX) * 0.02;
+            blueY += (blueTargetY - blueY) * 0.02;
+            pinkX += (pinkTargetX - pinkX) * 0.022;
+            pinkY += (pinkTargetY - pinkY) * 0.022;
+            violetX += (violetTargetX - violetX) * 0.018;
+            violetY += (violetTargetY - violetY) * 0.018;
+            orangeX += (orangeTargetX - orangeX) * 0.021;
+            orangeY += (orangeTargetY - orangeY) * 0.021;
+            cyanX += (cyanTargetX - cyanX) * 0.019;
+            cyanY += (cyanTargetY - cyanY) * 0.019;
+            pinkSmallX += (pinkSmallTargetX - pinkSmallX) * 0.023;
+            pinkSmallY += (pinkSmallTargetY - pinkSmallY) * 0.023;
+
+            hero.style.setProperty("--purple-x", purpleX + "%");
+            hero.style.setProperty("--purple-y", purpleY + "%");
+            hero.style.setProperty("--blue-x", blueX + "%");
+            hero.style.setProperty("--blue-y", blueY + "%");
+            hero.style.setProperty("--pink-x", pinkX + "%");
+            hero.style.setProperty("--pink-y", pinkY + "%");
+            hero.style.setProperty("--violet-x", violetX + "%");
+            hero.style.setProperty("--violet-y", violetY + "%");
+            hero.style.setProperty("--orange-x", orangeX + "%");
+            hero.style.setProperty("--orange-y", orangeY + "%");
+            hero.style.setProperty("--cyan-x", cyanX + "%");
+            hero.style.setProperty("--cyan-y", cyanY + "%");
+            hero.style.setProperty("--pink-small-x", pinkSmallX + "%");
+            hero.style.setProperty("--pink-small-y", pinkSmallY + "%");
+
+            requestAnimationFrame(animateGradient);
+        }
+
+        animateGradient();
+
+        let audioContext;
+
+        function playClickSound()
+        {
+            try
+            {
+                if (!audioContext)
+                {
+                    audioContext = new (
+                        window.AudioContext ||
+                        window.webkitAudioContext
+                    )();
+                }
+
+                if (audioContext.state === "suspended")
+                {
+                    audioContext.resume();
+                }
+
+                const oscillator = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+
+                oscillator.type = "sine";
+
+                oscillator.frequency.setValueAtTime(
+                    520,
+                    audioContext.currentTime
+                );
+
+                oscillator.frequency.exponentialRampToValueAtTime(
+                    300,
+                    audioContext.currentTime + 0.045
+                );
+
+                gain.gain.setValueAtTime(
+                    0.045,
+                    audioContext.currentTime
+                );
+
+                gain.gain.exponentialRampToValueAtTime(
+                    0.001,
+                    audioContext.currentTime + 0.06
+                );
+
+                oscillator.connect(gain);
+                gain.connect(audioContext.destination);
+
+                oscillator.start();
+
+                oscillator.stop(audioContext.currentTime + 0.06);
+            }
+            catch (error)
+            {
+            }
+        }
+
+        document.addEventListener("click", function(event)
+        {
+            const clickable =
+                event.target.closest("button, a");
+
+            if (clickable)
+            {
+                playClickSound();
+            }
+        });
+
+        const revealItems = document.querySelectorAll(".reveal");
+
+        const revealObserver = new IntersectionObserver(
+            function(entries)
+            {
+                entries.forEach(function(entry)
+                {
+                    if (entry.isIntersecting)
+                    {
+                        entry.target.classList.add("visible");
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+        revealItems.forEach(function(item)
+        {
+            revealObserver.observe(item);
+        });
+
+        const cursorGradient = document.querySelector(".cursor-gradient");
+
+        let cursorMouseX = window.innerWidth / 2;
+        let cursorMouseY = window.innerHeight / 2;
+        let gradientX = cursorMouseX;
+        let gradientY = cursorMouseY;
+
+        document.addEventListener("mousemove", function(event)
+        {
+            cursorMouseX = event.clientX;
+            cursorMouseY = event.clientY;
+
+            document.body.classList.add("cursor-ready");
+        });
+
+        function moveCursorGradient()
+        {
+            gradientX += (cursorMouseX - gradientX) * 0.12;
+            gradientY += (cursorMouseY - gradientY) * 0.12;
+
+            cursorGradient.style.left = gradientX + "px";
+            cursorGradient.style.top = gradientY + "px";
+
+            requestAnimationFrame(moveCursorGradient);
+        }
+
+        moveCursorGradient();
+
+        window.addEventListener("scroll", function()
+        {
+            if (window.scrollY > 450)
+            {
+                backToTop.classList.add("show");
+            }
+            else
+            {
+                backToTop.classList.remove("show");
+            }
+        });
+
+        backToTop.addEventListener("click", function()
+        {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+
+        const requestForm = document.getElementById("adminRequestForm");
+        const fullNameInput = document.getElementById("fullName");
+        const contactEmailInput = document.getElementById("contactEmail");
+        const studentIdGroup = document.getElementById("studentIdGroup");
+        const studentIdInput = document.getElementById("studentId");
+        const roleGroup = document.getElementById("roleGroup");
+        const roleSelect = document.getElementById("roleSelect");
+        const typeSelect = document.getElementById("typeSelect");
+        const requestNote = document.getElementById("requestNote");
+        const messageLabel = document.getElementById("messageLabel");
+        const messageInput = document.getElementById("message");
+
+        const requestCopy =
+        {
+            account:
+            {
+                label: "Reason for Request",
+                placeholder: "Tell your school administrator why you need an EduBridge account.",
+                note: "An authorized administrator must create the account. Submitting this request does not create an account."
+            },
+            password:
+            {
+                label: "Issue Details",
+                placeholder: "Describe the account access problem you need help with.",
+                note: "Only an authorized administrator can handle password requests. Never include your password in this message."
+            },
+            general:
+            {
+                label: "Message",
+                placeholder: "Write your message here...",
+                note: ""
+            }
+        };
+
+        function setError(inputField, errorId, message)
+        {
+            const errorElement = document.getElementById(errorId);
+            const isInvalid = message !== "";
+
+            errorElement.textContent = message;
+            inputField.classList.toggle("is-invalid", isInvalid);
+            inputField.setAttribute("aria-invalid", String(isInvalid));
+        }
+
+        function clearError(inputField, errorId)
+        {
+            const errorElement = document.getElementById(errorId);
+
+            errorElement.textContent = "";
+            inputField.classList.remove("is-invalid");
+            inputField.removeAttribute("aria-invalid");
+        }
+
+        function isApplicable(fieldGroup)
+        {
+            return !fieldGroup.hidden;
+        }
+
+        function applyRequestType()
+        {
+            const type = typeSelect.value;
+            const copy = requestCopy[type] || requestCopy.general;
+            const isGeneral = type === "general";
+
+            roleGroup.hidden = isGeneral;
+            studentIdGroup.hidden =
+                isGeneral || roleSelect.value !== "student";
+
+            messageLabel.textContent = copy.label;
+            messageInput.placeholder = copy.placeholder;
+
+            if (copy.note === "")
+            {
+                requestNote.textContent = "";
+                requestNote.hidden = true;
+            }
+            else
+            {
+                requestNote.textContent = copy.note;
+                requestNote.hidden = false;
+            }
+
+            if (!isApplicable(roleGroup))
+            {
+                clearError(roleSelect, "roleError");
+            }
+
+            if (!isApplicable(studentIdGroup))
+            {
+                clearError(studentIdInput, "studentIdError");
+            }
+        }
+
+        function validateFullName()
+        {
+            const message = fullNameInput.value.trim() === ""
+                ? "Full name is required."
+                : "";
+
+            setError(fullNameInput, "fullNameError", message);
+            return message === "";
+        }
+
+        function validateEmail()
+        {
+            const value = contactEmailInput.value.trim();
+            let message = "";
+
+            if (value === "")
+            {
+                message = "Contact email is required.";
+            }
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+            {
+                message = "Enter a valid email address.";
+            }
+
+            setError(contactEmailInput, "contactEmailError", message);
+            return message === "";
+        }
+
+        function validateRole()
+        {
+            if (!isApplicable(roleGroup))
+            {
+                clearError(roleSelect, "roleError");
+                return true;
+            }
+
+            const message = roleSelect.value === ""
+                ? "Select a role."
+                : "";
+
+            setError(roleSelect, "roleError", message);
+            return message === "";
+        }
+
+        function validateStudentId()
+        {
+            if (!isApplicable(studentIdGroup))
+            {
+                clearError(studentIdInput, "studentIdError");
+                return true;
+            }
+
+            const message = studentIdInput.value.trim() === ""
+                ? "Student ID is required."
+                : "";
+
+            setError(studentIdInput, "studentIdError", message);
+            return message === "";
+        }
+
+        function validateMessage()
+        {
+            const message = messageInput.value.trim() === ""
+                ? "Message is required."
+                : "";
+
+            setError(messageInput, "messageError", message);
+            return message === "";
+        }
+
+        function revalidateWhileInvalid(inputField, validator)
+        {
+            inputField.addEventListener("input", function()
+            {
+                if (inputField.classList.contains("is-invalid"))
+                {
+                    validator();
+                }
+            });
+        }
+
+        fullNameInput.addEventListener("blur", validateFullName);
+        contactEmailInput.addEventListener("blur", validateEmail);
+        roleSelect.addEventListener("change", validateRole);
+        studentIdInput.addEventListener("blur", validateStudentId);
+        messageInput.addEventListener("blur", validateMessage);
+
+        revalidateWhileInvalid(fullNameInput, validateFullName);
+        revalidateWhileInvalid(contactEmailInput, validateEmail);
+        revalidateWhileInvalid(studentIdInput, validateStudentId);
+        revalidateWhileInvalid(messageInput, validateMessage);
+
+        typeSelect.addEventListener("change", applyRequestType);
+
+        roleSelect.addEventListener("change", function()
+        {
+            studentIdGroup.hidden =
+                typeSelect.value === "general" ||
+                roleSelect.value !== "student";
+
+            if (!isApplicable(studentIdGroup))
+            {
+                clearError(studentIdInput, "studentIdError");
+            }
+        });
+
+        requestForm.addEventListener("submit", function(event)
+        {
+            event.preventDefault();
+
+            const checks =
+                [
+                    validateFullName(),
+                    validateEmail(),
+                    validateRole(),
+                    validateStudentId(),
+                    validateMessage()
+                ];
+
+            if (checks.includes(false))
+            {
+                const firstInvalid = requestForm.querySelector(".is-invalid");
+
+                if (firstInvalid)
+                {
+                    firstInvalid.focus();
+                }
+
+                return;
+            }
+
+            const typeLabels =
+            {
+                account: "Account Request",
+                password: "Password Assistance",
+                general: "General Inquiry"
+            };
+
+            const requestType = typeSelect.value || "general";
+            const extras = [];
+            const roleField = document.getElementById("roleSelect");
+            const studentIdField = document.getElementById("studentId");
+
+            if (!document.getElementById("roleGroup").hidden && roleField.value)
+            {
+                extras.push("Role: " + roleField.options[roleField.selectedIndex].text);
+            }
+
+            if (!document.getElementById("studentIdGroup").hidden && studentIdField.value.trim())
+            {
+                extras.push("Student ID: " + studentIdField.value.trim());
+            }
+
+            let requestMessage = document.getElementById("message").value.trim();
+
+            if (extras.length > 0)
+            {
+                requestMessage = extras.join("\n") + "\n\n" + requestMessage;
+            }
+
+            EduAPI.post("/backend/api/contact.php?action=submit",
+            {
+                type: requestType,
+                name: document.getElementById("fullName").value.trim(),
+                email: document.getElementById("contactEmail").value.trim(),
+                subject: typeLabels[requestType] || "General Inquiry",
+                message: requestMessage
+            })
+                .then(function(data)
+                {
+                    showToast(data.message || "Your request has been submitted.", "success");
+                    requestForm.reset();
+                    applyRequestType();
+                })
+                .catch(function(error)
+                {
+                    showToast(error.message || "Your request could not be submitted. Please try again.", "error");
+                });
+        });
+
+        const requestedType =
+            new URLSearchParams(window.location.search).get("type");
+
+        if (requestedType === "account" || requestedType === "password")
+        {
+            typeSelect.value = requestedType;
+        }
+
+        applyRequestType();
+    </script>
+
+</body>
