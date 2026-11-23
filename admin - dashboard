@@ -2505,33 +2505,17 @@
 			.metrics-grid
 			{
 					display: grid;
-					grid-template-columns: repeat(3, minmax(0, 1fr));
+					grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
 					gap: 16px;
-			}
-
-			.metrics-grid.grid-inquiries,
-			.metrics-grid.grid-faqs
-			{
-					grid-template-columns: repeat(4, minmax(0, 1fr));
 			}
 	
 			.stat-card
 			{
 					background: var(--surface);
 					border: 1px solid var(--border);
-					border-radius: 5px;
+					border-radius: 16px;
 					padding: 20px;
-					box-shadow: 0 5px 20px var(--shadow);
-					transition: 0.3s ease;
-			}
-
-			.stat-card:hover
-			{
-					transform: translateY(-5px);
-					border-color: #a970ff;
-					box-shadow:
-							0 15px 35px var(--shadow),
-							0 0 22px rgba(113, 56, 200, 0.08);
+					box-shadow: 0 12px 30px var(--shadow);
 			}
 	
 			.stat-card .stat-label
@@ -2569,9 +2553,9 @@
 			{
 					background: var(--surface);
 					border: 1px solid var(--border);
-					border-radius: 5px;
+					border-radius: 16px;
 					padding: 24px;
-					box-shadow: 0 5px 20px var(--shadow);
+					box-shadow: 0 12px 30px var(--shadow);
 			}
 	
 			.panel + .panel
@@ -2863,7 +2847,7 @@
 			.quick-grid
 			{
 					display: grid;
-					grid-template-columns: repeat(3, minmax(0, 1fr));
+					grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 					gap: 18px;
 			}
 	
@@ -2875,20 +2859,17 @@
 					padding: 22px;
 					background: var(--surface);
 					border: 1px solid var(--border);
-					border-radius: 5px;
+					border-radius: 16px;
 					text-decoration: none;
-					box-shadow: 0 5px 20px var(--shadow);
-					transition: 0.3s ease;
+					box-shadow: 0 12px 30px var(--shadow);
+					transition: transform 0.18s ease, border-color 0.18s ease;
 			}
 	
 			.quick-card:hover,
 			.quick-card:focus-visible
 			{
-					transform: translateY(-5px);
-					border-color: #a970ff;
-					box-shadow:
-							0 15px 35px var(--shadow),
-							0 0 22px rgba(113, 56, 200, 0.08);
+					transform: translateY(-3px);
+					border-color: var(--purple);
 			}
 	
 			.quick-card h3
@@ -3257,91 +3238,18 @@
 			@media (prefers-reduced-motion: reduce)
 			{
 					.btn,
-					.quick-card,
-					.stat-card
+					.quick-card
 					{
 								transition: none;
 								}
 	
 								.btn:hover,
 								.quick-card:hover,
-								.quick-card:focus-visible,
-								.stat-card:hover
+								.quick-card:focus-visible
 								{
 										transform: none;
 								}
 			}
-
-		@media (max-width: 900px)
-		{
-			.metrics-grid,
-			.metrics-grid.grid-inquiries,
-			.metrics-grid.grid-faqs
-			{
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-		}
-
-		@media (max-width: 760px)
-		{
-			.navbar.menu-open
-			{
-				height: auto;
-				flex-wrap: wrap;
-				background: rgba(8, 5, 29, 0.97);
-				box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
-				backdrop-filter: blur(14px);
-			}
-
-			.nav-links
-			{
-				display: none;
-			}
-
-			.navbar.menu-open .nav-links
-			{
-				order: 3;
-				display: flex;
-				flex-basis: 100%;
-				flex-direction: column;
-				align-items: stretch;
-				gap: 0;
-				padding: 2px 0 8px;
-				font-size: 12px;
-			}
-
-			.navbar.menu-open .nav-links a
-			{
-				padding: 11px 10px;
-				border-radius: 4px;
-			}
-
-			.navbar.menu-open .nav-links a:hover
-			{
-				background: #ffffff10;
-			}
-
-			.navbar.menu-open .nav-links a::after
-			{
-				display: none;
-			}
-
-			.quick-grid
-			{
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-			}
-		}
-
-		@media (max-width: 560px)
-		{
-			.metrics-grid,
-			.metrics-grid.grid-inquiries,
-			.metrics-grid.grid-faqs,
-			.quick-grid
-			{
-				grid-template-columns: minmax(0, 1fr);
-			}
-		}
 
 	</style>
 </head>
@@ -3351,8 +3259,8 @@
 
 	<nav class="navbar">
 
-		<a href="admindashboard.html" class="logo">
-			<img src="edubridgelogo.png" alt="EduBridge">
+		<a href="landingpage.html" class="logo">
+			<img src="Edubridge-Logo.png" alt="EduBridge">
 
 			<span class="brand-name">
 				<span class="brand-edu">
@@ -3366,27 +3274,27 @@
 
 		<div class="nav-links" id="navLinks">
 
-			<a href="admindashboard.html">
+			<a href="landingpage.html">
 				Home
 			</a>
 
-			<a href="adminabout.html">
+			<a href="about.html">
 				About EduBridge
 			</a>
 
-			<a href="adminannouncements.html">
+			<a href="announcements.html">
 				Announcements
 			</a>
 
-			<a href="adminfaq.html">
+			<a href="faq.html">
 				FAQs
 			</a>
 
-			<a href="admininquiries.html">
+			<a href="inquiries.html">
 				Inquiries
 			</a>
 
-			<a href="admincontact.html">
+			<a href="contact.html">
 				Contact
 			</a>
 
@@ -3401,7 +3309,7 @@
 				</svg>
 			</button>
 
-			<a class="nav-bell" href="adminannouncements.html" aria-label="Notifications">
+			<a class="nav-bell" href="admin-notifications.html" aria-label="Notifications">
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M12 22a2.3 2.3 0 0 0 2.25-2h-4.5A2.3 2.3 0 0 0 12 22zm6-6v-5a6 6 0 0 0-5-5.91V4a1 1 0 0 0-2 0v1.09A6 6 0 0 0 6 11v5l-2 2v1h16v-1z">
 					</path>
@@ -3415,12 +3323,12 @@
 				</svg>
 			</button>
 
-			<a class="nav-profile" href="adminprofile.html">
-				<img src="resume.jpg" alt="Resume Dizon">
+			<a class="nav-profile" href="admin-profile.html">
+				<img src="resume.jpg" alt="Lyza Camille Pancipane">
 
 				<span class="nav-profile-text">
 					<strong>
-						Resume Dizon
+						Lyza Camille Pancipane
 					</strong>
 
 					<small>
@@ -3504,14 +3412,14 @@
 
 			</div>
 
-			<div class="metrics-grid grid-users">
+			<div class="metrics-grid">
 
 				<div class="stat-card">
 					<div class="stat-label">
 						Total Users
 					</div>
-					<div class="stat-value">
-						128
+					<div class="stat-value" id="statUsersTotal">
+						0
 					</div>
 				</div>
 
@@ -3519,11 +3427,8 @@
 					<div class="stat-label">
 						Administrators
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statUsersAdmins">
+						0
 					</div>
 				</div>
 
@@ -3531,11 +3436,8 @@
 					<div class="stat-label">
 						Students
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statUsersStudents">
+						0
 					</div>
 				</div>
 
@@ -3543,11 +3445,8 @@
 					<div class="stat-label">
 						Active Users
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statUsersActive">
+						0
 					</div>
 				</div>
 
@@ -3555,11 +3454,8 @@
 					<div class="stat-label">
 						Inactive Users
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statUsersInactive">
+						0
 					</div>
 				</div>
 
@@ -3567,8 +3463,8 @@
 					<div class="stat-label">
 						Account Requests
 					</div>
-					<div class="stat-value">
-						5
+					<div class="stat-value" id="statAccountRequests">
+						0
 					</div>
 				</div>
 
@@ -3594,7 +3490,7 @@
 
 			</div>
 
-			<div class="metrics-grid grid-inquiries">
+			<div class="metrics-grid">
 
 				<div class="stat-card">
 					<div class="stat-label">
@@ -3619,7 +3515,7 @@
 
 				<div class="stat-card">
 					<div class="stat-label">
-						Answered
+						In Progress
 					</div>
 					<div class="stat-value" id="inquiryAnswered">
 						0
@@ -3631,7 +3527,7 @@
 
 				<div class="stat-card">
 					<div class="stat-label">
-						Closed
+						Resolved
 					</div>
 					<div class="stat-value" id="inquiryClosed">
 						0
@@ -3650,7 +3546,7 @@
 				</div>
 
 				<div class="panel-subtitle">
-					Pending, answered, and closed inquiries.
+					Pending, in progress, and resolved inquiries.
 				</div>
 
 				<div id="inquiryChart">
@@ -3662,13 +3558,13 @@
 					</div>
 
 					<div class="bar-row">
-						<span>Answered</span>
+						<span>In Progress</span>
 						<div class="bar-track"><div class="bar-fill" id="barAnswered" style="width: 0%;"></div></div>
 						<span class="bar-value" id="barAnsweredValue">0</span>
 					</div>
 
 					<div class="bar-row">
-						<span>Closed</span>
+						<span>Resolved</span>
 						<div class="bar-track"><div class="bar-fill is-green" id="barClosed" style="width: 0%;"></div></div>
 						<span class="bar-value" id="barClosedValue">0</span>
 					</div>
@@ -3682,12 +3578,12 @@
 
 						<span>
 							<span class="legend-dot is-purple"></span>
-							Answered
+							In Progress
 						</span>
 
 						<span>
 							<span class="legend-dot is-green"></span>
-							Closed
+							Resolved
 						</span>
 
 					</div>
@@ -3720,17 +3616,14 @@
 
 			</div>
 
-			<div class="metrics-grid grid-faqs">
+			<div class="metrics-grid">
 
 				<div class="stat-card is-unavailable">
 					<div class="stat-label">
 						Total FAQs
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statFaqsTotal">
+						0
 					</div>
 				</div>
 
@@ -3738,11 +3631,8 @@
 					<div class="stat-label">
 						Published FAQs
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statFaqsPublished">
+						0
 					</div>
 				</div>
 
@@ -3750,11 +3640,8 @@
 					<div class="stat-label">
 						Unpublished FAQs
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statFaqsUnpublished">
+						0
 					</div>
 				</div>
 
@@ -3762,11 +3649,8 @@
 					<div class="stat-label">
 						Total Categories
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statFaqCategories">
+						0
 					</div>
 				</div>
 
@@ -3792,14 +3676,14 @@
 
 			</div>
 
-			<div class="metrics-grid grid-announcements">
+			<div class="metrics-grid">
 
 				<div class="stat-card">
 					<div class="stat-label">
 						Total Announcements
 					</div>
-					<div class="stat-value">
-						24
+					<div class="stat-value" id="statAnnouncementsTotal">
+						0
 					</div>
 				</div>
 
@@ -3807,11 +3691,8 @@
 					<div class="stat-label">
 						Published
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statAnnouncementsPublished">
+						0
 					</div>
 				</div>
 
@@ -3819,11 +3700,8 @@
 					<div class="stat-label">
 						Drafts
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statAnnouncementsDrafts">
+						0
 					</div>
 				</div>
 
@@ -3831,11 +3709,8 @@
 					<div class="stat-label">
 						Scheduled
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statAnnouncementsScheduled">
+						0
 					</div>
 				</div>
 
@@ -3843,11 +3718,8 @@
 					<div class="stat-label">
 						Archived
 					</div>
-					<div class="stat-value">
-						&mdash;
-					</div>
-					<div class="stat-hint">
-						Not available
+					<div class="stat-value" id="statAnnouncementsArchived">
+						0
 					</div>
 				</div>
 
@@ -3875,7 +3747,7 @@
 
 			<div class="quick-grid">
 
-				<a class="quick-card" href="adminusermanagement.html">
+				<a class="quick-card" href="admin-usermanagement.html">
 					<h3>
 						User Management
 					</h3>
@@ -3884,7 +3756,16 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="adminfaq.html">
+				<a class="quick-card" href="admin-contactmanagement.html">
+					<h3>
+						Contact Management
+					</h3>
+					<p>
+						Review messages sent through Contact Admin and problem reports.
+					</p>
+				</a>
+
+				<a class="quick-card" href="admin-faqmanagement.html">
 					<h3>
 						FAQs Management
 					</h3>
@@ -3893,7 +3774,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="admininquiries.html">
+				<a class="quick-card" href="admin-inquirymanagement.html">
 					<h3>
 						Inquiries Management
 					</h3>
@@ -3902,7 +3783,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="adminannouncemanagement.html">
+				<a class="quick-card" href="announcements.html">
 					<h3>
 						Announcement Management
 					</h3>
@@ -3911,7 +3792,31 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="adminactivitylogs.html">
+			</div>
+
+		</section>
+
+		<section class="content-section reveal">
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					QUICK LINKS
+				</div>
+
+				<h2>
+					Admin Shortcuts
+				</h2>
+
+				<p>
+					Jump to other administrative tools.
+				</p>
+
+			</div>
+
+			<div class="quick-grid">
+
+				<a class="quick-card" href="admin-activitylogs.html">
 					<h3>
 						Activity Logs
 					</h3>
@@ -3920,7 +3825,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="adminnotifications.html">
+				<a class="quick-card" href="admin-notifications.html">
 					<h3>
 						Notifications
 					</h3>
@@ -3929,7 +3834,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="admincontact.html?type=account">
+				<a class="quick-card" href="contactadmin.html?type=account">
 					<h3>
 						Account Requests
 					</h3>
@@ -3938,7 +3843,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="admincontact.html?type=password">
+				<a class="quick-card" href="contactadmin.html?type=password">
 					<h3>
 						Password Requests
 					</h3>
@@ -3947,7 +3852,7 @@
 					</p>
 				</a>
 
-				<a class="quick-card" href="bothreport.html">
+				<a class="quick-card" href="reportproblem.html">
 					<h3>
 						Report a Problem
 					</h3>
@@ -3959,8 +3864,64 @@
 			</div>
 
 		</section>
+		<section class="content-section reveal">
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					RECENT ACTIVITY
+				</div>
+
+				<h2>
+					Recent Activity
+				</h2>
+
+				<p>
+					The latest actions recorded across EduBridge.
+				</p>
+
+			</div>
+
+			<div class="panel">
+				<ul class="timeline" id="recentActivityList">
+				</ul>
+				<div class="chart-empty" id="recentActivityEmpty" hidden>
+					No activity recorded yet.
+				</div>
+			</div>
+
+		</section>
+
+		<section class="content-section reveal">
+
+			<div class="section-heading">
+
+				<div class="section-label">
+					RECENT INQUIRIES
+				</div>
+
+				<h2>
+					Latest Inquiries
+				</h2>
+
+				<p>
+					The newest student inquiries awaiting your review.
+				</p>
+
+			</div>
+
+			<div class="panel" id="recentInquiryPanel">
+				<div id="recentInquiryList">
+				</div>
+				<div class="chart-empty" id="recentInquiryEmpty" hidden>
+					No inquiries recorded yet.
+				</div>
+			</div>
+
+		</section>
 	</main>
 
+	<div class="toast" id="pageToast" role="status" aria-live="polite" hidden></div>
 
 	<footer>
 
@@ -3968,8 +3929,8 @@
 
 			<div>
 
-				<a href="admindashboard.html" class="logo footer-logo">
-					<img src="edubridgelogo.png" alt="EduBridge">
+				<a href="landingpage.html" class="logo footer-logo">
+					<img src="Edubridge-Logo.png" alt="EduBridge">
 
 					<span class="brand-name">
 						<span class="brand-edu">
@@ -4034,37 +3995,37 @@
 				<ul class="footer-links">
 
 					<li>
-						<a href="admindashboard.html">
+						<a href="landingpage.html">
 							Home
 						</a>
 					</li>
 
 					<li>
-						<a href="adminabout.html">
+						<a href="about.html">
 							About EduBridge
 						</a>
 					</li>
 
 					<li>
-						<a href="adminannouncements.html">
+						<a href="announcements.html">
 							Announcements
 						</a>
 					</li>
 
 					<li>
-						<a href="adminfaq.html">
+						<a href="faq.html">
 							FAQs
 						</a>
 					</li>
 
 					<li>
-						<a href="admininquiries.html">
+						<a href="inquiries.html">
 							Inquiries
 						</a>
 					</li>
 
 					<li>
-						<a href="admincontact.html">
+						<a href="contact.html">
 							Contact
 						</a>
 					</li>
@@ -4130,7 +4091,7 @@
 						with your school community.
 					</p>
 
-					<a class="question-button" href="admininquiries.html">
+					<a class="question-button" href="inquiries.html">
 						Get Started →
 					</a>
 
@@ -4184,6 +4145,8 @@
 	</button>
 
 
+	<script src="profile-sync.js"></script>
+	<script src="edubridge-api.js"></script>
 	<script>
 		try
 		{
@@ -4355,7 +4318,7 @@
 			function logOut()
 			{
 				localStorage.removeItem("edubridge-role");
-				window.location.href = "bothlogout.html";
+				window.location.href = "logout.html";
 			}
 
 			function buildAccountMenu()
@@ -4364,36 +4327,35 @@
 				const items = [];
 
 				const announcementChildren = [
-					{ label: "All Announcements", href: "adminannouncements.html" },
-					{ label: "Create Announcement", href: "admincreateannounce.html" },
-					{ label: "Categories", href: "admincategories.html" }
+					{ label: "All Announcements", href: "announcements.html" },
+					{ label: "Create Announcement", href: "admin-createannounce.html" },
+					{ label: "Categories", href: "admin-categories.html" }
 				];
 
 				if (role !== "teacher" && role !== "student")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
-					items.push({ label: "User Management", href: "adminusermanagement.html" });
-					items.push({ label: "Dashboard Analytics", href: "admindashboard.html" });
-					items.push({ label: "Activity Logs", href: "adminactivitylogs.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Inquiries Management", href: "admin-inquirymanagement.html" });
+					items.push({ label: "User Management", href: "admin-usermanagement.html" });
+					items.push({ label: "Dashboard Analytics", href: "admin-dashboard.html" });
+					items.push({ label: "Activity Logs", href: "admin-activitylogs.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "teacher")
 				{
 					items.push({ label: "Announcement Management", children: announcementChildren });
-					items.push({ label: "FAQs Management", href: "adminfaq.html" });
-					items.push({ label: "Inquiries Management", href: "admininquiries.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
-					items.push({ label: "Report a Problem", href: "bothreport.html" });
+					items.push({ label: "FAQs Management", href: "admin-faqmanagement.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
+					items.push({ label: "Report a Problem", href: "reportproblem.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 				else if (role === "student")
 				{
-					items.push({ label: "Profile", href: "adminprofile.html" });
-					items.push({ label: "Settings", href: "adminsettings.html" });
+					items.push({ label: "Profile", href: "admin-profile.html" });
+					items.push({ label: "Settings", href: "admin-settings.html" });
 					items.push({ label: "Log Out", action: "logout" });
 				}
 
@@ -4472,37 +4434,27 @@
 				const name = profile.querySelector(".nav-profile-text strong");
 				const roleText = profile.querySelector(".nav-profile-text small");
 
-				if (role === "student")
+				if (role === "student" || role === "teacher")
 				{
-					if (img) img.src = "junior.jpg";
-					if (img) img.alt = "Student";
-					if (name) name.textContent = "Student";
-					if (roleText) roleText.textContent = "Student";
-					profile.setAttribute("href", "admininquiries.html");
-				}
-				else if (role === "teacher")
-				{
-					if (img) img.src = "junior.jpg";
-					if (img) img.alt = "Teacher";
-					if (name) name.textContent = "Teacher";
-					if (roleText) roleText.textContent = "Teacher";
-					profile.setAttribute("href", "admininquiries.html");
+					img.src = EduBridgeProfile.savedPicture(role) || "junior.jpg";
+					img.alt = "Junior Slickback";
+					name.textContent = "Junior Slickback";
+					roleText.textContent = "Student";
+					profile.setAttribute("href", "inquiries.html");
 				}
 				else
 				{
-					img.src = "resume.jpg";
-					img.alt = "Resume Dizon";
-					name.textContent = "Resume Dizon";
+					img.src = EduBridgeProfile.savedPicture(role) || "resume.jpg";
+					img.alt = "Lyza Camille Pancipane";
+					name.textContent = "Lyza Camille Pancipane";
 					roleText.textContent = "Administrator";
-					profile.setAttribute("href", "adminprofile.html");
+					profile.setAttribute("href", "admin-profile.html");
 				}
 			}
 
 			buildAccountMenu();
 			applyNavProfile();
 
-
-			const inquiryStorageKey = "edubridge-inquiries";
 
 			const inquiryTotal = document.getElementById("inquiryTotal");
 			const inquiryPending = document.getElementById("inquiryPending");
@@ -4517,59 +4469,38 @@
 			const barAnsweredValue = document.getElementById("barAnsweredValue");
 			const barClosedValue = document.getElementById("barClosedValue");
 
-			function readInquiryRecords()
+
+			function setStat(id, value)
 			{
+				const element = document.getElementById(id);
 
-				try
+				if (element)
 				{
-					const saved = localStorage.getItem(inquiryStorageKey);
-
-					if (saved === null)
-					{
-						return [];
-					}
-
-					const parsed = JSON.parse(saved);
-
-					return Array.isArray(parsed) ? parsed : [];
+					element.textContent = String(value);
 				}
-				catch (error)
-				{
-					return [];
-				}
-
 			}
 
-			function renderInquiryAnalytics()
+			function formatLogDate(value)
 			{
+				const date = new Date(String(value).replace(" ", "T"));
 
-				const records = readInquiryRecords();
-
-				const counts =
+				if (isNaN(date.getTime()))
 				{
-					pending: 0,
-					answered: 0,
-					closed: 0
-				};
+					return String(value || "");
+				}
 
-				records.forEach(function(entry)
+				return date.toLocaleString("en-US",
 				{
-					if (entry.status === "Pending")
-					{
-						counts.pending += 1;
-					}
-					else if (entry.status === "Answered")
-					{
-						counts.answered += 1;
-					}
-					else if (entry.status === "Closed")
-					{
-						counts.closed += 1;
-					}
+					month: "long",
+					day: "numeric",
+					year: "numeric",
+					hour: "numeric",
+					minute: "2-digit"
 				});
+			}
 
-				const total = records.length;
-
+			function applyInquiryCounts(counts, total)
+			{
 				inquiryTotal.textContent = String(total);
 				inquiryPending.textContent = String(counts.pending);
 				inquiryAnswered.textContent = String(counts.answered);
@@ -4586,31 +4517,158 @@
 				inquiryChart.hidden = false;
 				inquiryChartEmpty.hidden = true;
 
-				const pendingPercent =
-					Math.round((counts.pending / total) * 100);
-
-				const answeredPercent =
-					Math.round((counts.answered / total) * 100);
-
-				const closedPercent =
-					Math.round((counts.closed / total) * 100);
+				const pendingPercent = Math.round((counts.pending / total) * 100);
+				const answeredPercent = Math.round((counts.answered / total) * 100);
+				const closedPercent = Math.round((counts.closed / total) * 100);
 
 				barPending.style.width = pendingPercent + "%";
 				barAnswered.style.width = answeredPercent + "%";
 				barClosed.style.width = closedPercent + "%";
 
-				barPendingValue.textContent =
-					counts.pending + " (" + pendingPercent + "%)";
-
-				barAnsweredValue.textContent =
-					counts.answered + " (" + answeredPercent + "%)";
-
-				barClosedValue.textContent =
-					counts.closed + " (" + closedPercent + "%)";
-
+				barPendingValue.textContent = counts.pending + " (" + pendingPercent + "%)";
+				barAnsweredValue.textContent = counts.answered + " (" + answeredPercent + "%)";
+				barClosedValue.textContent = counts.closed + " (" + closedPercent + "%)";
 			}
 
-			renderInquiryAnalytics();
+			function renderRecentActivity(entries)
+			{
+				const list = document.getElementById("recentActivityList");
+				const empty = document.getElementById("recentActivityEmpty");
+
+				list.replaceChildren();
+
+				if (!entries.length)
+				{
+					empty.hidden = false;
+					return;
+				}
+
+				empty.hidden = true;
+
+				entries.forEach(function(entry)
+				{
+					const item = document.createElement("li");
+
+					const time = document.createElement("span");
+					time.className = "timeline-time";
+					time.textContent = formatLogDate(entry.date);
+
+					const what = document.createElement("span");
+					what.className = "timeline-what";
+					what.textContent = entry.user + " — ";
+
+					const highlight = document.createElement("span");
+					highlight.textContent = entry.description;
+					what.append(highlight);
+
+					item.append(time, what);
+					list.append(item);
+				});
+			}
+
+			function renderRecentInquiries(entries)
+			{
+				const list = document.getElementById("recentInquiryList");
+				const empty = document.getElementById("recentInquiryEmpty");
+
+				list.replaceChildren();
+
+				if (!entries.length)
+				{
+					empty.hidden = false;
+					return;
+				}
+
+				empty.hidden = true;
+
+				const tone =
+				{
+					"Pending": "badge badge-amber",
+					"In Progress": "badge badge-purple",
+					"Resolved": "badge badge-green"
+				};
+
+				entries.forEach(function(entry)
+				{
+					const row = document.createElement("div");
+					row.className = "list-row";
+
+					const body = document.createElement("div");
+					body.className = "list-row-body";
+
+					const title = document.createElement("h3");
+					title.textContent = entry.reference + " — " + entry.subject;
+
+					const meta = document.createElement("p");
+					meta.textContent = entry.student + " · " + formatLogDate(entry.submittedAt);
+
+					body.append(title, meta);
+
+					const actions = document.createElement("div");
+					actions.className = "row-actions";
+
+					const badge = document.createElement("span");
+					badge.className = tone[entry.status] || "badge badge-gray";
+					badge.textContent = entry.status;
+
+					const link = document.createElement("a");
+					link.className = "btn btn-secondary btn-small";
+					link.href = "admin-inquirymanagement.html?id=" + encodeURIComponent(entry.reference);
+					link.textContent = "Open";
+
+					actions.append(badge, link);
+					row.append(body, actions);
+					list.append(row);
+				});
+			}
+
+			function loadDashboardStats()
+			{
+				return EduAPI.get("/backend/api/stats.php")
+					.then(function(stats)
+					{
+						setStat("statUsersTotal", stats.users.total);
+						setStat("statUsersAdmins", stats.users.admins);
+						setStat("statUsersStudents", stats.users.students);
+						setStat("statUsersActive", stats.users.active);
+						setStat("statUsersInactive", stats.users.inactive);
+						setStat("statAccountRequests", stats.users.accountRequests);
+
+						setStat("statFaqsTotal", stats.faqs.total);
+						setStat("statFaqsPublished", stats.faqs.published);
+						setStat("statFaqsUnpublished", stats.faqs.unpublished);
+						setStat("statFaqCategories", stats.faqs.categories);
+
+						setStat("statAnnouncementsTotal", stats.announcements.total);
+						setStat("statAnnouncementsPublished", stats.announcements.published);
+						setStat("statAnnouncementsDrafts", stats.announcements.drafts);
+						setStat("statAnnouncementsScheduled", stats.announcements.scheduled);
+						setStat("statAnnouncementsArchived", stats.announcements.archived);
+
+						applyInquiryCounts(
+						{
+							pending: stats.inquiries.pending,
+							answered: stats.inquiries.inProgress,
+							closed: stats.inquiries.resolved
+						}, stats.inquiries.total);
+
+						renderRecentActivity(stats.recentActivity || []);
+						renderRecentInquiries(stats.recentInquiries || []);
+					})
+					.catch(function(error)
+					{
+						const toast = document.getElementById("pageToast");
+
+						if (toast)
+						{
+							toast.textContent = error.message || "Dashboard statistics could not be loaded.";
+							toast.hidden = false;
+						}
+					});
+			}
+
+			loadDashboardStats();
+
 
 
 			function updateNavbar()
